@@ -16,7 +16,7 @@ images:
   - name: docker.io/woodpeckerci/woodpecker-server
     newTag: "v2.8.2"
   - name: docker.io/woodpeckerci/woodpecker-agent
-    newTag: "v2.7.3"
+    newTag: "v2.8.2"
 
 replicas:
   - name: woodpecker-agent
