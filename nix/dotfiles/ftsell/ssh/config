@@ -138,6 +138,11 @@ Host netbox.fux-eg.net 185.161.128.4
   HostName netbox.fux-eg.net
   IdentityFile ~/.ssh/id_lilly@fux.pub
 
+Host vpn.fux-eg.net
+  User noc
+  HostName vpn.fux-eg.net
+  IdentityFile ~/.ssh/id_lilly@fux.pub
+
 Host dhcp01.fux-eg.net 172.16.2.20
   User noc
   HostName 172.16.2.20
