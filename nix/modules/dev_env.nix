@@ -15,6 +15,37 @@
       path = "/home/ftsell/.kube/config";
       format = "binary";
     };
+    "wg_fux/privkey" = {};
+  };
+
+  networking.networkmanager.ensureProfiles = {
+    profiles."wgFux" = {
+      connection = {
+        id = "wgFux";
+        type = "wireguard";
+        autoconnect = true;
+        interface-name = "wgFux";
+        permissions = "user:ftsell;";
+      };
+      wireguard.private-key-flags = 1;
+      ipv4 = {
+        method = "manual";
+        address1 = "172.17.2.251/29";
+      };
+      "wireguard-peer.bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=" = {
+        endpoint = "vpn.fux-eg.net:50199";
+        allowed-ips = "172.17.2.248/29";
+      };
+    };
+    secrets.entries = [
+      {
+        matchId = config.networking.networkmanager.ensureProfiles.profiles."wgFux".connection.id;
+        matchType = config.networking.networkmanager.ensureProfiles.profiles."wgFux".connection.type;
+        matchSetting = "wireguard";
+        key = "private-key";
+        file = "/run/secrets/wg_fux/privkey";
+      }
+    ];
   };
 
   environment.systemPackages = with pkgs; [
