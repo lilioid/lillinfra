@@ -10,7 +10,6 @@ let
         inputs.home-manager.nixosModules.home-manager
         inputs.sops-nix.nixosModules.default
         inputs.lix.nixosModules.lixFromNixpkgs
-        inputs.nm-file-secret-agent.nixosModules.default
 
         ../modules/backup.nix
         ../modules/syncthing.nix
