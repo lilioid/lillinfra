@@ -4,6 +4,7 @@ local config = wezterm.config_builder()
 config.xcursor_theme = "Adwaita"
 config.color_scheme = "Alabaster"
 config.use_fancy_tab_bar = true
+config.front_end = "WebGpu"
 config.keys = {
 {
     key = "E",
