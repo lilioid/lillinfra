@@ -26,6 +26,7 @@
 
   home-manager.users.ftsell = {
     home.preferXdgDirectories = true;
+    xdg.mimeApps = import ../dotfiles/ftsell/mimeapps.nix;
     xdg.configFile = {
       "wezterm/wezterm,lua".source = ../dotfiles/ftsell/wezterm/wezterm.lua;
     };

@@ -21,6 +21,7 @@
     discord
     vlc
     obsidian
+    okular
   ];
 
   programs.firefox = {
