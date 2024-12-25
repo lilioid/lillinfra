@@ -197,22 +197,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-local": {
-      "locked": {
-        "lastModified": 1734888544,
-        "narHash": "sha256-5TagrUEUoOAH7/AJMmABV+o7BLUjGNOL++6cjtGQ5/4=",
-        "ref": "refs/heads/add-ietf-cli",
-        "rev": "4a78826feb869f9910ad7ac2dba271d0e5e236ab",
-        "shallow": true,
-        "type": "git",
-        "url": "file:///home/ftsell/Projects/nixpkgs"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "file:///home/ftsell/Projects/nixpkgs"
-      }
-    },
     "nixpkgs-small": {
       "locked": {
         "lastModified": 1734927162,
@@ -322,7 +306,6 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-local": "nixpkgs-local",
         "nixpkgs-small": "nixpkgs-small",
         "nixpkgs2405": "nixpkgs2405",
         "nixpkgs2405-small": "nixpkgs2405-small",

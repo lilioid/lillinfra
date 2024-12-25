@@ -1,7 +1,7 @@
 {
   description = "lillinfra - lillys infrastructure configuration";
 
-  inputs = rec {
+  inputs = {
     # nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     nixpkgs-small.url = "github:nixos/nixpkgs?ref=nixos-24.11-small";
@@ -12,7 +12,7 @@
     nixpkgs2411.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     nixpkgs2411-small.url = "github:nixos/nixpkgs?ref=nixos-24.11-small";
 
-    nixpkgs-local.url = "/home/ftsell/Projects/nixpkgs";
+    #nixpkgs-local.url = "/home/ftsell/Projects/nixpkgs";
 
     # some helpers for writing flakes with less repitition
     flake-utils.url = "github:numtide/flake-utils";
