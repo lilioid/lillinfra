@@ -7,7 +7,10 @@
 }:
 {
   options = {
-    custom.devEnv.enable = lib.options.mkEnableOption "installation of development utilities";
+    custom.devEnv = {
+      enable = lib.options.mkEnableOption "installation of development utilities";
+      enableFuxVpn = lib.options.mkEnableOption "configuration of fux vpn access";
+    };
   };
 
   config = lib.mkIf config.custom.devEnv.enable {
@@ -23,7 +26,7 @@
       "wg_fux/privkey" = { };
     };
 
-    networking.networkmanager.ensureProfiles = {
+    networking.networkmanager.ensureProfiles = lib.mkIf config.custom.devEnv.enableFuxVpn {
       profiles."wgFux" = {
         connection = {
           id = "wgFux";
@@ -44,8 +47,8 @@
       };
       secrets.entries = [
         {
-          matchId = config.networking.networkmanager.ensureProfiles.profiles."wgFux".connection.id;
-          matchType = config.networking.networkmanager.ensureProfiles.profiles."wgFux".connection.type;
+          matchId = "wgFux";
+          matchType = "wireguard";
           matchSetting = "wireguard";
           key = "private-key";
           file = "/run/secrets/wg_fux/privkey";

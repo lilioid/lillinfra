@@ -60,11 +60,9 @@ let
     };
     bridgeVLANs = [
       {
-        bridgeVLANConfig = {
           VLAN = vlan;
           EgressUntagged = vlan;
           PVID = vlan;
-        };
       }
     ];
   };
@@ -212,18 +210,14 @@ in
               [
                 {
                   # rt-hosting IPv4 can always be reached
-                  routeConfig = {
                     Destination = data.network.rt-hosting.ip4;
-                  };
                 }
               ]
               ++ builtins.map
                 # guestIPs can be reached via rt-hosting
                 (i: {
-                  routeConfig = {
                     Destination = i;
                     Gateway = data.network.guests.rt-hosting.ipv4;
-                  };
                 })
                 data.network.guestIPs;
           };

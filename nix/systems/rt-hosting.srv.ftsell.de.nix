@@ -39,15 +39,11 @@ let
     };
     routes =
       (builtins.map (ip4: {
-        routeConfig = {
-          Destination = ip4;
-        };
+        Destination = ip4;
       }) routedIp4s)
       ++ [
         {
-          routeConfig = {
-            Destination = "2a10:9902:111:${builtins.toString vlan}::/64";
-          };
+          Destination = "2a10:9902:111:${builtins.toString vlan}::/64";
         }
       ];
   };
@@ -173,36 +169,37 @@ in
   };
 
   services.frr = {
-    mgmt.enable = true;
-    zebra.enable = true;
+    bgpd.enable = true;
+    bgpd.extraOptions = [ "--listenon=2a10:9906:1002:0:125::126" ];
+    config = ''
+      frr version 10.1
+      frr defaults traditional
+      
+      hostname rt-hosting.srv.ftsell.de
 
-    bgp = {
-      enable = true;
-      extraOptions = [ "--listenon=2a10:9906:1002:0:125::126" ];
-      config = ''
-        router bgp 214493
-          no bgp default ipv4-unicast
-          bgp default ipv6-unicast
-          bgp ebgp-requires-policy
-          no bgp network import-check
+      ! BGP Router config
+      router bgp 214493
+        no bgp default ipv4-unicast
+        bgp default ipv6-unicast
+        bgp ebgp-requires-policy
+        no bgp network import-check
 
-          neighbor myroot peer-group
-          neighbor myroot remote-as 39409
-          neighbor myroot capability dynamic
-          neighbor 2a10:9906:1002::2 peer-group myroot
+        neighbor myroot peer-group
+        neighbor myroot remote-as 39409
+        neighbor myroot capability dynamic
+        neighbor 2a10:9906:1002::2 peer-group myroot
 
-          address-family ipv6 unicast
-            network 2a10:9902:111::/48
-            # redistribute kernel
-            # aggregate-address 2a10:9902:111::/48 summary-only
-            neighbor myroot prefix-list pl-allowed-export out
-            neighbor myroot prefix-list pl-allowed-import in
-          exit-address-family
+        address-family ipv6 unicast
+          network 2a10:9902:111::/48
+          # redistribute kernel
+          # aggregate-address 2a10:9902:111::/48 summary-only
+          neighbor myroot prefix-list pl-allowed-export out
+          neighbor myroot prefix-list pl-allowed-import in
+        exit-address-family
 
-        ip prefix-list pl-allowed-import seq 5 permit ::/0
-        ip prefix-list pl-allowed-export seq 5 permit 2a10:9902:111::/48
-      '';
-    };
+      ip prefix-list pl-allowed-import seq 5 permit ::/0
+      ip prefix-list pl-allowed-export seq 5 permit 2a10:9902:111::/48
+    '';
   };
 
   services.kea.dhcp4 = {
@@ -244,6 +241,7 @@ in
           interface = "vlanLilly";
           subnet4 = [
             {
+              id = 1;
               subnet = "37.153.156.169/30";
               pools = [ { pool = "37.153.156.169 - 37.153.156.170"; } ];
               reservations = [
@@ -260,6 +258,7 @@ in
               ];
             }
             {
+              id = 2;
               subnet = "10.0.10.0/24";
               pools = [ { pool = "10.0.10.10 - 10.0.10.254"; } ];
               reservations = [
@@ -315,6 +314,7 @@ in
           interface = "vlanBene";
           subnet4 = [
             {
+              id = 3;
               subnet = "37.153.156.172/32";
               pools = [ { pool = "37.153.156.172 - 37.153.156.172"; } ];
               reservations = [
@@ -326,6 +326,7 @@ in
               ];
             }
             {
+              id = 4;
               subnet = "10.0.11.0/24";
               pools = [ { pool = "10.0.11.10 - 10.0.11.254"; } ];
             }
@@ -338,6 +339,7 @@ in
           interface = "vlanPolygon";
           subnet4 = [
             {
+              id = 5;
               subnet = "37.153.156.174/32";
               pools = [ { pool = "37.153.156.174 - 37.153.156.174"; } ];
               reservations = [
@@ -349,6 +351,7 @@ in
               ];
             }
             {
+              id = 6;
               subnet = "10.0.12.0/24";
               pools = [ { pool = "10.0.12.10 - 10.0.12.254"; } ];
             }
@@ -361,6 +364,7 @@ in
           interface = "vlanVieta";
           subnet4 = [
             {
+              id = 7;
               subnet = "37.153.156.173/32";
               pools = [ { pool = "37.153.156.173 - 37.153.156.173"; } ];
               reservations = [
@@ -372,6 +376,7 @@ in
               ];
             }
             {
+              id = 8;
               subnet = "10.0.13.0/24";
               pools = [ { pool = "10.0.13.10 - 10.0.13.254"; } ];
             }
@@ -384,6 +389,7 @@ in
           interface = "vlanTimon";
           subnet4 = [
             {
+              id = 9;
               subnet = "37.153.156.171/32";
               pools = [ { pool = "37.153.156.171 - 37.153.156.171"; } ];
               reservations = [
@@ -395,6 +401,7 @@ in
               ];
             }
             {
+              id = 10;
               subnet = "10.0.14.0/24";
               pools = [ { pool = "10.0.14.10 - 10.0.14.254"; } ];
             }
@@ -407,6 +414,7 @@ in
           interface = "vlanIsabell";
           subnet4 = [
             {
+              id = 11;
               subnet = "37.153.156.175/32";
               pools = [ { pool = "37.153.156.175 - 37.153.156.175"; } ];
               reservations = [
@@ -418,6 +426,7 @@ in
               ];
             }
             {
+              id = 12;
               subnet = "10.0.15.0/24";
               pools = [ { pool = "10.0.15.10 - 10.0.15.254"; } ];
             }

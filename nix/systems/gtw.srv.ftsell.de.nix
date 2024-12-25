@@ -54,14 +54,10 @@
       ];
       routes = [
         {
-          routeConfig = {
-            Destination = "37.153.156.168";
-          };
+          Destination = "37.153.156.168";
         }
         {
-          routeConfig = {
-            Destination = "37.153.156.170";
-          };
+          Destination = "37.153.156.170";
         }
       ];
       networkConfig = {

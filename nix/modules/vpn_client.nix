@@ -127,8 +127,8 @@ in
 
     ensureProfiles.secrets.entries = [
       {
-        matchId = config.networking.networkmanager.ensureProfiles.profiles."wgVpn".connection.id;
-        matchType = config.networking.networkmanager.ensureProfiles.profiles."wgVpn".connection.type;
+        matchId = "wgVpn";
+        matchType = "wireguard";
         matchSetting = "wireguard";
         key = "private-key";
         file = "/run/secrets/wg_vpn/privkey";
