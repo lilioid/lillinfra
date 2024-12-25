@@ -55,7 +55,7 @@ in
       inputs.nixpkgs2405-small;
   "vpn.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "vpn.srv.myroot.intern"
-      inputs.nixpkgs2405-small;
+      inputs.nixpkgs2411-small;
   "monitoring.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "monitoring.srv.myroot.intern"
       inputs.nixpkgs2405-small;
