@@ -10,7 +10,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../modules/base_system.nix
-    ../modules/gnome.nix
     ../modules/user_ftsell.nix
     ../modules/dev_env.nix
     ../modules/syncthing.nix
@@ -69,10 +68,15 @@
     editor = false;
   };
 
-  # backup settings
-  custom.backup.rsync-net = {
-    enable = true;
-    repoPath = "./backups/private-systems";
+  # settings defined by my own custom modules
+  custom = {
+    gnomeDesktop.enable = true;
+    devEnv.enable = true;
+    user-syncthing.enable = true;
+    backup.rsync-net = {
+      enable = true;
+      repoPath = "./backups/private-systems";
+    };
   };
 
   # additional packages
@@ -100,7 +104,6 @@
   services.earlyoom.enable = true;
   services.resolved.enable = true;
   programs.gnupg.agent.enable = true;
-  custom.user-syncthing.enable = true;
 
   sops.age.keyFile = /home/ftsell/.config/sops/age/keys.txt;
 

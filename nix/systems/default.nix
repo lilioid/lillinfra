@@ -11,6 +11,9 @@ let
         inputs.sops-nix.nixosModules.default
         inputs.lix.nixosModules.lixFromNixpkgs
 
+        ../modules/user_ftsell.nix
+        ../modules/dev_env.nix
+        ../modules/gnome.nix
         ../modules/backup.nix
         ../modules/syncthing.nix
         ./${name}.nix

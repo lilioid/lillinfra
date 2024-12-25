@@ -11,7 +11,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../modules/sane_extra_config.nix
     ../modules/base_system.nix
-    ../modules/gnome.nix
     ../modules/user_ftsell.nix
     ../modules/dev_env.nix
     ../modules/syncthing.nix
@@ -100,10 +99,15 @@
     makemkv
   ];
 
-  # backup settings
-  custom.backup.rsync-net = {
-    enable = true;
-    repoPath = "./backups/private-systems";
+  # options defined by other custom modules
+  custom = {
+    gnomeDesktop.enable = true;
+    devEnv.enable = true;
+    user-syncthing.enable = true;
+    backup.rsync-net = {
+      enable = true;
+      repoPath = "./backups/private-systems";
+    };
   };
 
   services.openssh = {
@@ -130,7 +134,6 @@
       net EPSON79DA90.home.intern
     '';
   };
-  custom.user-syncthing.enable = true;
 
   sops.age.keyFile = /home/ftsell/.config/sops/age/keys.txt;
 

@@ -39,12 +39,10 @@ in
       };
       wireguardPeers = (
         builtins.map (iServer: {
-          wireguardPeerConfig = {
-            PublicKey = iServer.pubKey;
-            AllowedIPs = iServer.allowedIPs;
-            Endpoint = iServer.endpoint;
-            PersistentKeepalive = lib.mkIf selfClientConf.keepalive 25;
-          };
+          PublicKey = iServer.pubKey;
+          AllowedIPs = iServer.allowedIPs;
+          Endpoint = iServer.endpoint;
+          PersistentKeepalive = lib.mkIf selfClientConf.keepalive 25;
         }) (lib.attrValues data.wg_vpn.knownServers)
       );
     };
