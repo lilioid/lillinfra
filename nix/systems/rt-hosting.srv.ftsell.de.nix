@@ -170,7 +170,11 @@ in
 
   services.frr = {
     bgpd.enable = true;
-    bgpd.extraOptions = [ "--listenon=2a10:9906:1002:0:125::126" ];
+    bgpd.extraOptions = [ 
+      "--listenon=2a10:9906:1002:0:125::126" 
+      "--listenon=::1"
+      "--listenon=127.0.0.1"
+    ];
     config = ''
       frr version 10.1
       frr defaults traditional
