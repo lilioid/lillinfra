@@ -13,10 +13,6 @@ items:
     spec:
       selector: *labels
       ports:
-        - name: pixelflut-udp
-          port: 1234
-          protocol: UDP
-          targetPort: pixelflut-udp
         - name: pixelflut-tcp
           port: 1234
           protocol: TCP
@@ -35,11 +31,6 @@ items:
       selector: *labels
       type: NodePort
       ports:
-        - name: pixelflut-udp
-          port: 1234
-          nodePort: 31234
-          protocol: UDP
-          targetPort: pixelflut-udp
         - name: pixelflut-tcp
           port: 1234
           nodePort: 31234
@@ -73,7 +64,6 @@ items:
                 - --verbose
                 - server
                 - --listen=tcp://0.0.0.0:1234
-                - --listen=udp://0.0.0.0:1234
                 - --listen=ws://0.0.0.0:1235
                 - --load-snapshot=/srv/data/homepage.pixmap
                 - --snapshot=/srv/data/homepage.pixmap
@@ -82,9 +72,6 @@ items:
                 - name: pixelflut-tcp
                   containerPort: 1234
                   protocol: TCP
-                - name: pixelflut-udp
-                  containerPort: 1234
-                  protocol: UDP
                 - name: pixelflut-ws
                   containerPort: 1235
                   protocol: TCP
