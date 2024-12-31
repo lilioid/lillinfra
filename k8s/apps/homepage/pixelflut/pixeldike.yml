@@ -36,13 +36,11 @@ items:
       type: NodePort
       ports:
         - name: pixelflut-udp
-          port: 30000
-          nodePort: 30000
+          nodePort: 31234
           protocol: UDP
           targetPort: pixelflut-udp
         - name: pixelflut-tcp
-          port: 30000
-          nodePort: 30000
+          nodePort: 31234
           protocol: TCP
           targetPort: pixelflut-tcp
 

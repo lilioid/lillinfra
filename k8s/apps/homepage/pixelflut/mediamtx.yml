@@ -23,27 +23,6 @@ items:
           port: 8554
           targetPort: rtsp
 
-  # service for WebRtc (must be publicly discoverable)
-  - apiVersion: v1
-    kind: Service
-    metadata:
-      name: mediamtx-webrtc
-      labels: *labels
-    spec:
-      selector: *labels
-      type: NodePort
-      ports:
-        - name: webrtc-udp
-          port: 30189
-          targetPort: webrtc-udp
-          nodePort: 30189
-          protocol: UDP
-        - name: webrtc-tcp
-          port: 30189
-          targetPort: webrtc-tcp
-          nodePort: 30189
-          protocol: TCP
-
   # deployment
   - apiVersion: apps/v1
     kind: Deployment
