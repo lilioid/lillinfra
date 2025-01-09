@@ -26,7 +26,7 @@ Host gtw.srv.ftsell.de
   Port 23
 
 Host vpn.srv.myroot.intern
-  User ftsell
+  User lilly
   HostName 10.0.10.11
   ProxyJump gtw.srv.ftsell.de
 
