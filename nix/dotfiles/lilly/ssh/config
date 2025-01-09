@@ -30,23 +30,18 @@ Host vpn.srv.myroot.intern
   HostName 10.0.10.11
   ProxyJump gtw.srv.ftsell.de
 
-Host monitoring.srv.myroot.intern
-  User ftsell
-  HostName 10.0.10.13
-  ProxyJump gtw.srv.ftsell.de
-
 Host nas.srv.myroot.intern
   User ftsell
   HostName 10.0.10.14
   ProxyJump gtw.srv.ftsell.de
 
 Host k8s-ctl.srv.myroot.intern
-  User ftsell
+  User lilly
   HostName 10.0.10.15
   ProxyJump gtw.srv.ftsell.de
 
 Host k8s-worker1.srv.myroot.intern
-  User ftsell
+  User lilly
   HostName 10.0.10.16
   ProxyJump gtw.srv.ftsell.de
 
