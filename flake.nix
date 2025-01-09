@@ -57,12 +57,6 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # nm-file-secret-agent
-    nm-file-secret-agent = {
-      url = "git+https://git.lly.sh/lilly/nm-file-secret-agent.git";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

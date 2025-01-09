@@ -86,6 +86,7 @@
       gleam
       erlang
       terraform
+      ietf-cli
     ];
 
     programs.fish.shellInit = ''
