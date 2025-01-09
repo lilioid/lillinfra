@@ -17,7 +17,7 @@ Host mail.srv.ftsell.de
   HostName mail.srv.ftsell.de
 
 Host rt-hosting.srv.ftsell.de
-  User ftsell
+  User lilly
   HostName rt-hosting.srv.ftsell.de
 
 Host gtw.srv.ftsell.de
