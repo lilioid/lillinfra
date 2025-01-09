@@ -21,7 +21,7 @@ Host rt-hosting.srv.ftsell.de
   HostName rt-hosting.srv.ftsell.de
 
 Host gtw.srv.ftsell.de
-  User ftsell
+  User lilly
   HostName gtw.srv.ftsell.de
   Port 23
 
