@@ -116,6 +116,7 @@
   networking.firewall.allowedTCPPorts = [
     80
     443
+    1234
   ];
 
   # haproxy
@@ -137,6 +138,11 @@
         mode tcp
         use_backend ingress-https
 
+      frontend pixelflut
+        bind :1234
+        mode tcp
+        use_backend pixelflut-nodeport
+
       backend ingress-http
         mode tcp
         server k8s-worker1 10.0.10.16:30080 check send-proxy
@@ -144,6 +150,10 @@
       backend ingress-https
         mode tcp
         server k8s-worker1 10.0.10.16:30443 check send-proxy
+
+      backend pixelflut-nodeport
+        mode tcp
+        server k8s-worker1 10.0.10.16:31234
     '';
   };
 

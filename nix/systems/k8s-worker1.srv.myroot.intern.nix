@@ -61,6 +61,7 @@ in
       30080 # ingress http
       30443 # ingress https
       30022 # forgejo ssh
+      31234 # pixelflut
     ];
     allowedUDPPorts = [
       8472 # k8s flannel vxlan
