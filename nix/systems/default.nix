@@ -11,6 +11,7 @@ let
         inputs.sops-nix.nixosModules.default
         inputs.lix.nixosModules.lixFromNixpkgs
 
+        ../modules/base_system.nix
         ../modules/user_lilly.nix
         ../modules/dev_env.nix
         ../modules/gnome.nix
