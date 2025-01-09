@@ -79,8 +79,6 @@ in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../modules/base_system.nix
-    ../modules/user_ftsell.nix
   ];
 
   # boot config
@@ -237,26 +235,6 @@ in
                 config.systemd.network.netdevs."br${capitalize name}".netdevConfig.Name;
           }) data.network.tenants
         );
-    #        {
-    #            brFinn = mkBridgeNetwork "brFinn";
-    #            "vethFinn-up" = mkVethConnUp "vethFinn" 10;
-    #            "vethFinn-down" = mkVethConnDown "vethFinn" "brFinn";
-    #            brBene = mkBridgeNetwork "brBene";
-    #            "vethBene@up" = mkVethConnUp "vethBene" 11;
-    #            "vethBene@down" = mkVethConnDown "vethBene" "brBene";
-    #            brPolygon = mkBridgeNetwork "brPolygon";
-    #            "vethPolygon@up" = mkVethConnUp "vethPoly" 12;
-    #            "vethPolygon@down" = mkVethConnDown "vethPoly" "brPolygon";
-    #            brVieta = mkBridgeNetwork "brVieta";
-    #            "vethVieta@up" = mkVethConnUp "vethVieta" 13;
-    #            "vethVieta@down" = mkVethConnDown "vethVieta" "brVieta";
-    #            brTimon = mkBridgeNetwork "brTimon";
-    #            "vethTimon@up" = mkVethConnUp "vethTimon" 14;
-    #            "vethTimon@down" = mkVethConnDown "vethTimon" "brTimon";
-    #            brIsabell = mkBridgeNetwork "brIsabell";
-    #            "vethIsa@up" = mkVethConnUp "vethIsa" 15;
-    #            "vethIsa@down" = mkVethConnDown "vethIsa" "brIsabell";
-    #        };
   };
 
   boot.kernel.sysctl = {
@@ -345,7 +323,7 @@ in
         configure-bridge-vlan-port = "${configure-bridge-vlan-port}/bin/qemu-configure-bridge-vlan-port";
       };
   };
-  users.users.ftsell.extraGroups = [ "libvirtd" ];
+  users.users.lilly.extraGroups = [ "libvirtd" ];
 
   environment.systemPackages = with pkgs; [
     bridge-utils
@@ -359,7 +337,7 @@ in
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.ftsell.home.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "24.05";
   system.stateVersion = "23.11";
   networking.hostId = "eaad9974";
 }

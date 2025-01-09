@@ -9,7 +9,7 @@ Host rsync.net zh4525.rsync.net
 #
 
 Host hosting.srv.ftsell.de
-  User ftsell
+  User lilly
   HostName hosting.srv.ftsell.de
 
 Host mail.srv.ftsell.de
