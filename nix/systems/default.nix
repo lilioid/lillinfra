@@ -45,7 +45,7 @@ in
       inputs.nixpkgs2411-small;
   "mail.srv.ftsell.de" =
     mkSystem "x86_64-unknown-linux-gnu" "mail.srv.ftsell.de"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
   "gtw.srv.ftsell.de" =
     mkSystem "x86_64-unknown-linux-gnu" "gtw.srv.ftsell.de"
       inputs.nixpkgs2411-small;

@@ -8,8 +8,6 @@
 {
   imports = [
     ../modules/hosting_guest.nix
-    ../modules/base_system.nix
-    ../modules/user_lilly.nix
   ];
 
   # boot config
