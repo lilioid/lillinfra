@@ -31,7 +31,7 @@ Host vpn.srv.myroot.intern
   ProxyJump gtw.srv.ftsell.de
 
 Host nas.srv.myroot.intern
-  User ftsell
+  User lilly
   HostName 10.0.10.14
   ProxyJump gtw.srv.ftsell.de
 

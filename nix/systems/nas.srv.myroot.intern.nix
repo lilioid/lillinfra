@@ -8,14 +8,15 @@
 {
   imports = [
     ../modules/hosting_guest.nix
-    ../modules/base_system.nix
-    ../modules/user_ftsell.nix
     ../modules/vpn_client.nix
   ];
 
   # filesystem config (including zfs which adds additional mountpoints automatically)
   boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportRoot = false;
+  boot.zfs = {
+    forceImportRoot = false;
+    devNodes = "/dev/vdb1";
+  };
   networking.hostId = "d1c39a07";
   fileSystems = {
     "/boot" = {
@@ -29,6 +30,16 @@
     "/" = {
       device = "/dev/disk/by-uuid/9ce95a64-55d6-442d-a41f-8bbbb3332269";
       fsType = "ext4";
+    };
+    "/srv/data/k8s" = {
+      device = "server-myroot-hdd/k8s";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
+    "/var/lib/postgresql" = {
+      device = "server-myroot-hdd/postgres";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
     };
   };
 
@@ -129,6 +140,6 @@
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.ftsell.home.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "24.05";
   system.stateVersion = "24.05";
 }
