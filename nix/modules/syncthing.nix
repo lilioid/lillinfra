@@ -19,8 +19,8 @@ in
     services.syncthing = lib.mkIf cfg.enable {
       enable = true;
       group = "users";
-      user = "ftsell";
-      dataDir = "/home/ftsell/";
+      user = "lilly";
+      dataDir = "/home/lilly/";
       settings.options.urAccepted = -1;
       openDefaultPorts = false;
       overrideFolders = false;

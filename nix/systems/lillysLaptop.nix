@@ -10,7 +10,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../modules/base_system.nix
-    ../modules/user_ftsell.nix
     ../modules/dev_env.nix
     ../modules/syncthing.nix
     ../modules/vpn_client.nix
@@ -105,11 +104,11 @@
   services.resolved.enable = true;
   programs.gnupg.agent.enable = true;
 
-  sops.age.keyFile = /home/ftsell/.config/sops/age/keys.txt;
+  sops.age.keyFile = /home/lilly/.config/sops/age/keys.txt;
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.ftsell.home.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "24.05";
   system.stateVersion = "24.05";
   networking.hostId = "1a091689";
 }

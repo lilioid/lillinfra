@@ -11,7 +11,7 @@ let
         inputs.sops-nix.nixosModules.default
         inputs.lix.nixosModules.lixFromNixpkgs
 
-        ../modules/user_ftsell.nix
+        ../modules/user_lilly.nix
         ../modules/dev_env.nix
         ../modules/gnome.nix
         ../modules/backup.nix
@@ -72,7 +72,7 @@ in
       inputs.nixpkgs2405-small;
 
   # private systems
-  finnsLaptop = mkSystem "x86_64-unknown-linux-gnu" "finnsLaptop" inputs.nixpkgs2411;
+  lillysLaptop = mkSystem "x86_64-unknown-linux-gnu" "lillysLaptop" inputs.nixpkgs2411;
 
   # home systems
   "finnsWorkstation.home.intern" =

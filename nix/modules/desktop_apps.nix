@@ -23,6 +23,7 @@
       vlc
       obsidian
       okular
+      wezterm
     ];
 
     programs.firefox = {

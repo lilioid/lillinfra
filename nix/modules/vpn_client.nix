@@ -77,7 +77,7 @@ in
             type = "wireguard";
             autoconnect = true;
             interface-name = "wgVpn";
-            permissions = "user:ftsell:;";
+            permissions = "user:lilly:;";
           };
           wireguard = {
             private-key-flags = 1;

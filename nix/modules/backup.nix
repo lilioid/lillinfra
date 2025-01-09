@@ -41,7 +41,7 @@ in
       sourceDirectories = mkOption {
         type = types.listOf types.str;
         default = [
-          "/home/ftsell"
+          "/home/lilly"
           "/root"
         ];
       };

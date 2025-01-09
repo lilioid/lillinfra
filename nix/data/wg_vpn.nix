@@ -43,8 +43,8 @@ rec {
       "10.20.30.105/32"
       "fc10:20:30::105/128"
     ] "NASuIV3T8lYoE2VTnuu+GPqq8Pzh/NHTfL06puPZDTE=" true;
-    "lillyPhone" = mkRegistration 102 "PHN5Srlsv3x7+ehWF4SPz0eezcYlm7c0pIU5jXYuYG4=";
-    "finnsLaptop" = mkRegistration 103 "LAPcOludjQrjfza0M+XA+fuwxpVfmqRKjBawAxWDyDY=";
+    "lillysPhone" = mkRegistration 102 "PHN5Srlsv3x7+ehWF4SPz0eezcYlm7c0pIU5jXYuYG4=";
+    "lillysLaptop" = mkRegistration 103 "LAPcOludjQrjfza0M+XA+fuwxpVfmqRKjBawAxWDyDY=";
     "finnsWorkstation" = mkRegistration 104 "WOrk7yTwmWilfWrOhF2EpmMvK/fC8L3IfGaOnZQnRyA=";
   };
 

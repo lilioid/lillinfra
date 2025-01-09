@@ -16,11 +16,11 @@
   config = lib.mkIf config.custom.devEnv.enable {
 
     sops.secrets = {
-      "ftsell/kubeconfig.yml" = {
-        owner = "ftsell";
+      "lilly/kubeconfig.yml" = {
+        owner = "lilly";
         group = "nogroup";
-        sopsFile = ../dotfiles/ftsell/kubectl/config.secret.yml;
-        path = "/home/ftsell/.kube/config";
+        sopsFile = ../dotfiles/lilly/kubectl/config.secret.yml;
+        path = "/home/lilly/.kube/config";
         format = "binary";
       };
       "wg_fux/privkey" = { };
@@ -33,7 +33,7 @@
           type = "wireguard";
           autoconnect = true;
           interface-name = "wgFux";
-          permissions = "user:ftsell;";
+          permissions = "user:lilly;";
         };
         wireguard.private-key-flags = 1;
         ipv4 = {
@@ -59,6 +59,7 @@
     environment.systemPackages = with pkgs; [
       ansible
       ansible-lint
+      direnv
       nodejs
       nodePackages.pnpm
       python3

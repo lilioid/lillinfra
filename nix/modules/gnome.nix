@@ -30,7 +30,7 @@
       };
     };
 
-    home-manager.users.ftsell = {
+    home-manager.users.lilly = {
       dconf = with lib.gvariant; {
         enable = true;
         settings = {
@@ -39,6 +39,10 @@
             show-battery-percentage = true;
             font-name = "Inter 11";
             document-font-name = "Inter 11";
+          };
+          "org/gnome/desktop/background" = {
+            "picture-uri" = "file:///home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
+            "picture-uri-dark" = "file:///home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg";
           };
           "org/gnome/desktop/media-handling" = {
             automount = false;
@@ -79,6 +83,12 @@
           };
           "org/gnome/nautilus/preferences" = {
             "default-folder-viewer" = "list-view";
+          };
+          "org/gnome/tweaks" = {
+            "show-extension-notice" = false;
+          };
+          "org/gtk/settings/file-chooser" = {
+            "sort-directories-first" = true;
           };
         };
       };
