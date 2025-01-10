@@ -27,6 +27,9 @@
     options = "--delete-older-than 30d";
   };
 
+  # link flake source into /etc/nixos
+  environment.etc."nixos".source = ../../.;
+
   # locale settings
   time.timeZone = lib.mkDefault "Europe/Berlin";
   i18n = {
