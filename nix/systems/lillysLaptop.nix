@@ -3,15 +3,13 @@
   config,
   lib,
   pkgs,
-  home-manager,
+  lanzaboote,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../modules/base_system.nix
-    ../modules/dev_env.nix
-    ../modules/syncthing.nix
+    lanzaboote.nixosModules.lanzaboote
     ../modules/vpn_client.nix
   ];
 
@@ -62,9 +60,14 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
-    enable = true;
+    # lanzaboote is currently implemented as an alternative option to systemd-boot
+    enable = lib.mkForce false;
     configurationLimit = 10;
     editor = false;
+  };
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/etc/secureboot";
   };
 
   # settings defined by my own custom modules
@@ -91,6 +94,7 @@
     sieveshell
     nftables
     file
+    sbctl
   ];
 
   virtualisation.podman = {
