@@ -17,6 +17,7 @@ let
         ../modules/gnome.nix
         ../modules/backup.nix
         ../modules/syncthing.nix
+        ../modules/auto_upgrade.nix
         ./${name}.nix
 
         (
