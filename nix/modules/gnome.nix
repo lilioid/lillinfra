@@ -41,7 +41,8 @@
             document-font-name = "Inter 11";
           };
           "org/gnome/desktop/background" = {
-            "picture-uri" = "file:///home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
+            "picture-uri" =
+              "file:///home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
             "picture-uri-dark" = "file:///home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg";
           };
           "org/gnome/desktop/media-handling" = {

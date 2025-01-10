@@ -43,9 +43,7 @@ in
   "rt-hosting.srv.ftsell.de" =
     mkSystem "x86_64-unknown-linux-gnu" "rt-hosting.srv.ftsell.de"
       inputs.nixpkgs2411-small;
-  "mail.srv.ftsell.de" =
-    mkSystem "x86_64-unknown-linux-gnu" "mail.srv.ftsell.de"
-      inputs.nixpkgs2411;
+  "mail.srv.ftsell.de" = mkSystem "x86_64-unknown-linux-gnu" "mail.srv.ftsell.de" inputs.nixpkgs2411;
   "gtw.srv.ftsell.de" =
     mkSystem "x86_64-unknown-linux-gnu" "gtw.srv.ftsell.de"
       inputs.nixpkgs2411-small;
