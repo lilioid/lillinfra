@@ -121,6 +121,7 @@
   };
 
   # backup config
+  services.zfs.autoSnapshot.enable = true;
   custom.backup.rsync-net = {
     enable = true;
     sourceDirectories = [
@@ -129,14 +130,6 @@
       "/srv/data/k8s/"
     ];
     backupPostgres = true;
-    #hooks.beforeBackup = with pkgs; [
-    #  "${zfs}/bin/zfs snapshot server-myroot-hdd/postgres@pre-backup"
-    #  "${zfs}/bin/zfs snapshot server-myroot-hdd/k8s@pre-backup"
-    #];
-    #hooks.afterBackup = with pkgs; [
-    #  "${zfs}/bin/zfs destroy server-myroot-hdd/postgres@pre-backup"
-    #  "${zfs}/bin/zfs destroy server-myroot-hdd/k8s@pre-backup"
-    #];
   };
 
   # DO NOT CHANGE
