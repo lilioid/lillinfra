@@ -47,6 +47,7 @@ in
   };
 
   # generic network config
+  custom.mailRelay.enable = true;
   networking.nftables.enable = true;
   networking.useDHCP = false;
   systemd.network = {

@@ -124,6 +124,7 @@ in
 
   # networking config
   networking.useDHCP = false;
+  custom.mailRelay.enable = true;
 
   services.openssh = {
     enable = true;

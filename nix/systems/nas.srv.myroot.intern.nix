@@ -48,6 +48,7 @@
   ];
 
   # networking config
+  custom.mailRelay.enable = true;
   networking.useDHCP = false;
   systemd.network = {
     enable = true;

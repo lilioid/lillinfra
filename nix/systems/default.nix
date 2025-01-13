@@ -18,6 +18,7 @@ let
         ../modules/backup.nix
         ../modules/syncthing.nix
         ../modules/auto_upgrade.nix
+        ../modules/mail_relay.nix
         ./${name}.nix
 
         (

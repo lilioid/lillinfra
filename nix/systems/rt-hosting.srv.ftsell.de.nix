@@ -74,6 +74,7 @@ in
     traceroute
   ];
 
+  custom.mailRelay.enable = true;
   networking.useDHCP = false;
   systemd.network = {
     enable = true;
