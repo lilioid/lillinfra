@@ -100,6 +100,7 @@
       gnomeExtensions.appindicator
       gnomeExtensions.caffeine
       gnomeExtensions.vitals
+      gnomeExtensions.color-picker
     ];
 
     environment.gnome.excludePackages = (

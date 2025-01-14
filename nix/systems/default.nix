@@ -67,10 +67,10 @@ in
   # servers at home
   "priv.srv.home.intern" =
     mkSystem "aarch64-unknown-linux-gnu" "priv.srv.home.intern"
-      inputs.nixpkgs2405-small;
+      inputs.nixpkgs2411;
   "proxy.srv.home.intern" =
     mkSystem "aarch64-unknown-linux-gnu" "proxy.srv.home.intern"
-      inputs.nixpkgs2405-small;
+      inputs.nixpkgs2411;
 
   # private systems
   lillysLaptop = mkSystem "x86_64-unknown-linux-gnu" "lillysLaptop" inputs.nixpkgs2411;

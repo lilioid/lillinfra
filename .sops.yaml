@@ -9,6 +9,8 @@ keys:
   - &gtw-myroot "age186x5sfsv6txmtu8f9dfd84td6fq7cxup25nrtxlr43327xrqvpzsvqe6sv"
   - &home-proxy "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
   - &rt-hosting "age1j3raxh0fk0a56htx68tg2jqguqklujxz26u7mk698rct4z0ek3vqh5mtes"
+  - &priv-home-srv "age1nww3jxah80k2he6ur8gmzywx7hradf3cnyfshfzzd4rcp62kxsasw58phj"
+  - &proxy-home "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
 creation_rules:
   # per-host secrets
   - path_regex: "data/secrets/vpn.srv.myroot.intern.yml"
@@ -42,7 +44,7 @@ creation_rules:
   # shared secrets
   - path_regex: "data/secrets/mail_relay.yml"
     key_groups:
-      - age: [ *ftsell, *vpn-srv, *gtw-myroot, *k8s-ctl-srv, *nas-myroot, *k8s-worker1-srv, *rt-hosting, *hosting-srv ]
+      - age: [ *ftsell, *vpn-srv, *gtw-myroot, *k8s-ctl-srv, *nas-myroot, *k8s-worker1-srv, *rt-hosting, *hosting-srv, *priv-home-srv, *proxy-home ]
 
   # generic secrets
   - path_regex: "data/secrets/.+.yml"

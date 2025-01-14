@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  home-manager,
   ...
 }:
 let
@@ -14,9 +13,7 @@ let
 in
 {
   imports = [
-    ../modules/base_system.nix
     ../modules/hosting_guest.nix
-    ../modules/user_ftsell.nix
     ../modules/vpn_client.nix
   ];
 
@@ -37,6 +34,7 @@ in
   };
 
   # network config
+  custom.mailRelay.enable = true;
   networking.useDHCP = false;
   systemd.network = {
     enable = true;
@@ -58,7 +56,7 @@ in
   # dyndns for home.lly.sh
   services.ddclient = {
     enable = true;
-    use = "web, web=https://checkipv4.dedyn.io/";
+    usev4 = "web, web=https://checkipv4.dedyn.io/";
     server = "update.dedyn.io";
     username = "lly.sh";
     domains = [ "home.lly.sh" ];
@@ -111,7 +109,7 @@ in
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.ftsell.home.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "24.05";
   system.stateVersion = "24.05";
   networking.hostId = "1a091689";
 }

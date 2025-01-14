@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  home-manager,
   ...
 }:
 let
@@ -25,9 +24,7 @@ let
 in
 {
   imports = [
-    ../modules/base_system.nix
     ../modules/hosting_guest.nix
-    ../modules/user_ftsell.nix
   ];
 
   # boot config
@@ -58,6 +55,8 @@ in
   };
 
   # general hosting config
+  custom.mailRelay.enable = true;
+  services.zfs.autoSnapshot.enable = true;
   virtualisation.podman = {
     enable = true;
     autoPrune.enable = true;
@@ -80,7 +79,7 @@ in
   services.samba = {
     enable = true;
     openFirewall = true;
-    shares = {
+    settings = {
       SyncPictures = {
         path = "/srv/data/encrypted/syncthing/SyncPictures";
         comment = "Camera folder";
@@ -118,16 +117,16 @@ in
   systemd.services."postgresql".wantedBy = lib.mkForce [ "encrypted-services.target" ];
   services.postgresql = {
     enable = true;
-    extraPlugins = ps: with ps; [ pgvector ];
+    extensions = ps: with ps; [ pgvector ];
     ensureDatabases = [
       "root"
-      "ftsell"
+      "lilly"
       "paperless"
       "immich"
     ];
     ensureUsers = [
       {
-        name = "ftsell";
+        name = "lilly";
         ensureDBOwnership = true;
         ensureClauses.superuser = true;
       }
@@ -279,7 +278,7 @@ in
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.ftsell.home.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "24.05";
   system.stateVersion = "24.05";
   networking.hostId = "1a091689";
 }

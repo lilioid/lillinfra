@@ -51,25 +51,16 @@ Host k8s-worker1.srv.myroot.intern
 #
 
 Host raspi5.srv.home.intern
-  User ftsell
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 Host proxy.srv.home.intern
-  User ftsell
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 Host priv.srv.home.intern
-  User ftsell
-
-#Host nas.vpn.private
-#  User ftsell
-#  HostName 10.20.30.105
-#
-#Host home.vpn.private
-#  User ftsell
-#  HostName 10.20.30.103
-#
-#Host priv.srv.home.intern
-#  User ftsell
-#  HostName 192.168.20.104
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 
 
