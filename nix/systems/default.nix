@@ -41,28 +41,28 @@ in
   # exposed hosts at myroot
   "hosting.srv.ftsell.de" =
     mkSystem "x86_64-unknown-linux-gnu" "hosting.srv.ftsell.de"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
   "rt-hosting.srv.ftsell.de" =
     mkSystem "x86_64-unknown-linux-gnu" "rt-hosting.srv.ftsell.de"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
   "mail.srv.ftsell.de" = mkSystem "x86_64-unknown-linux-gnu" "mail.srv.ftsell.de" inputs.nixpkgs2411;
   "gtw.srv.ftsell.de" =
     mkSystem "x86_64-unknown-linux-gnu" "gtw.srv.ftsell.de"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
 
   # internal hosts at myroot
   "k8s-ctl.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "k8s-ctl.srv.myroot.intern"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
   "k8s-worker1.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "k8s-worker1.srv.myroot.intern"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
   "vpn.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "vpn.srv.myroot.intern"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
   "nas.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "nas.srv.myroot.intern"
-      inputs.nixpkgs2411-small;
+      inputs.nixpkgs2411;
 
   # servers at home
   "priv.srv.home.intern" =

@@ -108,9 +108,7 @@ in
       routes = [
         {
           # default gateway can always be reached directly
-          routeConfig = {
-            Destination = "37.153.156.1";
-          };
+          Destination = "37.153.156.1";
         }
       ];
     };
