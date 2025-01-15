@@ -1,1 +1,6 @@
-args: import ./custom_python.nix args // import ./wg_conf.nix args // import ./installer.nix args
+{ pkgs }:
+{
+  show-wg-conf = pkgs.callPackage ./show-wg-conf { };
+  #installer = pkgs.callPackage ./installer.nix {};
+  hetzner-ddns = pkgs.callPackage ./hetzner-ddns.nix { };
+}

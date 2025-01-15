@@ -1,4 +1,4 @@
-{ inputs }:
+{ self, inputs }:
 let
   mkSystem =
     systemType: name: nixpkgs:

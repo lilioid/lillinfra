@@ -24,6 +24,7 @@
       obsidian
       okular
       wezterm
+      gimp
     ];
 
     programs.firefox = {

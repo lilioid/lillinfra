@@ -1,14 +1,18 @@
-{ lib, config, ...}:
-let 
+{ lib, config, ... }:
+let
   cfg = config.custom.autoUpgrade;
-in {
+in
+{
   options = {
     custom.autoUpgrade = {
       enable = lib.options.mkEnableOption "auto upgrades from my forgejo flake";
       mode = lib.options.mkOption {
         default = "live";
         description = "Whether to perform live in-place upgrades or upgrade only via reboots";
-        type = lib.types.enum [ "live" "reboot" ];
+        type = lib.types.enum [
+          "live"
+          "reboot"
+        ];
       };
     };
   };

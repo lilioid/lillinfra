@@ -1,13 +1,7 @@
 {
-  inputs,
   pkgs,
-  system,
-}:
-let
-  python3 = pkgs.python3;
-in
-{
-  hetzner-ddns = python3.pkgs.buildPythonApplication rec {
+  python3,
+}: python3.pkgs.buildPythonApplication {
     name = "hetzner-ddns";
     version = "1.0.0";
     format = "pyproject";
@@ -24,5 +18,4 @@ in
       pydantic
       flit-core
     ];
-  };
-}
+  }

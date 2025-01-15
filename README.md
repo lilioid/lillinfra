@@ -1,16 +1,14 @@
-# finnfrastructure
+# lillinfra
 
 My personal infrastructure *configuration-as-code* repository.
-Its goal is to contain all necessary configuration for my different servers to allow easier setup.
+Its goal is to contain all necessary configuration for my different servers and workstations to allow easier and documented setups.
 
-### How to show a WireGuard config
+This repository contains the following things:
 
-Run the following command but substitue the `finnsLaptop` part for some other host:
-
-```shell
-set -l PKG (nix build --print-out-paths --no-link '.#packages.x86_64-linux.wg_vpn-config-finnsLaptop')
-$PKG/bin/show-wg-conf
-```
+- [./docs](./docs): Some documentation about various kinks. Also contains some notes e.g. certain annotations I use on some kubernetes objects which I can never remember.
+- [./nix](./nix): NixOS definitons for most of my systems. *#AnsibleNeinDanke*.
+- [./k8s](./k8s): Most applications I'm running defined as Kubernetes manifests.
+- [./containers](./containers): Custom container image definitions that are automatically built by CI.
 
 ### How to generate an Installer ISO
 

@@ -1,7 +1,8 @@
 { lib, config, ... }:
 let
   cfg = config.custom.mailRelay;
-in {
+in
+{
   options = {
     custom.mailRelay = {
       enable = lib.options.mkEnableOption "mail relay via noreply.lly.sh";
