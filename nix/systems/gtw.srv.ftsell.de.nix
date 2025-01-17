@@ -27,7 +27,6 @@
   };
 
   # networking config
-  custom.mailRelay.enable = true;
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = "1";
   };
@@ -79,6 +78,8 @@
     };
   };
 
+  custom.mailRelay.enable = true;
+  custom.autoUpgrade.enable = true;
   services.openssh.ports = [ 23 ];
 
   networking.nftables.enable = true;
