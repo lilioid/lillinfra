@@ -19,6 +19,7 @@ in
 
   config = lib.mkIf cfg.enable {
     system.autoUpgrade = {
+      enable = true;
       flake = "git+https://git.lly.sh/lilly/lillinfra.git";
       operation = if cfg.mode == "live" then "switch" else "boot";
       dates = "04:00";
