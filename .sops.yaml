@@ -1,5 +1,5 @@
 keys:
-  - &ftsell "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
+  - &lilly "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
   - &vpn-srv "age1hylsuhm7zweqwwf37u6evva2ssjz0us5m229u8crghtj6n3qup5smu52a6"
   - &mail-srv "age1ayrlyw9c9mwumujrvx7x3s30a42emn9k2tf9v2kw2vkcx70fvf5sj63fe6"
   - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
@@ -15,41 +15,41 @@ creation_rules:
   # per-host secrets
   - path_regex: "data/secrets/vpn.srv.myroot.intern.yml"
     key_groups:
-      - age: [ *ftsell, *vpn-srv ]
+      - age: [ *lilly, *vpn-srv ]
 
   - path_regex: "data/secrets/mail.srv.ftsell.de.yml"
     key_groups:
-      - age: [ *ftsell, *mail-srv ]
+      - age: [ *lilly, *mail-srv ]
 
   - path_regex: "data/secrets/k8s-worker1.srv.myroot.intern.yml"
     key_groups:
-      - age: [ *ftsell, *k8s-worker1-srv ]
+      - age: [ *lilly, *k8s-worker1-srv ]
 
   - path_regex: "data/secrets/hosting.srv.ftsell.de.yml"
     key_groups:
-      - age: [ *ftsell, *hosting-srv ]
+      - age: [ *lilly, *hosting-srv ]
 
   - path_regex: "data/secrets/nas.srv.myroot.intern.yml"
     key_groups:
-      - age: [ *ftsell, *nas-myroot ]
+      - age: [ *lilly, *nas-myroot ]
 
   - path_regex: "data/secrets/gtw.srv.ftsell.de.yml"
     key_groups:
-      - age: [ *ftsell, *gtw-myroot ]
+      - age: [ *lilly, *gtw-myroot ]
 
   - path_regex: "data/secrets/proxy.srv.home.intern.yml"
     key_groups:
-      - age: [ *ftsell, *home-proxy ]
+      - age: [ *lilly, *home-proxy ]
 
   # shared secrets
   - path_regex: "data/secrets/mail_relay.yml"
     key_groups:
-      - age: [ *ftsell, *vpn-srv, *gtw-myroot, *k8s-ctl-srv, *nas-myroot, *k8s-worker1-srv, *rt-hosting, *hosting-srv, *priv-home-srv, *proxy-home ]
+      - age: [ *lilly, *vpn-srv, *gtw-myroot, *k8s-ctl-srv, *nas-myroot, *k8s-worker1-srv, *rt-hosting, *hosting-srv, *priv-home-srv, *proxy-home ]
 
   # generic secrets
   - path_regex: "data/secrets/.+.yml"
     key_groups:
-      - age: [ *ftsell ]
+      - age: [ *lilly ]
   - path_regex: "dotfiles/.+\\.secret\\..+"
     key_groups:
-      - age: [ *ftsell ]
+      - age: [ *lilly ]
