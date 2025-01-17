@@ -45,7 +45,7 @@ rec {
     ] "NASuIV3T8lYoE2VTnuu+GPqq8Pzh/NHTfL06puPZDTE=" true;
     "lillysPhone" = mkRegistration 102 "PHN5Srlsv3x7+ehWF4SPz0eezcYlm7c0pIU5jXYuYG4=";
     "lillysLaptop" = mkRegistration 103 "LAPcOludjQrjfza0M+XA+fuwxpVfmqRKjBawAxWDyDY=";
-    "finnsWorkstation" = mkRegistration 104 "WOrk7yTwmWilfWrOhF2EpmMvK/fC8L3IfGaOnZQnRyA=";
+    "lillysWorkstation" = mkRegistration 104 "WOrk7yTwmWilfWrOhF2EpmMvK/fC8L3IfGaOnZQnRyA=";
   };
 
   knownServers = {

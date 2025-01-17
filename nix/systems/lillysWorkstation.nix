@@ -3,17 +3,12 @@
   config,
   lib,
   pkgs,
-  home-manager,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../modules/sane_extra_config.nix
-    ../modules/base_system.nix
-    ../modules/user_ftsell.nix
-    ../modules/dev_env.nix
-    ../modules/syncthing.nix
     ../modules/vpn_client.nix
   ];
 
@@ -139,7 +134,7 @@
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.ftsell.home.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "24.05";
   system.stateVersion = "24.05";
   networking.hostId = "0744a9ed";
 }

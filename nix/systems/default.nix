@@ -76,8 +76,8 @@ in
   lillysLaptop = mkSystem "x86_64-unknown-linux-gnu" "lillysLaptop" inputs.nixpkgs2411;
 
   # home systems
-  "finnsWorkstation.home.intern" =
-    mkSystem "x86_64-unknown-linux-gnu" "finnsWorkstation"
+  "lillysWorkstation" =
+    mkSystem "x86_64-unknown-linux-gnu" "lillysWorkstation"
       inputs.nixpkgs2411;
 
   # others
