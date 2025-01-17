@@ -15,7 +15,7 @@ images:
   - name: docker.io/redis
     newTag: "7-alpine"
   - name: docker.io/netboxcommunity/netbox
-    newName: git.lly.sh/ftsell/lillinfra-netbox
+    newTag: "v4.2.1"
 
 configMapGenerator:
   - name: netbox-env
