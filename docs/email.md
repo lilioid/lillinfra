@@ -1,8 +1,24 @@
-# EMail Setup Docs & Maintenance Guide
+# E-Mail Setup Docs & Maintenance Guide
 
-The deployed email system uses my own [mailcalf](https://github.com/ftsell/mailcalf) dockerized mailserver.
-It is deployed via [k8s/user-apps/mailserver](../k8s/user-apps/mailserver).
+The deployed email system uses my own [mailcalf](https://git.lly.sh/lilly/mailcalf) dockerized mailserver.
+It is deployed via [k8s/apps/mailserver](../k8s/apps/mailserver).
 
+## Server data
+
+- Mailserver name: `mail.lly.sh`
+- IMAP Data:
+   - Server: `mail.lly.sh`
+   - Port: `993`
+   - Connection Security: *SSL/TLS*
+   - Auth Method: *Normal Password*
+   - Credentials: Username and password from [auth.lly.sh](https://auth.lly.sh)
+- SMTP Data:
+   - Server: `mail.lly.sh`
+   - Port: `587`
+   - Connection Security: *STARTTLS*
+   - Auth Method: *Normal Password*
+   - Credentials: Username and password from [auth.lly.sh](https://auth.lly.sh)
+   
 ## How to add a mailbox
 
 ### Actions on my Infrastructure
