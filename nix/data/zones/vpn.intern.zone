@@ -3,7 +3,7 @@ $TTL 3600
 
 ; zone management
 vpn.intern.     IN  SOA   ns.vpn.intern. dev.ftsell.de. (
-    2 ;serial
+    3 ;serial
     7200 ;refresh
     3600 ;retry
     1209600 ;expire
@@ -15,11 +15,11 @@ vpn.intern.     IN  NS  ns
 ns              IN  A       10.20.30.1
 ns              IN  AAAA    fc10:20:30::1
 
-finnsLaptop     IN  A       10.20.30.101
-finnsLaptop     IN  AAAA    fc10:20:30::101
+lillysLaptop    IN  A       10.20.30.101
+lillysLaptop    IN  AAAA    fc10:20:30::101
 
-finnsPhone      IN  A       10.20.30.102
-finnsPhone      IN  AAAA    fc10:20:30::102
+lillysPhone     IN  A       10.20.30.102
+lillysPhone     IN  AAAA    fc10:20:30::102
 
 home-proxy      IN  A       10.20.30.103
 home-proxy      IN  AAAA    fc10:20:30::103
@@ -29,3 +29,6 @@ finnsWorkstation IN AAAA    fc10:20:30::104
 
 nas             IN  A       10.20.30.2
 nas             IN  AAAA    fc10:20:30::2
+
+nas-ole         IN A        10.20.30.105
+nas-ole         IN AAAA     fc10:20:30::105

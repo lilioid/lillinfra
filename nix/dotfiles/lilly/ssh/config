@@ -63,6 +63,15 @@ Host priv.srv.home.intern
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 
+####
+# Other Private Hosts
+#
+
+Host nas-ole.vpn.intern
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
+
+
 
 ####
 # Uni
