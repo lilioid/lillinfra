@@ -84,8 +84,8 @@
     in
     {
       nixosConfigurations = import ./nix/systems { inherit inputs self; };
-      packages = eachSystem (pkgs: import ./nix/packages { inherit pkgs; });
-      overlays.default = final: prev: import ./nix/packages { pkgs = prev; };
+      overlays.default = final: prev: import ./nix/packages { inherit self; pkgs = prev; };
+      packages = eachSystem (pkgs: import ./nix/packages { inherit pkgs self; });
 
       devShells = eachSystem (pkgs: {
         default = pkgs.mkShell {

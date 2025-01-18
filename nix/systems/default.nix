@@ -85,4 +85,5 @@ in
     mkSystem "x86_64-unknown-linux-gnu" "factorio.z9.ccchh.net"
       inputs.nixpkgs2405;
   "lan-server.intern" = mkSystem "x86_64-unknown-linux-gnu" "lan-server.intern" inputs.nixpkgs2405;
+  "installer" = mkSystem "x86_64-unknown-linux-gnu" "installer" inputs.nixpkgs2411;
 }
