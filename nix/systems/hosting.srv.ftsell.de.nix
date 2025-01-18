@@ -244,32 +244,47 @@ in
     "vm.swappiness" = "0";
   };
 
-  systemd.timers.download-nixos-installer = {
-    name = "download-nixos-installer.timer";
+  # regularly update my own installer image
+  systemd.timers.build-custom-installer = {
+    name = "build-custom-installer.timer";
     wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnActiveSec = "0";
-      OnCalendar = "24hr";
-    };
+    timerConfig.OnCalendar = "daily";
   };
-  systemd.services.download-nixos-installer = {
-    name = "download-nixos-installer.service";
-    path = [ pkgs.curl ];
-    script = "curl -sSL https://channels.nixos.org/nixos-24.05/latest-nixos-minimal-x86_64-linux.iso -o /var/lib/libvirt/images/nixos-installer-x86_64-linux.iso";
+  systemd.services.build-custom-installer = {
+    name = "build-custom-installer.service";
+    path = with pkgs; [ nix coreutils git ];
+    script = ''
+      RESULT=$(nix build --no-link --print-out-paths "git+https://git.lly.sh/lilly/lillinfra.git#installer")
+      ln -sf $RESULT/iso/*.iso /var/lib/libvirt/images/nixos-custom-lilly.iso
+    '';
   };
-  systemd.timers.download-debian-installer = {
-    name = "download-debian-installer.timer";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnActiveSec = "0";
-      OnCalendar = "24hr";
-    };
-  };
-  systemd.services.download-debian-installer = {
-    name = "download-debian-installer.service";
-    path = [ pkgs.curl ];
-    script = "curl -sSL https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.5.0-amd64-netinst.iso -o /var/lib/libvirt/images/debian-12-amd64-netinst.iso";
-  };
+  
+  #systemd.timers.download-nixos-installer = {
+  #  name = "download-nixos-installer.timer";
+  #  wantedBy = [ "timers.target" ];
+  #  timerConfig = {
+  #    OnActiveSec = "0";
+  #    OnCalendar = "24hr";
+  #  };
+  #};
+  #systemd.services.download-nixos-installer = {
+  #  name = "download-nixos-installer.service";
+  #  path = [ pkgs.curl ];
+  #  script = "curl -sSL https://channels.nixos.org/nixos-24.05/latest-nixos-minimal-x86_64-linux.iso -o /var/lib/libvirt/images/nixos-installer-x86_64-linux.iso";
+  #};
+  #systemd.timers.download-debian-installer = {
+  #  name = "download-debian-installer.timer";
+  #  wantedBy = [ "timers.target" ];
+  #  timerConfig = {
+  #    OnActiveSec = "0";
+  #    OnCalendar = "24hr";
+  #  };
+  #};
+  #systemd.services.download-debian-installer = {
+  #  name = "download-debian-installer.service";
+  #  path = [ pkgs.curl ];
+  #  script = "curl -sSL https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.5.0-amd64-netinst.iso -o /var/lib/libvirt/images/debian-12-amd64-netinst.iso";
+  #};
 
   virtualisation.libvirtd = {
     enable = true;
