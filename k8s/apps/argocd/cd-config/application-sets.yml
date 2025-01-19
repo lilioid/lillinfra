@@ -21,6 +21,10 @@ spec:
         repoURL: "git@git.lly.sh:lilly/lillinfra.git"
         targetRevision: main
         path: "{{ .path.path }}"
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
       destination:
         name: "in-cluster"
 
