@@ -1,4 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":disableDependencyDashboard", "group:allNonMajor"]
+  "extends": ["config:recommended", ":disableDependencyDashboard", "group:allNonMajor"],
+  "packageRules": [
+    {
+      "matchPackageNames": [ "docker.io/woodpeckerci/*" ],
+      "groupName": "woodpecker"
+    }
+  ]
 }
