@@ -14,9 +14,9 @@ resources:
 
 images:
   - name: docker.io/woodpeckerci/woodpecker-server
-    newTag: "v2.8.3"
+    newTag: "v3.0.0"
   - name: docker.io/woodpeckerci/woodpecker-agent
-    newTag: "v2.8.3"
+    newTag: "v3.0.0"
 
 replicas:
   - name: woodpecker-agent
