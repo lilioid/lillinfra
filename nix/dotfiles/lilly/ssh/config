@@ -7,6 +7,8 @@ Host rsync.net zh4525.rsync.net
 ####
 # Private Hosts @myroot
 #
+Host *.srv.ftsell.de
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 Host hosting.srv.ftsell.de
   User lilly
