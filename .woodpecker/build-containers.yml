@@ -28,6 +28,8 @@ steps:
       - event: cron
         cron: periodic-rebuild
     image: quay.io/containers/skopeo
-    secrets: [ "FORGEJO_PACKAGES_ACCESS" ]
+    environment:
+      FORGEJO_PACKAGES_ACCESS:
+        from_secret: FORGEJO_PACKAGES_ACCESS
     commands:
       - skopeo copy --dest-username ftsell --dest-password $FORGEJO_PACKAGES_ACCESS docker-archive:${CONTAINER}.tar docker://git.lly.sh/ftsell/lillinfra-${CONTAINER}
