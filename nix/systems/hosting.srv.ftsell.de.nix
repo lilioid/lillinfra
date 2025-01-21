@@ -252,13 +252,17 @@ in
   };
   systemd.services.build-custom-installer = {
     name = "build-custom-installer.service";
-    path = with pkgs; [ nix coreutils git ];
+    path = with pkgs; [
+      nix
+      coreutils
+      git
+    ];
     script = ''
       RESULT=$(nix build --no-link --print-out-paths "git+https://git.lly.sh/lilly/lillinfra.git#installer")
       ln -sf $RESULT/iso/*.iso /var/lib/libvirt/images/nixos-custom-lilly.iso
     '';
   };
-  
+
   #systemd.timers.download-nixos-installer = {
   #  name = "download-nixos-installer.timer";
   #  wantedBy = [ "timers.target" ];

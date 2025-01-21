@@ -8,8 +8,6 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../modules/base_system.nix
-    ../modules/user_ftsell.nix
   ];
 
   # boot config
@@ -88,7 +86,7 @@
     onShutdown = "shutdown";
     parallelShutdown = 10;
   };
-  users.users.ftsell.extraGroups = [ "libvirtd" ];
+  users.users.lilly.extraGroups = [ "libvirtd" ];
 
   environment.systemPackages = with pkgs; [
     bridge-utils
@@ -97,7 +95,7 @@
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.ftsell.home.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "24.05";
   system.stateVersion = "23.11";
   networking.hostId = "eaad9976";
 }

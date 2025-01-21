@@ -46,9 +46,7 @@ in
     mkSystem "x86_64-unknown-linux-gnu" "rt-hosting.srv.ftsell.de"
       inputs.nixpkgs2411;
   "mail.srv.ftsell.de" = mkSystem "x86_64-unknown-linux-gnu" "mail.srv.ftsell.de" inputs.nixpkgs2411;
-  "gtw.srv.ftsell.de" =
-    mkSystem "x86_64-unknown-linux-gnu" "gtw.srv.ftsell.de"
-      inputs.nixpkgs2411;
+  "gtw.srv.ftsell.de" = mkSystem "x86_64-unknown-linux-gnu" "gtw.srv.ftsell.de" inputs.nixpkgs2411;
 
   # internal hosts at myroot
   "k8s-ctl.srv.myroot.intern" =
@@ -76,14 +74,9 @@ in
   lillysLaptop = mkSystem "x86_64-unknown-linux-gnu" "lillysLaptop" inputs.nixpkgs2411;
 
   # home systems
-  "lillysWorkstation" =
-    mkSystem "x86_64-unknown-linux-gnu" "lillysWorkstation"
-      inputs.nixpkgs2411;
+  "lillysWorkstation" = mkSystem "x86_64-unknown-linux-gnu" "lillysWorkstation" inputs.nixpkgs2411;
 
   # others
-  "factorio.z9.ccchh.net" =
-    mkSystem "x86_64-unknown-linux-gnu" "factorio.z9.ccchh.net"
-      inputs.nixpkgs2405;
-  "lan-server.intern" = mkSystem "x86_64-unknown-linux-gnu" "lan-server.intern" inputs.nixpkgs2405;
+  "lan-server.intern" = mkSystem "x86_64-unknown-linux-gnu" "lan-server.intern" inputs.nixpkgs2411;
   "installer" = mkSystem "x86_64-unknown-linux-gnu" "installer" inputs.nixpkgs2411;
 }

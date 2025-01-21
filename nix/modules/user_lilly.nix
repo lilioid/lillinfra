@@ -39,7 +39,7 @@ in
       home.preferXdgDirectories = true;
       programs.wezterm.enable = hasDesktop;
       programs.wezterm.extraConfig = lib.mkIf hasDesktop (
-        builtins.readFile ../dotfiles/lilly/wezterm/wezterm.lua
+        builtins.readFile ../dotfiles/lilly/wezterm.lua
       );
       xdg.mimeApps = lib.mkIf hasDesktop (import ../dotfiles/lilly/mimeapps.nix);
       home.file = {
