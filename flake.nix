@@ -109,6 +109,7 @@
             python311Packages.ipython
             pre-commit
             show-wg-conf
+            show-nixos-diff
           ];
         };
       });

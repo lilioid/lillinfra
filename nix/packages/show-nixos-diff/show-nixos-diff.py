@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+import argparse
+import subprocess
+import tempfile
+import sys
+
+
+def log(msg: str):
+    print(msg, file=sys.stderr)
+
+
+def realize_config(workdir: str, revision: str, flake_uri: str, config: str) -> str:
+    log(f"Bulding configuration of {config} at {revision}")
+    subprocess.check_call([
+        "nixos-rebuild",
+        "build",
+        "--quiet",
+        "--flake",
+        f"{flake_uri}?ref={revision}#{config}",
+    ], cwd=workdir, stdout=sys.stderr)
+    return f"{workdir}/result"
+
+
+def compute_diff(closure_a: str, closure_b: str) -> str:
+    return subprocess.check_output([
+        "nix",
+        "store",
+        "--quiet",
+        "diff-closures",
+        closure_a,
+        closure_b,
+    ], encoding="UTF-8")
+
+
+def main():
+    argp = argparse.ArgumentParser(description="Show diffs of Nixos configurations between current git HEAD and a previous version")
+    argp.add_argument("rev_a", help="Revision A of the diff")
+    argp.add_argument("rev_b", help="Revision B of the diff")
+    argp.add_argument("configuration", help="Which nixosConfiguration output to compare versions of")
+    argp.add_argument("--flake", required=True, help="Path to the flake which contains system definitions")
+    args = argp.parse_args()
+
+    with tempfile.TemporaryDirectory(prefix="show-nixos-diff-") as temp_a:
+        with tempfile.TemporaryDirectory(prefix="show-nixos-diff-") as temp_b:
+            closure_a = realize_config(temp_a, args.rev_a, args.flake, args.configuration)
+            closure_b = realize_config(temp_b, args.rev_b, args.flake, args.configuration)
+            diff = compute_diff(closure_a, closure_b)
+
+    print(diff)
+
+
+if __name__ == "__main__":
+    main()
+
