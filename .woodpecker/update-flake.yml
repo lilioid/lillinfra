@@ -1,0 +1,21 @@
+when:
+  - event: cron
+    cron: update-flake-inputs
+
+steps:
+  - name: update-flake-inputs
+    image: docker.io/nixos/nix
+    commands:
+      - nix --extra-experimental-features "nix-command flakes" flake update
+
+  - name: commit-changes
+    image: docker.io/appleboy/drone-git-push
+    settings:
+      remote_name: origin
+      branch: update-flake-inputs
+      force: true
+      commit: true
+      commit_message: "update flake inputs"
+      author_name: "Woodpecker CI"
+      author_email: "woodpecker-ci@noreply.lly.sh"
+      
