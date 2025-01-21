@@ -10,5 +10,5 @@ steps:
     environment:
       XDG_CACHE_HOME: /woodpecker/src/cache
     commands:
-      - nix flake check
+      - nix --extra-experimental-features "nix-command flakes" flake check
 
