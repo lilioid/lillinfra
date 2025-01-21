@@ -1,0 +1,14 @@
+steps:
+  - name: check flake
+    when:
+      - event: manual
+      - event: push
+        path: [ "flake.nix", "flake.lock", "nix/**" ]
+    image: docker.io/nixos/nix
+    volumes:
+      - woodpecker-cache:/woodpecker/src/cache
+    environment:
+      XDG_CACHE_HOME: /woodpecker/src/cache
+    commands:
+      - nix flake check
+
