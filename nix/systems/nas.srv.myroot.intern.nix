@@ -65,6 +65,7 @@
   };
 
   # postgres config
+  systemd.services."postgresql".serviceConfig."Restart" = "on-failure";
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
