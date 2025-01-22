@@ -9,16 +9,15 @@ def log(msg: str):
     print(msg, file=sys.stderr)
 
 
-def realize_config(workdir: str, revision: str, flake_uri: str, config: str) -> str:
+def realize_config(revision: str, flake_uri: str, config: str) -> str:
     log(f"Bulding configuration of {config} at {revision}")
-    subprocess.check_call([
-        "nixos-rebuild",
+    return subprocess.check_output([
+        "nix",
         "build",
-        "--quiet",
-        "--flake",
-        f"{flake_uri}?ref={revision}#{config}",
-    ], cwd=workdir, stdout=sys.stderr)
-    return f"{workdir}/result"
+        "--no-link",
+        "--print-out-paths",
+        f"{flake_uri}?ref={revision}#nixosConfigurations.\"{config}\".config.system.build.toplevel",
+    ], encoding="UTF-8").strip()
 
 
 def compute_diff(closure_a: str, closure_b: str) -> str:
@@ -40,11 +39,9 @@ def main():
     argp.add_argument("--flake", required=True, help="Path to the flake which contains system definitions")
     args = argp.parse_args()
 
-    with tempfile.TemporaryDirectory(prefix="show-nixos-diff-") as temp_a:
-        with tempfile.TemporaryDirectory(prefix="show-nixos-diff-") as temp_b:
-            closure_a = realize_config(temp_a, args.rev_a, args.flake, args.configuration)
-            closure_b = realize_config(temp_b, args.rev_b, args.flake, args.configuration)
-            diff = compute_diff(closure_a, closure_b)
+    closure_a = realize_config(args.rev_a, args.flake, args.configuration)
+    closure_b = realize_config(args.rev_b, args.flake, args.configuration)
+    diff = compute_diff(closure_a, closure_b)
 
     print(diff)
 
