@@ -1,0 +1,18 @@
+when:
+  # trigger only on PRs created by ./update-flake.yml
+  - event: pull_request
+    branch: main
+    evaluate: "CI_COMMIT_SOURCE_BRANCH == 'update-flake-inputs'"
+
+matrix:
+  SYSTEM_CONFIG:
+    - lillysWorkstation
+    - lillysLaptop
+    - hosting.srv.ftsell.de
+    - rt-hosting.srv.ftsell.de
+
+steps:
+  - name: render-diff
+    image: docker.io/nixos/nix
+    commands:
+      - nix --extra-experimental-features "nix-command flakes" run ".#show-nixos-diff" -- --flake "$(pwd)" "${CI_COMMIT_BRANCH}" "${CI_COMMIT_SOURCE_BRANCH}" "${SYSTEM_CONFIG}"

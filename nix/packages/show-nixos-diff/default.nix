@@ -8,7 +8,7 @@ python3.pkgs.buildPythonApplication {
   version = "1.0.0";
   src = ./.;
   pyproject = false;
-  propagatedBuildInputs = with pkgs; [ nix ];
+  propagatedBuildInputs = with pkgs; [ nix nixos-rebuild ];
 
   installPhase = ''
     runHook preInstall
