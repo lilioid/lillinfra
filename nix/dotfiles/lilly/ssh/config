@@ -140,9 +140,9 @@ Host vpn.fux-eg.net
   HostName vpn.fux-eg.net
   IdentityFile ~/.ssh/id_lilly@fux.pub
 
-Host dhcp01.fux-eg.net 172.16.2.20
+Host dhcp01.fux-eg.net 172.16.2.7
   User noc
-  HostName 172.16.2.20
+  HostName 172.16.2.7
   IdentityFile ~/.ssh/id_lilly@fux.pub
 
 
