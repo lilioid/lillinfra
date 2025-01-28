@@ -14,7 +14,6 @@
   ];
 
   # boot config
-  #boot.initrd.systemd.enable = true;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "nvme"
@@ -69,6 +68,18 @@
     enable = true;
     pkiBundle = "/etc/secureboot";
   };
+
+  # custom battery indicator on boot
+  boot.initrd.kernelModules = [ "thinkpad_acpi" ];
+  boot.initrd.preDeviceCommands = ''
+    # Turn on keyboard backlight before asking for drive encryption password
+    #echo 1 > /sys/class/leds/tpacpi::kbd_backlight/brightness
+  
+    # Show battery levels
+    echo
+    echo "Battery level: External $(cat /sys/class/power_supply/BAT1/capacity)% Internal $(cat /sys/class/power_supply/BAT0/capacity)%"
+    echo
+  '';
 
   # settings defined by my own custom modules
   custom = {
