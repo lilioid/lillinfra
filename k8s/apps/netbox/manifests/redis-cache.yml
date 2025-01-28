@@ -22,7 +22,7 @@ items:
       name: redis-cache
       labels: *labels
     spec:
-      storageClassName: local-path
+      storageClassName: nfs-fast
       accessModes: [ ReadWriteOnce ]
       resources:
         requests:

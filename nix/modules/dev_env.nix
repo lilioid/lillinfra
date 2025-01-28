@@ -87,6 +87,7 @@
       erlang
       terraform
       ietf-cli
+      sequoia-sq
     ];
 
     programs.fish.shellInit = ''

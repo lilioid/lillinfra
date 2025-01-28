@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mailserver-mails
 spec:
-  storageClassName: local-path
+  storageClassName: nfs-fast
   accessModes:
     - ReadWriteOnce
   resources:
@@ -19,7 +19,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mailserver-data
 spec:
-  storageClassName: local-path
+  storageClassName: nfs-fast
   accessModes:
     - ReadWriteOnce
   resources:

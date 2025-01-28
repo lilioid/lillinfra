@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: nextcloud
 spec:
-  storageClassName: local-path
+  storageClassName: nfs-fast
   accessModes:
     - ReadWriteOnce
   resources:

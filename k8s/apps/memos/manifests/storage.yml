@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: memos-data
 spec:
-  storageClassName: local-path
+  storageClassName: nfs-fast
   accessModes: [ReadWriteOnce]
   resources:
     requests:

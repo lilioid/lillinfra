@@ -15,7 +15,7 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs = {
     forceImportRoot = false;
-    devNodes = "/dev/vdb1";
+    extraPools = [ "hdd" "ssd" ];
   };
   networking.hostId = "d1c39a07";
   fileSystems = {
@@ -30,16 +30,6 @@
     "/" = {
       device = "/dev/disk/by-uuid/9ce95a64-55d6-442d-a41f-8bbbb3332269";
       fsType = "ext4";
-    };
-    "/srv/data/k8s" = {
-      device = "server-myroot-hdd/k8s";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/var/lib/postgresql" = {
-      device = "server-myroot-hdd/postgres";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
     };
   };
 
@@ -98,7 +88,8 @@
     lockdPort = 4001;
     mountdPort = 4002;
     exports = ''
-      /srv/data/k8s 10.0.10.0/24(rw,mp,no_root_squash,crossmnt)
+      /srv/ssd/k8s 10.0.10.0/24(rw,mp,no_root_squash,crossmnt)
+      /srv/hdd/k8s 10.0.10.0/24(rw,mp,no_root_squash,crossmnt)
     '';
   };
 
@@ -128,7 +119,8 @@
     sourceDirectories = [
       "/root"
       "/home/ftsell"
-      "/srv/data/k8s/"
+      "/srv/ssd"
+      "/srv/hdd"
     ];
     backupPostgres = true;
   };

@@ -27,14 +27,6 @@ in
       device = "/dev/disk/by-uuid/4e0b7ea5-8c74-478f-a4e3-ddc5691e4065";
       fsType = "ext4";
     };
-    "/srv/data/k8s" = {
-      device = "10.0.10.14:/srv/data/k8s";
-      fsType = "nfs";
-      options = [
-        "defaults"
-        "_netdev"
-      ];
-    };
   };
 
   # networking config

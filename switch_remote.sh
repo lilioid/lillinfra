@@ -1,12 +1,9 @@
 #/usr/bin/env bash
 set -euo pipefail
 
-exec nixos-rebuild switch \
+exec nixos-rebuild $1 \
   --use-substitutes \
-  --log-format multiline \
   --use-remote-sudo \
-  --fast \
-  --build-host "$1" \
-  --target-host "$1" \
-  --flake ".#$1"
+  --target-host "$2" \
+  --flake ".#$2"
 
