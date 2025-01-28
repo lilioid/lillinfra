@@ -86,7 +86,7 @@ items:
       name: pixmap
       labels: *labels
     spec:
-      storageClassName: local-path
+      storageClassName: nfs-fast
       accessModes: [ ReadWriteOnce ]
       resources:
         requests:

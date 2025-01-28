@@ -28,7 +28,7 @@ items:
         - metadata:
             name: agent-config
           spec:
-            storageClassName: local-path
+            storageClassName: nfs-fast
             accessModes: [ "ReadWriteMany" ]
             resources:
               requests:

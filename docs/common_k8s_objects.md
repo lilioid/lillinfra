@@ -9,7 +9,7 @@ metadata:
   name: my-name
 spec:
   accessModes: [ ReadWriteOnce ]
-  storageClassName: local-path
+  storageClassName: nfs-fast # nfs-slow is also available
   resources:
     requests:
       storage: 1G

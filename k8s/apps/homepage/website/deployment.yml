@@ -12,9 +12,18 @@ spec:
     metadata:
       labels: *labels
     spec:
+      securityContext:
+        fsGroup: 10000
+      volumes:
+        - name: state
+          persistentVolumeClaim:
+            claimName: homepage-state
       containers:
         - name: homepage
           image: git.lly.sh/lilly/homepage
+          volumeMounts:
+            - name: state
+              mountPath: /srv/homepage
           ports:
             - name: http
               containerPort: 8000
@@ -27,6 +36,5 @@ spec:
           resources:
             requests:
               cpu: "0.1"
-              memory: "200M"
             limits:
               memory: "200M"

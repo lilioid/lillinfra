@@ -10,6 +10,7 @@ resources:
 
   - website/deployment.yml
   - website/service.yml
+  - website/storage.yml
 
   - riddles/deployment.yml
   - riddles/service.yml

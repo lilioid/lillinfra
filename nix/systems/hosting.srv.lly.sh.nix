@@ -93,22 +93,22 @@ in
   boot.kernelModules = [ "kvm-intel" ];
   boot.loader.grub = {
     enable = true;
-    device = "/dev/disk/by-id/ata-WDC_WD120EFBX-68B0EN0_D7HE49WN";
+    device = "/dev/disk/by-id/ata-SAMSUNG_MZ7LN512HAJQ-00000_S3TVNX0R203136";
   };
-  boot.zfs.extraPools = [ "hdd" ];
+  boot.zfs.extraPools = [ "ssd" "hdd" ];
   fileSystems = {
     "/" = {
-      device = "hdd/root";
+      device = "ssd/root";
       fsType = "zfs";
       options = [ "zfsutil" ];
     };
     "/nix" = {
-      device = "hdd/nix";
+      device = "ssd/nix";
       fsType = "zfs";
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/C85B-5816";
+      device = "/dev/disk/by-uuid/8E7E-669B";
       fsType = "vfat";
       options = [
         "fmask=0077"
@@ -118,7 +118,7 @@ in
   };
   swapDevices = [
     {
-      device = "/dev/disk/by-uuid/58ccf5a8-6b0f-45b3-bfe0-fe9db08b3338";
+      device = "/dev/disk/by-uuid/84126140-efd1-41cf-8fc9-010d9e1fbbda";
     }
   ];
 
@@ -147,7 +147,7 @@ in
               Name = "brMyRoot";
               Description = "The bridge device connected to the physical network";
               Kind = "bridge";
-              MACAddress = "0c:c4:7a:8e:25:ae";
+              MACAddress = "0c:c4:7a:7d:95:74";
             };
             bridgeConfig = {
               MulticastSnooping = false;
@@ -185,7 +185,7 @@ in
           ethMyRoot = {
             matchConfig = {
               Type = "ether";
-              MACAddress = "0c:c4:7a:8e:25:ae";
+              MACAddress = "0c:c4:7a:7d:95:74";
             };
             networkConfig = {
               Bridge = config.systemd.network.netdevs.brMyRoot.netdevConfig.Name;
@@ -302,7 +302,7 @@ in
           text = ''
             # Docs: https://www.libvirt.org/hooks.html#etc-libvirt-hooks-network
             #
-            # Assigns configugres the brVMs network device to allow all tenant VLANs to be forwarded to the routing vm
+            # Configures the brVMs network device to allow all tenant VLANs to be forwarded to the routing vm
             # DOMAIN=$1
             OPERATION=$2
             # SUB_OPERATION=$3

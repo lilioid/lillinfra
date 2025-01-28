@@ -2,7 +2,7 @@ keys:
   - &lilly "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
   - &vpn-srv "age1hylsuhm7zweqwwf37u6evva2ssjz0us5m229u8crghtj6n3qup5smu52a6"
   - &mail-srv "age1ayrlyw9c9mwumujrvx7x3s30a42emn9k2tf9v2kw2vkcx70fvf5sj63fe6"
-  - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
+  - &hosting.srv.lly.sh "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
   - &k8s-worker1-srv "age1g2uxex88r5fya0lgjqthp0tekalz6hq3fc8m8hhnwr36q5ylafaqcnt2hq"
   - &k8s-ctl-srv "age1zsn2hgy6zzczsqgjf0eqlda7gneegsjpym0nu0p078ff5luz2gcsct9cuv"
   - &nas-myroot "age13c2vll0rel2pj62sdfgrvlr0mvauqhzclqh8hyqgdue8ws2t45xsuslxg6"
@@ -25,9 +25,9 @@ creation_rules:
     key_groups:
       - age: [ *lilly, *k8s-worker1-srv ]
 
-  - path_regex: "data/secrets/hosting.srv.ftsell.de.yml"
+  - path_regex: "data/secrets/hosting.srv.lly.sh.yml"
     key_groups:
-      - age: [ *lilly, *hosting-srv ]
+      - age: [ *lilly, *hosting.srv.lly.sh ]
 
   - path_regex: "data/secrets/nas.srv.myroot.intern.yml"
     key_groups:
