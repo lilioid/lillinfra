@@ -74,6 +74,19 @@
   boot.initrd.preDeviceCommands = ''
     # Turn on keyboard backlight before asking for drive encryption password
     #echo 1 > /sys/class/leds/tpacpi::kbd_backlight/brightness
+
+    # show system header
+    echo
+    echo " _        _   _   _           _           _                        _                   "
+    echo "| |      (_) | | | |         ( )         | |                      | |                  "
+    echo "| |       _  | | | |  _   _  |/   ___    | |        __ _   _ __   | |_    ___    _ __  "
+    echo "| |      | | | | | | | | | |     / __|   | |       / _\` | | '_ \  | __|  / _ \\  | '_ \\ "
+    echo "| |____  | | | | | | | |_| |     \\__ \\   | |____  | (_| | | |_) | | |_  | (_) | | |_) |"
+    echo "|______| |_| |_| |_|  \\__, |     |___/   |______|  \\__,_| | .__/   \\__|  \\___/  | .__/ "
+    echo "                       __/ |                              | |                   | |    "
+    echo "                      |___/                               |_|                   |_|    "
+    echo
+    echo "                                 --> found@lly.sh <--                                  "
   
     # Show battery levels
     echo
