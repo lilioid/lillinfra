@@ -1,5 +1,6 @@
 matrix:
-  CONTAINER: [ "pre-commit" ]
+  CONTAINER:
+    - pre-commit
 
 steps:
   - name: build ${CONTAINER} container image
@@ -15,8 +16,8 @@ steps:
     environment:
       XDG_CACHE_HOME: /woodpecker/src/cache
     commands:
-      - podman build -t git.lly.sh/ftsell/lillinfra-${CONTAINER} -f containers/${CONTAINER}.Containerfile containers
-      - podman save -o ${CONTAINER}.tar git.lly.sh/ftsell/lillinfra-${CONTAINER}
+      - podman build -t git.lly.sh/lilly/lillinfra-${CONTAINER} -f containers/${CONTAINER}.Containerfile containers
+      - podman save -o ${CONTAINER}.tar git.lly.sh/lilly/lillinfra-${CONTAINER}
 
   - name: publish ${CONTAINER} container image
     when:
@@ -32,4 +33,4 @@ steps:
       FORGEJO_PACKAGES_ACCESS:
         from_secret: FORGEJO_PACKAGES_ACCESS
     commands:
-      - skopeo copy --dest-username ftsell --dest-password $FORGEJO_PACKAGES_ACCESS docker-archive:${CONTAINER}.tar docker://git.lly.sh/ftsell/lillinfra-${CONTAINER}
+      - skopeo copy --dest-username lilly --dest-password $FORGEJO_PACKAGES_ACCESS docker-archive:${CONTAINER}.tar docker://git.lly.sh/lilly/lillinfra-${CONTAINER}
