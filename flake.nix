@@ -59,6 +59,14 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # harmonia - private binary nix cache implementation
+    # https://github.com/nix-community/harmonia.git
+    harmonia = {
+      url = "github:nix-community/harmonia?ref=harmonia-v2.0.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
   };
 
   outputs =
