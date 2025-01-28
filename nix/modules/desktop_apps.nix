@@ -7,6 +7,10 @@
 }:
 {
   config = lib.mkIf config.custom.gnomeDesktop.enable {
+    environment.variables = {
+      "XCURSOR_THEME" = "Adwaita";
+    };
+    
     environment.systemPackages = with pkgs; [
       chromium
       element-desktop
