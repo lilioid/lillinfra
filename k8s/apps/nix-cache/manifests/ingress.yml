@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: harmonia
+  labels:
+    app.kubernetes.io/name: harmonia
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  tls:
+    - secretName: tls-nix-cache.lly.sh
+      hosts:
+        - nix-cache.lly.sh
+  rules:
+    - host: nix-cache.lly.sh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: harmonia
+                port:
+                  name: http

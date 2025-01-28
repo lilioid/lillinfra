@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nix-binary-cache
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/part-of: nix-binary-cache
+
+resources:
+  - manifests/namespace.yml
+  - manifests/storage.yml
+  - manifests/ingress.yml
+  - manifests/harmonia.yml
+  - manifests/store-ssh.yml
+
+configMapGenerator:
+  - name: harmonia-config
+    files:
+      - config.toml=config/harmonia-config.toml
+  - name: sshd-config
+    files:
+      - sshd_config=config/sshd_config
+
+secretGenerator:
+  - name: cache-signing-keys
+    files:
+      - cache-key.secret.txt=config/cache-key.secret.txt
+  - name: sshd-keys
+    files:
+      - ssh_host_ed25519_key=config/ssh_host_ed25519_key.secret

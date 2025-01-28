@@ -1,0 +1,33 @@
+AuthorizedPrincipalsFile none
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+GatewayPorts no
+KbdInteractiveAuthentication no
+KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+LogLevel INFO
+Macs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+PasswordAuthentication no
+PermitRootLogin no
+PrintMotd no
+StrictModes yes
+UseDns no
+UsePAM no
+X11Forwarding no
+Banner "You have connected to the private binary nix cache at nix-cache.lly.sh. It is intended to be used with nix copy and not interactively."
+
+AddressFamily any
+Port 22
+UsePrivilegeSeparation no
+
+
+
+
+XAuthLocation /nix/store/qycgg8y6yhq20zxx0mxxidr6hp3x0dzb-xauth-1.1.3/bin/xauth
+
+Subsystem sftp /nix/store/6yg632zzin51iqizcbkd5wi3y7flynhl-openssh-9.9p1/libexec/sftp-server 
+
+AuthorizedKeysFile %h/.ssh/authorized_keys /etc/ssh/authorized_keys.d/%u
+
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+
