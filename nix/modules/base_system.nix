@@ -9,6 +9,8 @@
   # settings for nix and nixos
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.nvidia.acceptLicense = true;
+  nix.channel.enable = false;
+  nix.nixPath = [ "nixpkgs=${lib.cleanSource pkgs.path}" ];
   nix.settings = {
     tarball-ttl = 60;
     trusted-users = [
@@ -70,16 +72,19 @@
   sops.defaultSopsFile = ../data/secrets + "/${config.networking.fqdnOrHostName}.yml";
 
   # additional apps
+  programs.mtr.enable = true;
+  programs.git.enable = true;
+  programs.htop.enable = true;
   environment.systemPackages = with pkgs; [
-    git
     helix
     tig
-    htop
     age
   ];
+
   environment.variables = {
     EDITOR = "hx";
     VISUAL = "hx";
   };
+
   environment.localBinInPath = true;
 }
