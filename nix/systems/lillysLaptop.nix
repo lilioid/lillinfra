@@ -90,7 +90,8 @@
   
     # Show battery levels
     echo
-    echo "Battery level: External $(cat /sys/class/power_supply/BAT1/capacity)% Internal $(cat /sys/class/power_supply/BAT0/capacity)%"
+    echo "Battery level: External $(cat /sys/class/power_supply/BAT1/capacity)%"
+    echo "               Internal $(cat /sys/class/power_supply/BAT0/capacity)%"
     echo
   '';
 
