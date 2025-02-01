@@ -37,7 +37,7 @@ in
     networks.enp1s0 = {
       matchConfig = {
         Type = "ether";
-        MACAddress = "52:54:00:58:93:1a";
+        MACAddress = "BC:24:11:A2:4E:25";
       };
       networkConfig = {
         IPv6AcceptRA = false;

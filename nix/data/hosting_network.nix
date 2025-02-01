@@ -63,10 +63,10 @@ rec {
 
   guests = {
     # exposed guests
-    rt-hosting = mkExposed "52:54:00:af:bc:45" "37.153.156.168";
+    rt-hosting = mkExposed "BC:24:11:47:54:53" "37.153.156.168";
     # routed guests
     main-srv = mkRouted "52:54:00:ba:63:25" "37.153.156.169";
-    mail-srv = mkRouted "52:54:00:66:e2:38" "37.153.156.170";
+    mail-srv = mkRouted "BC:24:11:6D:82:1E" "37.153.156.170";
     bene-server = mkRouted "52:54:00:13:f8:f9" "37.153.156.172";
     vieta-server = mkRouted "52:54:00:6d:0e:83" "37.153.156.173";
     polygon-server = mkRouted "52:54:00:f9:64:31" "37.153.156.174";

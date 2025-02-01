@@ -5,6 +5,17 @@
   pkgs,
   ...
 }:
+let
+  renameLink = macAddr: newName: {
+    matchConfig = {
+      MACAddress = macAddr;
+      Type = "ether";
+    };
+    linkConfig = {
+      Name = newName;
+    };
+  };
+in
 {
   imports = [
     ../modules/hosting_guest.nix
@@ -34,13 +45,15 @@
   networking.useDHCP = false;
   systemd.network = {
     enable = true;
+  
+    links = {
+      "10-ethIntern" = renameLink "BC:24:11:94:E3:C3" "ethExtern";
+      "10-ethExtern" = renameLink "BC:24:11:DE:56:03" "ethIntern";
+    };
 
     # external interface
-    networks.enp1s0 = {
-      matchConfig = {
-        Type = "ether";
-        MACAddress = "52:54:00:43:ff:c6";
-      };
+    networks."10-ethExtern" = {
+      matchConfig.Name = "ethExtern";
       address = [
         "37.153.156.169/32"
         "2a10:9902:111:10:42:42:42:42/64"
@@ -65,11 +78,8 @@
     };
 
     # internal interface
-    networks.enp7s0 = {
-      matchConfig = {
-        Type = "ether";
-        MACAdreess = "52:54:00:8c:88:66";
-      };
+    networks."10-ethIntern" = {
+      matchConfig.Name = "ethIntern";
       address = [ "10.0.10.2/24" ];
       networkConfig = {
         DHCP = "no";
@@ -87,7 +97,7 @@
     enable = true;
     externalIP = "37.153.156.169";
     internalIPs = [ "10.0.10.0/24" ];
-    externalInterface = "enp1s0";
+    externalInterface = "ethExtern";
     forwardPorts = [
       {
         # VPN

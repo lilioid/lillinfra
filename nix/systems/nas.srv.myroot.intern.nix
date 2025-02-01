@@ -40,19 +40,7 @@
   # networking config
   custom.mailRelay.enable = true;
   networking.useDHCP = false;
-  systemd.network = {
-    enable = true;
-
-    # default network interface
-    networks.enp1s0 = {
-      matchConfig = {
-        Type = "ether";
-        MACAddress = "52:54:00:2e:74:29";
-      };
-      networkConfig.IPv6AcceptRA = false;
-      DHCP = "yes";
-    };
-  };
+  systemd.network.networks."99-default-ether".networkConfig.IPv6AcceptRA = false;
 
   # postgres config
   systemd.services."postgresql".serviceConfig."Restart" = "on-failure";
@@ -60,12 +48,12 @@
     enable = true;
     enableTCPIP = true;
     ensureDatabases = [
-      "ftsell"
+      "lilly"
       "root"
     ];
     ensureUsers = [
       {
-        name = "ftsell";
+        name = "lilly";
         ensureDBOwnership = true;
         ensureClauses.superuser = true;
       }
@@ -118,7 +106,7 @@
     enable = true;
     sourceDirectories = [
       "/root"
-      "/home/ftsell"
+      "/home/lilly"
       "/srv/ssd"
       "/srv/hdd"
     ];

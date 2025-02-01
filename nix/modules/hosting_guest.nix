@@ -31,6 +31,20 @@
   # general os config
   services.qemuGuest.enable = true;
 
+  # configure systemd-networkd to listen for DHCP and router advertisements on all ethernet interfaces by default
+  networking.useDHCP = false;
+  systemd.network = {
+    enable = true;
+    networks."99-default-ether" = {
+      matchConfig = {
+        Type = "ether";
+        Kind = "!veth";
+      };
+      DHCP = "yes";
+      networkConfig.IPv6AcceptRA = lib.mkDefault true;
+    };
+  };
+
   # ssh server
   services.openssh = {
     enable = true;

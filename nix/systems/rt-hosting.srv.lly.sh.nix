@@ -15,37 +15,34 @@ let
       (builtins.substring 1 (lib.stringLength str) str)
     ];
 
-  mkVlanNetdev = name: vlan: {
-    netdevConfig = {
-      Name = name;
-      Kind = "vlan";
+  renameLink = macAddr: newName: {
+    matchConfig = {
+      MACAddress = macAddr;
+      Type = "ether";
     };
-    vlanConfig = {
-      Id = vlan;
+    linkConfig = {
+      Name = newName;
     };
   };
 
-  mkVlanNetwork = name: vlan: routedIp4s: {
-    matchConfig = {
-      Name = name;
-      Kind = "vlan";
-    };
+  mkTenantNet = netdev: tenantId: routedIp4s: {
+    matchConfig.Name = netdev;
     networkConfig = {
       Address = [
-        "10.0.${builtins.toString vlan}.1/24"
+        "10.0.${builtins.toString tenantId}.1/24"
         "fe80::1/64"
       ];
       IPv6AcceptRA = false;
     };
     routes =
-      (builtins.map (ip4: {
-        Destination = ip4;
-      }) routedIp4s)
-      ++ [
-        {
-          Destination = "2a10:9902:111:${builtins.toString vlan}::/64";
-        }
-      ];
+        (builtins.map (ip4: {
+          Destination = ip4;
+        }) routedIp4s)
+        ++ [
+          {
+            Destination = "2a10:9902:111:${builtins.toString tenantId}::/64";
+          }
+        ];
   };
 
 in
@@ -79,70 +76,45 @@ in
   systemd.network = {
     enable = true;
 
-    netdevs =
-      lib.mergeAttrs
-        # statically defined netdevs
-        { }
-        # netdevs derived from hosting_network.nix
-        (
-          lib.attrsets.concatMapAttrs (name: data: {
-            "vlan${capitalize name}" = mkVlanNetdev "vlan${capitalize name}" data.tenantId;
-          }) data.network.tenants
-        );
-
-    networks.ethMyRoot = {
-      matchConfig = {
-        Type = "ether";
-        MACAddress = "52:54:00:af:bc:45";
-      };
-      networkConfig = {
-        IPv4ProxyARP = true;
-      };
-      address = [
-        "${data.network.guests.rt-hosting.ipv4}/32"
-        "2a10:9906:1002:0:125::126/64"
-      ];
-      gateway = [
-        "37.153.156.1"
-      ];
-      routes = [
-        {
-          # default gateway can always be reached directly
-          Destination = "37.153.156.1";
-        }
-      ];
+    links = {
+      "10-myroot" = renameLink data.network.guests.rt-hosting.macAddress "ethMyroot";
+      "10-vmsLilly" = renameLink "bc:24:11:e3:12:55" "vmsLilly";
+      "10-vmsBene" = renameLink "BC:24:11:51:A0:26" "vmsBene";
+      "10-vmsIsabell" = renameLink "BC:24:11:78:50:EF" "vmsIsabell";
+      "10-vmsTimon" = renameLink "BC:24:11:9B:CD:5D" "vmsTimon";
     };
 
-    networks.ethVMs = {
-      matchConfig = {
-        Type = "ether";
-        MACAddress = "52:54:00:85:6c:df";
-      };
-      linkConfig = {
-        RequiredForOnline = false;
-      };
-      networkConfig = {
-        LinkLocalAddressing = false;
-        VLAN = [
-          "vlanLilly"
-          "vlanBene"
-          "vlanPolygon"
-          "vlanVieta"
-          "vlanTimon"
-          "vlanIsabell"
+    networks = {
+      # upstream interface
+      "10-ethMyRoot" = {
+        matchConfig.Name = "ethMyroot";
+        networkConfig = {
+          IPv4ProxyARP = true;
+        };
+        address = [
+          "${data.network.guests.rt-hosting.ipv4}/32"
+          "2a10:9906:1002:0:125::126/64"
+        ];
+        gateway = [
+          "37.153.156.1"
+        ];
+        routes = [
+          {
+            # default gateway can always be reached directly
+            Destination = "37.153.156.1";
+          }
         ];
       };
-    };
 
-    networks."vlanLilly" = mkVlanNetwork "vlanLilly" 10 [
-      "37.153.156.169"
-      "37.153.156.170"
-    ];
-    networks."vlanBene" = mkVlanNetwork "vlanBene" 11 [ "37.153.156.172" ];
-    networks."vlanPolygon" = mkVlanNetwork "vlanPolygon" 12 [ "37.153.156.174" ];
-    networks."vlanVieta" = mkVlanNetwork "vlanVieta" 13 [ "37.153.156.173" ];
-    networks."vlanTimon" = mkVlanNetwork "vlanTimon" 14 [ "37.153.156.171" ];
-    networks."vlanIsabell" = mkVlanNetwork "vlanIsabell" 15 [ "37.153.156.175" ];
+      # downstream client interfaces
+      "20-vmsLilly" = mkTenantNet "vmsLilly" data.network.tenants.lilly.tenantId [ 
+        "37.153.156.169"
+        "37.153.156.170"
+      ];
+      "20-vmsBene" = mkTenantNet "vmsBene" data.network.tenants.bene.tenantId ["37.153.156.172"];
+      "20-vmsIsabell" = mkTenantNet "vmsIsabell" data.network.tenants.isabell.tenantId ["37.153.156.175"];
+      "20-vmsTimon" = mkTenantNet "vmsTimon" data.network.tenants.timon.tenantId ["37.153.156.171"];
+    };
   };
 
   networking.nftables.enable = true;
@@ -208,12 +180,10 @@ in
     settings = {
       interfaces-config = {
         interfaces = [
-          "vlanLilly"
-          "vlanBene"
-          "vlanPolygon"
-          "vlanVieta"
-          "vlanTimon"
-          "vlanIsabell"
+          "vmsLilly"
+          "vmsBene"
+          "vmsTimon"
+          "vmsIsabell"
         ];
       };
       lease-database = {
@@ -237,9 +207,9 @@ in
       ];
       shared-networks = [
         {
-          # network for finn
-          name = "finnNet";
-          interface = "vlanLilly";
+          # network for lilly
+          name = "lillyNet";
+          interface = "vmsLilly";
           subnet4 = [
             {
               id = 1;
@@ -248,12 +218,12 @@ in
               reservations = [
                 {
                   # gtw.srv.ftsell.de
-                  hw-address = "52:54:00:43:ff:c6";
+                  hw-address = "BC:24:11:94:E3:C3";
                   ip-address = "37.153.156.169";
                 }
                 {
                   # mail-srv
-                  hw-address = "52:54:00:66:e2:38";
+                  hw-address = "BC:24:11:6D:82:1E";
                   ip-address = "37.153.156.170";
                 }
               ];
@@ -265,7 +235,7 @@ in
               reservations = [
                 {
                   # gtw.srv.myroot.intern
-                  hw-address = "52:54:00:8c:88:66";
+                  hw-address = "BC:24:11:DE:56:03";
                   ip-address = "10.0.10.2";
                 }
                 {
@@ -275,29 +245,29 @@ in
                 }
                 {
                   # mail.srv.myroot.intern
-                  hw-address = "52:54:00:7d:ff:7f";
+                  hw-address = "BC:24:11:D0:67:E4";
                   ip-address = "10.0.10.12";
                 }
                 {
-                  # monitoring.srv.myroot.intern
-                  hw-address = "52:54:00:00:47:69";
-                  ip-address = "10.0.10.13";
-                }
-                {
                   # nas.srv.myroot.intern
-                  hw-address = "52:54:00:2e:74:29";
+                  hw-address = "BC:24:11:CB:0E:A8";
                   ip-address = "10.0.10.14";
                 }
                 {
                   # k8s-ctl.srv.myroot.intern
-                  hw-address = "52:54:00:58:93:1a";
+                  hw-address = "BC:24:11:A2:4E:25";
                   ip-address = "10.0.10.15";
                 }
                 {
                   # k8s-worker1.srv.myroot.intern
-                  hw-address = "52:54:00:e6:1f:51";
+                  hw-address = "BC:24:11:EB:C6:02";
                   ip-address = "10.0.10.16";
                 }
+                {
+                    # k8s-worker2.srv.myroot.intern
+                    hw-address = "BC:24:11:3C:B4:FD";
+                    ip-address = "10.0.10.17";
+                  }
               ];
               option-data = [
                 {
@@ -312,7 +282,7 @@ in
         {
           # network for bene
           name = "beneNet";
-          interface = "vlanBene";
+          interface = "vmsBene";
           subnet4 = [
             {
               id = 3;
@@ -321,7 +291,7 @@ in
               reservations = [
                 {
                   # bene-server
-                  hw-address = "52:54:00:13:f8:f9";
+                  hw-address = "BC:24:11:F9:84:34";
                   ip-address = "37.153.156.172";
                 }
               ];
@@ -333,61 +303,11 @@ in
             }
           ];
         }
-
-        {
-          # network for polygon
-          name = "polygonNet";
-          interface = "vlanPolygon";
-          subnet4 = [
-            {
-              id = 5;
-              subnet = "37.153.156.174/32";
-              pools = [ { pool = "37.153.156.174 - 37.153.156.174"; } ];
-              reservations = [
-                {
-                  # polygon-server
-                  hw-address = "52:54:00:f9:64:31";
-                  ip-address = "37.153.156.174";
-                }
-              ];
-            }
-            {
-              id = 6;
-              subnet = "10.0.12.0/24";
-              pools = [ { pool = "10.0.12.10 - 10.0.12.254"; } ];
-            }
-          ];
-        }
-
-        {
-          # network for vieta
-          name = "vietaNet";
-          interface = "vlanVieta";
-          subnet4 = [
-            {
-              id = 7;
-              subnet = "37.153.156.173/32";
-              pools = [ { pool = "37.153.156.173 - 37.153.156.173"; } ];
-              reservations = [
-                {
-                  # polygon-server
-                  hw-address = "52:54:00:6d:0e:83";
-                  ip-address = "37.153.156.173";
-                }
-              ];
-            }
-            {
-              id = 8;
-              subnet = "10.0.13.0/24";
-              pools = [ { pool = "10.0.13.10 - 10.0.13.254"; } ];
-            }
-          ];
-        }
-
+        
         {
           # network for timon
           name = "timonNet";
-          interface = "vlanTimon";
+          interface = "vmsTimon";
           subnet4 = [
             {
               id = 9;
@@ -396,7 +316,7 @@ in
               reservations = [
                 {
                   # timon-server
-                  hw-address = "52:54:00:00:c9:09";
+                  hw-address = "BC:24:11:EE:FB:EE";
                   ip-address = "37.153.156.171";
                 }
               ];
@@ -412,7 +332,7 @@ in
         {
           # network for isabell
           name = "isabellNet";
-          interface = "vlanIsabell";
+          interface = "vmsIsabell";
           subnet4 = [
             {
               id = 11;
@@ -421,7 +341,7 @@ in
               reservations = [
                 {
                   # isabell-server
-                  hw-address = "52:54:00:2d:2a:26";
+                  hw-address = "BC:24:11:0B:C6:6D";
                   ip-address = "37.153.156.175";
                 }
               ];
@@ -440,29 +360,24 @@ in
   services.radvd = {
     enable = true;
     config = ''
-      interface vlanLilly {
+      interface vmsLilly {
         AdvSendAdvert on;
         prefix 2a10:9902:111:10::/64 {};
       };
 
-      interface vlanBene {
+      interface vmsBene {
         AdvSendAdvert on;
         prefix 2a10:9902:111:11::/64 {};
       };
 
-      interface vlanPolygon {
-        AdvSendAdvert on;
-        prefix 2a10:9902:111:12::/64 {};
-      };
-
-      interface vlanVieta {
-        AdvSendAdvert on;
-        prefix 2a10:9902:111:13::/64 {};
-      };
-
-      interface vlanTimon {
+      interface vmsTimon {
         AdvSendAdvert on;
         prefix 2a10:9902:111:14::/64 {};
+      };
+
+      interface vmsIsabell {
+        AdvSendAdvert on;
+        prefix 2a10:9902:111:15::/64 {};
       };
     '';
   };

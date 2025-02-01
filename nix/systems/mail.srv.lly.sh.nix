@@ -33,22 +33,13 @@ in
   networking.useDHCP = false;
   systemd.network = {
     enable = true;
-    networks.enp1s0 = {
+    networks."80-intern-ether" = {
       matchConfig = {
         Type = "ether";
-        MACAddress = data.network.guests.mail-srv.macAddress;
+        MACAddress = "BC:24:11:D0:67:E4";
       };
       DHCP = "yes";
-    };
-    networks.enp8s0 = {
-      matchConfig = {
-        Type = "ether";
-        MACAddress = "52:54:00:7d:ff:7f";
-      };
-      DHCP = "yes";
-      networkConfig = {
-        IPv6AcceptRA = false;
-      };
+      networkConfig.IPv6AcceptRA = false;
     };
   };
 

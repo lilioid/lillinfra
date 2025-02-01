@@ -45,7 +45,7 @@ in
   "rt-hosting.srv.lly.sh" =
     mkSystem "x86_64-unknown-linux-gnu" "rt-hosting.srv.lly.sh"
       inputs.nixpkgs2411;
-  "mail.srv.ftsell.de" = mkSystem "x86_64-unknown-linux-gnu" "mail.srv.ftsell.de" inputs.nixpkgs2411;
+  "mail.srv.lly.sh" = mkSystem "x86_64-unknown-linux-gnu" "mail.srv.lly.sh" inputs.nixpkgs2411;
   "gtw.srv.lly.sh" = mkSystem "x86_64-unknown-linux-gnu" "gtw.srv.lly.sh" inputs.nixpkgs2411;
 
   # internal hosts at myroot

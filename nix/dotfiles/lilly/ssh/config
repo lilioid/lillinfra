@@ -7,12 +7,12 @@ Host rsync.net zh4525.rsync.net
 ####
 # Private Hosts @myroot
 #
-Host *.srv.ftsell.de
+Host *.srv.ftsell.de *.srv.lly.sh
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
-Host hosting.srv.ftsell.de
-  User lilly
-  HostName hosting.srv.ftsell.de
+Host hosting.srv.lly.sh
+  User root
+  HostName hosting.srv.lly.sh
 
 Host mail.srv.ftsell.de
   User lilly
@@ -22,30 +22,30 @@ Host rt-hosting.srv.ftsell.de
   User lilly
   HostName rt-hosting.srv.ftsell.de
 
-Host gtw.srv.ftsell.de
+Host gtw.srv.lly.sh
   User lilly
-  HostName gtw.srv.ftsell.de
+  HostName gtw.srv.lly.sh
   Port 23
 
 Host vpn.srv.myroot.intern
   User lilly
   HostName 10.0.10.11
-  ProxyJump gtw.srv.ftsell.de
+  ProxyJump gtw.srv.lly.sh
 
 Host nas.srv.myroot.intern
   User lilly
   HostName 10.0.10.14
-  ProxyJump gtw.srv.ftsell.de
+  ProxyJump gtw.srv.lly.sh
 
 Host k8s-ctl.srv.myroot.intern
   User lilly
   HostName 10.0.10.15
-  ProxyJump gtw.srv.ftsell.de
+  ProxyJump gtw.srv.lly.sh
 
 Host k8s-worker1.srv.myroot.intern
   User lilly
   HostName 10.0.10.16
-  ProxyJump gtw.srv.ftsell.de
+  ProxyJump gtw.srv.lly.sh
 
 
 ####
