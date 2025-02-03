@@ -22,10 +22,8 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.loader.systemd-boot = {
+  boot.loader.grub = {
     enable = true;
-    configurationLimit = 25;
-    editor = false;
   };
 
   # general os config
