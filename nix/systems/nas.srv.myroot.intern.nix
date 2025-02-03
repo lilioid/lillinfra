@@ -13,10 +13,10 @@
 
   # filesystem config (including zfs which adds additional mountpoints automatically)
   networking.hostId = "d1c39a07";
-  boot.supportedFilesystems = [ "zfs" ];
+  #boot.supportedFilesystems = [ "zfs" ];
   boot.zfs = {
     forceImportRoot = false;
-    extraPools = [ "hdd" "ssd" ];
+    #extraPools = [ "hdd" "ssd" ];
   };
   boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
   fileSystems = {
