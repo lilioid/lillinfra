@@ -52,17 +52,10 @@ in
   ];
 
   # boot config
+  boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
   fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-uuid/83DB-8B4E";
-      fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
-    };
     "/" = {
-      device = "/dev/disk/by-uuid/ac4a51da-dea7-4c32-b949-073dd9fbc592";
+      device = "/dev/disk/by-uuid/228408ee-ca5f-47f9-8612-14f3a2164e82";
       fsType = "ext4";
     };
   };
