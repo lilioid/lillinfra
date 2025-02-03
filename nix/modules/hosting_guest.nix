@@ -24,6 +24,11 @@
   boot.extraModulePackages = [ ];
   boot.loader.grub = {
     enable = true;
+    extraEntries = ''
+      menuentry "Firmware Setup" {
+        fwsetup
+      }
+    '';
   };
 
   # general os config
