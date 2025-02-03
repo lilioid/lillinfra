@@ -15,17 +15,10 @@ in
   ];
 
   # filesystem mount config
+  boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
   fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-uuid/9124-3481";
-      fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
-    };
     "/" = {
-      device = "/dev/disk/by-uuid/0ea6f61b-84b7-4903-8ba9-7dba9adba39a";
+      device = "/dev/disk/by-uuid/e9c9f2f6-172c-45e2-91e1-fd994548078e";
       fsType = "ext4";
     };
   };
@@ -51,13 +44,6 @@ in
   networking.nftables.enable = true;
   networking.useDHCP = false;
   systemd.network = {
-    enable = true;
-    networks.enp1s0 = {
-      matchConfig."Type" = "ether";
-      networkConfig."IPv6AcceptRA" = false;
-      DHCP = "yes";
-    };
-
     # wireguard NetDev config
     netdevs.wgVpn = {
       netdevConfig = {

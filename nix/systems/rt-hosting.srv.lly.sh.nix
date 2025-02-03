@@ -233,7 +233,7 @@ in
                 }
                 {
                   # vpn.srv.myroot.intern
-                  hw-address = "52:54:00:8e:97:05";
+                  hw-address = "BC:24:11:6A:70:69";
                   ip-address = "10.0.10.11";
                 }
                 {
