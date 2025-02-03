@@ -12,23 +12,16 @@
   ];
 
   # filesystem config (including zfs which adds additional mountpoints automatically)
+  networking.hostId = "d1c39a07";
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs = {
     forceImportRoot = false;
     extraPools = [ "hdd" "ssd" ];
   };
-  networking.hostId = "d1c39a07";
+  boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
   fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-uuid/C669-0126";
-      fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
-    };
     "/" = {
-      device = "/dev/disk/by-uuid/9ce95a64-55d6-442d-a41f-8bbbb3332269";
+      device = "/dev/disk/by-uuid/1a58acb9-6cd2-4c39-a8e1-edd226eb1e14";
       fsType = "ext4";
     };
   };
