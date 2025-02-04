@@ -5,6 +5,7 @@ keys:
   - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
   - &k8s-ctl-srv "age1ny4cv3stnnuvyf0qhhk7mha98rrhnwa4fpvdqt505qdsssn92flsayudjc"
   - &k8s-worker1-srv "age1ujymnlvetgl0kq7cpm9xsk4wuugdr869fynhawfe2gk4ucu2mycsd2yjta"
+  - &k8s-worker2-srv "age13523e34ct38lf099wu5lag5f75j58tkee6f0ragzc40qqrxuqafs06alhd"
   - &nas-myroot "age1gufa7z3leuufvps6wszfzyk7e8rqdpz3ryfneu9x4qfj0je95amq4gpd20"
   - &gtw-myroot "age186x5sfsv6txmtu8f9dfd84td6fq7cxup25nrtxlr43327xrqvpzsvqe6sv"
   - &home-proxy "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
@@ -19,7 +20,7 @@ creation_rules:
 
   - path_regex: "data/secrets/k8s.yml"
     key_groups:
-      - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv, *mail-srv ]
+      - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv, *k8s-worker2-srv, *mail-srv ]
 
   - path_regex: "data/secrets/hosting.srv.lly.sh.yml"
     key_groups:
@@ -40,7 +41,7 @@ creation_rules:
   # shared secrets
   - path_regex: "data/secrets/mail_relay.yml"
     key_groups:
-      - age: [ *lilly, *vpn-srv, *gtw-myroot, *k8s-ctl-srv, *nas-myroot, *k8s-worker1-srv, *rt-hosting, *hosting-srv, *priv-home-srv, *proxy-home ]
+      - age: [ *lilly, *vpn-srv, *gtw-myroot, *k8s-ctl-srv, *nas-myroot, *k8s-worker1-srv, *k8s-worker2-srv, *rt-hosting, *hosting-srv, *priv-home-srv, *proxy-home ]
 
   # generic secrets
   - path_regex: "data/secrets/.+.yml"
