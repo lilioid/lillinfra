@@ -61,7 +61,9 @@ in
     serverAddr = "https://10.0.10.15:6443";
     tokenFile = "/run/secrets/k3s/token";
   };
-  sops.secrets."k3s/token" = { };
+  sops.secrets."k3s/token" = {
+    sopsFile = ../data/secrets/k8s.yml;
+  };
 
   # haproxy (for certificate generation)
   services.haproxy = {

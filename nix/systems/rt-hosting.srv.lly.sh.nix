@@ -240,6 +240,12 @@ in
                   # mail.srv.myroot.intern
                   hw-address = "BC:24:11:D0:67:E4";
                   ip-address = "10.0.10.12";
+                  option-data = [
+                    {
+                      "name" = "routers";
+                      "data" = "";
+                    }
+                  ];
                 }
                 {
                   # nas.srv.myroot.intern

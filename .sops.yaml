@@ -1,7 +1,7 @@
 keys:
   - &lilly "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
   - &vpn-srv "age1hylsuhm7zweqwwf37u6evva2ssjz0us5m229u8crghtj6n3qup5smu52a6"
-  - &mail-srv "age1ayrlyw9c9mwumujrvx7x3s30a42emn9k2tf9v2kw2vkcx70fvf5sj63fe6"
+  - &mail-srv "age1rhkf95d3ffm9jfw8pskxtaq30lk02awg8ag8nr76wtytemzzuszskxa5ch"
   - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
   - &k8s-ctl-srv "age1ny4cv3stnnuvyf0qhhk7mha98rrhnwa4fpvdqt505qdsssn92flsayudjc"
   - &k8s-worker1-srv "age1ujymnlvetgl0kq7cpm9xsk4wuugdr869fynhawfe2gk4ucu2mycsd2yjta"
@@ -17,13 +17,9 @@ creation_rules:
     key_groups:
       - age: [ *lilly, *vpn-srv ]
 
-  - path_regex: "data/secrets/mail.srv.ftsell.de.yml"
-    key_groups:
-      - age: [ *lilly, *mail-srv ]
-
   - path_regex: "data/secrets/k8s.yml"
     key_groups:
-      - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv ]
+      - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv, *mail-srv ]
 
   - path_regex: "data/secrets/hosting.srv.lly.sh.yml"
     key_groups:
