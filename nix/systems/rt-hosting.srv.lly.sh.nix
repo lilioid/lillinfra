@@ -263,10 +263,10 @@ in
                   ip-address = "10.0.10.16";
                 }
                 {
-                    # k8s-worker2.srv.myroot.intern
-                    hw-address = "BC:24:11:3C:B4:FD";
-                    ip-address = "10.0.10.17";
-                  }
+                  # k8s-worker2.srv.myroot.intern
+                  hw-address = "BC:24:11:88:46:E2";
+                  ip-address = "10.0.10.17";
+                }
               ];
               option-data = [
                 {

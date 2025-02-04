@@ -14,17 +14,10 @@ in
   ];
 
   # boot config
+  boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
   fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-uuid/94A7-6995";
-      fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
-    };
     "/" = {
-      device = "/dev/disk/by-uuid/4e0b7ea5-8c74-478f-a4e3-ddc5691e4065";
+      device = "/dev/disk/by-uuid/ba20e97f-1b10-41ac-a05b-b85db63a2b8d";
       fsType = "ext4";
     };
   };
@@ -53,7 +46,9 @@ in
     serverAddr = "https://10.0.10.15:6443";
     tokenFile = "/run/secrets/k3s/token";
   };
-  sops.secrets."k3s/token" = { };
+  sops.secrets."k3s/token" = {
+    sopsFile = ../data/secrets/k8s.yml;
+  };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible

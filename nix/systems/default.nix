@@ -55,6 +55,9 @@ in
   "k8s-worker1.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "k8s-worker1.srv.myroot.intern"
       inputs.nixpkgs2411;
+  "k8s-worker2.srv.myroot.intern" =
+    mkSystem "x86_64-unknown-linux-gnu" "k8s-worker2.srv.myroot.intern"
+      inputs.nixpkgs2411;
   "vpn.srv.myroot.intern" =
     mkSystem "x86_64-unknown-linux-gnu" "vpn.srv.myroot.intern"
       inputs.nixpkgs2411;

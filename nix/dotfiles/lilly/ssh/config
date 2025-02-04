@@ -47,6 +47,11 @@ Host k8s-worker1.srv.myroot.intern
   HostName 10.0.10.16
   ProxyJump gtw.srv.lly.sh
 
+Host k8s-worker2.srv.myroot.intern
+  User lilly
+  HostName 10.0.10.17
+  ProxyJump gtw.srv.lly.sh
+
 
 ####
 # Private Hosts @home
