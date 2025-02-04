@@ -43,6 +43,7 @@ in
   services.k3s = {
     enable = true;
     role = "agent";
+    extraFlags = "--node-taint ip-reputation=mailserver:NoSchedule";
     serverAddr = "https://10.0.10.15:6443";
     tokenFile = "/run/secrets/k3s/token";
   };

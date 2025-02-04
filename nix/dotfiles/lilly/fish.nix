@@ -10,7 +10,7 @@
     "gc" = "git commit";
     "gb" = "git branch";
     "kc" = "kubectl";
-    "kubef" = "kubectl --context=ftsell-de";
+    "kubel" = "kubectl --context=lly-sh";
     "kubem" = "kubectl --context=mafiasi";
     "nix-shell" = "nix-shell --command fish";
   };
