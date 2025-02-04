@@ -14,38 +14,17 @@ in
   ];
 
   # boot config
+  boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
   fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-uuid/90B5-97F3";
-      fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
-    };
     "/" = {
-      device = "/dev/disk/by-uuid/ca0700a0-ae52-4fae-ac7e-562b8ec6ea16";
+      device = "/dev/disk/by-uuid/3abb1bda-64d0-4423-a36d-01486a41cefb";
       fsType = "ext4";
     };
   };
 
-  # networking config
   custom.mailRelay.enable = true;
-  networking.useDHCP = false;
-  systemd.network = {
-    enable = true;
-    networks.enp1s0 = {
-      matchConfig = {
-        Type = "ether";
-        MACAddress = "BC:24:11:A2:4E:25";
-      };
-      networkConfig = {
-        IPv6AcceptRA = false;
-      };
-      DHCP = "yes";
-    };
-  };
 
+  # networking config
   networking.firewall = {
     allowedTCPPorts = [
       6443 # k8s api server
@@ -61,7 +40,7 @@ in
     enable = true;
     role = "server";
     clusterInit = false;
-    extraFlags = "--disable-helm-controller --disable=traefik --disable=servicelb --disable=local-storage --flannel-backend=vxlan --cluster-cidr 10.42.0.0/16 --service-cidr 10.43.0.0/16 --egress-selector-mode disabled --tls-san=k8s.ftsell.de --node-taint node-role.kubernetes.io/control-plane=:NoSchedule";
+    extraFlags = "--disable-helm-controller --disable=traefik --disable=servicelb --disable=local-storage --flannel-backend=vxlan --cluster-cidr 10.42.0.0/16 --service-cidr 10.43.0.0/16 --egress-selector-mode disabled --tls-san=k8s.lly.sh --node-taint node-role.kubernetes.io/control-plane=:NoSchedule";
   };
 
   # DO NOT CHANGE
