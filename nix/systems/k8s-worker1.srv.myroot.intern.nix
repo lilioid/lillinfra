@@ -46,7 +46,9 @@ in
     serverAddr = "https://10.0.10.15:6443";
     tokenFile = "/run/secrets/k3s/token";
   };
-  sops.secrets."k3s/token" = { };
+  sops.secrets."k3s/token" = {
+    sopsFile = ../data/secrets/k8s.yml;
+  };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible

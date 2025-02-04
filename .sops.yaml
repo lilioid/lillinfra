@@ -2,13 +2,13 @@ keys:
   - &lilly "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
   - &vpn-srv "age1hylsuhm7zweqwwf37u6evva2ssjz0us5m229u8crghtj6n3qup5smu52a6"
   - &mail-srv "age1ayrlyw9c9mwumujrvx7x3s30a42emn9k2tf9v2kw2vkcx70fvf5sj63fe6"
-  - &hosting.srv.lly.sh "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
-  - &k8s-worker1-srv "age1g2uxex88r5fya0lgjqthp0tekalz6hq3fc8m8hhnwr36q5ylafaqcnt2hq"
-  - &k8s-ctl-srv "age1zsn2hgy6zzczsqgjf0eqlda7gneegsjpym0nu0p078ff5luz2gcsct9cuv"
-  - &nas-myroot "age13c2vll0rel2pj62sdfgrvlr0mvauqhzclqh8hyqgdue8ws2t45xsuslxg6"
+  - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
+  - &k8s-ctl-srv "age1ny4cv3stnnuvyf0qhhk7mha98rrhnwa4fpvdqt505qdsssn92flsayudjc"
+  - &k8s-worker1-srv "age1ujymnlvetgl0kq7cpm9xsk4wuugdr869fynhawfe2gk4ucu2mycsd2yjta"
+  - &nas-myroot "age1gufa7z3leuufvps6wszfzyk7e8rqdpz3ryfneu9x4qfj0je95amq4gpd20"
   - &gtw-myroot "age186x5sfsv6txmtu8f9dfd84td6fq7cxup25nrtxlr43327xrqvpzsvqe6sv"
   - &home-proxy "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
-  - &rt-hosting "age1j3raxh0fk0a56htx68tg2jqguqklujxz26u7mk698rct4z0ek3vqh5mtes"
+  - &rt-hosting "age1dlc688a6mm60vva8w4g0jfyjz3mx4sgjl65zewsrdjl0dgp025jsg5ac2g"
   - &priv-home-srv "age1nww3jxah80k2he6ur8gmzywx7hradf3cnyfshfzzd4rcp62kxsasw58phj"
   - &proxy-home "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
 creation_rules:
@@ -21,13 +21,13 @@ creation_rules:
     key_groups:
       - age: [ *lilly, *mail-srv ]
 
-  - path_regex: "data/secrets/k8s-worker1.srv.myroot.intern.yml"
+  - path_regex: "data/secrets/k8s.yml"
     key_groups:
-      - age: [ *lilly, *k8s-worker1-srv ]
+      - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv ]
 
   - path_regex: "data/secrets/hosting.srv.lly.sh.yml"
     key_groups:
-      - age: [ *lilly, *hosting.srv.lly.sh ]
+      - age: [ *lilly, *hosting-srv ]
 
   - path_regex: "data/secrets/nas.srv.myroot.intern.yml"
     key_groups:

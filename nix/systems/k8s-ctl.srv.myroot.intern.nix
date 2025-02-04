@@ -25,6 +25,7 @@ in
   custom.mailRelay.enable = true;
 
   # networking config
+  systemd.network.networks."99-default-ether".networkConfig.IPv6AcceptRA = false;
   networking.firewall = {
     allowedTCPPorts = [
       6443 # k8s api server
