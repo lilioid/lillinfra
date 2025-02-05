@@ -1,6 +1,6 @@
 keys:
   - &lilly "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
-  - &vpn-srv "age1hylsuhm7zweqwwf37u6evva2ssjz0us5m229u8crghtj6n3qup5smu52a6"
+  - &vpn-srv "age1gvt4lwamnuxmqgp5anhn008ze8kzrq287rn4jpn7k75fvn5ufvfsm73cvx"
   - &mail-srv "age1rhkf95d3ffm9jfw8pskxtaq30lk02awg8ag8nr76wtytemzzuszskxa5ch"
   - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
   - &k8s-ctl-srv "age1ny4cv3stnnuvyf0qhhk7mha98rrhnwa4fpvdqt505qdsssn92flsayudjc"
