@@ -24,7 +24,7 @@ let
 in
 {
   imports = [
-    ../modules/hosting_guest.nix
+    ../modules/home_vm.nix
   ];
 
   # boot config
@@ -41,16 +41,6 @@ in
         "fmask=0077"
         "dmask=0077"
       ];
-    };
-  };
-
-  # network config
-  networking.useDHCP = false;
-  systemd.network = {
-    enable = true;
-    networks.enp1s0 = {
-      matchConfig.Type = "ether";
-      networkConfig.DHCP = "yes";
     };
   };
 

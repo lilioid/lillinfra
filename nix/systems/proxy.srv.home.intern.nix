@@ -13,7 +13,7 @@ let
 in
 {
   imports = [
-    ../modules/hosting_guest.nix
+    ../modules/home_vm.nix
     ../modules/vpn_client.nix
   ];
 
@@ -33,17 +33,9 @@ in
     };
   };
 
-  # network config
   custom.mailRelay.enable = true;
-  networking.useDHCP = false;
-  systemd.network = {
-    enable = true;
-    networks.enp1s0 = {
-      matchConfig.Type = "ether";
-      networkConfig.DHCP = "yes";
-    };
-  };
 
+  # network config
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -56,7 +48,7 @@ in
   # dyndns for home.lly.sh
   services.ddclient = {
     enable = true;
-    usev4 = "web, web=https://checkipv4.dedyn.io/";
+    usev4 = "webv4, webv4=https://checkipv4.dedyn.io/";
     server = "update.dedyn.io";
     username = "lly.sh";
     domains = [ "home.lly.sh" ];
