@@ -13,6 +13,7 @@ Host *.srv.ftsell.de *.srv.lly.sh
 Host hosting.srv.lly.sh
   User root
   HostName hosting.srv.lly.sh
+  AddressFamily inet
 
 Host mail.srv.ftsell.de
   User lilly
@@ -134,6 +135,14 @@ Host cs01.fux.intern
   PubkeyAuthentication no
   KexAlgorithms diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
   HostKeyAlgorithms +ssh-rsa
+
+Host cs02.fux.intern
+  User noc
+  HostName 172.16.2.3
+  PubkeyAuthentication no
+  KexAlgorithms diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
+  HostKeyAlgorithms +ssh-rsa
+  Ciphers +3des-cbc
 
 Host netbox.fux-eg.net 185.161.128.4
   User noc
