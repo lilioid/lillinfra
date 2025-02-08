@@ -8,11 +8,11 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-http
 spec:
   tls:
-    - secretName: tls-nix-cache.lly.sh
+    - secretName: tls-nix-store
       hosts:
-        - nix-cache.lly.sh
+        - babe-do-you-need-anything-from-the-nix.store
   rules:
-    - host: nix-cache.lly.sh
+    - host: babe-do-you-need-anything-from-the-nix.store
       http:
         paths:
           - path: /
