@@ -13,6 +13,11 @@ spec:
       labels: *labels
     spec:
 
+      tolerations:
+        - key: "ip-reputation"
+          operator: "Equal"
+          value: "mailserver"
+
       volumes:
         - name: secrets
           secret:
