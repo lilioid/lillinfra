@@ -75,6 +75,7 @@ in
       "10-vmsBene" = renameLink "BC:24:11:51:A0:26" "vmsBene";
       "10-vmsIsabell" = renameLink "BC:24:11:78:50:EF" "vmsIsabell";
       "10-vmsTimon" = renameLink "BC:24:11:9B:CD:5D" "vmsTimon";
+      "10-vmsNoah" = renameLink "BC:24:11:9C:BA:D6" "vmsNoah";
     };
 
     networks = {
@@ -107,6 +108,7 @@ in
       "20-vmsBene" = mkTenantNet "vmsBene" data.network.tenants.bene.tenantId ["37.153.156.172"];
       "20-vmsIsabell" = mkTenantNet "vmsIsabell" data.network.tenants.isabell.tenantId ["37.153.156.175"];
       "20-vmsTimon" = mkTenantNet "vmsTimon" data.network.tenants.timon.tenantId ["37.153.156.171"];
+      "20-vmsNoah" = mkTenantNet "vmsNoah" data.network.tenants.noah.tenantId [ "37.153.156.173" ];
     };
   };
 
@@ -119,6 +121,7 @@ in
       "10.0.11.0/24"
       "10.0.12.0/24"
       "10.0.13.0/24"
+      "10.0.16.0/24"
     ];
   };
 
@@ -352,6 +355,31 @@ in
             }
           ];
         }
+
+        {
+          # network for noah
+          name = "noahNet";
+          interface = "vmsNoah";
+          subnet4 = [
+            {
+              id = 13;
+              subnet = "37.153.156.173/32";
+              pools = [ { pool = "37.153.156.173 - 37.153.156.173"; } ];
+              reservations = [
+                {
+                  # noah-server
+                  hw-address = "BC:24:11:E9:08:F7";
+                  ip-address = "37.153.156.173";
+                }
+              ];
+            }
+            {
+              id = 14;
+              subnet = "10.0.16.0/24";
+              pools = [ { pool = "10.0.16.10 - 10.0.16.254"; } ];
+            }
+          ];
+        }
       ];
     };
   };
@@ -377,6 +405,11 @@ in
       interface vmsIsabell {
         AdvSendAdvert on;
         prefix 2a10:9902:111:15::/64 {};
+      };
+      
+      interface vmsNoah {
+        AdvSendAdvert on;
+        prefix 2a10:9902:111:16::/64 {};
       };
     '';
   };
