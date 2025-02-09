@@ -13,6 +13,8 @@ def realize_config(revision: str, flake_uri: str, config: str) -> str:
     log(f"Bulding configuration of {config} at {revision}")
     return subprocess.check_output([
         "nix",
+        "--extra-experimental-features",
+        "nix-command",
         "build",
         "--no-link",
         "--print-out-paths",
@@ -23,6 +25,8 @@ def realize_config(revision: str, flake_uri: str, config: str) -> str:
 def compute_diff(closure_a: str, closure_b: str) -> str:
     return subprocess.check_output([
         "nix",
+        "--extra-experimental-features",
+        "nix-command",
         "store",
         "--quiet",
         "diff-closures",
