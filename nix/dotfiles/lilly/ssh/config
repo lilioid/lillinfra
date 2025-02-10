@@ -193,6 +193,18 @@ Host vca-prod
   User ftsell
   HostName production.srv.vivaconagua.org
 
+
+
+####
+# EH22 NOC
+#
+
+Host auth-dns.noc.eh22.intern
+  User noc
+  HostName 10.31.210.253
+
+
+
 # Global Override Settings
 Host *
   ForwardAgent no
