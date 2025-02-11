@@ -72,11 +72,6 @@
       kubernetes-helm
       pass
       sshuttle
-      jetbrains.webstorm
-      jetbrains.rust-rover
-      jetbrains.pycharm-professional
-      jetbrains.datagrip
-      jetbrains.idea-ultimate
       rustup
       clang
       pkg-config
