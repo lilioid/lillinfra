@@ -76,6 +76,7 @@ in
       "10-vmsIsabell" = renameLink "BC:24:11:78:50:EF" "vmsIsabell";
       "10-vmsTimon" = renameLink "BC:24:11:9B:CD:5D" "vmsTimon";
       "10-vmsNoah" = renameLink "BC:24:11:9C:BA:D6" "vmsNoah";
+      "10-vmsFux" = renameLink "BC:24:11:E3:F0:CC" "vmsFux";
     };
 
     networks = {
@@ -109,6 +110,7 @@ in
       "20-vmsIsabell" = mkTenantNet "vmsIsabell" data.network.tenants.isabell.tenantId ["37.153.156.175"];
       "20-vmsTimon" = mkTenantNet "vmsTimon" data.network.tenants.timon.tenantId ["37.153.156.171"];
       "20-vmsNoah" = mkTenantNet "vmsNoah" data.network.tenants.noah.tenantId [ "37.153.156.173" ];
+      "20-vmsFux" = mkTenantNet "vmsFux" data.network.tenants.fux.tenantId [ "37.153.156.176" ];
     };
   };
 
@@ -122,6 +124,7 @@ in
       "10.0.12.0/24"
       "10.0.13.0/24"
       "10.0.16.0/24"
+      "10.0.17.0/24"
     ];
   };
 
@@ -180,6 +183,7 @@ in
           "vmsBene"
           "vmsTimon"
           "vmsIsabell"
+          "vmsFux"
         ];
       };
       lease-database = {
@@ -380,6 +384,31 @@ in
             }
           ];
         }
+
+        {
+          # network for fux
+          name = "fuxNet";
+          interface = "vmsFux";
+          subnet4 = [
+            {
+              id = 15;
+              subnet = "37.153.156.176/32";
+              pools = [ { pool = "37.153.156.176 - 37.153.156.176"; } ];
+              reservations = [
+                {
+                  # fux-monitoring
+                  hw-address = "BC:24:11:4C:2D:8C";
+                  ip-address = "37.153.156.176";
+                }
+              ];
+            }
+            {
+              id = 16;
+              subnet = "10.0.17.0/24";
+              pools = [ { pool = "10.0.17.10 - 10.0.17.254"; } ];
+            }
+          ];
+        }
       ];
     };
   };
@@ -410,6 +439,11 @@ in
       interface vmsNoah {
         AdvSendAdvert on;
         prefix 2a10:9902:111:16::/64 {};
+      };
+
+      interface vmsFux {
+        AdvSendAdvert on;
+        prefix 2a10:9902:111:17::/64 {};
       };
     '';
   };

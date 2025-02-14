@@ -60,6 +60,7 @@ rec {
     timon = mkTenant 14;
     isabell = mkTenant 15;
     noah = mkTenant 16;
+    fux = mkTenant 17;
   };
 
   guests = {
@@ -73,6 +74,7 @@ rec {
     timon-server = mkRouted "52:54:00:00:c9:09" "37.153.156.171";
     isabell-srv = mkRouted "52:54:00:2d:2a:26" "37.153.156.175";
     noah-server = mkRouted "BC:24:11:E9:08:F7" "37.153.156.173";
+    fux-monitoring = mkRouted "" "37.153.156.176";
     # nat guests
     vpn-srv = mkNat "52:54:00:8e:97:05" "10.0.0.101" [
       {
