@@ -90,6 +90,10 @@
         contents = cccConfig;
       }
       {
+        condition = "gitdir:~/Projects/mafiasi/py_simple_openid_connect/*";
+        contents = b1Config;
+      }
+      {
         condition = "gitdir:~/Projects/b1/**";
         contents = b1Config;
       }
