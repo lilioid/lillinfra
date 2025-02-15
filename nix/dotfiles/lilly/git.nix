@@ -42,7 +42,7 @@
     };
     pull.rebase = true;
     color.ui = "auto";
-    init.defaultBranch = true;
+    init.defaultBranch = "main";
     push.autoSetupRemote = true;
     gpg.format = "ssh";
     gpg.ssh.allowedSignersFile = "${pkgs.writeText "trusted-git-signers" ''
