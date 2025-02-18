@@ -184,6 +184,7 @@ in
           "vmsTimon"
           "vmsIsabell"
           "vmsFux"
+          "vmsNoah"
         ];
       };
       lease-database = {
