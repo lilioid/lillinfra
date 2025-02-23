@@ -8,6 +8,7 @@ steps:
       - event: push
         path: [ ".woodpecker/build-containers.yml", "containers/${CONTAINER}.Containerfile" ]
       - event: cron
+        cron: build-containers
       - event: manual
     image: quay.io/containers/podman
     privileged: true
