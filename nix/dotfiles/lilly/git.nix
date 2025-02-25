@@ -41,6 +41,7 @@
       ldog = "log --all --decorate --oneline --graph";
     };
     pull.rebase = true;
+    rebase.autostash = true;
     color.ui = "auto";
     init.defaultBranch = "main";
     push.autoSetupRemote = true;
