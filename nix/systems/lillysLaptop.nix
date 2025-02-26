@@ -136,6 +136,41 @@
   services.resolved.enable = true;
   programs.gnupg.agent.enable = true;
 
+  # fux vpn connection
+  networking.networkmanager.ensureProfiles = {
+    profiles."wgFux" = {
+      connection = {
+        id = "wgFux";
+        type = "wireguard";
+        autoconnect = false;
+        interface-name = "wgFux";
+        permission = "user:lilly:;";
+      };
+      wireguard = {
+        private-key-flags = 1;
+      };
+      ipv4 = {
+        address1 = "172.17.2.251/26";
+        method = "manual";
+      };
+      ipv6.method = "disabled";
+      "wireguard-peer.bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=" = {
+        allowed-ips = "172.17.2.192/26";
+        endpoint = "vpn.fux-eg.net";
+      };
+    };
+    secrets.entries = [
+      {
+        matchId = "wgFux";
+        matchType = "wireguard";
+        matchSetting = "wireguard";
+        key = "private-key";
+        file = "/run/secrets/wg_fux/privkey";
+      }
+    ];
+  };
+  sops.secrets."wg_fux/privkey" = {};
+
   sops.age.keyFile = "/home/lilly/.config/sops/age/keys.txt";
 
   # DO NOT CHANGE
