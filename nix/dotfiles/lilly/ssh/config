@@ -159,7 +159,7 @@ Host dhcp01.fux-eg.net 172.16.2.7
   HostName 172.16.2.7
   IdentityFile ~/.ssh/id_lilly@fux.pub
 
-Host monitoring.fux-eg.net
+Host status.fux-eg.net
   User noc
   IdentityFile ~/.ssh/id_lilly@fux.pub
 
