@@ -83,6 +83,7 @@
       terraform
       ietf-cli
       sequoia-sq
+      subnetcalc
     ];
 
     programs.fish.shellInit = ''
