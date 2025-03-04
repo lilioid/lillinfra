@@ -21,7 +21,8 @@
         group = "nogroup";
         sopsFile = ../dotfiles/lilly/kubectl/config.secret.yml;
         path = "/home/lilly/.kube/config";
-        format = "binary";
+        key = ""; # force sops-nix to output the whole file and not just extract one key from the yaml content
+        #format = "binary";
       };
       "wg_fux/privkey" = { };
     };

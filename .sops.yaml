@@ -58,10 +58,17 @@ creation_rules:
           - *priv-home-srv
           - *proxy-home
 
-    # generic secrets
+  # specific files
+  - path_regex: "nix/dotfiles/lilly/kubectl/config.secret.yml"
+    encrypted_regex: "^(client-key-data)$"
+    key_groups:
+      - age: [ *lilly ]
+
+  # generic secrets
   - path_regex: "nix/data/secrets/.+.yml"
     key_groups:
       - age: [ *lilly ]
   - path_regex: "dotfiles/.+\\.secret\\..+"
     key_groups:
       - age: [ *lilly ]
+
