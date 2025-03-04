@@ -1,0 +1,14 @@
+# networking
+base-url: "https://ntfy.lly.sh"
+behind-proxy: true
+
+# authentication and authorization
+auth-file: /var/lib/ntfy/auth.sqlite3
+auth-default-access: deny-all
+
+# file storage and retention
+cache-duration: "48h"
+attachment-expiry-duration: "12h"
+cache-file: /var/lib/ntfy/cache.sqlite3
+attachment-cache-dir: /var/lib/ntfy/attachment-cache/
+

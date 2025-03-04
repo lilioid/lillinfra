@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ntfy
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  tls:
+    - secretName: tls-ntfy.lly.sh
+      hosts:
+        - ntfy.lly.sh
+  rules:
+    - host: ntfy.lly.sh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ntfy
+                port:
+                  name: http
