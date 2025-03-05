@@ -134,6 +134,7 @@
   services.printing.enable = true;
   services.earlyoom.enable = true;
   services.resolved.enable = true;
+  services.openssh.enable = true;
   programs.gnupg.agent.enable = true;
 
   # fux vpn connection
@@ -170,8 +171,6 @@
     ];
   };
   sops.secrets."wg_fux/privkey" = {};
-
-  sops.age.keyFile = "/home/lilly/.config/sops/age/keys.txt";
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
