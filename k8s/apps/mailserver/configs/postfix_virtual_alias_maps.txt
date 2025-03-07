@@ -1,3 +1,21 @@
+#
+# Postmaster & Admin stuff
+#
+tenants@lly.sh                  ftsell;tengelke;ssheak;bpermesang;polygon;admin@bit-bots.de
+postmaster@lly.sh               ftsell
+postmaster@ftsell.de            ftsell
+postmaster@timonengelke.de      ftsell
+postmaster@sheaksadi.me         ftsell
+postmaster@bastianpermesang.com ftsell
+postmaster@powolygon.gay        ftsell
+postmaster@critter.codes        ftsell
+postmaster@bit-bots.de          ftsell
+
+
+
+#
+# My own special config
+#
 noreply@lly.sh                  noreply
 @noreply.lly.sh                 noreply
 dmarc-reports@ftsell.de         dmarc-reports
@@ -10,18 +28,11 @@ wg@ftsell.de                    contact@ftsell.de;contact@oleb.it
 li@lly.sh                       ftsell
 @lly.sh                         li@lly.sh
 
-tenants@lly.sh                  ftsell;tengelke;ssheak;bpermesang;polygon;admin@bit-bots.de
 
-contact@timonengelke.de         tengelke
-@timonengelke.de                tengelke
 
-@sheaksadi.me                   ssheak
-
-@bastianpermesang.com           bpermesang
-
-@powolygon.gay                  polygon
-@critter.codes                  polygon
-
+#
+# Bit-Bots special config
+#
 @bit-bots.de                    finn@bit-bots.de
 admin@bit-bots.de               finn@bit-bots.de
 sponsoring@bit-bots.de          bitbots-sponsoring;
@@ -36,3 +47,15 @@ jasper@bit-bots.de              bitbots-jasper
 jessica.jobski@bit-bots.de      Jessica.jobski.rc@dualj.de
 valerie@bit-bots.de             bitbots-valerie
 jan@bit-bots.de                 bitbots@jaagut.de
+
+
+
+#
+# Hosted Tenant Domains
+#
+@timonengelke.de                tengelke
+@sheaksadi.me                   ssheak
+@bastianpermesang.com           bpermesang
+@powolygon.gay                  polygon
+@critter.codes                  polygon
+
