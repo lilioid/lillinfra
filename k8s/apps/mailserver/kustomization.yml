@@ -25,9 +25,5 @@ configMapGenerator:
       - opendkim_domains.txt=configs/opendkim_domains.txt
       - dovecot-extra.passwd=configs/dovecot-extra.passwd
 
-secretGenerator:
-  - name: mailserver
-    files:
-      - opendkim_key.pem=configs/dkim_key.secret.pem
-      - dovecot-oauth2.conf.ext=configs/oauth2.secret.conf
-      - fetchmailrc=configs/fetchmailrc.secret.txt
+generators:
+  - ./secret-generator.yml
