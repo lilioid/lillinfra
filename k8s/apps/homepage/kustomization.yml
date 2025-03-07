@@ -28,7 +28,5 @@ configMapGenerator:
     files:
       - mediamtx.yml=configs/mediamtx.yml
 
-secretGenerator:
-  - name: website-riddles
-    envs:
-      - configs/riddles.secret.env
+generators:
+  - ./secret-generator.yml
