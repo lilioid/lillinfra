@@ -118,6 +118,7 @@
             pre-commit
             show-wg-conf
             show-nixos-diff
+            kustomize-sops
           ];
         };
       });
