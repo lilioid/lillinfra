@@ -1,5 +1,6 @@
 keys:
   - &lilly "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
+  - &argocd "age1j2a8asttv66kkqk4008an46f4apjru9lgm0hxmvuuamlm5ts5f9qmzlx9y"
   - &vpn-srv "age1gvt4lwamnuxmqgp5anhn008ze8kzrq287rn4jpn7k75fvn5ufvfsm73cvx"
   - &mail-srv "age1rhkf95d3ffm9jfw8pskxtaq30lk02awg8ag8nr76wtytemzzuszskxa5ch"
   - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
@@ -81,4 +82,9 @@ creation_rules:
   - path_regex: "dotfiles/.+\\.secret\\..+"
     key_groups:
       - age: [ *lilly ]
+
+  # kubernetes secrets
+  - path_regex: "k8s/.+\\.secret\\..+"
+    key_groups:
+      - age: [ *lilly, *argocd ]
 

@@ -1,19 +1,33 @@
-# replace the existing gpg-keys volume definition to include secret gpg keys as well
-- op: replace
-  path: /spec/template/spec/volumes/2
-  value:
-    name: gpg-keys
-    projected:
-      sources:
-        - secret:
-            name: argocd-gpg-keys
-        - configMap:
-            name: argocd-gpg-keys-cm
-
-
-# set environment variables so that gpg work correctly
-- op: add
-  path: /spec/template/spec/containers/0/env/-
-  value:
-    name: GNUPGHOME
-    value: /app/config/gpg/keys
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+spec:
+  template:
+    spec:
+      volumes:
+        - name: age-keys
+          secret:
+            secretName: age-keys
+      containers:
+        - name: argocd-repo-server
+          env:
+            - name: SOPS_AGE_KEY_FILE
+              value: /app/config/age-keys/keys.txt
+            - name: PATH
+              value: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/argocd/cmp-server/plugins"
+          volumeMounts:
+            - name: age-keys
+              mountPath: /app/config/age-keys
+      initContainers:
+        - name: install-ksops
+          image: docker.io/viaductoss/ksops
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "Installing KSOPS..."
+              mv ksops /plugins/
+              echo "Done."
+          volumeMounts:
+            - mountPath: /plugins
+              name: plugins

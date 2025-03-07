@@ -11,7 +11,6 @@ resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.6/manifests/install.yaml
   - manifests/namespace.yml
   - manifests/ingress.yml
-  - config/repo-creds.secret.yml
   - ./cd-config
 
 patches:
@@ -22,16 +21,15 @@ patches:
       name: argocd-repo-server
     path: manifests/repo-server-gpg.patch.yml
 
-images:
-  - name: quay.io/argoproj/argocd
-    newName: ghcr.io/lilioid/argocd-git-crypt
-
 replicas:
   - name: argocd-dex-server
     count: 0
 
 generatorOptions:
   disableNameSuffixHash: true
+
+generators:
+  - ./secret-generator.yml
 
 # See configuration documentation
 # https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#atomic-configuration
@@ -59,15 +57,3 @@ configMapGenerator:
       behavior: replace
       files:
         - ssh_known_hosts=config/ssh-known-hosts
-        
-
-secretGenerator:
-  - name: argocd-secret
-    behavior: replace
-    envs:
-      - config/argocd.secret.env
-
-  - name: argocd-gpg-keys
-    files:
-      - 5B275C0ADDBDF2F6=config/git-crypt-key.secret.gpg
-
