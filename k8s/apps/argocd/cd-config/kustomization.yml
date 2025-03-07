@@ -5,4 +5,7 @@ namespace: argocd
 resources:
   - projects.yml
   - application-sets.yml
-  - authentik.secret.yml
+
+generators:
+  - ./secret-generator.yml
+
