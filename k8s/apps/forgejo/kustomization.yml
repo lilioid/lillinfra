@@ -20,7 +20,5 @@ configMapGenerator:
     envs:
       - config.env
 
-secretGenerator:
-  - name: forgejo
-    envs:
-      - config.secret.env
+generators:
+  - ./secret-generator.yml
