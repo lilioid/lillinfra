@@ -10,6 +10,8 @@ wg@ftsell.de                    contact@ftsell.de;contact@oleb.it
 li@lly.sh                       ftsell
 @lly.sh                         li@lly.sh
 
+tenants@lly.sh                  ftsell;tengelke;ssheak;bpermesang;polygon;admin@bit-bots.de
+
 contact@timonengelke.de         tengelke
 @timonengelke.de                tengelke
 
