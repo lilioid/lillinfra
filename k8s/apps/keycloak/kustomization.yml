@@ -19,6 +19,9 @@ configMapGenerator:
     envs:
       - config/keycloak.env
 
+generators:
+  - ./secret-generator.yml
+
 secretGenerator:
   - name: keycloak
     envs:
