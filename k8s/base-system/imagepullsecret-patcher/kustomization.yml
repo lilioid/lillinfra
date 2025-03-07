@@ -20,22 +20,5 @@ configMapGenerator:
     envs:
       - config.env
 
-secretGenerator:
-  - name: github-packages-creds
-    type: kubernetes.io/dockerconfigjson
-    options:
-      disableNameSuffixHash: true
-    files:
-      - ".dockerconfigjson=dockerconfig-github.secret.json"
-  - name: dockerhub-creds
-    type: kubernetes.io/dockerconfigjson
-    options:
-      disableNameSuffixHash: true
-    files:
-      - ".dockerconfigjson=dockerconfig-dockerhub.secret.json"
-  - name: own-gitea-creds
-    type: kubernetes.io/dockerconfigjson
-    options:
-      disableNameSuffixHash: true
-    files:
-      - ".dockerconfigjson=dockerconfig-own-gitea.secret.json"
+generators:
+  - ./secret-generator.yml
