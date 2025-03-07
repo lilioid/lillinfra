@@ -22,10 +22,5 @@ configMapGenerator:
     files:
       - sshd_config=config/sshd_config
 
-secretGenerator:
-  - name: cache-signing-keys
-    files:
-      - cache-key.secret.txt=config/cache-key.secret.txt
-  - name: sshd-keys
-    files:
-      - ssh_host_ed25519_key=config/ssh_host_ed25519_key.secret
+generators:
+  - ./secret-generator.yml
