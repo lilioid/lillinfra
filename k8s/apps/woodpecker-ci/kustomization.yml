@@ -25,12 +25,10 @@ replicas:
 configMapGenerator:
   - name: woodpecker-server
     envs:
-      - server.env
+      - config/server.env
   - name: woodpecker-agent
     envs:
-      - agent.env
+      - config/agent.env
 
-secretGenerator:
-  - name: woodpecker-server
-    envs:
-      - server.secret.env
+generators:
+  - ./secret-generator.yml
