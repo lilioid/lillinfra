@@ -13,7 +13,5 @@ configMapGenerator:
     envs:
       - config.env
 
-secretGenerator:
-  - name: renovatebot-config
-    envs:
-      - config.secret.env
+generators:
+  - ./secret-generator.yml
