@@ -6,6 +6,3 @@ resources:
   - projects.yml
   - application-sets.yml
 
-generators:
-  - ./secret-generator.yml
-
