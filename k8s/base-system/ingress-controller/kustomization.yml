@@ -1,38 +1,42 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ingress-nginx
-commonLabels:
-  app.kubernetes.io/part-of: ingress-nginx
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/part-of: ingress-nginx
 
 resources:
   - github.com/kubernetes/ingress-nginx/deploy/static/provider/baremetal?ref=controller-v1.11.3
 
 patches:
-  - target:
+  - path: manifests/ingress-service.patch.yml
+    target:
       kind: Service
       name: ingress-nginx-controller
-    path: manifests/ingress-service.patch.yml
-  - target:
+  - path: manifests/controller-deployment.patch.yml
+    target:
       group: apps
       kind: Deployment
       name: ingress-nginx-controller
-    path: manifests/controller-deployment.patch.yml
-  - target:
+  - path: manifests/ingress-class.patch.yml
+    target:
       group: networking.k8s.io
-      version: v1
       kind: IngressClass
       name: nginx
-    path: manifests/ingress-class.patch.yml
+      version: v1
 
 generatorOptions:
   disableNameSuffixHash: true
 configMapGenerator:
-  - name: ingress-nginx-controller
-    namespace: ingress-nginx
-    behavior: merge
+  - behavior: merge
     envs:
-      - config/config.env
-  - name: custom-headers
+    - config/config.env
+    name: ingress-nginx-controller
     namespace: ingress-nginx
-    envs:
-      - config/headers.env
+
+  - envs:
+    - config/headers.env
+    name: custom-headers
+    namespace: ingress-nginx
