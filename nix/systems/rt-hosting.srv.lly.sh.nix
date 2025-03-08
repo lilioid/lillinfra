@@ -35,14 +35,14 @@ let
       IPv6AcceptRA = false;
     };
     routes =
-        (builtins.map (ip4: {
-          Destination = ip4;
-        }) routedIp4s)
-        ++ [
-          {
-            Destination = "2a10:9902:111:${builtins.toString tenantId}::/64";
-          }
-        ];
+      (builtins.map (ip4: {
+        Destination = ip4;
+      }) routedIp4s)
+      ++ [
+        {
+          Destination = "2a10:9902:111:${builtins.toString tenantId}::/64";
+        }
+      ];
   };
 
 in
@@ -102,13 +102,15 @@ in
       };
 
       # downstream client interfaces
-      "20-vmsLilly" = mkTenantNet "vmsLilly" data.network.tenants.lilly.tenantId [ 
+      "20-vmsLilly" = mkTenantNet "vmsLilly" data.network.tenants.lilly.tenantId [
         "37.153.156.169"
         "37.153.156.170"
       ];
-      "20-vmsBene" = mkTenantNet "vmsBene" data.network.tenants.bene.tenantId ["37.153.156.172"];
-      "20-vmsIsabell" = mkTenantNet "vmsIsabell" data.network.tenants.isabell.tenantId ["37.153.156.175"];
-      "20-vmsTimon" = mkTenantNet "vmsTimon" data.network.tenants.timon.tenantId ["37.153.156.171"];
+      "20-vmsBene" = mkTenantNet "vmsBene" data.network.tenants.bene.tenantId [ "37.153.156.172" ];
+      "20-vmsIsabell" = mkTenantNet "vmsIsabell" data.network.tenants.isabell.tenantId [
+        "37.153.156.175"
+      ];
+      "20-vmsTimon" = mkTenantNet "vmsTimon" data.network.tenants.timon.tenantId [ "37.153.156.171" ];
       "20-vmsNoah" = mkTenantNet "vmsNoah" data.network.tenants.noah.tenantId [ "37.153.156.173" ];
       "20-vmsFux" = mkTenantNet "vmsFux" data.network.tenants.fux.tenantId [ "37.153.156.176" ];
     };
@@ -310,7 +312,7 @@ in
             }
           ];
         }
-        
+
         {
           # network for timon
           name = "timonNet";
@@ -436,7 +438,7 @@ in
         AdvSendAdvert on;
         prefix 2a10:9902:111:15::/64 {};
       };
-      
+
       interface vmsNoah {
         AdvSendAdvert on;
         prefix 2a10:9902:111:16::/64 {};

@@ -16,7 +16,10 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs = {
     forceImportRoot = false;
-    extraPools = [ "fast" "slow" ];
+    extraPools = [
+      "fast"
+      "slow"
+    ];
   };
   boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
   fileSystems = {

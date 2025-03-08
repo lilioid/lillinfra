@@ -7,16 +7,17 @@
   harmonia-oci = pkgs.callPackage ./harmonia-oci.nix { harmonia = self.inputs.harmonia; };
   openssh-oci = pkgs.callPackage ./openssh-oci.nix { };
 
-
   # the kustomize-sops package installs itself as a library by default but we need it to be an executable in PATH
-        kustomize-sops = pkgs.kustomize-sops.overrideAttrs (final: prev: {
-        installPhase = ''
-          mkdir -p $out/bin/
-          mv $GOPATH/bin/kustomize-sops $out/bin/ksops
-        '';
-        meta = prev.meta // {
-          mainProgram = "ksops";
-        };
-      });
+  kustomize-sops = pkgs.kustomize-sops.overrideAttrs (
+    final: prev: {
+      installPhase = ''
+        mkdir -p $out/bin/
+        mv $GOPATH/bin/kustomize-sops $out/bin/ksops
+      '';
+      meta = prev.meta // {
+        mainProgram = "ksops";
+      };
+    }
+  );
 
 }

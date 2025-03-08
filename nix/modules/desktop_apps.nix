@@ -10,7 +10,7 @@
     environment.variables = {
       "XCURSOR_THEME" = "Adwaita";
     };
-    
+
     # fix has already been merged but not yet packaged in nixos
     nixpkgs.config.permittedInsecurePackages = [
       "cinny-4.2.3"

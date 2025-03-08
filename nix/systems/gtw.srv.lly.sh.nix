@@ -38,7 +38,7 @@ in
   networking.useDHCP = false;
   systemd.network = {
     enable = true;
-  
+
     links = {
       "10-ethIntern" = renameLink "BC:24:11:94:E3:C3" "ethExtern";
       "10-ethExtern" = renameLink "BC:24:11:DE:56:03" "ethIntern";

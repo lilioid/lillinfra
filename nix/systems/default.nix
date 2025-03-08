@@ -39,9 +39,7 @@ let
 in
 {
   # exposed hosts at myroot
-  "hosting.srv.lly.sh" =
-    mkSystem "x86_64-unknown-linux-gnu" "hosting.srv.lly.sh"
-      inputs.nixpkgs2411;
+  "hosting.srv.lly.sh" = mkSystem "x86_64-unknown-linux-gnu" "hosting.srv.lly.sh" inputs.nixpkgs2411;
   "rt-hosting.srv.lly.sh" =
     mkSystem "x86_64-unknown-linux-gnu" "rt-hosting.srv.lly.sh"
       inputs.nixpkgs2411;

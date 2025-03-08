@@ -87,7 +87,7 @@
     echo "                      |___/                               |_|                   |_|    "
     echo
     echo "                                 --> found@lly.sh <--                                  "
-  
+
     # Show battery levels
     echo
     echo "Battery level: External $(cat /sys/class/power_supply/BAT1/capacity)%"
@@ -170,7 +170,7 @@
       }
     ];
   };
-  sops.secrets."wg_fux/privkey" = {};
+  sops.secrets."wg_fux/privkey" = { };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible

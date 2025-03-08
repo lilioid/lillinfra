@@ -95,7 +95,10 @@ in
     enable = true;
     device = "/dev/disk/by-id/ata-SAMSUNG_MZ7LN512HAJQ-00000_S3TVNX0R203136";
   };
-  boot.zfs.extraPools = [ "ssd" "hdd" ];
+  boot.zfs.extraPools = [
+    "ssd"
+    "hdd"
+  ];
   fileSystems = {
     "/" = {
       device = "ssd/root";
