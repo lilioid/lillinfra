@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: redis
+      labels: &labels
+        app.kubernetes.io/name: redis
+    spec:
+      selector: *labels
+      ports:
+        - name: redis
+          port: 6379
+          targetPort: redis
+
+  # statefulset
+  - apiVersion: apps/v1
+    kind: StatefulSet
+    metadata:
+      name: redis
+      labels: *labels
+    spec:
+      replicas: 1
+      selector:
+        matchLabels: *labels
+      serviceName: redis
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          automountServiceAccountToken: false
+          containers:
+            - name: redis-server
+              image: docker.io/redis
+              args: [ "--save", "60", "1" ]
+              volumeMounts:
+                - name: redis-data
+                  mountPath: /data
+              ports:
+                - name: redis
+                  containerPort: 6379
+              readinessProbe:
+                tcpSocket:
+                  port: redis
+      volumeClaimTemplates:
+        - metadata:
+            name: redis-data
+            labels: *labels
+          spec:
+            accessModes: [ ReadWriteOnce ]
+            storageClassName: nfs-fast
+            resources:
+              requests:
+                storage: "500M"
+

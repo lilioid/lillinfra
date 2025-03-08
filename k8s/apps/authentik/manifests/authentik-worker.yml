@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: &labels
+    app.kubernetes.io/name: authentik-worker
+    app.kubernetes.io/component: worker
+  name: authentik-worker
+spec:
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels: *labels
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      serviceAccountName: authentik
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: authentik-worker
+          image: ghcr.io/goauthentik/server
+          imagePullPolicy: IfNotPresent
+          args:  [ worker ]
+          envFrom:
+            - configMapRef:
+                name: authentik-env
+            - secretRef:
+                name: authentik-env
+          livenessProbe:
+            exec:
+              command: [ ak, healthcheck ]
+          startupProbe:
+            failureThreshold: 60
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            exec:
+              command: [ ak, healthcheck ]
+
