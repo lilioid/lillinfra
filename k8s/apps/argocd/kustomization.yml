@@ -28,9 +28,6 @@ replicas:
 generatorOptions:
   disableNameSuffixHash: true
 
-generators:
-  - ./secret-generator.yml
-
 # See configuration documentation
 # https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#atomic-configuration
 configMapGenerator:
@@ -57,3 +54,15 @@ configMapGenerator:
       behavior: replace
       files:
         - ssh_known_hosts=config/ssh-known-hosts
+
+secretGenerator:
+  - name: lillinfra-repo-creds
+    options:
+      labels:
+        argocd.argoproj.io/secret-type: repository
+    literals:
+        - "url=git@git.lly.sh:lilly/lillinfra.git"
+
+generators:
+  - ./secret-generator.yml
+
