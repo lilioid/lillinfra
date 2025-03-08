@@ -42,6 +42,12 @@ in
     role = "server";
     clusterInit = false;
     extraFlags = "--disable-helm-controller --disable=traefik --disable=servicelb --disable=local-storage --flannel-backend=vxlan --cluster-cidr 10.42.0.0/16 --service-cidr 10.43.0.0/16 --egress-selector-mode disabled --tls-san=k8s.lly.sh --node-taint node-role.kubernetes.io/control-plane=:NoSchedule";
+    environmentFile = config.sops.secrets."k3s/secret.env".path;
+  };
+
+  sops.secrets."k3s/secret.env" = {
+    restartUnits = [ "k3s.service" ];
+    key = "k3s/secretEnv";
   };
 
   # DO NOT CHANGE

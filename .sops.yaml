@@ -21,9 +21,13 @@ creation_rules:
     key_groups:
       - age: [ *lilly, *vpn-srv ]
 
-  - path_regex: "nix/data/secrets/k8s.yml"
+  - path_regex: "nix/data/secrets/k8s-node.yml"
     key_groups:
       - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv, *k8s-worker2-srv, *mail-srv ]
+
+  - path_regex: "nix/data/secrets/k8s-ctl.srv.myroot.intern.yml"
+    key_groups:
+      - age: [ *lilly, *k8s-ctl-srv ]
 
   - path_regex: "nix/data/secrets/hosting.srv.lly.sh.yml"
     key_groups:

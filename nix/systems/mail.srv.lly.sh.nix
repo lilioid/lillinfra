@@ -60,10 +60,10 @@ in
     role = "agent";
     extraFlags = "--node-taint ip-reputation=mailserver:NoSchedule";
     serverAddr = "https://10.0.10.15:6443";
-    tokenFile = "/run/secrets/k3s/token";
+    tokenFile = config.sops.secrets."k3s/token".path;
   };
   sops.secrets."k3s/token" = {
-    sopsFile = ../data/secrets/k8s.yml;
+    sopsFile = ../data/secrets/k8s-node.yml;
   };
 
   # haproxy (for certificate generation)
