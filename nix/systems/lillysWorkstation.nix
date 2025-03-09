@@ -92,6 +92,7 @@
     tree
     kicad
     makemkv
+    sieve-connect
   ];
 
   # options defined by other custom modules
