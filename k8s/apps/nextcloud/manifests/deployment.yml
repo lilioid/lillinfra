@@ -6,6 +6,8 @@ metadata:
     app.kubernetes.io/name: nextcloud
     app.kubernetes.io/component: server
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels: *labels
   template:
