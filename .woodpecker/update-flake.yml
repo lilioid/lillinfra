@@ -5,12 +5,26 @@ when:
 steps:
   - name: update-flake-inputs
     image: docker.io/nixos/nix
+    backend_options:
+      kubernetes:
+        resources:
+          requests:
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
     commands:
       - nix --extra-experimental-features "nix-command flakes" flake update
 
   # https://woodpecker-ci.org/plugins/Git%20Push
   - name: commit-changes
     image: docker.io/appleboy/drone-git-push
+    backend_options: &small_job_resources
+      kubernetes:
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            memory: 100Mi
     settings:
       branch: update-flake-inputs
       ssh_key:
@@ -25,6 +39,7 @@ steps:
   # https://woodpecker-ci.org/plugins/Gitea%20Create%20Pull%20Request
   - name: create-pr
     image: docker.io/johnwalkerx/gitea-pull-request-create-plugin      
+    backend_options: *small_job_resources
     settings:
       gitea_address: "${CI_FORGE_URL}"
       gitea_token:

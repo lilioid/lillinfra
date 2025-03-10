@@ -1,10 +1,18 @@
+when:
+  # only run when any nix files are modified
+  - event: push
+    path: [ "flake.nix", "flake.lock", "nix/**" ]
+
 steps:
   - name: check flake
-    when:
-      - event: manual
-      - event: push
-        path: [ "flake.nix", "flake.lock", "nix/**" ]
     image: docker.io/nixos/nix
+    backend_options:
+      kubernetes:
+        resources:
+          requests:
+            cpu: "4"
+          limits:
+            memory: "8Gi"
     volumes:
       - woodpecker-cache:/woodpecker/src/cache
     environment:
