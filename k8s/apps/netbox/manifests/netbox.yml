@@ -1,0 +1,157 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: netbox
+      labels: &webserver-labels
+        app.kubernetes.io/name: netbox
+        app.kubernetes.io/component: webserver
+    spec:
+      selector: *webserver-labels
+      ports:
+        - name: http
+          port: 8080
+          targetPort: http
+
+  # storage
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: netbox
+      labels: *webserver-labels
+    spec:
+      storageClassName: nfs-fast
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: 10G
+
+  # webserver
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: netbox
+      labels: *webserver-labels
+    spec:
+      selector:
+        matchLabels: *webserver-labels
+      template:
+        metadata:
+          labels: *webserver-labels
+        spec:
+          enableServiceLinks: false
+          volumes: &volumes
+            - name: data
+              persistentVolumeClaim:
+                claimName: netbox
+            - name: config
+              configMap:
+                name: netbox-config
+          containers:
+            - name: netbox
+              image: docker.io/netboxcommunity/netbox
+              imagePullPolicy: Always
+              envFrom: &envFrom
+                - configMapRef:
+                    name: netbox-env
+                - secretRef:
+                    name: netbox-env
+              volumeMounts: &volumeMounts
+                - name: data
+                  subPath: media
+                  mountPath: /opt/netbox/netbox/media
+                - name: data
+                  subPath: reports
+                  mountPath: /opt/netbox/netbox/reports
+                - name: data
+                  subPath: scripts
+                  mountPath: /opt/netbox/netbox/scripts
+                - name: config
+                  subPath: extra.py
+                  mountPath: /etc/netbox/config/extra.py
+                - name: config
+                  subPath: logging.py
+                  mountPath: /etc/netbox/config/logging.py
+                - name: config
+                  subPath: plugins.py
+                  mountPath: /etc/netbox/config/plugins.py
+              ports:
+                - name: http
+                  containerPort: 8080
+              readinessProbe:
+                httpGet:
+                  port: http
+                  path: /login/
+              resources:
+                requests:
+                  cpu: "100m"
+                limits:
+                  memory: "1Gi"
+
+  # worker
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: netbox-worker
+      labels: &worker-labels
+        app.kubernetes.io/name: netbox
+        app.kubernetes.io/component: worker
+    spec:
+      selector:
+        matchLabels: *worker-labels
+      template:
+        metadata:
+          labels: *worker-labels
+        spec:
+          enableServiceLinks: false
+          volumes: *volumes
+          containers:
+            - name: netbox
+              image: docker.io/netboxcommunity/netbox
+              imagePullPolicy: Always
+              command:
+                - /opt/netbox/venv/bin/python
+                - /opt/netbox/netbox/manage.py
+                - rqworker
+              envFrom: *envFrom
+              volumeMounts: *volumeMounts
+              resources:
+                requests:
+                  cpu: "100m"
+                limits:
+                  memory: "1Gi"
+
+  # housekeeping
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: netbox-housekeeping
+      labels: &housekeeping-labels
+        app.kubernetes.io/name: netbox
+        app.kubernetes.io/component: housekeeping
+    spec:
+      selector:
+        matchLabels: *housekeeping-labels
+      template:
+        metadata:
+          labels: *housekeeping-labels
+        spec:
+          enableServiceLinks: false
+          volumes: *volumes
+          containers:
+            - name: netbox
+              image: docker.io/netboxcommunity/netbox
+              imagePullPolicy: Always
+              command:
+                - /opt/netbox/housekeeping.sh
+              envFrom: *envFrom
+              volumeMounts: *volumeMounts
+              resources:
+                requests:
+                  cpu: "10m"
+                limits:
+                  memory: "200Mi"
