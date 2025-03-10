@@ -14,7 +14,7 @@ def realize_config(revision: str, flake_uri: str, config: str) -> str:
     return subprocess.check_output([
         "nix",
         "--extra-experimental-features",
-        "nix-command",
+        "nix-command flakes",
         "build",
         "--no-link",
         "--print-out-paths",
