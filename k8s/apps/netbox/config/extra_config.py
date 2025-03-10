@@ -2,6 +2,13 @@
 ## This file contains extra configuration options that can't be configured
 ## directly through environment variables.
 ####
+import os
+
+
+REMOTE_AUTH_BACKEND = "social_core.backends.open_id_connect.OpenIdConnectAuth"
+SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = "https://auth.lly.sh/application/o/netbox/"
+SOCIAL_AUTH_OIDC_KEY = "wvEEeiazoykeO9d9QhUoJ25F0LzfAtgVoybDEBUS"
+SOCIAL_AUTH_OIDC_SECRET = os.getenv("OIDC_SECRET")
 
 ## Specify one or more name and email address tuples representing NetBox administrators. These people will be notified of
 ## application errors (assuming correct email settings are provided).
