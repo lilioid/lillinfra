@@ -1,9 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: harmonia
-  labels:
-    app.kubernetes.io/name: harmonia
+  name: attic
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
 spec:
@@ -19,6 +17,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: harmonia
+                name: attic-server
                 port:
                   name: http

@@ -9,18 +9,13 @@ labels:
 
 resources:
   - manifests/namespace.yml
-  - manifests/storage.yml
+  - manifests/attic.yml
   - manifests/ingress.yml
-  - manifests/harmonia.yml
-  - manifests/store-ssh.yml
 
 configMapGenerator:
-  - name: harmonia-config
+  - name: attic-config
     files:
-      - config.toml=config/harmonia-config.toml
-  - name: sshd-config
-    files:
-      - sshd_config=config/sshd_config
+      - config.toml=config/attic-config.toml
 
 generators:
   - ./secret-generator.yml

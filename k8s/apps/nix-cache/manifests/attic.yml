@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: attic-server
+      labels: &labels
+        app.kubernetes.io/name: attic
+    spec:
+      selector: *labels
+      ports:
+        - name: http
+          port: 8080
+          targetPort: http
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: attic-server
+      labels: *labels
+    spec:
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          volumes:
+            - name: store
+              persistentVolumeClaim:
+                claimName: attic-store
+            - name: config
+              configMap:
+                name: attic-config
+          containers:
+            - name: attic-server
+              image: ghcr.io/zhaofengli/attic
+              args:
+                - "--config=/etc/attic/config.toml"
+              env:
+                - name: RUST_LOG
+                  value: DEBUG
+              envFrom:
+                - secretRef:
+                    name: attic-server-env
+              volumeMounts:
+                - name: store
+                  mountPath: /srv/store/
+                - name: config
+                  mountPath: /etc/attic/
+              ports:
+                - name: http
+                  containerPort: 8080
+              readinessProbe:
+                httpGet:
+                  port: http
+                  httpHeaders:
+                    - name: Host
+                      value: babe-do-you-need-anything-from-the-nix.store
+
+  # storage
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: attic-store
+      labels: *labels
+    spec:
+      storageClassName: nfs-slow
+      accessModes: [ ReadWriteMany ]
+      resources:
+        requests:
+          storage: "50G"
+
