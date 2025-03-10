@@ -12,7 +12,7 @@ resources:
   - manifests/rbac.yml
   - manifests/github.deployment.yml
   - manifests/dockerhub.deployment.yml
-  - manifests/own-gitea.deployment.yml
+  - manifests/own-forgejo.deployment.yml
 
 images:
   - name: quay.io/titansoft/imagepullsecret-patcher

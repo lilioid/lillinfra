@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: own-gitea-creds-patcher
+  name: own-forgejo-creds-patcher
   labels: &labels
     app.kubernetes.io/name: imagepullsecret-patcher
-    ftsell.de/imagepullsecret-target: own-gitea-creds
+    ftsell.de/imagepullsecret-target: own-forgejo-creds
 spec:
   replicas: 1   # software does not support HA so replicas are explicitly set to 1
   selector:
@@ -18,7 +18,7 @@ spec:
       volumes:
         - name: src-dockerconfigjson
           secret:
-            secretName: own-gitea-creds
+            secretName: own-forgejo-creds
 
       containers:
         - name: imagepullsecret-patcher
@@ -28,7 +28,7 @@ spec:
                 name: imagepullsecret-patcher
           env:
             - name: CONFIG_SECRETNAME
-              value: own-gitea-creds
+              value: own-forgejo-creds
           volumeMounts:
             - name: src-dockerconfigjson
               mountPath: /app/secrets
