@@ -23,7 +23,7 @@ images:
 
 replicas:
   - name: woodpecker-agent
-    count: 3
+    count: 5
 
 configMapGenerator:
   - name: woodpecker-server
