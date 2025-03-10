@@ -53,6 +53,22 @@ in
     defaultNetwork.settings.dns_enabled = true;
   };
 
+  # prefer routing via the server net because firewall permissions are granted there
+  systemd.network = {
+    enable = true;
+    networks."20-server-net" = {
+      matchConfig.MACAddress = "52:54:00:9f:4c:d9";
+      DHCP = "yes";
+      networkConfig.IPv6AcceptRA = lib.mkDefault true;
+      routes = [
+        {
+          Gateway = "_dhcp4";
+          Metric = 512;
+        }
+      ];
+    };
+  };
+
   networking.firewall.allowedTCPPorts = [
     8000 # paperless web
     8384 # syncthing gui
@@ -265,6 +281,73 @@ in
     ];
     extraOptions = [ "--net=host" ];
   };
+
+  # unifi controller
+  systemd.services."podman-unifi-network-application" = {
+    wantedBy = lib.mkForce [ "encrypted-services.target" ];
+    requires = [ "podman-unifi-mongodb.service" ];
+    after = [ "podman-unifi-mongodb.service" ];
+  };
+  virtualisation.oci-containers.containers."unifi-network-application" = {
+    image = "lscr.io/linuxserver/unifi-network-application";
+    volumes = [
+      "/srv/data/encrypted/unifi-network-application/unifi-data:/config"
+    ];
+    environment = {
+      TZ = "Europe/Berlin";
+      MONGO_USER = "unifi";
+      MONGO_PASS = "unifi";
+      MONGO_HOST = "localhost";
+      MONGO_PORT = "27017";
+      MONGO_DBNAME = "unifi";
+      MONGO_AUTHSOURCE = "admin";
+    };
+    extraOptions = [
+      "--net=host"
+    ];
+  };
+
+  virtualisation.oci-containers.containers."unifi-mongodb" =
+    let
+      initScript = pkgs.writeText "init-mongo.sh" ''
+        #!/bin/bash
+        if which mongosh > /dev/null 2>&1; then
+          mongo_init_bin='mongosh'
+        else
+          mongo_init_bin='mongo'
+        fi
+        "$mongo_init_bin" <<EOF
+        use $MONGO_AUTHSOURCE
+        db.auth("$MONGO_INITDB_ROOT_USERNAME", "$MONGO_INITDB_ROOT_PASSWORD")
+        db.createUser({
+          user: "$MONGO_USER",
+          pwd: "$MONGO_PASS",
+          roles: [
+            { db: "$MONGO_DBNAME", role: "dbOwner" },
+            { db: "''${MONGO_DBNAME}_stat", role: "dbOwner" }
+          ]
+        })
+        EOF
+      '';
+    in
+    {
+      image = "docker.io/mongo:6.0";
+      environment = {
+        MONGO_INITDB_ROOT_USERNAME = "root";
+        MONGO_INITDB_ROOT_PASSWORD = "root";
+        MONGO_USER = "unifi";
+        MONGO_PASS = "unifi";
+        MONGO_DBNAME = "unifi";
+        MONGO_AUTHSOURCE = "admin";
+      };
+      volumes = [
+        "/srv/data/encrypted/unifi-network-application/mongodb:/data/db"
+        "${initScript}:/docker-entrypoint-initdb.d/init-mongo.sh:ro"
+      ];
+      extraOptions = [
+        "--net=host"
+      ];
+    };
 
   # backup config
   custom.backup.rsync-net = {
