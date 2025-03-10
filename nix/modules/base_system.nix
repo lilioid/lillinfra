@@ -21,6 +21,12 @@
       "nix-command"
       "flakes"
     ];
+    substituters = [
+      "https://babe-do-you-need-anything-from-the-nix.store/lillinfra"
+    ];
+    trusted-public-keys = [
+      "lillinfra:2tw1d8pQ4EmiFJ/mEiTUJYFP65txNUpyIBNdnZeqRjY="
+    ];
   };
   nix.gc = {
     automatic = true;
