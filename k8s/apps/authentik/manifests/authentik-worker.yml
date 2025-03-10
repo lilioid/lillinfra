@@ -36,4 +36,9 @@ spec:
             timeoutSeconds: 1
             exec:
               command: [ ak, healthcheck ]
+          resources:
+            requests:
+              cpu: "100m"
+            limits:
+              memory: "1Gi"
 

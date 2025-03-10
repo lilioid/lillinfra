@@ -61,3 +61,8 @@ items:
                 - name: webrtc-tcp
                   containerPort: 30189
                   protocol: TCP
+              resources:
+                request:
+                  memory: "10Mi"
+                limits:
+                  memory: "100Mi"

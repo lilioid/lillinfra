@@ -21,3 +21,8 @@ spec:
           readinessProbe:
             tcpSocket:
               port: redis
+          resources:
+            requests:
+              cpu: "20m"
+            limits:
+              memory: "100Mi"

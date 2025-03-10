@@ -51,7 +51,6 @@ items:
                   path: /healthz
               resources:
                 requests:
-                  cpu: "0.2"
-                  memory: "200M"
+                  cpu: "100m"
                 limits:
-                  memory: "200M"
+                  memory: "200Mi"

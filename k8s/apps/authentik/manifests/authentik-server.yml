@@ -78,6 +78,12 @@ items:
                 httpGet:
                   path: /-/health/live/
                   port: http
+              resources:
+                requests:
+                  cpu: "100m"
+                  memory: "500Mi"
+                limits:
+                  memory: "1Gi"
 
   # PersistentVolumeClaim
   - apiVersion: v1

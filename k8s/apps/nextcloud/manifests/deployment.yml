@@ -39,3 +39,9 @@ spec:
           readinessProbe:
             tcpSocket:
               port: http
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "200Mi"
+            limits:
+              memory: "1Gi"

@@ -61,6 +61,11 @@ items:
                   httpHeaders:
                     - name: Host
                       value: babe-do-you-need-anything-from-the-nix.store
+              resources:
+                requests:
+                  cpu: "10m"
+                limits:
+                  memory: "1Gi"
 
   # storage
   - apiVersion: v1

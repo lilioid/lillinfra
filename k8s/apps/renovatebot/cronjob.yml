@@ -27,3 +27,8 @@ spec:
               volumeMounts:
                 - name: cache
                   mountPath: /tmp/renovate/
+              resources:
+                requests:
+                  cpu: "500m"
+                limits:
+                  memory: "1Gi"

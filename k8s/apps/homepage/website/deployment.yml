@@ -35,6 +35,6 @@ spec:
                   value: ftsell.de
           resources:
             requests:
-              cpu: "0.1"
+              cpu: "100m"
             limits:
-              memory: "200M"
+              memory: "200Mi"

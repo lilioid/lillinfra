@@ -28,3 +28,8 @@ spec:
           readinessProbe:
             httpGet:
               port: http
+          resources:
+            requests:
+              cpu: "10m"
+            limits:
+              memory: "100Mi"

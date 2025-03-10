@@ -77,6 +77,6 @@ items:
                   containerPort: 3000
               resources:
                 requests:
-                  cpu: "0.2"
+                  cpu: "10m"
                 limits:
-                  memory: "50M"
+                  memory: "50Mi"

@@ -55,9 +55,9 @@ items:
                   path: /v1/health
               resources:
                 requests:
-                  cpu: "100m"
+                  cpu: "10m"
                 limits:
-                  memory: "128Mi"
+                  memory: "50Mi"
 
   # storage
   - apiVersion: v1

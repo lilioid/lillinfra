@@ -72,10 +72,10 @@ spec:
               mountPath: /app/data
           resources:
             requests:
-              cpu: "0.2"
-              memory: "300M"
+              cpu: "100m"
+              memory: "500Mi"
             limits:
-              memory: "500M"
+              memory: "1Gi"
 
       initContainers:
         # merge configuration from secret and configmap into one directory
