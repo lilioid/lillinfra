@@ -85,6 +85,7 @@
       ietf-cli
       sequoia-sq
       subnetcalc
+      attic-client
     ];
 
     programs.fish.shellInit = ''
