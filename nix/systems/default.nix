@@ -2,6 +2,10 @@
 let
   mkSystem =
     systemType: name: nixpkgs:
+    let
+      lib = nixpkgs.lib;
+      systemModule = if lib.pathIsDirectory ./${name} then ./${name}/system.nix else ./${name}.nix;
+    in
     nixpkgs.lib.nixosSystem {
       system = builtins.replaceStrings [ "-unknown-" "-gnu" ] [ "-" "" ] systemType;
       specialArgs = inputs;
@@ -19,7 +23,7 @@ let
         ../modules/syncthing.nix
         ../modules/auto_upgrade.nix
         ../modules/mail_relay.nix
-        ./${name}.nix
+        systemModule
 
         (
           let

@@ -79,9 +79,9 @@ in
     6789 # unifi network application (mobile throughput test)
   ];
   networking.firewall.allowedUDPPorts = [
-    3478  # unifi network application (STUN)
-    1900  # unifi network application (controller discovery)    
-    5514  # unifi network application (remote syslog)
+    3478 # unifi network application (STUN)
+    1900 # unifi network application (controller discovery)
+    5514 # unifi network application (remote syslog)
     10001 # unifi network application (AP Discovery)
   ];
 
