@@ -75,6 +75,14 @@ in
     3001 # immich server
     8123 # home assistant
     1883 # mqtt server (exposed so that tasmota devices can access it)
+    8080 # unifi network application (web interface)
+    6789 # unifi network application (mobile throughput test)
+  ];
+  networking.firewall.allowedUDPPorts = [
+    3478  # unifi network application (STUN)
+    1900  # unifi network application (controller discovery)    
+    5514  # unifi network application (remote syslog)
+    10001 # unifi network application (AP Discovery)
   ];
 
   systemd.targets."encrypted-services" = {
