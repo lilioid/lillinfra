@@ -4,6 +4,7 @@ metadata:
   name: netbox
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
   tls:
     - secretName: tls-netbox.lly.sh
