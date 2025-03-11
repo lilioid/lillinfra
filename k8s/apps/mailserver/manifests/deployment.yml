@@ -23,6 +23,7 @@ spec:
           value: "mailserver"
 
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
 
       volumes:
         - name: conf
