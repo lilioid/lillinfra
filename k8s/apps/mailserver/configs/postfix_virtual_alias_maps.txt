@@ -1,15 +1,15 @@
 #
 # Postmaster & Admin stuff
 #
-tenants@lly.sh                  ftsell;tengelke;ssheak;bpermesang;polygon;admin@bit-bots.de
-postmaster@lly.sh               ftsell
-postmaster@ftsell.de            ftsell
-postmaster@timonengelke.de      ftsell
-postmaster@sheaksadi.me         ftsell
-postmaster@bastianpermesang.com ftsell
-postmaster@powolygon.gay        ftsell
-postmaster@critter.codes        ftsell
-postmaster@bit-bots.de          ftsell
+tenants@lly.sh                  lilly;tengelke;ssheak;bpermesang;polygon;admin@bit-bots.de
+postmaster@lly.sh               lilly
+postmaster@ftsell.de            lilly
+postmaster@timonengelke.de      lilly
+postmaster@sheaksadi.me         lilly
+postmaster@bastianpermesang.com lilly
+postmaster@powolygon.gay        lilly
+postmaster@critter.codes        lilly
+postmaster@bit-bots.de          lilly
 
 
 
@@ -19,14 +19,11 @@ postmaster@bit-bots.de          ftsell
 noreply@lly.sh                  noreply
 @noreply.lly.sh                 noreply
 dmarc-reports@ftsell.de         dmarc-reports
+dmarc-reports@lly.sh            dmarc-reports
 
-hi@ftsell.de                    ftsell
-wg@ftsell.de                    contact@ftsell.de;contact@oleb.it
-@ftsell.de                      hi@ftsell.de
-@finn-thorben.me                hi@ftsell.de
-
-li@lly.sh                       ftsell
-@lly.sh                         li@lly.sh
+@lly.sh                         lilly
+@ftsell.de                      lilly
+@finn-thorben.me                lilly
 
 
 
@@ -43,7 +40,7 @@ info@bit-bots.de                jan@bit-bots.de;
     jasper.gueldenstein@uni-hamburg.de;
     baz1652@studium.uni-hamburg.de
     valerie@bit-bots.de
-lilly@bit-bots.de               ftsell
+lilly@bit-bots.de               lilly
 jasper@bit-bots.de              bitbots-jasper
 jessica.jobski@bit-bots.de      Jessica.jobski.rc@dualj.de
 valerie@bit-bots.de             bitbots-valerie

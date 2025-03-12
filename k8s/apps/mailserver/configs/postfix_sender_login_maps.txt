@@ -1,9 +1,9 @@
 @noreply.lly.sh             noreply
 noreply@lly.sh              noreply
 
-@ftsell.de                  ftsell
-@finn-thorben.me            ftsell
-@lly.sh                     ftsell
+@ftsell.de                  lilly
+@finn-thorben.me            lilly
+@lly.sh                     lilly
 @timonengelke.de            tengelke
 @sheaksadi.me               ssheak
 @bastianpermesang.com       bpermesang
@@ -11,8 +11,8 @@ noreply@lly.sh              noreply
 @powolygon.gay              polygon
 @critter.codes              polygon
 
-finn@bit-bots.de            ftsell
+lilly@bit-bots.de           lilly
 jasper@bit-bots.de          bitbots-jasper
-info@bit-bots.de            ftsell,bitbots-jasper,bitbots-sponsoring,bitbots-valerie
+info@bit-bots.de            lilly,bitbots-jasper,bitbots-sponsoring,bitbots-valerie
 sponsoring@bit-bots.de      bitbots-sponsoring,bitbots-valerie
 valerie@bit-bots.de         bitbots-valerie
