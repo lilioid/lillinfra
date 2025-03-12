@@ -49,7 +49,7 @@ in
       443 # https
       11334 # rspamd web port (since mailserver runs in hostNetwork kubernetes sometimes uses the node's ip address to connect to it)
     ];
-    interfaces."enp8s0".allowedUDPPorts = [
+    allowedUDPPorts = [
       8472 # k8s flannel vxlan
     ];
   };
