@@ -58,7 +58,7 @@ in
   services.k3s = {
     enable = true;
     role = "agent";
-    extraFlags = "--node-taint ip-reputation=mailserver:NoSchedule --node-ip=10.0.10.12 --node-external-ip=37.153.156.170 --node-external-dns=mail.srv.lly.sh";
+    extraFlags = "--node-taint ip-reputation=mailserver:NoSchedule --node-ip=10.0.10.12 --node-external-ip=10.0.10.12";
     serverAddr = "https://10.0.10.15:6443";
     tokenFile = config.sops.secrets."k3s/token".path;
   };

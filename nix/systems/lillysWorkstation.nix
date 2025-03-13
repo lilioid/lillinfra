@@ -124,6 +124,7 @@
   services.earlyoom.enable = true;
   programs.gnupg.agent.enable = true;
   services.resolved.enable = true;
+  services.cookied.enable = true;
   hardware.sane = {
     enable = true;
     extraConfig."epson2" = ''

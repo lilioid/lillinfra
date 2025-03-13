@@ -67,6 +67,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
+
+    # cookied (not yet merged in nixpkgs)
+    cookied = {
+      url = "git+https://codeberg.org/lilly/cookied.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -75,6 +81,7 @@
       nixpkgs,
       systems,
       treefmt-nix,
+      cookied,
       ...
     }:
     let
@@ -83,7 +90,7 @@
         system:
         import nixpkgs {
           inherit system;
-          overlays = [ self.overlays.default ];
+          overlays = [ self.overlays.default cookied.overlays.default ];
         };
       # helper to iterate over all supported systems, passing the corresponding nixpkgs set
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f (mkPkgs system));
@@ -91,7 +98,7 @@
       treefmtEval = pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
     in
     {
-      nixosConfigurations = import ./nix/systems { inherit inputs self; };
+      nixosConfigurations = import ./nix/systems { flake = self; };
       overlays.default =
         final: prev:
         import ./nix/packages {
