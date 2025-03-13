@@ -60,14 +60,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # harmonia - private binary nix cache implementation
-    # https://github.com/nix-community/harmonia.git
-    harmonia = {
-      url = "github:nix-community/harmonia?ref=harmonia-v2.0.1";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-    };
-
     # cookied (not yet merged in nixpkgs)
     cookied = {
       url = "git+https://codeberg.org/lilly/cookied.git";
