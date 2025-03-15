@@ -87,10 +87,10 @@ items:
                   args:
                     - |
                       set -e
-                      runuser --user=www-data /var/www/html/occ db:add-missing-columns
-                      runuser --user=www-data /var/www/html/occ db:add-missing-indices
-                      runuser --user=www-data /var/www/html/occ db:add-missing-primary-keys
-                      runuser --user=www-data /var/www/html/occ maintenance:repair --include-expensive
+                      runuser --user=www-data -- /var/www/html/occ db:add-missing-columns
+                      runuser --user=www-data -- /var/www/html/occ db:add-missing-indices
+                      runuser --user=www-data -- /var/www/html/occ db:add-missing-primary-keys
+                      runuser --user=www-data -- /var/www/html/occ maintenance:repair --include-expensive
                   env:
                     - name: PHP_UPLOAD_LIMIT
                       value: 2G
