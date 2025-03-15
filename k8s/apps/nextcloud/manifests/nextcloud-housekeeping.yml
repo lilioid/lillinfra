@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: List
+items:
+
+  # execute nextcloud cron.php every 10 minutes
+  - apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      name: nextcloud-cron
+      labels: &labels
+        app.kubernetes.io/name: nextcloud
+        app.kubernetes.io/component: cron
+    spec:
+      schedule: "*/10 * * * *"
+      concurrencyPolicy: Forbid
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 1
+      jobTemplate:
+        metadata:
+          labels: *labels
+        spec: # job spec
+          backoffLimit: 0
+          template: # pod template
+            metadata:
+              labels: *labels
+            spec: # pod spec
+              restartPolicy: Never
+              securityContext:
+                fsGroup: 2000
+              volumes:
+                - name: installation
+                  persistentVolumeClaim:
+                    claimName: nextcloud
+              containers:
+                - name: cron
+                  image: docker.io/nextcloud
+                  imagePullPolicy: Always
+                  command: [ "runuser", "--user=www-data", "php", "/var/www/html/cron.php" ]
+                  env:
+                    - name: PHP_UPLOAD_LIMIT
+                      value: 2G
+                    - name: OVERWRITEPROTOCOL
+                      value: https
+                  volumeMounts:
+                    - name: installation
+                      mountPath: /var/www/html
+                  resources:
+                    requests:
+                      cpu: "100m"
+                    limits:
+                      memory: "200Mi"
+
+  # execute more expensive migration and housekeeping tasks once a day at night
+  - apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      name: nextcloud-maintenance
+      labels: &maintenance_labels
+        app.kubernetes.io/name: nextcloud
+        app.kubernetes.io/component: maintenance
+    spec:
+      schedule: "0 4 * * *"
+      concurrencyPolicy: Forbid
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 1
+      jobTemplate:
+        metadata:
+          labels: *maintenance_labels
+        spec: # job spec
+          backoffLimit: 2
+          template: # pod template
+            metadata:
+              labels: *maintenance_labels
+            spec: # pod spec
+              restartPolicy: Never
+              securityContext:
+                fsGroup: 2000
+              volumes:
+                - name: installation
+                  persistentVolumeClaim:
+                    claimName: nextcloud
+              containers:
+                - name: cron
+                  image: docker.io/nextcloud
+                  imagePullPolicy: Always
+                  command: [ "bash", "-c" ]
+                  args:
+                    - |
+                      set -e
+                      runuser --user=www-data /var/www/html/occ db:add-missing-columns
+                      runuser --user=www-data /var/www/html/occ db:add-missing-indices
+                      runuser --user=www-data /var/www/html/occ db:add-missing-primary-keys
+                      runuser --user=www-data /var/www/html/occ maintenance:repair --include-expensive
+                  env:
+                    - name: PHP_UPLOAD_LIMIT
+                      value: 2G
+                    - name: OVERWRITEPROTOCOL
+                      value: https
+                  volumeMounts:
+                    - name: installation
+                      mountPath: /var/www/html
+                  resources:
+                    requests:
+                      cpu: "100m"
+                    limits:
+                      memory: "200Mi"

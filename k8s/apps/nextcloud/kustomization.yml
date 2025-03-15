@@ -12,7 +12,7 @@ resources:
   - manifests/storage.yml
   - manifests/ingress.yml
   - manifests/nextcloud-server.yml
-  #- manifests/nextcloud-cron.yml
+  - manifests/nextcloud-housekeeping.yml
   - manifests/redis.yml
 
 images:
