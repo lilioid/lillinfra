@@ -4,8 +4,7 @@ metadata:
   name: nextcloud
 spec:
   storageClassName: nfs-fast
-  accessModes:
-    - ReadWriteOnce
+  accessModes: [ ReadWriteMany ]
   resources:
     requests:
       storage: 30G
