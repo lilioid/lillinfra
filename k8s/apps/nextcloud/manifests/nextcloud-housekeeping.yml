@@ -34,7 +34,7 @@ items:
               containers:
                 - name: cron
                   image: docker.io/nextcloud
-                  imagePullPolicy: Always
+                  imagePullPolicy: IfNotPresent
                   command: [ "runuser", "--user=www-data", "php", "/var/www/html/cron.php" ]
                   env:
                     - name: PHP_UPLOAD_LIMIT
