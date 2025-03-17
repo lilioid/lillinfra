@@ -13,6 +13,7 @@ steps:
             cpu: "4"
           limits:
             memory: "8Gi"
+            ephemeral-storage: "4Gi"
     volumes:
       - woodpecker-cache:/woodpecker/src/cache
     environment:
