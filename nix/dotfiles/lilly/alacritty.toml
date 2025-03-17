@@ -1,0 +1,6 @@
+# ref: https://alacritty.org/config-alacritty.html
+[window]
+title = "Alakitty"
+
+[colors]
+

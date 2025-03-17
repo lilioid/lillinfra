@@ -41,6 +41,12 @@ in
       programs.wezterm.extraConfig = lib.mkIf hasDesktop (
         builtins.readFile ../dotfiles/lilly/wezterm.lua
       );
+
+      programs.alacritty = {
+        enable = true;
+        settings = lib.importTOML ../dotfiles/lilly/alacritty.toml;
+      };
+      
       xdg.mimeApps = lib.mkIf hasDesktop (import ../dotfiles/lilly/mimeapps.nix);
       xdg.configFile."mimeapps.list" = lib.mkIf hasDesktop { force = true; };
       home.file = {
