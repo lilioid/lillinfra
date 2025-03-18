@@ -27,6 +27,7 @@ items:
               restartPolicy: Never
               securityContext:
                 fsGroup: 2000
+                fsGroupChangePolicy: OnRootMismatch
               volumes:
                 - name: installation
                   persistentVolumeClaim:
@@ -75,6 +76,7 @@ items:
               restartPolicy: Never
               securityContext:
                 fsGroup: 2000
+                fsGroupChangePolicy: OnRootMismatch
               volumes:
                 - name: installation
                   persistentVolumeClaim:

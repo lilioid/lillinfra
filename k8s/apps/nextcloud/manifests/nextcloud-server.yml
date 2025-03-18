@@ -35,6 +35,7 @@ items:
 
           securityContext:
             fsGroup: 2000
+            fsGroupChangePolicy: OnRootMismatch
 
           volumes:
             - name: installation
