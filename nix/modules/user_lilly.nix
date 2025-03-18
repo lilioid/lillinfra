@@ -41,12 +41,11 @@ in
       programs.wezterm.extraConfig = lib.mkIf hasDesktop (
         builtins.readFile ../dotfiles/lilly/wezterm.lua
       );
-
-      programs.alacritty = {
+      programs.kitty = lib.mkIf hasDesktop {
         enable = true;
-        settings = lib.importTOML ../dotfiles/lilly/alacritty.toml;
+        settings = import ../dotfiles/lilly/kitty.nix;
+        shellIntegration.enableFishIntegration = true;
       };
-      
       xdg.mimeApps = lib.mkIf hasDesktop (import ../dotfiles/lilly/mimeapps.nix);
       xdg.configFile."mimeapps.list" = lib.mkIf hasDesktop { force = true; };
       home.file = {
