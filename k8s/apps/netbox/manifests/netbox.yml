@@ -154,4 +154,4 @@ items:
                 requests:
                   cpu: "10m"
                 limits:
-                  memory: "200Mi"
+                  memory: "500Mi"
