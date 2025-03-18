@@ -43,4 +43,4 @@ items:
                 requests:
                   cpu: "20m"
                 limits:
-                  memory: "100Mi"
+                  memory: "300Mi"
