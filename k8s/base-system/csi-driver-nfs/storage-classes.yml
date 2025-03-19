@@ -12,6 +12,8 @@ items:
       server: 10.0.10.14
       share: /srv/hdd/k8s
       subDir: "${pvc.metadata.namespace}--${pvc.metadata.name}--${pv.metadata.name}"
+    mountOptions:
+      - nconnect=2
     reclaimPolicy: Delete
     volumeBindingMode: Immediate
     allowVolumeExpansion: true
