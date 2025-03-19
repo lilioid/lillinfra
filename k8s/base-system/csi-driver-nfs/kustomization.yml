@@ -8,9 +8,9 @@ labels:
       app.kubernetes.io/part-of: csi-driver-nfs
 
 resources:
-  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.10.0/deploy/rbac-csi-nfs.yaml"
-  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.10.0/deploy/csi-nfs-driverinfo.yaml"
-  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.10.0/deploy/csi-nfs-controller.yaml"
-  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.10.0/deploy/csi-nfs-node.yaml"
+  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.11.0/deploy/rbac-csi-nfs.yaml"
+  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.11.0/deploy/csi-nfs-driverinfo.yaml"
+  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.11.0/deploy/csi-nfs-controller.yaml"
+  - "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/refs/tags/v4.11.0/deploy/csi-nfs-node.yaml"
   - namespace.yml
   - storage-classes.yml
