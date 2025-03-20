@@ -18,9 +18,15 @@
     ]
   );
   settings = {
-    theme = "base16_default_light";
+    theme = "base16_custom";
     editor = {
       bufferline = "always";
     };
+  };
+  themes = {
+    base16_custom = {
+      inherits = "base16_default";
+      "ui.cursor" = { modifiers = [ "reversed" ] ;};
+     };
   };
 }
