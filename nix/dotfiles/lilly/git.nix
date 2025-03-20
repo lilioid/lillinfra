@@ -50,6 +50,7 @@
       li@lly.sh,dev@ftsell.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPohjBYcg4GR9hKH6vdT5V2OA+rpTBkDOJZzipnotpR+
     ''}";
     commit.gpgsign = true;
+    commit.verbose = true;
     tag.gpgsign = true;
   };
   includes =
