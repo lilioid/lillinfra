@@ -9,13 +9,8 @@ matrix:
     - lillysWorkstation
     - lillysLaptop
 
-# perform clone with depth=10 so that the source and target branch are known to git
-clone:
-  git:
-    image: woodpeckerci/plugin-git
-    settings:
-      partial: false
-      depth: 10
+# don't clone the repo because nix can use git references
+skip_clone: true
 
 steps:
   - name: render-diff
@@ -28,5 +23,5 @@ steps:
           limits:
             memory: "8Gi"
     commands:
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run ".#show-nixos-diff" -- --flake "$(pwd)" "${CI_COMMIT_BRANCH}" "${CI_COMMIT_SOURCE_BRANCH}" "${SYSTEM_CONFIG}" > diff.txt
+      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run "git+${CI_REPO_CLONE_URL}#show-nixos-diff" -- --flake "git+${CI_REPO_CLONE_URL}" "${CI_COMMIT_BRANCH}" "${CI_COMMIT_SOURCE_BRANCH}" "${SYSTEM_CONFIG}" > diff.txt
       - cat diff.txt
