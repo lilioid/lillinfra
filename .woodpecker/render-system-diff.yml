@@ -1,8 +1,9 @@
 when:
-  # trigger only on PRs created by ./update-flake.yml
-  - event: pull_request
-    branch: main
-    evaluate: "CI_COMMIT_SOURCE_BRANCH == 'update-flake-inputs'"
+  - evaluate: |
+      // Trigger when the update-flake-inputs PR is created
+      (CI_PIPELINE_EVENT == "pull_request" and CI_COMMIT_SOURCE_BRANCH == "update-flake-inputs")ß
+      // Also trigger when relevant nix files are changed
+      or any(CI_PIPELINE_FILES, # matches "^(flake.lock)|(flake.nix)|(nix/systems/.+)$")
 
 matrix:
   SYSTEM_CONFIG:
@@ -20,4 +21,5 @@ steps:
           limits:
             memory: "8Gi"
     commands:
-      - nix --extra-experimental-features "nix-command flakes" run ".#show-nixos-diff" -- --flake "$(pwd)" "${CI_COMMIT_BRANCH}" "${CI_COMMIT_SOURCE_BRANCH}" "${SYSTEM_CONFIG}"
+      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run ".#show-nixos-diff" -- --flake "$(pwd)" "${CI_COMMIT_BRANCH}" "${CI_COMMIT_SOURCE_BRANCH}" "${SYSTEM_CONFIG}" > diff.txt
+      - cat diff.txt
