@@ -18,6 +18,7 @@ def realize_configs(rev_a: str, rev_b: str, flake_uri: str, config: str) -> (str
         "build",
         "--no-link",
         "--print-out-paths",
+        "--accept-flake-config",
         f"{flake_uri}?ref={rev_a}#nixosConfigurations.\"{config}\".config.system.build.toplevel",
         f"{flake_uri}?ref={rev_b}#nixosConfigurations.\"{config}\".config.system.build.toplevel",
     ], encoding="UTF-8").splitlines()
