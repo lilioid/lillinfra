@@ -8,7 +8,7 @@ labels:
       app.kubernetes.io/part-of: ingress-nginx
 
 resources:
-  - github.com/kubernetes/ingress-nginx/deploy/static/provider/baremetal?ref=controller-v1.11.3
+  - github.com/kubernetes/ingress-nginx/deploy/static/provider/baremetal?ref=controller-v1.12.1
 
 patches:
   - path: manifests/ingress-service.patch.yml
