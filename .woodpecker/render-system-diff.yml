@@ -9,6 +9,14 @@ matrix:
     - lillysWorkstation
     - lillysLaptop
 
+# perform clone with depth=10 so that the source and target branch are known to git
+clone:
+  git:
+    image: woodpeckerci/plugin-git
+    settings:
+      partial: false
+      depth: 10
+
 steps:
   - name: render-diff
     image: docker.io/nixos/nix
