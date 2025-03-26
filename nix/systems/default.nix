@@ -52,9 +52,7 @@ in
 {
   # exposed hosts at myroot
   "hosting.srv.lly.sh" = mkSystem "x86_64-linux" "hosting.srv.lly.sh" flake.inputs.nixpkgs2411;
-  "rt-hosting.srv.lly.sh" =
-    mkSystem "x86_64-linux" "rt-hosting.srv.lly.sh"
-      flake.inputs.nixpkgs2411;
+  "rt-hosting.srv.lly.sh" = mkSystem "x86_64-linux" "rt-hosting.srv.lly.sh" flake.inputs.nixpkgs2411;
   "mail.srv.lly.sh" = mkSystem "x86_64-linux" "mail.srv.lly.sh" flake.inputs.nixpkgs2411;
   "gtw.srv.lly.sh" = mkSystem "x86_64-linux" "gtw.srv.lly.sh" flake.inputs.nixpkgs2411;
 
@@ -68,20 +66,12 @@ in
   "k8s-worker2.srv.myroot.intern" =
     mkSystem "x86_64-linux" "k8s-worker2.srv.myroot.intern"
       flake.inputs.nixpkgs2411;
-  "vpn.srv.myroot.intern" =
-    mkSystem "x86_64-linux" "vpn.srv.myroot.intern"
-      flake.inputs.nixpkgs2411;
-  "nas.srv.myroot.intern" =
-    mkSystem "x86_64-linux" "nas.srv.myroot.intern"
-      flake.inputs.nixpkgs2411;
+  "vpn.srv.myroot.intern" = mkSystem "x86_64-linux" "vpn.srv.myroot.intern" flake.inputs.nixpkgs2411;
+  "nas.srv.myroot.intern" = mkSystem "x86_64-linux" "nas.srv.myroot.intern" flake.inputs.nixpkgs2411;
 
   # servers at home
-  "priv.srv.home.intern" =
-    mkSystem "aarch64-linux" "priv.srv.home.intern"
-      flake.inputs.nixpkgs2411;
-  "proxy.srv.home.intern" =
-    mkSystem "aarch64-linux" "proxy.srv.home.intern"
-      flake.inputs.nixpkgs2411;
+  "priv.srv.home.intern" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs2411;
+  "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs2411;
 
   # private systems
   lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2411;

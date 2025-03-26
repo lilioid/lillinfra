@@ -1,6 +1,11 @@
 {
   description = "lillinfra - lillys infrastructure configuration";
 
+  nixConfig = {
+    extra-substituters = [ "https://babe-do-you-need-anything-from-the-nix.store/lillinfra" ];
+    extra-trusted-public-keys = [ "lillinfra:2tw1d8pQ4EmiFJ/mEiTUJYFP65txNUpyIBNdnZeqRjY=" ];
+  };
+
   inputs = {
     # nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
@@ -82,7 +87,10 @@
         system:
         import nixpkgs {
           inherit system;
-          overlays = [ self.overlays.default cookied.overlays.default ];
+          overlays = [
+            self.overlays.default
+            cookied.overlays.default
+          ];
         };
       # helper to iterate over all supported systems, passing the corresponding nixpkgs set
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f (mkPkgs system));

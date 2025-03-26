@@ -26,7 +26,9 @@
   themes = {
     base16_custom = {
       inherits = "base16_default";
-      "ui.cursor" = { modifiers = [ "reversed" ] ;};
-     };
+      "ui.cursor" = {
+        modifiers = [ "reversed" ];
+      };
+    };
   };
 }
