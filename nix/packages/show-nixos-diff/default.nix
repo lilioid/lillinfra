@@ -5,7 +5,7 @@
 }:
 python3.pkgs.buildPythonApplication {
   name = "show-nixos-diff";
-  version = "1.0.3";
+  version = "1.0.4";
   src = ./.;
   pyproject = false;
   propagatedBuildInputs = with pkgs; [
