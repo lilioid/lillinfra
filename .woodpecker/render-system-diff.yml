@@ -1,9 +1,8 @@
 when:
-  - evaluate: |
-      // Trigger when the update-flake-inputs PR is created
-      (CI_PIPELINE_EVENT == "pull_request" and CI_COMMIT_SOURCE_BRANCH == "update-flake-inputs")ß
-      // Also trigger when relevant nix files are changed
-      or any(CI_PIPELINE_FILES, # matches "^(flake.lock)|(flake.nix)|(nix/systems/.+)$")
+  # only trigger on the update-flake pull request because only there, creating comments makes sense
+  - event: pull_request
+    evaluate: >-
+      CI_COMMIT_SOURCE_BRANCH == "update-flake-inputs"
 
 matrix:
   SYSTEM_CONFIG:
