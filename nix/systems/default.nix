@@ -23,6 +23,7 @@ let
         ../modules/syncthing.nix
         ../modules/auto_upgrade.nix
         ../modules/mail_relay.nix
+        ../modules/gaming.nix
         systemModule
 
         (

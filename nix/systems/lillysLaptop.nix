@@ -104,6 +104,7 @@
       enable = true;
       repoPath = "./backups/private-systems";
     };
+    gaming.enable = true;
   };
 
   # additional packages
