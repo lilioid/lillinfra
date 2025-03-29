@@ -96,23 +96,25 @@ Host bits
   HostName www2.informatik.uni-hamburg.de
   ProxyJump bits@rzssh1.informatik.uni-hamburg.de
 
-Host fs5.informatik.uni-hamburg.de
-  User finn
-  ProxyJump fs4.informatik.uni-hamburg.de
-
 Host fs4.informatik.uni-hamburg.de
-  User finn
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@mafiasi.pub
+  
+Host fs5.informatik.uni-hamburg.de
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@mafiasi.pub
 
 Host fs6.informatik.uni-hamburg.de
-  User finn
-  ProxyJump rzssh1.informatik.uni-hamburg.de
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@mafiasi.pub
 
 Host fs7.informatik.uni-hamburg.de
-  User finn
-  ProxyJump rzssh1.informatik.uni-hamburg.de
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@mafiasi.pub
 
 Host monitoring.mafiasi.de
-  User finn
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@mafiasi.pub
 
 Host netsec-teaching
   User teaching
