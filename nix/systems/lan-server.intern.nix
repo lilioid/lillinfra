@@ -51,8 +51,8 @@
   networking.useDHCP = false;
   systemd.network = {
     enable = true;
-    networks.enp1s0 = {
-      matchConfig.MACAddress = "98:b7:85:1f:a3:7a";
+    networks."10-default-ether" = {
+      matchConfig.Type = "ether";
       bridge = [ "brLAN" ];
     };
     netdevs.brLAN = {

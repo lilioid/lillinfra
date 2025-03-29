@@ -1,11 +1,15 @@
 #/usr/bin/env bash
 set -euo pipefail
 
+ACTION=$1
+CONNECT=$2
+SYSTEM=$3
+
 set -x
-exec nixos-rebuild $1 \
+exec nixos-rebuild "$ACTION" \
   --use-substitutes \
   --fast \
   --use-remote-sudo \
-  --target-host "$2" \
-  --flake ".#$2"
+  --target-host "$CONNECT" \
+  --flake ".#$SYSTEM"
 
