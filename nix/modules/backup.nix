@@ -79,6 +79,7 @@ in
         "/home/*/.local/share/containers"
         "/home/*/.local/share/virtualenvs"
         "/home/*/.local/share/JetBrains/Toolbox/apps/"
+        "/home/*/.local/share/Steam/"
         "/home/*/Downloads"
         "/home/*/Games"
         "/home/*/.cache"
