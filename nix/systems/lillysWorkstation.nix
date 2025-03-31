@@ -100,6 +100,7 @@
     gnomeDesktop.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
+    gaming.enable = true;
     backup.rsync-net = {
       enable = true;
       repoPath = "./backups/private-systems";
