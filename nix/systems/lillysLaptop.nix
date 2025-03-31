@@ -9,7 +9,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    # lanzaboote.nixosModules.lanzaboote
+    lanzaboote.nixosModules.lanzaboote
     # ../modules/vpn_client.nix
   ];
 
@@ -60,14 +60,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
     # lanzaboote is currently implemented as an alternative option to systemd-boot
-    enable = lib.mkForce true;
+    enable = lib.mkForce false;
     configurationLimit = 10;
     editor = false;
   };
-  # boot.lanzaboote = {
-  #   enable = true;
-  #   pkiBundle = "/etc/secureboot";
-  # };
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/etc/secureboot";
+  };
 
   # custom battery indicator on boot
   boot.initrd.kernelModules = [ "thinkpad_acpi" ];
@@ -90,8 +90,7 @@
 
     # Show battery levels
     echo
-    echo "Battery level: External $(cat /sys/class/power_supply/BAT1/capacity)%"
-    echo "               Internal $(cat /sys/class/power_supply/BAT0/capacity)%"
+    echo "Battery level: $(cat /sys/class/power_supply/BAT0/capacity)%"
     echo
   '';
 
