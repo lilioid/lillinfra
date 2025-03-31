@@ -13,7 +13,7 @@ keys:
   - &rt-hosting "age1dlc688a6mm60vva8w4g0jfyjz3mx4sgjl65zewsrdjl0dgp025jsg5ac2g"
   - &priv-home-srv "age1nww3jxah80k2he6ur8gmzywx7hradf3cnyfshfzzd4rcp62kxsasw58phj"
   - &proxy-home "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
-  - &lillysLaptop "age1hn3ph2k4c37ndecy37zyvu4lhtk058xe7tkhnxdjry64wemcwc9q5s4ynp"
+  - &lillysLaptop "age1c3nxgz600s2pek704psnfns0vnz2jryyctlv6syrgs0n89jjyaksxtr5tx"
   - &lillysWorkstation "age1gu9536rsmf73ymqrnvv0emse85xwg22cdpy33jwfea395vt25spq67cdz2"
 creation_rules:
   # per-host secrets
