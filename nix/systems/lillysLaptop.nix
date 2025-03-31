@@ -9,39 +9,39 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    lanzaboote.nixosModules.lanzaboote
-    ../modules/vpn_client.nix
+    # lanzaboote.nixosModules.lanzaboote
+    # ../modules/vpn_client.nix
   ];
 
   # boot config
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "nvme"
+    "thunderbolt"
     "usb_storage"
     "sd_mod"
-    "rtsx_pci_sdmmc"
   ];
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.zfs.extraPools = [ "nvme" ];
+  # boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.zfs.extraPools = [ "lillysLaptop" ];
   fileSystems = {
     "/" = {
-      device = "nvme/root";
+      device = "lillysLaptop/root";
       fsType = "zfs";
       options = [ "zfsutil" ];
     };
     "/home" = {
-      device = "nvme/home";
+      device = "lillysLaptop/home";
       fsType = "zfs";
       options = [ "zfsutil" ];
     };
     "/nix" = {
-      device = "nvme/nix";
+      device = "lillysLaptop/nix";
       fsType = "zfs";
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/5C6D-BE54";
+      device = "/dev/disk/by-uuid/980A-2DC4";
       fsType = "vfat";
       options = [
         "fmask=0077"
@@ -55,19 +55,19 @@
       randomEncryption.enable = true;
     }
   ];
-  hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
   nixpkgs.hostPlatform = "x86_64-linux";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
     # lanzaboote is currently implemented as an alternative option to systemd-boot
-    enable = lib.mkForce false;
+    enable = lib.mkForce true;
     configurationLimit = 10;
     editor = false;
   };
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/etc/secureboot";
-  };
+  # boot.lanzaboote = {
+  #   enable = true;
+  #   pkiBundle = "/etc/secureboot";
+  # };
 
   # custom battery indicator on boot
   boot.initrd.kernelModules = [ "thinkpad_acpi" ];
@@ -176,6 +176,6 @@
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
   home-manager.users.lilly.home.stateVersion = "24.05";
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
   networking.hostId = "1a091689";
 }

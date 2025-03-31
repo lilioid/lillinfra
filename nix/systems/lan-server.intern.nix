@@ -78,7 +78,7 @@
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = "1";
     "net.ipv6.conf.all.forwarding" = "1";
-    "vm.swappiness" = "0";
+    "vm.swappiness" = "10";
   };
 
   virtualisation.libvirtd = {
