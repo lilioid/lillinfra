@@ -10,7 +10,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     lanzaboote.nixosModules.lanzaboote
-    # ../modules/vpn_client.nix
+    ../modules/vpn_client.nix
   ];
 
   # boot config
