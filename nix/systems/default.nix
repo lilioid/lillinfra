@@ -76,8 +76,7 @@ in
 
   # private systems
   lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2411;
-
-  # home systems
+  lillysWorkLaptop = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs2411;
   "lillysWorkstation" = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2411;
 
   # others
