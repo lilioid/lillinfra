@@ -98,6 +98,16 @@
           };
         };
       };
+
+      programs.gnome-shell = {
+        enable = true;
+        extensions = with pkgs.gnomeExtensions; [
+          { package = appindicator; }
+          { package = caffeine; }
+          { package = vitals; }
+          { package = color-picker; }
+        ];
+      };
     };
 
     environment.systemPackages = with pkgs; [
