@@ -14,6 +14,7 @@ keys:
   - &priv-home-srv "age1nww3jxah80k2he6ur8gmzywx7hradf3cnyfshfzzd4rcp62kxsasw58phj"
   - &proxy-home "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
   - &lillysLaptop "age1c3nxgz600s2pek704psnfns0vnz2jryyctlv6syrgs0n89jjyaksxtr5tx"
+  - &lillysWorkLaptop "age1hn3ph2k4c37ndecy37zyvu4lhtk058xe7tkhnxdjry64wemcwc9q5s4ynp"
   - &lillysWorkstation "age1gu9536rsmf73ymqrnvv0emse85xwg22cdpy33jwfea395vt25spq67cdz2"
 creation_rules:
   # per-host secrets
@@ -52,6 +53,10 @@ creation_rules:
   - path_regex: "nix/data/secrets/lillysLaptop.yml"
     key_groups:
       - age: [ *lilly, *lillysLaptop ]
+
+  - path_regex: "nix/data/secrets/lillysWorkLaptop.yml"
+    key_groups:
+      - age: [ *lilly, *lillysWorkLaptop ]
 
   - path_regex: "nix/data/secrets/lillysWorkstation.yml"
     key_groups:
