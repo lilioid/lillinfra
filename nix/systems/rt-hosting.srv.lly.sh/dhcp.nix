@@ -12,6 +12,7 @@
           "vmsIsabell"
           "vmsFux"
           "vmsNoah"
+          "vmsFreddy"
         ];
       };
       lease-database = {
@@ -212,6 +213,26 @@
             }
           ];
         }
+
+        {
+          # network for freddy
+          name = "freddyNet";
+          interface = "vmsFreddy";
+          subnet4 = [
+            {
+              id = 18;
+              subnet = "37.153.156.177/32";
+              pools = [ { pool = "37.153.156.177 - 37.153.156.177"; } ];
+              reservations = [
+                {
+                  # fux-monitoring
+                  hw-address = "BC:24:11:71:42:EE";
+                  ip-address = "37.153.156.177";
+                }
+              ];
+            }
+          ];
+        }
       ];
     };
   };
@@ -247,6 +268,11 @@
       interface vmsFux {
         AdvSendAdvert on;
         prefix 2a10:9902:111:17::/64 {};
+      };
+      
+      interface vmsFreddy {
+        AdvSendAdvert on;
+        prefix 2a10:9902:111:18::/64 {};
       };
     '';
   };

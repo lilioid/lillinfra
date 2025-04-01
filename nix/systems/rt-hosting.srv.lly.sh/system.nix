@@ -80,6 +80,7 @@ in
       "10-vmsTimon" = renameLink "BC:24:11:9B:CD:5D" "vmsTimon";
       "10-vmsNoah" = renameLink "BC:24:11:9C:BA:D6" "vmsNoah";
       "10-vmsFux" = renameLink "BC:24:11:E3:F0:CC" "vmsFux";
+      "10-vmsFreddy" = renameLink "BC:24:11:BC:26:9C" "vmsFreddy";
     };
 
     networks = {
@@ -116,6 +117,7 @@ in
       "20-vmsTimon" = mkTenantNet "vmsTimon" data.network.tenants.timon.tenantId [ "37.153.156.171" ];
       "20-vmsNoah" = mkTenantNet "vmsNoah" data.network.tenants.noah.tenantId [ "37.153.156.173" ];
       "20-vmsFux" = mkTenantNet "vmsFux" data.network.tenants.fux.tenantId [ "37.153.156.176" ];
+      "20-vmsFreddy" = mkTenantNet "vmsFreddy" 18 [ "37.153.156.177" ];
     };
   };
 

@@ -3,11 +3,10 @@ set -euo pipefail
 
 ACTION=$1
 CONNECT=$2
-SYSTEM=$3
+SYSTEM=${3:-$2}
 
 set -x
 exec nixos-rebuild "$ACTION" \
-  --use-substitutes \
   --fast \
   --use-remote-sudo \
   --target-host "$CONNECT" \
