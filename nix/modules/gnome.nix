@@ -91,7 +91,10 @@
           "org/gtk/settings/file-chooser" = {
             "sort-directories-first" = true;
           };
-          "org/gnome/settings-daemon/plugins/media-keys/cusotm-keybindings/custom0" = {
+          "org/gnome/settings-daemon/plugins/media-keys" = {
+            custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+          };
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
             "name" = "wezterm";
             "binding" = "<Super>Return";
             "command" = "wezterm";
