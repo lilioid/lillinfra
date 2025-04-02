@@ -5,16 +5,26 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.custom.gnomeDesktop;
+in {
   imports = [
     ./desktop_apps.nix
   ];
 
-  options = {
-    custom.gnomeDesktop.enable = lib.options.mkEnableOption "gnome desktop environment with my custom config";
+  options.custom.gnomeDesktop = with lib.options; {
+    enable = mkEnableOption "gnome desktop environment with my custom config";
+    backgroundLight = mkOption {
+      description = "Path to a background image that will be used in light mode";
+      default = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
+    };
+    backgroundDark = mkOption {
+      description = "Path to a background image that will be used in dark mode";
+      default = "/home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg";
+    };
   };
 
-  config = lib.mkIf config.custom.gnomeDesktop.enable {
+  config = lib.mkIf cfg.enable {
     services.xserver = {
       enable = true;
       displayManager.gdm.enable = true;
@@ -41,9 +51,8 @@
             document-font-name = "Inter 11";
           };
           "org/gnome/desktop/background" = {
-            "picture-uri" =
-              "file:///home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
-            "picture-uri-dark" = "file:///home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg";
+            "picture-uri" = "file://${cfg.backgroundLight}";
+            "picture-uri-dark" = "file://${cfg.backgroundLight}";
           };
           "org/gnome/desktop/media-handling" = {
             automount = false;
@@ -75,12 +84,10 @@
               "org.keepassxc.KeePassXC.desktop"
               "thunderbird.desktop"
               "signal-desktop.desktop"
+              "cinny.desktop"
               "firefox.desktop"
               "org.wezfurlong.wezterm.desktop"
             ];
-          };
-          "org/gnome/Console" = {
-            theme = "auto";
           };
           "org/gnome/nautilus/preferences" = {
             "default-folder-viewer" = "list-view";
