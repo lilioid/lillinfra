@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: nginx
+      labels: &labels
+        app.kubernetes.io/name: nginx
+    spec:
+      selector: *labels
+      ports:
+        - name: http
+          port: 80
+          targetPort: http
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nginx
+      labels: *labels
+    spec:
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          volumes:
+            - name: config
+              configMap:
+                name: nginx-config
+            - name: www
+              configMap:
+                name: nginx-www
+          containers:
+            - name: nginx
+              image: docker.io/nginx:stable
+              imagePullPolicy: Always
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/nginx/conf.d
+                - name: www
+                  mountPath: /var/www
+              ports:
+                - name: http
+                  containerPort: 80
+              readinessProbe:
+                httpGet:
+                  port: http
+                  path: /-/ready
+              resources:
+                requests:
+                  cpu: "10m"
+                limits:
+                  memory: "50Mi"
+          

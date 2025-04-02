@@ -1,0 +1,8 @@
+{
+  "m.homeserver": {
+    "base_url": "https://meowtrix.lly.sh/"
+  },
+  "org.matrix.msc3575.proxy": {
+    "url": "https://meowtrix.lly.sh/"
+  }
+}
