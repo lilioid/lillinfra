@@ -1,4 +1,5 @@
 .idea
 .direnv
 **/__pycache__
+**/.terraform
 result

@@ -126,6 +126,7 @@
             show-wg-conf
             show-nixos-diff
             kustomize-sops
+            opentofu
           ];
         };
       });
