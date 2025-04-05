@@ -42,7 +42,14 @@ in
         builtins.readFile ../dotfiles/lilly/wezterm.lua
       );
       xdg.mimeApps = lib.mkIf hasDesktop (import ../dotfiles/lilly/mimeapps.nix);
-      xdg.configFile."mimeapps.list" = lib.mkIf hasDesktop { force = true; };
+      xdg.configFile = {
+        "mimeapps.list" = lib.mkIf hasDesktop { force = true; };
+        "nixpkgs/config.nix".text = ''
+          {
+            allowUnfree = true;
+          }
+        '';
+      };
       home.file = {
         ".ssh/config".source = ../dotfiles/lilly/ssh/config;
         ".ssh/id_code_sign.pub".source = ../dotfiles/lilly/ssh/id_code_sign.pub;
