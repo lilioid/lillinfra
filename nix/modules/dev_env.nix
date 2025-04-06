@@ -27,6 +27,17 @@
       "wg_fux/privkey" = { };
     };
 
+    home-manager.users.lilly = {
+      programs.emacs = {
+        enable = true;
+        extraConfig = builtins.readFile ../dotfiles/lilly/emacs.el;
+        extraPackages = epkgs: [
+          epkgs.neotree
+          epkgs.nerd-icons
+        ];
+      };
+    };
+
     networking.networkmanager.ensureProfiles = lib.mkIf config.custom.devEnv.enableFuxVpn {
       profiles."wgFux" = {
         connection = {

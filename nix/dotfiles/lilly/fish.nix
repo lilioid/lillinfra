@@ -1,6 +1,9 @@
 # Configuration for Home-Managers programs.fish options
 {
   enable = true;
+  shellAliases = {
+    emacs = "emacs --no-window-system";
+  };
   shellAbbrs = {
     "ga" = "git add";
     "gst" = "git status";
