@@ -83,13 +83,14 @@
   programs.htop.enable = true;
   environment.systemPackages = with pkgs; [
     helix
+    emacs
     tig
     age
   ];
 
   environment.variables = {
-    EDITOR = "hx";
-    VISUAL = "hx";
+    EDITOR = "emacs";
+    VISUAL = "emacs";
   };
 
   environment.localBinInPath = true;

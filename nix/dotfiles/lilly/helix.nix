@@ -5,7 +5,7 @@
 }:
 {
   enable = true;
-  defaultEditor = true;
+  defaultEditor = false;
   extraPackages = lib.mkIf config.custom.devEnv.enable (
     with pkgs;
     [
