@@ -1,5 +1,4 @@
 {
-  modulesPath,
   config,
   lib,
   pkgs,
@@ -34,6 +33,7 @@
         extraPackages = epkgs: [
           epkgs.neotree
           epkgs.nerd-icons
+          pkgs.nil
         ];
       };
     };

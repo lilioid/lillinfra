@@ -8,12 +8,19 @@
     '(indent-tabs-mode nil))
 (global-set-key [f8] 'neotree-toggle)
 
+; configure lsp options
+(custom-set-variables
+    '(eglot-autoshutdown :t))
+
 ; configure plugins: neotree
 (custom-set-variables
     '(neo-theme 'nerd-icons)
-    '(inhibit-startup-screen :true))
+    '(neo-autorefresh :t)
+    '(neo-vc-integration '(face)))
 
-; configure plugins: tabbar
+; configure custom nix mode that uses an lsp
+(define-derived-mode nix-mode fundamental-mode "Nix" "A mode for the nix language")
+(add-hook 'nix-mode-hook 'eglot-ensure)
 
 ; init commands
 (neotree-show)
