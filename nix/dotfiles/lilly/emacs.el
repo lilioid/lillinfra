@@ -1,5 +1,7 @@
 ; load plugins
 (require 'neotree)
+(require 'tree-sitter)
+(require 'tree-sitter-langs)
 
 ; configure emacs options
 (custom-set-variables
@@ -11,6 +13,10 @@
 ; configure lsp options
 (custom-set-variables
     '(eglot-autoshutdown :t))
+
+; configure plugins: tree-sitter
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 ; configure plugins: neotree
 (custom-set-variables

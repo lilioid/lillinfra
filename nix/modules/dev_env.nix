@@ -33,6 +33,8 @@
         extraPackages = epkgs: [
           epkgs.neotree
           epkgs.nerd-icons
+          epkgs.tree-sitter
+          epkgs.tree-sitter-langs
           pkgs.nil
         ];
       };
