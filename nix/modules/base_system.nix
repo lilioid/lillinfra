@@ -89,8 +89,8 @@
   ];
 
   environment.variables = {
-    EDITOR = "emacs";
-    VISUAL = "emacs";
+    EDITOR = "hx";
+    VISUAL = "hx";
   };
 
   environment.localBinInPath = true;
