@@ -99,6 +99,7 @@
       sequoia-sq
       subnetcalc
       attic-client
+      jetbrains.pycharm-professional
     ];
 
     programs.fish.shellInit = ''
