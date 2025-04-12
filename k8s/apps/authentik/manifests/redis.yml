@@ -47,9 +47,9 @@ items:
                   port: redis
               resources:
                 requests:
-                  cpu: "20m"
+                  cpu: "100m"
                 limits:
-                  memory: "300Mi"
+                  memory: "500Mi"
       volumeClaimTemplates:
         - metadata:
             name: redis-data
