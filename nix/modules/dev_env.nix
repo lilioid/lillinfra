@@ -100,6 +100,7 @@
       subnetcalc
       attic-client
       jetbrains.pycharm-professional
+      jetbrains.rust-rover
     ];
 
     programs.fish.shellInit = ''
