@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextcloud
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+    nginx.ingress.kubernetes.io/proxy-body-size: "100M"
+spec:
+  tls:
+    - secretName: tls-tickets.lly.sh
+      hosts:
+        - tickets.lly.sh
+  rules:
+    - host: tickets.lly.sh
+      http: &http
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pretix
+                port:
+                  name: http

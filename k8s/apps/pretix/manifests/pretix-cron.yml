@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pretix-cron
+  labels: &labels
+    app.kubernetes.io/name: pretix
+    app.kubernetes.io/component: cron
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          restartPolicy: Never
+          securityContext:
+            fsGroup: 15371
+            fsGroupChangePolicy: OnRootMismatch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: pretix-data
+            - name: config
+              configMap:
+                name: pretix-config
+          containers:
+            - name: pretix
+              image: docker.io/pretix/standalone:stable
+              imagePullPolicy: Always
+              command: [ pretix, cron ]
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/pretix
+                - name: data
+                  mountPath: /data
+              envFrom:
+                - secretRef:
+                    name: pretix-env
+              ports:
+                - name: http
+                  containerPort: 80
+              readinessProbe:
+                httpGet:
+                  port: http
+                  httpHeaders:
+                    - name: Host
+                      value: tickets.lly.sh
+              resources:
+                requests:
+                  cpu: "100m"
+                limits:
+                  memory: "5Gi"
+
+

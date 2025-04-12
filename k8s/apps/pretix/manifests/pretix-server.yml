@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: pretix
+      labels: &labels
+        app.kubernetes.io/name: pretix
+        app.kubernetes.io/component: server
+    spec:
+      selector: *labels
+      ports:
+        - name: http
+          port: 80
+          targetPort: http
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: pretix
+      labels: *labels
+    spec:
+      strategy:
+        type: Recreate
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          securityContext:
+            fsGroup: 15371
+            fsGroupChangePolicy: OnRootMismatch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: pretix-data
+            - name: config
+              configMap:
+                name: pretix-config
+          containers:
+            - name: pretix
+              image: docker.io/pretix/standalone:stable
+              imagePullPolicy: Always
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/pretix
+                - name: data
+                  mountPath: /data
+              envFrom:
+                - secretRef:
+                    name: pretix-env
+              ports:
+                - name: http
+                  containerPort: 80
+              readinessProbe:
+                httpGet:
+                  port: http
+                  httpHeaders:
+                    - name: Host
+                      value: tickets.lly.sh
+              resources:
+                requests:
+                  cpu: "100m"
+                limits:
+                  memory: "5Gi"
+

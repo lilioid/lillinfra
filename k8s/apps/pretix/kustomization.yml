@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: pretix
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/part-of: pretix
+
+resources:
+  - manifests/namespace.yml
+  - manifests/ingress.yml
+  - manifests/storage.yml
+  - manifests/pretix-server.yml
+  - manifests/pretix-cron.yml
+  - manifests/redis.yml
+
+configMapGenerator:
+  - name: pretix-config
+    files:
+      - "pretix.cfg=config/config.cfg"
+
+generators:
+  - ./secret-generator.yml
+
