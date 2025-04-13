@@ -14,7 +14,7 @@ items:
       selector: *labels
       ports:
         - name: http
-          port: 8889
+          port: 8888
           targetPort: http
         - name: rtmp
           port: 1935
@@ -50,7 +50,7 @@ items:
                   subPath: mediamtx.yml
               ports:
                 - name: http
-                  containerPort: 8889
+                  containerPort: 8888
                 - name: rtmp
                   containerPort: 1935
                 - name: rtsp

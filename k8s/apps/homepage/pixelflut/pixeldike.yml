@@ -53,6 +53,8 @@ items:
         metadata:
           labels: *labels
         spec:
+          securityContext:
+            fsGroup: 1000
           volumes:
             - name: pixmap
               persistentVolumeClaim:
@@ -68,6 +70,7 @@ items:
                 - --load-snapshot=/srv/data/homepage.pixmap
                 - --snapshot=/srv/data/homepage.pixmap
                 - --rtmp-stream=rtmp://mediamtx:1935/stream/pixelflut
+                - --stream-framerate=5
               ports:
                 - name: pixelflut-tcp
                   containerPort: 1234
