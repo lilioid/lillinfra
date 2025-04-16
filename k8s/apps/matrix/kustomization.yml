@@ -14,14 +14,9 @@ images:
 resources:
   - manifests/namespace.yml
   - manifests/ingress.yml
-  - manifests/conduwuit.yml
   - manifests/element-web.yml
 
 configMapGenerator:
-  - name: conduwuit-config
-    files:
-      - "conduwuit.toml=config/conduwuit.toml"
-
   - name: element-web
     files:
       - "config.json=config/element-web.json"
