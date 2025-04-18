@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: synapse
+      labels: &labels
+        app.kubernetes.io/name: synapse
+        app.kubernetes.io/component: homeserver
+    spec:
+      selector: *labels
+      ports:
+        - name: http
+          port: 80
+          targetPort: http
+
+  # deployment
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: synapse
+      labels: *labels
+    spec:
+      selector:
+        matchLabels: *labels
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          volumes:
+            - name: config
+              configMap:
+                name: synapse-config
+            - name: media
+              persistentVolumeClaim:
+                claimName: synapse-media
+          containers:
+            - name: synapse
+              image: ghcr.io/element-hq/synapse
+              env:
+                - name: SYNAPSE_CONFIG_DIR
+                  value: /etc/synapse
+              volumeMounts:
+                - mountPath: /etc/synapse
+                  name: config
+                - mountPath: /srv/synapse/media
+                  name: media
+              ports:
+                - name: http
+                  containerPort: 8008
+              readinessProbe:
+                httpGet:
+                  port: http
+                  path: /health
+
+
+  # storage
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: synapse-media
+    spec:
+      storageClassName: nfs-slow
+      accessModes: [ ReadWriteMany ]
+      resources:
+        requests:
+          storage: 10G
+

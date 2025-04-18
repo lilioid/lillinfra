@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: conduwuit
+  name: matrix
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
     nginx.ingress.kubernetes.io/proxy-body-size: "256M"
@@ -10,23 +10,12 @@ spec:
     - secretName: tls-meowtrix.lly.sh
       hosts:
         - meowtrix.lly.sh
+        - synapse.meowtrix.lly.sh
   rules:
+    # element web client
     - host: meowtrix.lly.sh
       http:
         paths:
-          # homeserver
-          - path: /_matrix
-            pathType: Prefix
-            backend: &homeserver-backend
-              service:
-                name: conduwuit
-                port:
-                  name: http
-          - path: /_conduwuit
-            pathType: Prefix
-            backend: *homeserver-backend
-
-          # element web client
           - path: /
             pathType: Prefix
             backend:
@@ -34,3 +23,17 @@ spec:
                 name: element-web
                 port:
                   name: http
+
+
+    # homeserver
+    - host: synapse.meowtrix.lly.sh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: synapse
+                port:
+                  name: http
+
