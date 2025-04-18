@@ -145,19 +145,19 @@
         type = "wireguard";
         autoconnect = false;
         interface-name = "wgFux";
-        permission = "user:lilly:;";
+        permissions = "user:lilly:;";
       };
       wireguard = {
         private-key-flags = 1;
       };
       ipv4 = {
-        address1 = "172.17.2.251/26";
         method = "manual";
+        address1 = "172.17.2.251/29";
       };
       ipv6.method = "disabled";
       "wireguard-peer.bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=" = {
-        allowed-ips = "172.17.2.192/26";
-        endpoint = "vpn.fux-eg.net";
+        allowed-ips = "172.16.0.0/15;";
+        endpoint = "vpn.fux-eg.net:50199";
       };
     };
     secrets.entries = [
