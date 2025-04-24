@@ -16,7 +16,7 @@ resources:
 
 images:
   - name: codeberg.org/forgejo/forgejo
-    newTag: "10"
+    newTag: "11"
 
 configMapGenerator:
   - name: forgejo
