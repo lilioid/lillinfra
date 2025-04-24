@@ -98,6 +98,7 @@
   custom = {
     gnomeDesktop.enable = true;
     devEnv.enable = true;
+    devEnv.enableFuxVpn = true;
     user-syncthing.enable = true;
     backup.rsync-net = {
       enable = true;
@@ -138,38 +139,6 @@
   programs.gnupg.agent.enable = true;
 
   # fux vpn connection
-  networking.networkmanager.ensureProfiles = {
-    profiles."wgFux" = {
-      connection = {
-        id = "wgFux";
-        type = "wireguard";
-        autoconnect = false;
-        interface-name = "wgFux";
-        permissions = "user:lilly:;";
-      };
-      wireguard = {
-        private-key-flags = 1;
-      };
-      ipv4 = {
-        method = "manual";
-        address1 = "172.17.2.251/29";
-      };
-      ipv6.method = "disabled";
-      "wireguard-peer.bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=" = {
-        allowed-ips = "172.16.0.0/15;";
-        endpoint = "vpn.fux-eg.net:50199";
-      };
-    };
-    secrets.entries = [
-      {
-        matchId = "wgFux";
-        matchType = "wireguard";
-        matchSetting = "wireguard";
-        key = "private-key";
-        file = "/run/secrets/wg_fux/privkey";
-      }
-    ];
-  };
   sops.secrets."wg_fux/privkey" = { };
 
   # DO NOT CHANGE

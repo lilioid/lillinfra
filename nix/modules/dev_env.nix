@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.custom.devEnv;
+in
 {
   options = {
     custom.devEnv = {
@@ -12,8 +15,7 @@
     };
   };
 
-  config = lib.mkIf config.custom.devEnv.enable {
-
+  config = lib.mkIf cfg.enable {
     sops.secrets = {
       "lilly/kubeconfig.yml" = {
         owner = "lilly";
@@ -23,7 +25,7 @@
         key = ""; # force sops-nix to output the whole file and not just extract one key from the yaml content
         #format = "binary";
       };
-      "wg_fux/privkey" = { };
+      "wg_fux/privkey" = lib.mkIf cfg.enableFuxVpn { };
     };
 
     home-manager.users.lilly = {
@@ -40,23 +42,26 @@
       };
     };
 
-    networking.networkmanager.ensureProfiles = lib.mkIf config.custom.devEnv.enableFuxVpn {
+    networking.networkmanager.ensureProfiles = lib.mkIf cfg.enableFuxVpn {
       profiles."wgFux" = {
         connection = {
           id = "wgFux";
           type = "wireguard";
           autoconnect = true;
           interface-name = "wgFux";
-          permissions = "user:lilly;";
+          permissions = "user:lilly:;";
         };
-        wireguard.private-key-flags = 1;
+        wireguard = {
+          private-key-flags = 1;
+        };
         ipv4 = {
           method = "manual";
           address1 = "172.17.2.251/29";
         };
+        ipv6.method = "disabled";
         "wireguard-peer.bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=" = {
+          allowed-ips = "172.16.0.0/15;";
           endpoint = "vpn.fux-eg.net:50199";
-          allowed-ips = "172.17.2.248/29";
         };
       };
       secrets.entries = [
@@ -65,7 +70,7 @@
           matchType = "wireguard";
           matchSetting = "wireguard";
           key = "private-key";
-          file = "/run/secrets/wg_fux/privkey";
+          file = config.sops.secrets."wg_fux/privkey".path;
         }
       ];
     };
