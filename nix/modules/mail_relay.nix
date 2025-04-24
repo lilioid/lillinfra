@@ -16,7 +16,7 @@ in
         listen on lo hostname ${config.networking.fqdnOrHostName}
         listen on socket
 
-        table secrets file:/run/secrets/smtpd_secrets
+        table secrets file:${config.sops.secrets."smtpd_secrets".path}
         table aliases {
           root = admin@lly.sh
         }

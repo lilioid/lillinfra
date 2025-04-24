@@ -52,7 +52,7 @@ in
       };
       wireguardConfig = {
         ListenPort = 51820;
-        PrivateKeyFile = "/run/secrets/wg_vpn/privkey";
+        PrivateKeyFile = config.sops.secrets."wg_vpn/privkey".path;
       };
       wireguardPeers = (
         builtins.map (iClient: {

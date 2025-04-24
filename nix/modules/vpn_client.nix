@@ -35,7 +35,7 @@ in
       };
       wireguardConfig = {
         ListenPort = 51820;
-        PrivateKeyFile = "/run/secrets/wg_vpn/privkey";
+        PrivateKeyFile = config.sops.secrets."wg_vpn/privkey".path;
       };
       wireguardPeers = (
         builtins.map (iServer: {
@@ -129,14 +129,14 @@ in
         matchType = "wireguard";
         matchSetting = "wireguard";
         key = "private-key";
-        file = "/run/secrets/wg_vpn/privkey";
+        file = config.sops.secrets."wg_vpn/privkey".path;
       }
     ];
   };
 
   # wg-quick based implementation (the fallback)
   networking.wg-quick.interfaces.wgVpn = lib.mkIf (implMode == "wg-quick") {
-    privateKeyFile = "/run/secrets/wg_vpn/privkey";
+    privateKeyFile = config.sops.secrets."wg_vpn/privkey".path;
     address = selfClientConf.allowedIPs;
     dns = data.wg_vpn.network.dns;
     peers = (

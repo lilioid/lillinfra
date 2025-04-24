@@ -52,7 +52,7 @@ in
     server = "update.dedyn.io";
     username = "lly.sh";
     domains = [ "home.lly.sh" ];
-    passwordFile = "/run/secrets/ddclient/desec_token";
+    passwordFile = config.sops.secrets."ddclient/desec_token".path;
   };
 
   # web server config
