@@ -1,7 +1,8 @@
-{ config, lib, ...}:
+{ config, lib, ... }:
 let
   cfg = config.custom.gaming;
-in {
+in
+{
   # api
   options.custom.gaming = with lib.options; {
     enable = mkEnableOption "gaming software";

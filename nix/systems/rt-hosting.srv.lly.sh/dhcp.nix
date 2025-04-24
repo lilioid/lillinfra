@@ -269,7 +269,7 @@
         AdvSendAdvert on;
         prefix 2a10:9902:111:17::/64 {};
       };
-      
+
       interface vmsFreddy {
         AdvSendAdvert on;
         prefix 2a10:9902:111:18::/64 {};
