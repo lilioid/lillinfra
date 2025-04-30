@@ -57,6 +57,7 @@ in
         ".ssh/id_lilly@lly.sh.pub".source = ../dotfiles/lilly/ssh/id_lilly_lly.sh.pub;
         ".ssh/id_lilly@fux.pub".source = ../dotfiles/lilly/ssh/id_lilly_fux.pub;
         ".ssh/id_lilly@mafiasi.pub".source = ../dotfiles/lilly/ssh/id_lilly_mafiasi.pub;
+        ".ssh/id_sell@b1-systems.de.pub".source = ../dotfiles/lilly/ssh/id_sell_b1.pub;
         ".ietf/ietf.config".source = ../dotfiles/lilly/ietf.config;
       };
       programs.direnv = import ../dotfiles/lilly/direnv;
