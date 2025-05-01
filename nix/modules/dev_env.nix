@@ -82,6 +82,7 @@ in
       ansible
       ansible-lint
       direnv
+      dig
       nodejs
       nodePackages.pnpm
       python3
