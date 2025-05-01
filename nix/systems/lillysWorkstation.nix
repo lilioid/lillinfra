@@ -99,6 +99,7 @@
   custom = {
     gnomeDesktop.enable = true;
     devEnv.enable = true;
+    devEnv.enableFuxVpn = true;
     user-syncthing.enable = true;
     gaming.enable = true;
     backup.rsync-net = {
