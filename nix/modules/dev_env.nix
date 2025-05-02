@@ -63,7 +63,7 @@ in
           address1 = "2a07:c481:0:2::251/64";
         };
         "wireguard-peer.bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=" = {
-          allowed-ips = "172.16.0.0/15;2a07:c481:0:1::/64;2a07:c481:0:2::/64;";
+          allowed-ips = "172.16.0.0/12;2a07:c481:0:1::/64;2a07:c481:0:2::/64;";
           endpoint = "vpn.fux-eg.net:50199";
         };
       };
