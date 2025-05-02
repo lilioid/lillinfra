@@ -126,6 +126,10 @@ Host netsec-teaching
 # Fux e.G.
 #
 
+Host *.fux-eg.net
+  User noc
+  IdentityFile ~/.ssh/id_lilly@fux.pub
+
 Host cr01.fux.intern
   User noc
   HostName 172.16.2.1
