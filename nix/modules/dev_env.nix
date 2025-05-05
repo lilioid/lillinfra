@@ -93,6 +93,7 @@ in
       kubectl
       krew
       kubernetes-helm
+      k9s
       pass
       sshuttle
       rustup
