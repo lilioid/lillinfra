@@ -111,6 +111,7 @@ in
       attic-client
       jetbrains.pycharm-professional
       jetbrains.rust-rover
+      jetbrains.idea-ultimate
     ];
 
     programs.fish.shellInit = ''
