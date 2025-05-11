@@ -49,7 +49,7 @@ items:
                 requests:
                   cpu: "100m"
                 limits:
-                  memory: "500Mi"
+                  memory: "1Gi"
       volumeClaimTemplates:
         - metadata:
             name: redis-data
