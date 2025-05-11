@@ -35,7 +35,7 @@ in
     };
 
     sops.secrets."smtpd_secrets" = {
-      sopsFile = ../data/secrets/mail_relay.yml;
+      sopsFile = ../data/shared-secrets/mail_relay.yml;
       owner = "smtpd";
       restartUnits = [ "opensmtpd.service" ];
     };

@@ -98,13 +98,8 @@
 
   # backup config
   services.zfs.autoSnapshot.enable = true;
-  custom.backup.rsync-net = {
+  custom.backup = {
     enable = true;
-    sourceDirectories = [
-      "/root"
-      "/home"
-      "/srv"
-    ];
     backupPostgres = true;
   };
 

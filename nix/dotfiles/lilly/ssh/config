@@ -1,6 +1,7 @@
 Host rsync.net zh4525.rsync.net
   User zh4525
   HostName zh4525.rsync.net
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 
 

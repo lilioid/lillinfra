@@ -1,6 +1,6 @@
 backup:
     rsync-net:
-        encryption-passphrase: ENC[AES256_GCM,data:/9MhmbdlYjrY59ycMlNYVNy2Qm583Zn//s1HvUE/HJM=,iv:aTolJ7vWeze6XTVRQho7aBpsJA/WZE5MVjqDVonmAhk=,tag:Mq0Z9zCFv2DJtnZiG8NqNw==,type:str]
+        password: ENC[AES256_GCM,data:9B+iQamU8SwvIVtj/vrHQ+8Z839mWgUj,iv:9e6ib5P1eih9ESkudFvTDkTOuNE7q5CMrYGDGpCB72U=,tag:/fpGA4Hrq0pn7IT//PNmRA==,type:str]
         ssh-key: ENC[AES256_GCM,data:AO3rjB5QZnIB54TgERefokD3Y15DUaHbInMdwkoQGimGH5l2e+j2JfvLYc0YpHCrZ02TjUS5dOO6q5Afoe5d5keqCWYqowhd5+aWI7+km6pJbSy3ukzGarAESB6u1oTY0mtj1LwvlAqZdELFH+EE5VLImy7YmVOczLP6OzusGPCq1H13o+/rG+TLpPZTFbli5bhwVNzg1t+NjwpPDyhlTAYBEB4s08hbxxTw0P2BLspSHUkKURoiMzS6Gi9s1WtN5+u0kWVowLleBOuzRMODOIoktvYyHcQVyLNEf09LRRjVRfORVeYoBe/iISEM8BMGq9boUpzMpWjPuWPw40vl/gzO0pu5RfqzRc7z1UV9QopYFySVbXjuIMa6CQ60AmAQLagYOnQyvrSVnrIwrTZouwbkEAvUqZnhR/z5LceCIFttaqZn1DDU/zX3dWlv19Uon5QRu6RcZxOMa3EC7+kHGloCjhY+P7brPYjGvqEI6GqJirfXvra2mxmxKzoQN0pNHllwfC/0yZ6yG8bPKm2tnfX3xktAwf4yaY+mFvNF/+KbOGE=,iv:AHQ6J/UMPkyw84AICusF/eu65Wz6gGojZNrVTYjZUdQ=,tag:ue188bbND6Cn+dx3h8XUTA==,type:str]
 sops:
     kms: []
@@ -26,8 +26,8 @@ sops:
             bG54bFdMcUtiTHBQL1BwRHlna01BR0EKd7ScQGllcxhXQtQsmbmEZufb1cVDN6Km
             M6peSinA1XDyYUSetnqeS9Un2+I0OpuAiTL83s1ABWNuQky9SVzb9A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-10-21T07:29:50Z"
-    mac: ENC[AES256_GCM,data:axWMOE9iwcWc6PWajWJVcD1SQ90UtlanB0kNthAMaXrmx1LOc7+hEvNBFE5+6JKJ0puCcf2v3frazJxgayUpfKlPXDwppWBb9e0VuzfxS2kbVHAZFObYXH+x5t5+pMLRAAStB54c4raAuLmqtfEFmI9Y6fBi6isttpNfbAz9CFU=,iv:9/Dt5M3/o9gfTxjI5e658dZOUhh2fOIbh+kAOFpc4/Y=,tag:NHvgR5a7W2aH3hVeLBMBpQ==,type:str]
+    lastmodified: "2025-05-11T15:09:57Z"
+    mac: ENC[AES256_GCM,data:mWIAeB8RHVP+/1equpX3ZCf29v3KP6UcQl3SFQwVSViIhBWUqyN23ZgxjZcs16DHdxX6+IYOhDSHBnBIWfN21XPXdvTY1ezMkRvCDvC5P7ob6sDiC/n00QJWiR/x67gtNmwSy0lVUHJ0nLdUWPs6aisx5cVrI4/SOivUFCrYpxE=,iv:2v/DL6Je4XdsGJQGDxh+JYs+EuyOS40mLzX1gK7sXDE=,tag:X+Swz+4oil7FxlQeXS/+dQ==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
-    version: 3.8.1
+    version: 3.9.4

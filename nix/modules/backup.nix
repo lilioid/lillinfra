@@ -12,125 +12,119 @@ in
   imports = [ ];
 
   options = {
-    custom.backup.rsync-net = {
-      enable = mkEnableOption "backups to rsync.net";
-      passwordFilePath = mkOption {
-        type = types.str;
-        description = "The path inside the hosts secret data file which contains the encryption passphrase of the borg archive";
-        default = "backup/rsync-net/encryption-passphrase";
-      };
-      sshKeyPath = mkOption {
-        type = types.str;
-        description = "The path inside the hosts secret data file which holds the ssh private key that is used to connect to rsync.net";
-        default = "backup/rsync-net/ssh-key";
-      };
-      sshUser = mkOption {
-        type = types.str;
-        default = "zh4525";
-      };
-      sshHost = mkOption {
-        type = types.str;
-        default = "zh4525.rsync.net";
-      };
-      repoPath = mkOption {
-        description = "The path on rsync.net which holds the borg repository to which this host is backed up";
-        type = types.str;
-        defaultText = "./backups/{config.networking.fqdnOrHostName}";
-        default = "./backups/${config.networking.fqdnOrHostName}";
-      };
+    custom.backup = {
+      enable = mkEnableOption "automatic backup creation";
       sourceDirectories = mkOption {
         type = types.listOf types.str;
+        description = "A list of directories from this host that should be backed up";
         default = [
-          "/home/lilly"
+          "/home"
           "/root"
+          "/srv"
         ];
       };
       backupPostgres = mkOption {
+        default = config.services.postgresql.enable;
+        defaultText = "services.postgresql.enable";
+        description = "Whether to enable automatic backups of postgresql databases";
         type = types.bool;
-        default = false;
       };
-      hooks = {
-        beforeBackup = mkOption {
-          type = types.listOf types.str;
-          default = [ ];
-        };
-        afterBackup = mkOption {
-          type = types.listOf types.str;
-          default = [ ];
+      destinations = {
+        rsync-net = {
+          enable = mkOption {
+            default = true;
+            description = "Whether to enable backups to rsync.net";
+            type = types.bool;
+          };
+          passwordFilePath = mkOption {
+            type = types.str;
+            description = "Path to a file which contains the repositories password";
+            default = "backup/rsync-net/password";
+          };
+          sshKeyPath = mkOption {
+            type = types.str;
+            description = "Path to an SSH private key file that can be used to login to rsync.net";
+            default = "backup/rsync-net/ssh-key";
+          };
+          sshUser = mkOption {
+            type = types.str;
+            description = "Username for logging into rsync.net";
+            default = "zh4525";
+          };
+          sshHost = mkOption {
+            type = types.str;
+            description = "Hostname to use when connecting to rsync.net";
+            default = "zh4525.rsync.net";
+          };
+          repoPath = mkOption {
+            description = "The path on rsync.net which holds the repository to which this host is backed up";
+            type = types.str;
+            default = "backups/restic-repo";
+          };
         };
       };
     };
   };
 
-  config = mkIf cfg.rsync-net.enable {
-    services.borgmatic.enable = true;
-    services.borgmatic.configurations."rsync-net" = {
-      source_directories = cfg.rsync-net.sourceDirectories;
-      repositories = [
-        {
-          label = "rsync.net";
-          path = "ssh://${cfg.rsync-net.sshUser}@${cfg.rsync-net.sshHost}/${cfg.rsync-net.repoPath}";
-        }
-      ];
-      one_file_system = true;
-      exclude_patterns = [
-        "/home/*/.rustup/toolchains"
-        "/home/*/.vim/undodir"
-        "/home/*/.local/share/containers"
-        "/home/*/.local/share/virtualenvs"
-        "/home/*/.local/share/JetBrains/Toolbox/apps/"
-        "/home/*/.local/share/Steam/"
-        "/home/*/Downloads"
-        "/home/*/Games"
-        "/home/*/.cache"
-        "/home/*/.local/share/Trash"
-        "/home/*/.local/share/pnpm/store"
-        "/home/*/.npm"
-        "/home/*/Projects/**/target/"
-        "/root/.cache"
-        "**/node_modules/"
-        "**/cache/"
-        "**/Cache/"
-        "**/*.cache"
-      ];
-      encryption_passcommand = "${pkgs.coreutils}/bin/cat /run/secrets/${cfg.rsync-net.passwordFilePath}";
-      archive_name_format = "{hostname}--{now}";
-      relocated_repo_access_is_ok = true;
-      keep_hourly = 48;
-      keep_daily = 7;
-      keep_weekly = 8;
-      ssh_command = "ssh -i /run/secrets/${cfg.rsync-net.sshKeyPath} -o StrictHostKeyChecking=no";
-      extra_borg_options.create = "--list --filter=AME";
-      exclude_if_present = [ ".nobackup" ];
-      postgresql_databases = lib.mkIf cfg.rsync-net.backupPostgres [
-        {
-          name = "all";
-          format = "directory";
-          psql_command = with pkgs; "${postgresql}/bin/psql";
-          pg_dump_command = with pkgs; "${postgresql}/bin/pg_dump";
-        }
-      ];
-      before_backup = cfg.rsync-net.hooks.beforeBackup;
-      after_backup = cfg.rsync-net.hooks.afterBackup;
-    };
-
-    # create overwrites for the systemd unit to make it work in my system
-    systemd.services."borgmatic" = {
-      serviceConfig = {
-        #LockPersonality = false;
-        PrivateDevices = false;
-        #ProtectKernelTunables = false;
+  # TODO: Enable postgres backups
+  config = mkIf cfg.enable {
+    services.restic.backups = {
+      "rsync.net" = mkIf cfg.destinations.rsync-net.enable {
+        repository = "sftp:${cfg.destinations.rsync-net.sshUser}@${cfg.destinations.rsync-net.sshHost}:${cfg.destinations.rsync-net.repoPath}";
+        extraOptions = [
+          "sftp.command='ssh ${cfg.destinations.rsync-net.sshUser}@${cfg.destinations.rsync-net.sshHost} -i ${
+            config.sops.secrets.${cfg.destinations.rsync-net.sshKeyPath}.path
+          } -s sftp'"
+        ];
+        initialize = true;
+        timerConfig = {
+          OnCalendar = "hourly";
+          Persistent = false;
+        };
+        pruneOpts = [
+          "--keep-hourly=3"
+          "--keep-daily=7"
+          "--keep-weekly=4"
+          "--keep-monthly=6"
+        ];
+        paths = cfg.sourceDirectories;
+        passwordFile = config.sops.secrets.${cfg.destinations.rsync-net.passwordFilePath}.path;
+        inhibitsSleep = true;
+        extraBackupArgs = [ "--exclude-caches" ];
+        exclude = [
+          "/home/*/.rustup/toolchains"
+          "/home/*/.vim/undodir"
+          "/home/*/.local/share/containers"
+          "/home/*/.local/share/virtualenvs"
+          "/home/*/.local/share/JetBrains/Toolbox/apps/"
+          "/home/*/.local/share/Steam/"
+          "/home/*/Downloads"
+          "/home/*/Games"
+          "/home/*/.cache"
+          "/home/*/.local/share/Trash"
+          "/home/*/.local/share/pnpm/store"
+          "/home/*/.npm"
+          "/home/*/Projects/**/target/"
+          "/root/.cache"
+          "**/node_modules/"
+          "**/cache/"
+          "**/Cache/"
+          "**/*.cache"
+        ];
       };
     };
 
-    systemd.timers.borgmatic.timerConfig.OnCalendar = "hourly";
+    # TODO: Build postgres backup
 
+    # configure sops secrets with backup credentials
     sops.secrets = {
-      ${cfg.rsync-net.sshKeyPath} = {
+      ${cfg.destinations.rsync-net.sshKeyPath} = {
         mode = "0400";
+        sopsFile = ../data/shared-secrets/backup.yml;
       };
-      ${cfg.rsync-net.passwordFilePath} = {
+      ${cfg.destinations.rsync-net.passwordFilePath} = {
         mode = "0400";
+        sopsFile = ../data/shared-secrets/backup.yml;
       };
     };
   };

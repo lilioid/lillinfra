@@ -63,7 +63,7 @@ in
     tokenFile = config.sops.secrets."k3s/token".path;
   };
   sops.secrets."k3s/token" = {
-    sopsFile = ../data/secrets/k8s-node.yml;
+    sopsFile = ../data/shared-secrets/k8s-node.yml;
   };
 
   # haproxy (for certificate generation)

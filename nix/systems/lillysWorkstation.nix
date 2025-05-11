@@ -102,10 +102,7 @@
     devEnv.enableFuxVpn = true;
     user-syncthing.enable = true;
     gaming.enable = true;
-    backup.rsync-net = {
-      enable = true;
-      repoPath = "./backups/private-systems";
-    };
+    backup.enable = true;
   };
 
   services.openssh = {

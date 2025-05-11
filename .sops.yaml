@@ -1,6 +1,9 @@
 keys:
+  # Personal Keys
   - &lilly "age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d"
+  # Functional Keys
   - &argocd "age1j2a8asttv66kkqk4008an46f4apjru9lgm0hxmvuuamlm5ts5f9qmzlx9y"
+  # Per-Host Keys
   - &vpn-srv "age1gvt4lwamnuxmqgp5anhn008ze8kzrq287rn4jpn7k75fvn5ufvfsm73cvx"
   - &mail-srv "age1rhkf95d3ffm9jfw8pskxtaq30lk02awg8ag8nr76wtytemzzuszskxa5ch"
   - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
@@ -16,54 +19,51 @@ keys:
   - &lillysLaptop "age1c3nxgz600s2pek704psnfns0vnz2jryyctlv6syrgs0n89jjyaksxtr5tx"
   - &lillysWorkLaptop "age1hn3ph2k4c37ndecy37zyvu4lhtk058xe7tkhnxdjry64wemcwc9q5s4ynp"
   - &lillysWorkstation "age1gu9536rsmf73ymqrnvv0emse85xwg22cdpy33jwfea395vt25spq67cdz2"
+
 creation_rules:
-  # per-host secrets
-  - path_regex: "nix/data/secrets/vpn.srv.myroot.intern.yml"
+  # Per-Host secrets
+  - path_regex: "nix/data/host-secrets/vpn.srv.myroot.intern.yml"
     key_groups:
       - age: [ *lilly, *vpn-srv ]
 
-  - path_regex: "nix/data/secrets/k8s-node.yml"
-    key_groups:
-      - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv, *k8s-worker2-srv, *mail-srv ]
-
-  - path_regex: "nix/data/secrets/k8s-ctl.srv.myroot.intern.yml"
+  - path_regex: "nix/data/host-secrets/k8s-ctl.srv.myroot.intern.yml"
     key_groups:
       - age: [ *lilly, *k8s-ctl-srv ]
 
-  - path_regex: "nix/data/secrets/hosting.srv.lly.sh.yml"
+  - path_regex: "nix/data/host-secrets/hosting.srv.lly.sh.yml"
     key_groups:
       - age: [ *lilly, *hosting-srv ]
 
-  - path_regex: "nix/data/secrets/nas.srv.myroot.intern.yml"
+  - path_regex: "nix/data/host-secrets/nas.srv.myroot.intern.yml"
     key_groups:
       - age: [ *lilly, *nas-myroot ]
 
-  - path_regex: "nix/data/secrets/gtw.srv.ftsell.de.yml"
+  - path_regex: "nix/data/host-secrets/gtw.srv.ftsell.de.yml"
     key_groups:
       - age: [ *lilly, *gtw-myroot ]
 
-  - path_regex: "nix/data/secrets/proxy.srv.home.intern.yml"
+  - path_regex: "nix/data/host-secrets/proxy.srv.home.intern.yml"
     key_groups:
       - age: [ *lilly, *home-proxy ]
 
-  - path_regex: "nix/data/secrets/priv.srv.home.intern.yml"
+  - path_regex: "nix/data/host-secrets/priv.srv.home.intern.yml"
     key_groups:
       - age: [ *lilly, *priv-home-srv ]
 
-  - path_regex: "nix/data/secrets/lillysLaptop.yml"
+  - path_regex: "nix/data/host-secrets/lillysLaptop.yml"
     key_groups:
       - age: [ *lilly, *lillysLaptop ]
 
-  - path_regex: "nix/data/secrets/lillysWorkLaptop.yml"
+  - path_regex: "nix/data/host-secrets/lillysWorkLaptop.yml"
     key_groups:
       - age: [ *lilly, *lillysWorkLaptop ]
 
-  - path_regex: "nix/data/secrets/lillysWorkstation.yml"
+  - path_regex: "nix/data/host-secrets/lillysWorkstation.yml"
     key_groups:
       - age: [ *lilly, *lillysWorkstation ]
 
-  # shared secrets
-  - path_regex: "nix/data/secrets/mail_relay.yml"
+  # Shared Secrets
+  - path_regex: "nix/data/shared-secrets/mail_relay.yml"
     key_groups:
       - age:
           - *lilly
@@ -78,22 +78,29 @@ creation_rules:
           - *priv-home-srv
           - *proxy-home
 
+  - path_regex: "nix/data/shared-secrets/k8s-node.yml"
+    key_groups:
+      - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv, *k8s-worker2-srv, *mail-srv ]
+
+  - path_regex: "nix/data/shared-secrets/backup.yml"
+    key_groups:
+      - age: [ *lilly, *lillysLaptop, *lillysWorkstation, *nas-myroot, *priv-home-srv ]
+
+  # generic secrets
+  - path_regex: "nix/data/(.+-)?secrets/.+.yml"
+    key_groups:
+      - age: [ *lilly ]
+  - path_regex: "nix/dotfiles/.+\\.secret\\..+"
+    key_groups:
+      - age: [ *lilly ]
+
+  # Kubernetes secrets
+  - path_regex: "k8s/.+\\.secret\\..+"
+    key_groups:
+      - age: [ *lilly, *argocd ]
+
   # specific files
   - path_regex: "nix/dotfiles/lilly/kubectl/config.secret.yml"
     encrypted_regex: "^(client-key-data)$"
     key_groups:
       - age: [ *lilly, *lillysLaptop, *lillysWorkstation ]
-
-  # generic secrets
-  - path_regex: "nix/data/secrets/.+.yml"
-    key_groups:
-      - age: [ *lilly ]
-  - path_regex: "dotfiles/.+\\.secret\\..+"
-    key_groups:
-      - age: [ *lilly ]
-
-  # kubernetes secrets
-  - path_regex: "k8s/.+\\.secret\\..+"
-    key_groups:
-      - age: [ *lilly, *argocd ]
-

@@ -75,7 +75,7 @@
 
   # derive sops key from ssh key if ssh is enable and configure host sepcific secrets
   sops.age.sshKeyPaths = lib.mkIf config.services.openssh.enable [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.defaultSopsFile = ../data/secrets + "/${config.networking.fqdnOrHostName}.yml";
+  sops.defaultSopsFile = ../data/host-secrets + "/${config.networking.fqdnOrHostName}.yml";
 
   # additional apps
   programs.mtr.enable = true;

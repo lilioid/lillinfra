@@ -96,10 +96,7 @@
     gnomeDesktop.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
-    backup.rsync-net = {
-      enable = true;
-      repoPath = "./backups/private-systems";
-    };
+    backup.enable = true;
   };
 
   # additional packages
