@@ -17,7 +17,7 @@ resources:
 
 images:
   - name: ghcr.io/goauthentik/server
-    newTag: "2025.2.2"
+    newTag: "2025.4.1"
 
 configMapGenerator:
   - name: authentik-env

@@ -18,7 +18,7 @@ images:
   - name: docker.io/redis
     newTag: "7-alpine"
   - name: docker.io/netboxcommunity/netbox
-    newTag: "v4.2"
+    newTag: "v4.3"
 
 configMapGenerator:
   - name: netbox-env
