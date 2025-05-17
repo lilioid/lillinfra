@@ -25,17 +25,17 @@ spec:
                 name: authentik-env
             - secretRef:
                 name: authentik-env
-          livenessProbe:
-            exec:
-              command: [ ak, healthcheck ]
-          startupProbe:
-            failureThreshold: 60
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 1
-            exec:
-              command: [ ak, healthcheck ]
+          # livenessProbe:
+          #   exec:
+          #     command: [ ak, healthcheck ]
+          # startupProbe:
+          #   failureThreshold: 60
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   timeoutSeconds: 1
+          #   exec:
+          #     command: [ ak, healthcheck ]
           resources:
             requests:
               cpu: "100m"
