@@ -11,18 +11,11 @@
       "XCURSOR_THEME" = "Adwaita";
     };
 
-    # fix has already been merged but not yet packaged in nixos
-    nixpkgs.config.permittedInsecurePackages = [
-      "cinny-4.2.3"
-      "cinny-desktop-4.2.3"
-      "cinny-unwrapped-4.2.3"
-    ];
     environment.systemPackages = with pkgs; [
       chromium
       element-desktop
       telegram-desktop
       signal-desktop
-      cinny-desktop
       whatsapp-for-linux
       nextcloud-client
       keepassxc

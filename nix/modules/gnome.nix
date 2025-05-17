@@ -85,7 +85,7 @@ in
               "org.keepassxc.KeePassXC.desktop"
               "thunderbird.desktop"
               "signal-desktop.desktop"
-              "cinny.desktop"
+              "element-desktop.desktop"
               "firefox.desktop"
               "org.wezfurlong.wezterm.desktop"
             ];
