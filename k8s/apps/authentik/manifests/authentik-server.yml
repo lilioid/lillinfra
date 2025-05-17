@@ -83,7 +83,7 @@ items:
                   cpu: "100m"
                   memory: "500Mi"
                 limits:
-                  memory: "1Gi"
+                  memory: "4Gi"
 
   # PersistentVolumeClaim
   - apiVersion: v1
