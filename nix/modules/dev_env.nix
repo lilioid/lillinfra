@@ -109,6 +109,8 @@ in
       sequoia-sq
       subnetcalc
       attic-client
+      temurin-bin
+      spring-boot-cli
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       jetbrains.idea-ultimate
