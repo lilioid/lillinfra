@@ -18,6 +18,7 @@
     git
     keyutils
     helix
+    tmux
   ];
 
   networking.hostName = lib.mkForce "lillys-nixos-installer";
