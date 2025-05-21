@@ -85,6 +85,7 @@ in
       dig
       nodejs
       nodePackages.pnpm
+      bun
       python3
       pipenv
       poetry
