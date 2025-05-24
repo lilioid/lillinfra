@@ -41,7 +41,7 @@ info@bit-bots.de                jan@bit-bots.de;
     baz1652@studium.uni-hamburg.de
     valerie@bit-bots.de
 lilly@bit-bots.de               lilly
-jasper@bit-bots.de              bitbots-jasper
+jasper@bit-bots.de              bitbotsjasper
 jessica.jobski@bit-bots.de      Jessica.jobski.rc@dualj.de
 valerie@bit-bots.de             bitbots-valerie
 jan@bit-bots.de                 bitbots@jaagut.de
