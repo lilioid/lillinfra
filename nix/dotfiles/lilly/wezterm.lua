@@ -21,7 +21,6 @@ end
 
 config.color_scheme = scheme_for_appearance(get_appearance())
 config.use_fancy_tab_bar = true
-config.front_end = "WebGpu"
 config.keys = {
 {
     key = "E",
