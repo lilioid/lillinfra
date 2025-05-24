@@ -75,7 +75,7 @@ in
   "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs2411;
 
   # private systems
-  lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2411;
+  lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2505;
   lillysWorkLaptop = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs2411;
   lillysWorkstation = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2505;
 
