@@ -159,6 +159,6 @@ in
       alsa.enable = true;
       pulse.enable = true;
     };
-    hardware.pulseaudio.enable = false;
+    services.pulseaudio.enable = false;
   };
 }

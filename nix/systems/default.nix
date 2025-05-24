@@ -77,7 +77,7 @@ in
   # private systems
   lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2411;
   lillysWorkLaptop = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs2411;
-  "lillysWorkstation" = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2411;
+  lillysWorkstation = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2505;
 
   # others
   "lan-server.intern" = mkSystem "x86_64-linux" "lan-server.intern" flake.inputs.nixpkgs2411;

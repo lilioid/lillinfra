@@ -79,6 +79,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
+      nixos-rebuild-ng
       ansible
       ansible-lint
       direnv

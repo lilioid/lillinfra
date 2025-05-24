@@ -4,7 +4,7 @@
   python3,
 }:
 python3.pkgs.buildPythonApplication {
-  name = ",show-wg-conf";
+  pname = ",show-wg-conf";
   version = "1.0.0";
   src = ./.;
   pyproject = false;

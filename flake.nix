@@ -8,12 +8,12 @@
 
   inputs = {
     # nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
-    nixpkgs-small.url = "github:nixos/nixpkgs?ref=nixos-24.11-small";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
+    nixpkgs-small.url = "github:nixos/nixpkgs?ref=nixos-25.05-small";
 
     # version-specific nixpkgs
-    nixpkgs2405.url = "github:nixos/nixpkgs?ref=nixos-24.05";
     nixpkgs2411.url = "github:nixos/nixpkgs?ref=nixos-24.11";
+    nixpkgs2505.url = "github:nixos/nixpkgs?ref=nixos-25.05";
 
     # some helpers for writing flakes with less repitition
     systems.url = "github:nix-systems/default-linux";
@@ -23,7 +23,7 @@
 
     # dotfile (and user package) manager
     home-manager = {
-      url = "github:nix-community/home-manager?ref=release-24.11";
+      url = "github:nix-community/home-manager?ref=release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -48,7 +48,7 @@
     # lix package manager
     # https://lix.systems
     lix = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module.git?ref=release-2.92";
+      url = "git+https://git.lix.systems/lix-project/nixos-module.git?ref=release-2.93";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -61,7 +61,7 @@
     # lanzaboot for secure-boot on nixos
     # https://github.com/nix-community/lanzaboote
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

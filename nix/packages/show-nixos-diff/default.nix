@@ -4,7 +4,7 @@
   python3,
 }:
 python3.pkgs.buildPythonApplication {
-  name = "show-nixos-diff";
+  pname = "show-nixos-diff";
   version = "1.0.5";
   src = ./.;
   pyproject = false;

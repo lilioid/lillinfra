@@ -26,7 +26,7 @@
       discord
       vlc
       obsidian
-      okular
+      kdePackages.okular
       wezterm
       gimp
     ];

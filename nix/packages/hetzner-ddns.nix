@@ -3,7 +3,7 @@
   python3,
 }:
 python3.pkgs.buildPythonApplication {
-  name = "hetzner-ddns";
+  pname = "hetzner-ddns";
   version = "1.0.0";
   format = "pyproject";
 
