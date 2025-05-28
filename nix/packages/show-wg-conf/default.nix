@@ -19,7 +19,7 @@ python3.pkgs.buildPythonApplication {
   '';
 
   meta = {
-    mainProgram = ",show-wg-conf";
+    mainProgram = "show-wg-conf";
     matinaners = [ lib.maintainers.lilioid ];
     platforms = python3.meta.platforms;
   };

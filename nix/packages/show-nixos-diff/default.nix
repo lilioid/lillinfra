@@ -22,7 +22,7 @@ python3.pkgs.buildPythonApplication {
   '';
 
   meta = {
-    mainProgram = ",show-nixos-diff";
+    mainProgram = "show-nixos-diff";
     maintainers = [ lib.maintainers.lilioid ];
     platforms = python3.meta.platforms;
   };
