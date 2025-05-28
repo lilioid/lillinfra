@@ -8,7 +8,7 @@ python3.pkgs.buildPythonApplication {
   version = "1.0.5";
   src = ./.;
   pyproject = false;
-  propagatedBuildInputs = with pkgs; [
+  buildInputs = with pkgs; [
     nix
     nixos-rebuild
   ];
@@ -23,7 +23,7 @@ python3.pkgs.buildPythonApplication {
 
   meta = {
     mainProgram = ",show-nixos-diff";
-    matinaners = [ lib.maintainers.lilioid ];
+    maintainers = [ lib.maintainers.lilioid ];
     platforms = python3.meta.platforms;
   };
 }
