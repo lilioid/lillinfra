@@ -113,6 +113,7 @@ in
       attic-client
       temurin-bin
       spring-boot-cli
+      nil
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       jetbrains.idea-ultimate
