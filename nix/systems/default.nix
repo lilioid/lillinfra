@@ -81,5 +81,5 @@ in
 
   # others
   "lan-server.intern" = mkSystem "x86_64-linux" "lan-server.intern" flake.inputs.nixpkgs2411;
-  "installer" = mkSystem "x86_64-linux" "installer" flake.inputs.nixpkgs2411;
+  "installer" = mkSystem "x86_64-linux" "installer" flake.inputs.nixpkgs2505;
 }
