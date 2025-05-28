@@ -16,6 +16,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # add aarch64-linux as supported binary format if this is an x64 system
+    # this is needed to support nixos-rebuild for systems in aarch64 format
+    boot.binfmt.emulatedSystems = lib.mkIf (config.nixpkgs.hostPlatform.system == "x86_64-linux") [ "aarch64-linux" ];
+
     sops.secrets = {
       "lilly/kubeconfig.yml" = {
         owner = "lilly";
