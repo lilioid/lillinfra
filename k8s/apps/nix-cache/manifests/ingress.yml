@@ -4,7 +4,7 @@ metadata:
   name: attic
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
-    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    nginx.ingress.kubernetes.io/proxy-body-size: "2g"
 spec:
   tls:
     - secretName: tls-nix-store
