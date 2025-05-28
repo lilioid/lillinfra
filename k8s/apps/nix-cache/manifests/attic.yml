@@ -43,7 +43,7 @@ items:
                 - "--config=/etc/attic/config.toml"
               env:
                 - name: RUST_LOG
-                  value: DEBUG
+                  value: "INFO,sqlx::query=warn"
               envFrom:
                 - secretRef:
                     name: attic-server-env
