@@ -29,6 +29,7 @@
 
   # general os config
   services.qemuGuest.enable = true;
+  documentation.nixos.enable = false;
 
   # configure systemd-networkd to listen for DHCP and router advertisements on all ethernet interfaces by default
   networking.useDHCP = false;
