@@ -71,8 +71,8 @@ in
   "nas.srv.myroot.intern" = mkSystem "x86_64-linux" "nas.srv.myroot.intern" flake.inputs.nixpkgs2411;
 
   # servers at home
-  "priv.srv.home.intern" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs2411;
-  "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs2411;
+  "priv.srv.home.intern" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs2505;
+  "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs2505;
 
   # private systems
   lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2505;
