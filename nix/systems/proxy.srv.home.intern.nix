@@ -43,6 +43,7 @@ in
   networking.firewall.allowedUDPPorts = [
     80
     443
+    51820
   ];
 
   # dyndns for home.lly.sh

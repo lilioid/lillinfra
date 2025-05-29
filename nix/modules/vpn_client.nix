@@ -149,6 +149,7 @@ in
     );
   };
 
+  # load private key for wireguard connection from sops
   sops.secrets = {
     "wg_vpn/privkey" = {
       owner = "systemd-network";
