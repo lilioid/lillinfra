@@ -52,7 +52,6 @@ let
 in
 {
   # exposed hosts at myroot
-  "hosting.srv.lly.sh" = mkSystem "x86_64-linux" "hosting.srv.lly.sh" flake.inputs.nixpkgs2505;
   "rt-hosting.srv.lly.sh" = mkSystem "x86_64-linux" "rt-hosting.srv.lly.sh" flake.inputs.nixpkgs2505;
   "mail.srv.lly.sh" = mkSystem "x86_64-linux" "mail.srv.lly.sh" flake.inputs.nixpkgs2505;
   "gtw.srv.lly.sh" = mkSystem "x86_64-linux" "gtw.srv.lly.sh" flake.inputs.nixpkgs2505;
