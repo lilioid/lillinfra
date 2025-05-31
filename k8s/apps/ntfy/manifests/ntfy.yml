@@ -30,6 +30,7 @@ items:
         metadata:
           labels: *labels
         spec:
+          priorityClassName: custom-high
           volumes:
             - name: config
               configMap:
