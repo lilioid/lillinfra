@@ -5,10 +5,11 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: dev@ftsell.de
+    email: li@lly.sh
     privateKeySecretRef:
       name: letsencrypt-account-key
     solvers:
     - http01:
         ingress:
           class: nginx
+          serviceType: ClusterIP
