@@ -10,3 +10,7 @@
   value:
     name: prometheus
     containerPort: 10254
+# specify custom priorityClassname
+- op: add
+  path: /spec/template/spec/priorityClassName
+  value: custom-critical
