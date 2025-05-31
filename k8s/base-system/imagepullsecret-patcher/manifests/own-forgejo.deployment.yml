@@ -15,6 +15,7 @@ spec:
     spec:
       automountServiceAccountToken: true
       serviceAccountName: imagepullsecret-patcher
+      priorityClassName: custom-critical
       volumes:
         - name: src-dockerconfigjson
           secret:
