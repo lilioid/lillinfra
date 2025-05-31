@@ -1,0 +1,9 @@
+$TTL 3600
+
+; SOA is managed by desec so we skip it
+; aut-sys.de.	300	    IN	SOA	get.desec.io. get.desec.io. 2025053101 86400 3600 2419200 3600
+
+@	3600	IN	NS	ns1.desec.io.
+@	3600	IN	NS	ns2.desec.org.
+
+@   DNAME   gtw.srv.lly.sh.

@@ -117,12 +117,9 @@ in
       sequoia-sq
       subnetcalc
       attic-client
-      temurin-bin
-      spring-boot-cli
       nil
       jetbrains.pycharm-professional
       jetbrains.rust-rover
-      jetbrains.idea-ultimate
     ];
 
     programs.fish.shellInit = ''
