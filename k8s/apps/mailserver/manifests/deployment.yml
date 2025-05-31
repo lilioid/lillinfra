@@ -14,6 +14,7 @@ spec:
     metadata:
       labels: *labels
     spec:
+      priorityClassName: custom-high
       nodeSelector:
         kubernetes.io/hostname: mail
 

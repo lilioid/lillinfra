@@ -13,6 +13,7 @@ spec:
     metadata:
       labels: *labels
     spec:
+      priorityClassName: custom-high
       serviceAccountName: authentik
       terminationGracePeriodSeconds: 30
       containers:

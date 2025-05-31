@@ -21,6 +21,12 @@ patches:
       name: argocd-repo-server
     path: manifests/repo-server-gpg.patch.yml
 
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+    path: manifests/add-priorityclass.patch.yml
+
 replicas:
   - name: argocd-dex-server
     count: 0

@@ -31,6 +31,7 @@ items:
         metadata:
           labels: *labels
         spec:
+          priorityClassName: custom-high
           automountServiceAccountToken: false
           containers:
             - name: redis-server

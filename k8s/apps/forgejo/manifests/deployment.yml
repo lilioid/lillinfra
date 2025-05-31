@@ -15,6 +15,7 @@ spec:
       labels: *labels
     spec:
 
+      priorityClassName: custom-high
       volumes:
         - name: data
           persistentVolumeClaim:

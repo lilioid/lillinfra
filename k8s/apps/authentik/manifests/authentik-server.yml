@@ -34,6 +34,7 @@ items:
         metadata:
           labels: *labels
         spec:
+          priorityClassName: custom-high
           terminationGracePeriodSeconds: 30
           volumes:
             - name: media
