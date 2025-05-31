@@ -16,8 +16,6 @@
       element-desktop
       telegram-desktop
       signal-desktop
-      whatsapp-for-linux
-      nextcloud-client
       keepassxc
       wl-clipboard
       thunderbird
