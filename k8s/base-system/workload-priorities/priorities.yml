@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: List
+items:
+
+  # custom-critical
+  - apiVersion: scheduling.k8s.io/v1
+    kind: PriorityClass
+    metadata:
+      name: custom-critical
+    value: 5002000
+
+  # custom-high
+  - apiVersion: scheduling.k8s.io/v1
+    kind: PriorityClass
+    metadata:
+      name: custom-high
+    value: 5001000
+
+  # custom-mid
+  - apiVersion: scheduling.k8s.io/v1
+    kind: PriorityClass
+    metadata:
+      name: custom-normal
+    value: 5000000
+    globalDefault: true
+
+  # custom-low
+  - apiVersion: scheduling.k8s.io/v1
+    kind: PriorityClass
+    metadata:
+      name: custom-low
+    value: 4009000
