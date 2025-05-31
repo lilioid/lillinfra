@@ -9,3 +9,11 @@ labels:
 resources:
   - https://github.com/cert-manager/cert-manager/releases/download/v1.16.1/cert-manager.yaml
   - issuers.yml
+
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: cert-manager
+    path: add-priorityclass.patch.yml

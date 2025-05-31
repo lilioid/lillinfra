@@ -13,3 +13,6 @@ spec:
         ingress:
           class: nginx
           serviceType: ClusterIP
+          podTemplate:
+            spec:
+              priorityClassName: custom-critical
