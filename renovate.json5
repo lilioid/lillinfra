@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":disableDependencyDashboard", "group:allNonMajor"],
+  "packageRules": [
+    {
+      "matchPackageNames": [ "docker.io/woodpeckerci/*" ],
+      "groupName": "woodpecker"
+    }
+  ],
+
+  "customManagers": [
+      {
+        // https://try.jsonata.org/
+        customType: "jsonata",
+        fileFormat: "yaml",
+        fileMatch: [ "k8s/.+/kustomization.yml" ],
+        matchStrings: [
+          // match the form https://github.com/<owner>/<repo>/releases/download/v<version>/<file>
+          "resources[$ ~> /https:\\/\\/github.com\\/.+\\/releases\\/download\\/.+/].{\n    \"depName\": ($ ~> /github.com\\/.+\\/(.+)\\/releases/).groups[0],\n    \"packageName\": ($ ~> /github.com\\/(.+\\/.+)\\/releases\\/download\\//).groups[0],\n    \"currentValue\": ($ ~> /\\/download\\/(v.+)\\/.+/).groups[0],\n    \"datasource\": \"github-release-attachments\",\n    \"versioning\": \"loose\"\n}[]"
+        ]
+      }
+  ],
+}
