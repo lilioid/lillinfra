@@ -49,7 +49,10 @@ in
   # dyndns for home.lly.sh
   services.ddclient = {
     enable = true;
+    verbose = true;
     usev4 = "webv4, webv4=https://checkipv4.dedyn.io/";
+#    usev6 = "webv6, webv6=https://checkipv6.dedyn.io/";
+    usev6 = "disabled";
     server = "update.dedyn.io";
     username = "lly.sh";
     domains = [ "home.lly.sh" ];
