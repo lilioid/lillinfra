@@ -120,6 +120,7 @@ in
       nil
       jetbrains.pycharm-professional
       jetbrains.rust-rover
+      jetbrains.webstorm
     ];
 
     programs.fish.shellInit = ''

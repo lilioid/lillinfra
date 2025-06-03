@@ -25,7 +25,8 @@ in
       extraGroups = [
         "wheel"
         "networkmanager"
-      ] ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ]);
+      ] ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ])
+        ++ (if config.virtualisation.docker.enable then [ "docker" ] else []);
       home = "/home/lilly";
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [

@@ -121,13 +121,12 @@
     nftables
     file
     sbctl
+    docker-compose
   ];
 
-  virtualisation.podman = {
+  virtualisation.docker = {
     enable = true;
-    dockerSocket.enable = true;
     autoPrune.enable = true;
-    dockerCompat = true;
   };
   services.printing.enable = true;
   services.earlyoom.enable = true;
