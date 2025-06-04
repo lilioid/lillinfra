@@ -124,10 +124,6 @@
     docker-compose
   ];
 
-  virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
-  };
   services.printing.enable = true;
   services.earlyoom.enable = true;
   services.resolved.enable = true;
