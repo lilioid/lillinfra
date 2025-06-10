@@ -69,6 +69,8 @@
     pkiBundle = "/etc/secureboot";
   };
 
+  virtualisation.docker.storageDriver = "zfs";
+
   # custom battery indicator on boot
   boot.initrd.kernelModules = [ "thinkpad_acpi" ];
   boot.initrd.preDeviceCommands = ''
