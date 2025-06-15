@@ -14,7 +14,7 @@ mail        	CNAME	mail.srv.lly.sh.
 *.mail	        CNAME	mail.srv.lly.sh.
 _dmarc      	TXT	"v=DMARC1; p=reject; ruf=mailto:dmarc-reports@ftsell.de;"
 main._domainkey	TXT	"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2Aq7HNQZmuk438HUlcYsxkmRuHJOz4ZpPRfIIml6C3Qp5hY5O7l8cSmvhsj1vLoMoPi4CWwHyOVl2hRTMQqsYz+l6ZFAcwI3YBDTD7hjaB3nNjGfOVo1X2Cq7c+sFaeMAZwTqC2R1TusfVb7QBuUTRxVnHStvc7crmOdJb0NCVBZvJ0juYkmXtA" "i6S/VhBZxDSpMb69Eef48yeyFEhK5qcRSAA2D/RnaZwY1/RrKS4RpP6YEhkgFkLtgiQuYjslk64zDYiJu3pmIhW1an+qv984C55FowifyGVaLkCkvXrnO/kMMX5Ya05N6RnurVCP9w6Vu2yX8zThY1F8yyro6SwIDAQAB"
-@	            TXT	"v=spf1 +a:mail.srv.ftsell.de +include:mailbox.org -all"
+@	            TXT	"v=spf1 +a:mail.srv.lly.sh +include:mailbox.org -all"
 @	            MX	100 mail.srv.lly.sh.
 @	            MX	200 mxext1.mailbox.org.
 @               MX	200 mxext2.mailbox.org.
