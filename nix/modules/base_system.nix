@@ -3,6 +3,8 @@
   config,
   lib,
   pkgs,
+  nixpkgs,
+  nixpkgs-unstable,
   ...
 }:
 {
@@ -10,7 +12,14 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.nvidia.acceptLicense = true;
   nix.channel.enable = false;
-  nix.nixPath = [ "nixpkgs=${lib.cleanSource pkgs.path}" ];
+  nix.nixPath = [
+    "nixpkgs=${lib.cleanSource pkgs.path}"
+    "nixpkgs-unstable=${lib.cleanSource nixpkgs-unstable}"
+  ];
+  nix.registry = {
+    nixpkgs.flake = nixpkgs;
+    nixpkgs-unstable.flake = nixpkgs-unstable;
+  };
   nix.settings = {
     tarball-ttl = 60;
     trusted-users = [

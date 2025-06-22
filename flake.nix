@@ -10,6 +10,7 @@
     # nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     nixpkgs-small.url = "github:nixos/nixpkgs?ref=nixos-25.05-small";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     # version-specific nixpkgs
     nixpkgs2411.url = "github:nixos/nixpkgs?ref=nixos-24.11";
