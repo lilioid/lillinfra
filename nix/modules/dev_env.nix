@@ -123,6 +123,7 @@ in
       subnetcalc
       attic-client
       nil
+      reuse
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       jetbrains.webstorm
