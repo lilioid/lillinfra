@@ -17,3 +17,7 @@ main._domainkey	TXT	"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8
 @	            MX	200 mxext1.mailbox.org.
 @               MX	200 mxext2.mailbox.org.
 @           	MX	210 mxext3.mailbox.org.
+
+; legacy mail names (still used by other people)
+mail            CNAME    mail.srv.lly.sh.
+mail.srv        CNAME    mail.srv.lly.sh.
