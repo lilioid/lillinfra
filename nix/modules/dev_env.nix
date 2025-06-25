@@ -35,9 +35,11 @@ in
     };
 
     home-manager.users.lilly = {
+      services.emacs = {
+        enable = true;
+      };
       programs.emacs = {
         enable = true;
-        extraConfig = builtins.readFile ../dotfiles/lilly/emacs.el;
         extraPackages = epkgs: [
           epkgs.neotree
           epkgs.nerd-icons
