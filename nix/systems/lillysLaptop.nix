@@ -99,6 +99,7 @@
   # settings defined by my own custom modules
   custom = {
     gnomeDesktop.enable = true;
+    #kde.enable = true;
     devEnv.enable = true;
     devEnv.enableFuxVpn = true;
     user-syncthing.enable = true;

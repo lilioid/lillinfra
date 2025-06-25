@@ -19,6 +19,7 @@ let
         ../modules/user_lilly.nix
         ../modules/dev_env.nix
         ../modules/gnome.nix
+        ../modules/kde.nix
         ../modules/backup.nix
         ../modules/syncthing.nix
         ../modules/auto_upgrade.nix

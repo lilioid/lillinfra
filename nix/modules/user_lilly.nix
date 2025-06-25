@@ -25,6 +25,7 @@ in
       extraGroups = [
         "wheel"
         "networkmanager"
+        "dialout"
       ] ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ])
         ++ (if config.virtualisation.docker.enable then [ "docker" ] else []);
       home = "/home/lilly";
