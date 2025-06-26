@@ -103,10 +103,10 @@
       overlays.default =
         final: prev:
         import ./nix/packages {
-          inherit self;
+          flake = self;
           pkgs = prev;
         };
-      packages = eachSystem (pkgs: import ./nix/packages { inherit pkgs self; });
+      packages = eachSystem (pkgs: import ./nix/packages { inherit pkgs; flake = self; });
 
       devShells = eachSystem (pkgs: {
         default = pkgs.mkShell {
