@@ -48,6 +48,9 @@ in
           pkgs.nil
         ];
       };
+      home.sessionSearchVariables = {
+        PATH = [ "$HOME/.krew/bin" ];
+      };
     };
 
     networking.networkmanager.ensureProfiles = lib.mkIf cfg.enableFuxVpn {
