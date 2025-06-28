@@ -237,7 +237,6 @@ Host btv-migration
   IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
 
 
-
 # Global Override Settings
 Host *
   ForwardAgent no
