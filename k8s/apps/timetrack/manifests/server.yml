@@ -41,7 +41,10 @@ items:
               readinessProbe:
                 httpGet:
                   port: http
-                  path: /
+                  path: /admin/login/
+                  httpHeaders:
+                    - name: Host
+                      value: tt.lly.sh
               resources:
                 requests:
                   cpu: "100m"
