@@ -224,6 +224,13 @@ Host git.intern.b1-systems.de
   User git
   IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
 
+Host adenauer
+   Hostname adenauer.systems.b1-systems.de
+   User root
+   IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
+   Port 60000
+   AddressFamily inet
+
 Host agora-migration
   hostname 192.214.176.106
   port 60000
