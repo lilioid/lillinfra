@@ -1,7 +1,7 @@
 #
 # Postmaster & Admin stuff
 #
-tenants@lly.sh                  lilly;tengelke;ssheak;geschox;polygon;admin@bit-bots.de
+tenants@lly.sh                  lilly;tengelke;ssheak;geschox;polygon
 postmaster@lly.sh               lilly
 postmaster@ftsell.de            lilly
 postmaster@timonengelke.de      lilly
@@ -24,27 +24,6 @@ dmarc-reports@lly.sh            dmarc-reports
 @lly.sh                         lilly
 @ftsell.de                      lilly
 @finn-thorben.me                lilly
-
-
-
-#
-# Bit-Bots special config
-#
-@bit-bots.de                    admin@bit-bots.de
-admin@bit-bots.de               lilly@bit-bots.de
-sponsoring@bit-bots.de          bitbots-sponsoring;
-    valerie@bit-bots.de
-press@bit-bots.de               info@bit-bots.de
-presse@bit-bots.de              info@bit-bots.de
-info@bit-bots.de                jan@bit-bots.de;
-    jasper.gueldenstein@uni-hamburg.de;
-    baz1652@studium.uni-hamburg.de
-    valerie@bit-bots.de
-lilly@bit-bots.de               lilly
-jasper@bit-bots.de              bitbotsjasper
-jessica.jobski@bit-bots.de      Jessica.jobski.rc@dualj.de
-valerie@bit-bots.de             bitbots-valerie
-jan@bit-bots.de                 bitbots@jaagut.de
 
 
 
