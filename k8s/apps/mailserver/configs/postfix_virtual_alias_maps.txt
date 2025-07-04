@@ -1,7 +1,7 @@
 #
 # Postmaster & Admin stuff
 #
-tenants@lly.sh                  lilly;tengelke;ssheak;bpermesang;polygon;admin@bit-bots.de
+tenants@lly.sh                  lilly;tengelke;ssheak;geschox;polygon;admin@bit-bots.de
 postmaster@lly.sh               lilly
 postmaster@ftsell.de            lilly
 postmaster@timonengelke.de      lilly
@@ -53,7 +53,7 @@ jan@bit-bots.de                 bitbots@jaagut.de
 #
 @timonengelke.de                tengelke
 @sheaksadi.me                   ssheak
-@bastianpermesang.com           bpermesang
+@bastianpermesang.com           geschox
 @powolygon.gay                  polygon
 @critter.codes                  polygon
 
