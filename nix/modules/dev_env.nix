@@ -48,6 +48,9 @@ in
           pkgs.nil
         ];
       };
+      programs.jujutsu = {
+        enable = true;
+      };
       home.sessionSearchVariables = {
         PATH = [ "$HOME/.krew/bin" ];
       };
