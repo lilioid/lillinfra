@@ -76,7 +76,7 @@ in
             dynamic-workspaces = true;
           };
           "org/gnome/desktop/wm/preferences" = {
-            button-layout = "appmenu:minimize,close";
+            button-layout = "appmenu:minimize,maximize,close";
             focus-mode = "mouse";
           };
           "org/gnome/shell" = {
