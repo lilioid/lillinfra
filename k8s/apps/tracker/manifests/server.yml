@@ -15,6 +15,7 @@ items:
       ports:
         - name: http
           port: 80
+          targetPort: http
 
   # deployment
   - apiVersion: apps/v1
