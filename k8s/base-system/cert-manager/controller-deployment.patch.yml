@@ -1,0 +1,8 @@
+- op: add
+  path: /spec/template/spec/priorityClassName
+  value: custom-critical
+
+# see https://cert-manager.io/docs/releases/release-notes/release-notes-1.18/#acme-http01-challenge-paths-now-use-pathtype-exact-in-ingress-routes
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--feature-gates=ACMEHTTP01IngressPathTypeExact=false"

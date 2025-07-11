@@ -16,4 +16,4 @@ patches:
       version: v1
       kind: Deployment
       name: cert-manager
-    path: add-priorityclass.patch.yml
+    path: controller-deployment.patch.yml
