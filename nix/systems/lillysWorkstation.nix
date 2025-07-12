@@ -68,6 +68,8 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
+  virtualisation.docker.storageDriver = "zfs";
+
   # hardware config
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
