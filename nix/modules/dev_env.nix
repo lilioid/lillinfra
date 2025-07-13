@@ -99,6 +99,7 @@ in
 
     environment.systemPackages = with pkgs; [
       nixos-rebuild-ng
+      watchexec
       ansible
       ansible-lint
       direnv
