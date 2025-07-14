@@ -99,6 +99,7 @@ in
 
     environment.systemPackages = with pkgs; [
       nixos-rebuild-ng
+      helmfile
       watchexec
       ansible
       ansible-lint
