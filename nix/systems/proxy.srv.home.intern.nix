@@ -98,7 +98,12 @@ in
       };
 
       "unifi.home.lly.sh" = vhostDefaults // {
-        locations."/".proxyPass = "http://priv.srv.home.intern:8080";
+        locations."/" = {
+          proxyPass = "https://priv.srv.home.intern:8443";
+          extraConfig = ''
+            proxy_ssl_verify off; 
+          '';
+        };
       };
     };
   };

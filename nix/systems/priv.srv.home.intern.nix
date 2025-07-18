@@ -16,6 +16,8 @@ let
 
   vHomeAssistant = "stable";
 
+  vUnify = "9.2.87";
+
   mosquittoConf = pkgs.writeText "mosquitto.conf" ''
     listener 1883 0.0.0.0
     listener 1883 ::
@@ -76,6 +78,7 @@ in
     8123 # home assistant
     1883 # mqtt server (exposed so that tasmota devices can access it)
     8080 # unifi network application (web interface)
+    8443 # unify network application (web interface https)
     6789 # unifi network application (mobile throughput test)
   ];
   networking.firewall.allowedUDPPorts = [
@@ -297,7 +300,7 @@ in
     after = [ "podman-unifi-mongodb.service" ];
   };
   virtualisation.oci-containers.containers."unifi-network-application" = {
-    image = "lscr.io/linuxserver/unifi-network-application";
+    image = "lscr.io/linuxserver/unifi-network-application:${vUnify}";
     volumes = [
       "/srv/data/encrypted/unifi-network-application/unifi-data:/config"
     ];
