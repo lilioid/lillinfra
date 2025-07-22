@@ -21,9 +21,12 @@ spec:
       containers:
         - name: homepage
           image: git.lly.sh/lilly/homepage
+          envFrom:
+            - secretRef:
+                name: website-env
           volumeMounts:
             - name: state
-              mountPath: /srv/homepage
+              mountPath: /var/lib/homepage/
           ports:
             - name: http
               containerPort: 8000
@@ -32,7 +35,7 @@ spec:
               port: http
               httpHeaders:
                 - name: Host
-                  value: ftsell.de
+                  value: li.lly.sh
           resources:
             requests:
               cpu: "100m"
