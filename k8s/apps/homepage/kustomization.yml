@@ -9,6 +9,7 @@ resources:
   - ingress.yml
 
   - website/deployment.yml
+  - website/cronjob.yml
   - website/service.yml
   - website/storage.yml
 

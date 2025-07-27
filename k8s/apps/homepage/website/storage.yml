@@ -4,7 +4,7 @@ metadata:
   name: homepage-state
 spec:
   storageClassName: nfs-fast
-  accessModes: [ReadWriteOnce]
+  accessModes: [ReadWriteMany]
   resources:
     requests:
       storage: 100M
