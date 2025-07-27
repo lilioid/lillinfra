@@ -29,21 +29,18 @@ spec:
           containers:
             - name: homepage
               image: git.lly.sh/lilly/homepage
+              command: [ "/bin/sh", "-c" ]
+              args:
+                - |
+                  /usr/local/src/homepage/manage.py discover-webmentions
+                  /usr/local/src/homepage/manage.py send-webmentions
+                  /usr/local/src/homepage/manage.py show-webmentions
               envFrom:
                 - secretRef:
                     name: website-env
               volumeMounts:
                 - name: state
                   mountPath: /var/lib/homepage/
-              ports:
-                - name: http
-                  containerPort: 8000
-              readinessProbe:
-                httpGet:
-                  port: http
-                  httpHeaders:
-                    - name: Host
-                      value: li.lly.sh
               resources:
                 requests:
                   cpu: "100m"
