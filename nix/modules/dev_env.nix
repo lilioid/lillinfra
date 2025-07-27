@@ -50,6 +50,16 @@ in
       };
       programs.jujutsu = {
         enable = true;
+        ediff = lib.mkForce false;
+        settings = {
+          user = {
+            email = "li@lly.sh";
+            name = "lilly";
+          };
+          aliases = {
+            init = ["git" "init"];
+          };
+        };
       };
       home.sessionSearchVariables = {
         PATH = [ "$HOME/.krew/bin" ];
