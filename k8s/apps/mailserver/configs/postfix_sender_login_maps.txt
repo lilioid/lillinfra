@@ -6,7 +6,7 @@ noreply@lly.sh              noreply
 @lly.sh                     lilly
 @timonengelke.de            tengelke
 @sheaksadi.me               ssheak
-@bastianpermesang.com       bpermesang
+@bastianpermesang.com       geschox
 
 @powolygon.gay              polygon
 @critter.codes              polygon
