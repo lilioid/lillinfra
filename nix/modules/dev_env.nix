@@ -66,6 +66,15 @@ in
             # https://jj-vcs.github.io/jj/latest/config/#default-revisions
             log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())";
           };
+          "--scope" = [
+            {
+              "--when.repositories" = ["~/Projects/b1"];
+              user = {
+                name = "Lilly Sell";
+                email = "sell@b1-systems.de";
+              };
+            }
+          ];
         };
       };
       home.sessionSearchVariables = {
