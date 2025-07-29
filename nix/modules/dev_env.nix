@@ -59,6 +59,13 @@ in
           aliases = {
             init = ["git" "init"];
           };
+          ui = {
+            deafult_command = "log";
+          };
+          revsets = {
+            # https://jj-vcs.github.io/jj/latest/config/#default-revisions
+            log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())";
+          };
         };
       };
       home.sessionSearchVariables = {
