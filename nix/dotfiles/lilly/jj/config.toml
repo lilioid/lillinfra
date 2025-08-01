@@ -22,6 +22,19 @@ log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())"
 [git]
 auto-local-bookmark = true
 
+[templates]
+draft_commit_description = '''
+concat(
+  coalesce(description, default_commit_description, "\n"),
+  surround(
+    "\nJJ: This commit contains the following changes:\n", "",
+    indent("JJ:     ", diff.stat(72)),
+  ),
+  "\nJJ: ignore-rest\n",
+  diff.git(),
+)
+'''
+
 [[--scope]]
 "--when.repositories" = ["~/Projects/b1/", "~/Projects/mafiasi/py_simple_openid_connect"]
 
