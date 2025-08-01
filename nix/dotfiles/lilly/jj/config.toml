@@ -19,6 +19,9 @@ default_command = "log"
 # https://jj-vcs.github.io/jj/latest/config/#default-revisions
 log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())"
 
+[git]
+auto-local-bookmark = true
+
 [[--scope]]
 "--when.repositories" = ["~/Projects/b1/", "~/Projects/mafiasi/py_simple_openid_connect"]
 
