@@ -173,6 +173,15 @@ Host status.fux-eg.net
 
 
 ####
+# hanse.de
+#
+Host *.hanse.de
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@hanse.de.pub
+
+
+
+####
 # Viva con Agua
 #
 
