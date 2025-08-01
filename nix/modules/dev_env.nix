@@ -51,36 +51,6 @@ in
       programs.jujutsu = {
         enable = true;
         ediff = lib.mkForce false;
-        settings = {
-          user = {
-            email = "li@lly.sh";
-            name = "lilly";
-          };
-          aliases = {
-            init = ["git" "init"];
-            tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
-          };
-          ui = {
-            deafult_command = "log";
-          };
-          colors = {
-            "diff removed token" = { fg = "bright red"; bg = "#400000"; underline = false; };
-            "diff added token" = { fg = "bright green"; bg = "#003000"; underline = false; };
-          };
-          revsets = {
-            # https://jj-vcs.github.io/jj/latest/config/#default-revisions
-            log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())";
-          };
-          "--scope" = [
-            {
-              "--when.repositories" = ["~/Projects/b1" "~/Projects/mafiasi/py_simple_openid_connect"];
-              user = {
-                name = "Lilly Sell";
-                email = "sell@b1-systems.de";
-              };
-            }
-          ];
-        };
       };
       home.sessionSearchVariables = {
         PATH = [ "$HOME/.krew/bin" ];

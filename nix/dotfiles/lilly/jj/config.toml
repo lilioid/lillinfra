@@ -1,0 +1,25 @@
+[user]
+name = "lilly"
+email = "li@lly.sh"
+
+[aliases]
+init = [ "git", "init" ]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+
+[ui]
+default_command = "log"
+
+[colors]
+"diff removed token" = { fg = "bright red", bg = "#400000", underline = false }
+"diff added token" = { fg = "bright green", bg = "#003000", underline = false }
+
+[revsets]
+# https://jj-vcs.github.io/jj/latest/config/#default-revisions
+log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())"
+
+[[--scope]]
+"--when.repositories" = ["~/Projects/b1/", "~/Projects/mafiasi/py_simple_openid_connect"]
+
+[scope.user]
+name = "Lilly Sell"
+email = "sell@b1-systems.de"

@@ -51,6 +51,10 @@ in
             allowUnfree = true;
           }
         '';
+        "jj/config.toml" = {
+          enable = config.home-manager.users.lilly.programs.jujutsu.enable;
+          source = ../dotfiles/lilly/jj/config.toml;
+        };
       };
       home.file = {
         ".ssh/config".source = ../dotfiles/lilly/ssh/config;
