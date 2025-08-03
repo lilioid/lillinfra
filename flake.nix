@@ -49,7 +49,7 @@
     # lix package manager
     # https://lix.systems
     lix = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module.git?ref=2.93.0";
+      url = "git+https://git.lix.systems/lix-project/nixos-module.git?ref=release-2.93";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
