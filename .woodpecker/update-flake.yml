@@ -13,45 +13,4 @@ steps:
           limits:
             memory: "2Gi"
     commands:
-      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config flake update
-
-  # https://woodpecker-ci.org/plugins/Git%20Push
-  - name: commit-changes
-    image: docker.io/appleboy/drone-git-push
-    backend_options: &small_job_resources
-      kubernetes:
-        resources:
-          requests:
-            cpu: 100m
-          limits:
-            memory: 100Mi
-    settings:
-      branch: update-flake-inputs
-      ssh_key:
-        from_secret: ssh-key
-      remote: "${CI_REPO_CLONE_SSH_URL}"
-      commit: true
-      commit_message: "update flake inputs"
-      author_name: "Woodpecker CI"
-      author_email: "woodpecker-ci@noreply.lly.sh"
-      force: true
-
-  # https://woodpecker-ci.org/plugins/Gitea%20Create%20Pull%20Request
-  - name: create-pr
-    image: docker.io/johnwalkerx/gitea-pull-request-create-plugin      
-    backend_options: *small_job_resources
-    settings:
-      gitea_address: "${CI_FORGE_URL}"
-      gitea_token:
-        from_secret: forgejo-token
-      owner: "${CI_REPO_OWNER}"
-      repo: "${CI_REPO_NAME}"
-      branch: update-flake-inputs
-      base_branch: main
-      pr_title: "Update flake inputs"
-      pr_body: |
-        Automatic CI update of flake inputs.
-        See generated comments below for the effects this has on derivation outputs.
-      close_pr_if_empty: true
-      delete_branch_if_pr_empty: true
-      delete_branch_after_merge: true
+      - nix --extra-experimental-features "nix-command flakes" --accept-flake-config run ".#ci-update-flakes"
