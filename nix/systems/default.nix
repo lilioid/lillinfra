@@ -12,7 +12,7 @@ let
         flake.inputs.disko.nixosModules.disko
         flake.inputs.home-manager.nixosModules.home-manager
         flake.inputs.sops-nix.nixosModules.default
-        #flake.inputs.lix.nixosModules.default
+        flake.inputs.lix.nixosModules.default
         flake.inputs.cookied.nixosModules.default
 
         ../modules/base_system.nix
