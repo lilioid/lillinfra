@@ -36,4 +36,3 @@ let
   };
 in
   pkgs.lib.mergeAttrs dirPkgs manualPkgs
-
