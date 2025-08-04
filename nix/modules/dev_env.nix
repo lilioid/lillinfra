@@ -138,6 +138,7 @@ in
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       jetbrains.webstorm
+      jetbrains.goland
     ];
 
     programs.fish.shellInit = ''
