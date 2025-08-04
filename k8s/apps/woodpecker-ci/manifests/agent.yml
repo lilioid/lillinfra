@@ -58,7 +58,7 @@ items:
           serviceAccountName: woodpecker-agent
           containers:
             - name: agent
-              image: docker.io/woodpeckerci/woodpecker-agent
+              image: git.lly.sh/lilly/woodpecker-agent
               imagePullPolicy: Always
               envFrom:
                 - configMapRef:
