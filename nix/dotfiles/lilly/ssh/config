@@ -179,6 +179,9 @@ Host *.hanse.de
   User lilly
   IdentityFile ~/.ssh/id_lilly@hanse.de.pub
 
+Host vesteralen.hanse.de
+  User eisenboot
+
 
 
 ####
