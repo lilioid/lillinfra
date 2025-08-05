@@ -17,7 +17,7 @@ default_command = "log"
 
 [revsets]
 # https://jj-vcs.github.io/jj/latest/config/#default-revisions
-log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())"
+log = "present(@) | ancestors(immutable_heads().., 6) | present(trunk())"
 
 [git]
 auto-local-bookmark = true
