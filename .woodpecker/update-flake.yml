@@ -7,8 +7,6 @@ steps:
     image: docker.io/nixos/nix
     backend_options:
       kubernetes:
-        securityContext:
-          fsGroupChangePolicy: "OnRootMismatch"
         resources:
           requests:
             cpu: "1"

@@ -13,7 +13,7 @@ matrix:
 skip_clone: true
 
 steps:
-  - name: build-systems
+  - name: render-diff
     image: docker.io/nixos/nix
     backend_options:
       kubernetes:
@@ -26,7 +26,7 @@ steps:
       - nix 
           --extra-experimental-features "nix-command flakes"
           --accept-flake-config
-          build "git+${CI_REPO_CLONE_URL}.#nixosConfigurations.\"${SYSTEM_CONFIG}\".config.build.system.toplevel"
+          build "git+${CI_REPO_CLONE_URL}#nixosConfigurations.\"${SYSTEM_CONFIG}\".config.build.system.toplevel"
       - nix --extra-experimental-features "nix-command flakes" 
           --accept-flake-config 
           run "git+${CI_REPO_CLONE_URL}#show-nixos-diff" -- 
