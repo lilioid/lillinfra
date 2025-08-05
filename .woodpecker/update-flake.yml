@@ -16,7 +16,7 @@ steps:
             memory: "2Gi"
     commands:
       - nix --extra-experimental-features "nix-command flakes"
-          --accept-flake-config \
+          --accept-flake-config
           flake update
 
   # https://woodpecker-ci.org/plugins/Git%20Push
