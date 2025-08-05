@@ -122,13 +122,6 @@ in
   };
 
   networking.nftables.enable = true;
-  networking.nat = {
-    enable = true;
-    externalInterface = "enp1s0";
-    internalIPs = [
-      "10.0.10.0/24"
-    ];
-  };
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = "1";
