@@ -11,11 +11,11 @@ steps:
           fsGroupChangePolicy: "OnRootMismatch"
         resources:
           requests:
-            cpu: "500m"
+            cpu: "1"
           limits:
             memory: "2Gi"
     commands:
       - nix
           --extra-experimental-features "nix-command flakes"
           --accept-flake-config
-          run ".#ci-update-flakes"
+          run ".#ci-update-flake"
