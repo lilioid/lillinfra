@@ -14,11 +14,8 @@ steps:
             cpu: "500m"
           limits:
             memory: "2Gi"
-    volumes:
-      - "woodpecker-nix:/woodpecker/nix/"
     commands:
       - nix
           --extra-experimental-features "nix-command flakes"
           --accept-flake-config
-          --store /woodpecker/nix/store
           run ".#ci-update-flakes"
