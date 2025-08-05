@@ -56,14 +56,6 @@ in
         "37.153.156.168"
         "fe80::1"
       ];
-      routes = [
-        {
-          Destination = "37.153.156.168";
-        }
-        {
-          Destination = "37.153.156.170";
-        }
-      ];
       networkConfig = {
         DHCP = "no";
         IPv6AcceptRA = false;

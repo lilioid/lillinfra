@@ -37,6 +37,7 @@ let
     routes =
       (builtins.map (ip4: {
         Destination = ip4;
+        PreferredSource = data.network.rt-hosting.ip4;
       }) routedIp4s)
       ++ [
         {
