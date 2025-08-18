@@ -99,8 +99,6 @@
   };
   environment.systemPackages = with pkgs; [
     helix
-    emacs
-    tig
     age
   ];
 

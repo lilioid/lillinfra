@@ -72,6 +72,12 @@ in
       programs.git = import ../dotfiles/lilly/git.nix { inherit lib pkgs; };
       programs.fish = import ../dotfiles/lilly/fish.nix;
       programs.helix = import ../dotfiles/lilly/helix.nix { inherit lib pkgs config; };
+      programs.taskwarrior = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit pkgs; }).taskwarrior;
+      services.taskwarrior-sync = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit pkgs; }).taskwarrior-sync;
     };
+
+    environment.systemPackages = [
+      (lib.mkIf config.custom.devEnv.enable pkgs.taskwarrior-tui)
+    ];
   };
 }
