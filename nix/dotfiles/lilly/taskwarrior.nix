@@ -5,6 +5,10 @@
     package = pkgs.taskwarrior3;
     config = {
       sync.local.server_dir = "~/Sync/.tasks";
+      color = {
+        alternate = "white on grey2";
+        uda.priority.H = "white on red";
+      };
     };
   };
   taskwarrior-sync = {
