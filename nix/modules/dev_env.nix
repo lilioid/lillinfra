@@ -88,6 +88,7 @@ in
     environment.systemPackages = with pkgs; [
       nixos-rebuild-ng
       helmfile
+      jq
       watchexec
       ansible
       ansible-lint
@@ -97,10 +98,7 @@ in
       nodePackages.pnpm
       bun
       python3
-      pipenv
-      poetry
       uv
-      sshfs
       kubectl
       krew
       kubernetes-helm
@@ -108,10 +106,7 @@ in
       pass
       sshuttle
       rustup
-      clang
-      pkg-config
       pre-commit
-      uucp
       openssl
       gleam
       erlang
@@ -122,10 +117,10 @@ in
       attic-client
       nil
       reuse
+      tig
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       jetbrains.webstorm
-      jetbrains.goland
     ];
 
     programs.fish.shellInit = ''
