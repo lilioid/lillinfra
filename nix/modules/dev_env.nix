@@ -35,19 +35,6 @@ in
     };
 
     home-manager.users.lilly = {
-      services.emacs = {
-        enable = true;
-      };
-      programs.emacs = {
-        enable = true;
-        extraPackages = epkgs: [
-          epkgs.neotree
-          epkgs.nerd-icons
-          epkgs.tree-sitter
-          epkgs.tree-sitter-langs
-          pkgs.nil
-        ];
-      };
       programs.jujutsu = {
         enable = true;
         ediff = lib.mkForce false;
