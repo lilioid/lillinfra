@@ -127,6 +127,10 @@ Host netsec-teaching
 # Fux e.G.
 #
 
+Host rt1.z9.fux-eg.net
+  User lilly
+  PasswordAuthentication no
+
 Host *.fux-eg.net
   User noc
   IdentityFile ~/.ssh/id_lilly@fux.pub
