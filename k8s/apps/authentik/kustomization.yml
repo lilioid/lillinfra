@@ -12,12 +12,11 @@ resources:
   - manifests/rbac.yml
   - manifests/authentik-server.yml
   - manifests/authentik-worker.yml
-  - manifests/redis.yml
   - manifests/ingress.yml
 
 images:
   - name: ghcr.io/goauthentik/server
-    newTag: "2025.6.4"
+    newTag: "2025.8"
 
 configMapGenerator:
   - name: authentik-env
