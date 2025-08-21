@@ -6,13 +6,16 @@
     config = {
       sync.local.server_dir = "~/Sync/.tasks";
       color = {
-        alternate = "white on grey2";
+        alternate = "";
+        scheduled = "on rgb345";
+        calendar.weekend = "";
         uda.priority.H = "white on red";
       };
     };
   };
   taskwarrior-sync = {
     enable = true;
+    package = pkgs.taskwarrior3;
     frequency = "minutely";
   };
 }
