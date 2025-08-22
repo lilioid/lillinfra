@@ -28,7 +28,7 @@ items:
           default: # default limit
             memory: "1Gi"
           max: # maximum allowed limit
-            memory: "8Gi"
+            memory: "12Gi"
 
   # pod statefulset
   - apiVersion: apps/v1
@@ -56,6 +56,7 @@ items:
           labels: *labels
         spec:
           serviceAccountName: woodpecker-agent
+          priorityClassName: custom-high
           containers:
             - name: agent
               image: docker.io/woodpeckerci/woodpecker-agent

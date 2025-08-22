@@ -13,14 +13,3 @@ items:
       resources:
         requests:
           storage: "10G"
-
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: woodpecker-nix
-    spec:
-      storageClassName: nfs-slow
-      accessModes: [ "ReadWriteMany" ]
-      resources:
-        requests:
-          storage: "50G"

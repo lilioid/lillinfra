@@ -31,6 +31,7 @@ items:
         metadata:
           labels: *labels
         spec:
+          priorityClassName: custom-high
           containers:
             - name: woodpecker-server
               image: docker.io/woodpeckerci/woodpecker-server
