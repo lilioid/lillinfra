@@ -72,8 +72,26 @@ in
       programs.git = import ../dotfiles/lilly/git.nix { inherit lib pkgs; };
       programs.fish = import ../dotfiles/lilly/fish.nix;
       programs.helix = import ../dotfiles/lilly/helix.nix { inherit lib pkgs config; };
-      programs.taskwarrior = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit pkgs; }).taskwarrior;
-      services.taskwarrior-sync = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit pkgs; }).taskwarrior-sync;
+      programs.taskwarrior = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior;
+      services.taskwarrior-sync = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior-sync;
+    };
+
+    sops = {
+      secrets."lilly/taskchampion-sync-client-id" = {
+        owner = "lilly";
+      };
+      secrets."lilly/taskchampion-sync-encryption-secret" = {
+        owner = "lilly";
+        sopsFile = ../data/shared-secrets/task-sync.yml;
+      };
+      templates."lilly/taskrc" = {
+        owner = "lilly";
+        content = ''
+          sync.server.url=https://task-sync.lly.sh
+          sync.server.client_id=${config.sops.placeholder."lilly/taskchampion-sync-client-id"}
+          sync.encryption_secret=${config.sops.placeholder."lilly/taskchampion-sync-encryption-secret"}
+        '';
+      };
     };
 
     environment.systemPackages = [

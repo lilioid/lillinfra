@@ -2,11 +2,9 @@ wg_vpn:
     privkey: ENC[AES256_GCM,data:1np62reJ5VN/8MuyqawaAipjhPp1zcJndu2DEdmRCJl2X6QCKkOylrPC7wQ=,iv:YE8ryliXI+r5zKLaaTku+FdAL0Z85UdmpU1J6zgac80=,tag:0uVsF8cbkOVwvNptCW3i8g==,type:str]
 wg_fux:
     privkey: ENC[AES256_GCM,data:SvHINau0easmDjmFzGq75Twxy8wICdDGts4FL+/yRTqp76z4yU+lB7h9BhY=,iv:1g0+dOyt4qQ3QIiSkZzMxyzaanJMrdcmUYAE7fL7lCk=,tag:dvEXZ2vEWVeecENsNAdEBw==,type:str]
+lilly:
+    taskchampion-sync-client-id: ENC[AES256_GCM,data:GOJ4tRzPgXyfBURhx5l64KZdEjcOHjuAUOaNgydDyWZITcgq,iv:WeiZdJFiE23dN1I5+T+vwLQWnzYr2HK4ki+ORXrfwSo=,tag:Y6m3DhlfsMpNE74N3kjJYg==,type:str]
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
     age:
         - recipient: age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d
           enc: |
@@ -26,8 +24,7 @@ sops:
             UG1GYkh1bU5WSlk2VWtnN0k4cTV1OEUKDs6AqkaMIx6zDuDIplSxPcSvUl+L9fog
             v1K0DbdH4aTzhZVSAK3d0kJ4ayX/A3yy5u+B6QAQGZdvw6l2RB0jRg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-05-11T15:51:02Z"
-    mac: ENC[AES256_GCM,data:hASuiEf4SBbpJTDcrFVoMQ9qsBZ1zUC9jPJJYjCCPMw23hAZRaz2E5eAzc42r2vfiWlWa0+5n0CTxQY+K69Q5D6pJz42J6FoWrPFNMHedVHkxONAugK6k0dqusHVRqUsJoYncfXiVZyQGIwHJAK0GrBNsYGDRXNy8BBKchbxPko=,iv:UvRT+i4myudGCbcT48LkZkt2l0MDx9ta1ZZqydRtkYw=,tag:1l2odJUiy2gdrmo8rXWtSA==,type:str]
-    pgp: []
+    lastmodified: "2025-08-22T06:17:50Z"
+    mac: ENC[AES256_GCM,data:wGbL8l6pw2Yd0C/Z8PublKrE2fzMly38KQgPillcBu/rzx9sXmeBGatkmrIQ6vUsLG1wdSmtpbm8P41H9R0divPZV7ebap22Af1ywX+J8uYPH3q9AI1d9bDhJj83J9VussR4rLZfV4xgSfDdTv3NrASYSr5ZkaZz4ZMtf/0clcY=,iv:AUuFpJ6DFGZGetKY6/XtGbeIrRnhLhNz13ojo7wvxxU=,tag:QPj2hz+5j695GYYcyC2Fow==,type:str]
     unencrypted_suffix: _unencrypted
-    version: 3.9.4
+    version: 3.10.2

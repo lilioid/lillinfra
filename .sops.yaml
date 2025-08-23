@@ -86,6 +86,10 @@ creation_rules:
     key_groups:
       - age: [ *lilly, *lillysLaptop, *lillysWorkstation, *nas-myroot, *priv-home-srv ]
 
+  - path_regex: "nix/data/shared-secrets/task-sync.yml"
+    key_groups:
+      - age: [ *lilly, *lillysLaptop, *lillysWorkstation ]
+
   # generic secrets
   - path_regex: "nix/data/(.+-)?secrets/.+.yml"
     key_groups:
