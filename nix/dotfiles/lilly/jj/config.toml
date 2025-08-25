@@ -5,7 +5,7 @@ name = "lilly"
 email = "li@lly.sh"
 
 [aliases]
-init = [ "git", "init" ]
+init = [ "git", "init", "--colocate" ]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
 [ui]
