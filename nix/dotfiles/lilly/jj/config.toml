@@ -8,6 +8,11 @@ email = "li@lly.sh"
 init = [ "git", "init", "--colocate" ]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
+[signing]
+behavior = "own"
+backend = "ssh"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPohjBYcg4GR9hKH6vdT5V2OA+rpTBkDOJZzipnotpR+"
+
 [ui]
 default_command = "log"
 
