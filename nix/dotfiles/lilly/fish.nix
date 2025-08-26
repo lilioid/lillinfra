@@ -5,6 +5,7 @@
     emacs = "emacs --no-window-system";
   };
   shellAbbrs = {
+    "sshpw" = "ssh -o \"PreferredAuthentications=password\"";
     "ga" = "git add";
     "gst" = "git status";
     "gsw" = "git switch";
