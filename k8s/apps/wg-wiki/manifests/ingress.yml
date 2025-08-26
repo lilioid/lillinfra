@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wg-wiki
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  tls:
+    - secretName: tls-tracker
+      hosts:
+        - wiki.wg.aut-sys.de
+  rules:
+    - host: wiki.wg.aut-sys.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wiki-server
+                port:
+                  name: http

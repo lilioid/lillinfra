@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: wg-wiki
+labels:
+  - includeSelectors: true
+    includeTemplates: true
+    pairs:
+      app.kubernetes.io/part-of: wg-wiki
+
+images:
+  - name: ghcr.io/dokuwiki/dokuwiki
+    newTag: "2025-05-14a"
+
+resources:
+  - manifests/namespace.yml
+  - manifests/ingress.yml
+  - manifests/server.yml
+
+configMapGenerator:
+  - name: wiki-server-env
+    envs:
+      - config/wiki-server.env

@@ -261,6 +261,15 @@ Host btv-migration
   IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
 
 
+
+######
+# Eurofurence 29
+#
+Host *.ef29.aut-sys.de
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@ccc.pub
+
+
 # Global Override Settings
 Host *
   ForwardAgent no
