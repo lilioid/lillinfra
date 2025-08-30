@@ -77,14 +77,14 @@ in
     };
 
     sops = {
-      secrets."lilly/taskchampion-sync-client-id" = {
+      secrets."lilly/taskchampion-sync-client-id" = lib.mkIf config.custom.devEnv.enable {
         owner = "lilly";
       };
-      secrets."lilly/taskchampion-sync-encryption-secret" = {
+      secrets."lilly/taskchampion-sync-encryption-secret" = lib.mkIf config.custom.devEnv.enable {
         owner = "lilly";
         sopsFile = ../data/shared-secrets/task-sync.yml;
       };
-      templates."lilly/taskrc" = {
+      templates."lilly/taskrc" = lib.mkIf config.custom.devEnv.enable {
         owner = "lilly";
         content = ''
           sync.server.url=https://task-sync.lly.sh
