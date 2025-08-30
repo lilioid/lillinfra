@@ -75,12 +75,10 @@ in
     virtualHosts = {
 
       "sync.home.lly.sh" = vhostDefaults // {
-        serverAliases = [ "sync.home.ftsell.de" ];
         locations."/".proxyPass = "http://priv.srv.home.intern:8384";
       };
 
       "ha.home.lly.sh" = vhostDefaults // {
-        serverAliases = [ "ha.home.ftsell.de" ];
         locations."/" = {
           proxyPass = "http://priv.srv.home.intern:8123";
           proxyWebsockets = true;
@@ -88,12 +86,10 @@ in
       };
 
       "docs.home.lly.sh" = vhostDefaults // {
-        serverAliases = [ "docs.home.ftsell.de" ];
         locations."/".proxyPass = "http://priv.srv.home.intern:8000";
       };
 
       "pics.home.lly.sh" = vhostDefaults // {
-        serverAliases = [ "pics.home.lly.sh" ];
         locations."/".proxyPass = "http://priv.srv.home.intern:3001";
       };
 
