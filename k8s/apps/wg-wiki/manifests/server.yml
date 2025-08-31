@@ -24,6 +24,7 @@ items:
       name: wiki-server
       labels: *labels
     spec:
+      replicas: 0
       selector:
         matchLabels: *labels
       template:
