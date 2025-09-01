@@ -2,10 +2,9 @@
 {
   enable = true;
   shellAliases = {
-    emacs = "emacs --no-window-system";
+    "sshpw" = "ssh -o \"PreferredAuthentications=password\"";
   };
   shellAbbrs = {
-    "sshpw" = "ssh -o \"PreferredAuthentications=password\"";
     "ga" = "git add";
     "gst" = "git status";
     "gsw" = "git switch";
