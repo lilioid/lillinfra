@@ -99,7 +99,7 @@
   # settings defined by my own custom modules
   custom = {
     gnomeDesktop.enable = true;
-    #kde.enable = true;
+    niriDesktop.enable = true;
     devEnv.enable = true;
     devEnv.enableFuxVpn = true;
     user-syncthing.enable = true;
@@ -135,6 +135,8 @@
 
   # fux vpn connection
   sops.secrets."wg_fux/privkey" = { };
+
+  services.timesyncd.servers = [ "151.216.48.11" "151.216.48.12" ];
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible

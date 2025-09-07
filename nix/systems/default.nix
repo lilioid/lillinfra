@@ -20,6 +20,7 @@ let
         ../modules/dev_env.nix
         ../modules/gnome.nix
         ../modules/kde.nix
+        ../modules/niri.nix
         ../modules/backup.nix
         ../modules/syncthing.nix
         ../modules/auto_upgrade.nix
