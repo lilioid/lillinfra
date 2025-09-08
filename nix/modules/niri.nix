@@ -25,9 +25,19 @@ in {
       # TODO xdg-desktop-portals
     };
 
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome
+      ];
+    };
+
     environment.systemPackages = with pkgs; [
       swaybg  # background image renderer
       xwayland-satellite # be able to run x apps
+      alacritty
+      font-awesome
     ];
 
     # use inter as default font
@@ -35,6 +45,7 @@ in {
       packages = with pkgs; [ inter ];
       fontconfig.defaultFonts = {
         sansSerif = [ "Inter" ];
+        emoji = [ "Noto Color Emoji" "Font Awesome" ];
       };
     };
 
