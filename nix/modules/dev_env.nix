@@ -12,6 +12,7 @@ in
     custom.devEnv = {
       enable = lib.options.mkEnableOption "installation of development utilities";
       enableFuxVpn = lib.options.mkEnableOption "configuration of fux vpn access";
+      enableAutSysMgmtVpn = lib.options.mkEnableOption "configuration of aut-sys vpn";
     };
   };
 
@@ -32,6 +33,7 @@ in
         #format = "binary";
       };
       "wg_fux/privkey" = lib.mkIf cfg.enableFuxVpn { };
+      "wg_autsys/privkey" = lib.mkIf cfg.enableAutSysMgmtVpn {};
     };
 
     home-manager.users.lilly = {
@@ -44,8 +46,8 @@ in
       };
     };
 
-    networking.networkmanager.ensureProfiles = lib.mkIf cfg.enableFuxVpn {
-      profiles."wgFux" = {
+    networking.networkmanager.ensureProfiles = {
+      profiles."wgFux" = lib.mkIf cfg.enableFuxVpn {
         connection = {
           id = "wgFux";
           type = "wireguard";
@@ -69,14 +71,50 @@ in
           endpoint = "vpn.fux-eg.net:50199";
         };
       };
+      profiles."autSys" = lib.mkIf cfg.enableAutSysMgmtVpn {
+        connection = {
+          id = "wgAutSysMgmt";
+          type = "wireguard";
+          autoconnect = true;
+          interface-name = "wgAutSysMgmt";
+          permissions = "user:lilly:;";
+        };
+        wireguard = {
+          private-key-flags = 1;
+        };
+        ipv4 = {
+          method = "manual";
+          address1 = "10.233.227.2/24";
+        };
+        ipv6 = {
+          method = "manual";
+          address1 = "2a07:c481:2:3::2/64";
+        };
+        "wireguard-peer.SySg/p4N+TEx874Rnlt/7vNmXhQPQNE+WpBDk791dww=" = {
+          allowed-ips = lib.strings.concatStringsSep ";" [
+            "10.233.226.0/24"    # mgmt network
+            "10.233.227.0/24"    # mgmt vpn
+            "2a07:c481:2:2::/64" # mgmt network
+            "2a07:c481:2:3::/64" # mgmt vpn
+          ];
+          endpoint = "vpn.aut-sys.de:13231";
+        };
+      };
       secrets.entries = [
-        {
+        (lib.mkIf cfg.enableFuxVpn {
           matchId = "wgFux";
           matchType = "wireguard";
           matchSetting = "wireguard";
           key = "private-key";
           file = config.sops.secrets."wg_fux/privkey".path;
-        }
+        })
+        (lib.mkIf cfg.enableAutSysMgmtVpn {
+          matchId = "wgAutSysMgmt";
+          matchType = "wireguard";
+          matchSetting = "wireguard";
+          key = "private-key";
+          file = config.sops.secrets."wg_autsys/privkey".path;
+        })
       ];
     };
   
