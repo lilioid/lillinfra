@@ -100,6 +100,7 @@
   # options defined by other custom modules
   custom = {
     gnomeDesktop.enable = true;
+    niriDesktop.enable = true;
     devEnv.enable = true;
     devEnv.enableFuxVpn = true;
     user-syncthing.enable = true;
