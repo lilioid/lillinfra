@@ -87,6 +87,7 @@ in
 
     environment.systemPackages = with pkgs; [
       nixos-rebuild-ng
+      glab
       helmfile
       jq
       watchexec
