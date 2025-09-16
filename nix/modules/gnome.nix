@@ -84,8 +84,9 @@ in
               "org.gnome.Nautilus.desktop"
               "org.keepassxc.KeePassXC.desktop"
               "thunderbird.desktop"
-              "signal-desktop.desktop"
               "element-desktop.desktop"
+              "signal.desktop"
+              "org.telegram.desktop.desktop"
               "firefox.desktop"
               "org.wezfurlong.wezterm.desktop"
             ];
