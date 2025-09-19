@@ -33,7 +33,7 @@ in
         #format = "binary";
       };
       "wg_fux/privkey" = lib.mkIf cfg.enableFuxVpn { };
-      "wg_autsys/privkey" = lib.mkIf cfg.enableAutSysMgmtVpn {};
+      "wg_autsysmgmt/privkey" = lib.mkIf cfg.enableAutSysMgmtVpn {};
     };
 
     home-manager.users.lilly = {
@@ -113,7 +113,7 @@ in
           matchType = "wireguard";
           matchSetting = "wireguard";
           key = "private-key";
-          file = config.sops.secrets."wg_autsys/privkey".path;
+          file = config.sops.secrets."wg_autsysmgmt/privkey".path;
         })
       ];
     };

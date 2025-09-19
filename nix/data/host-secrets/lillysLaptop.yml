@@ -2,8 +2,8 @@ wg_vpn:
     privkey: ENC[AES256_GCM,data:EF0lb7SC+o7xoogeW9dn+eD96k5Cbza5eP0Chgv7C6lSONZqdSu4Enif7Ds=,iv:7A8W5/t6nf4uib7YbR+kycj9GvSjA8jUe/rOO5N4OD8=,tag:iYfO1woTY0fNVRMYsB1o0w==,type:str]
 wg_fux:
     privkey: ENC[AES256_GCM,data:+0hg+p9biegVLDFShJp20j6K+A8jMsqn/bsFZSQu4wKeOOadRJqnsPwMzjY=,iv:tiozqLvXPcauWf8DdD1bCg1ywYwfIO/YYs640SRiq5c=,tag:I/Y2J8Xh4z5SWh/d4jq1DQ==,type:str]
-wg_autsys:
-    privkey: ENC[AES256_GCM,data:037zYR8F+gToIExpjwROxFI5RpTtvKFRsU3fBtSlEbm8GRLj0sIrH9HQ1K4=,iv:TSGOFVgFrXqnfgJF5ysW8nMq5EzZb87Nv2jHpOiYZDo=,tag:E5QcKwkqJPYB6AVlu3xBIA==,type:str]
+wg_autsysmgmt:
+    privkey: ENC[AES256_GCM,data:hQCihV9y3hV3wAvjxqnvUolHdPFL2HAF1jf/XNJ/1VsqzG6HHnQETZAUsoQ=,iv:bZb2RCZ1UETvbvoMHZ80kY+I7cM30cZ/6sPBucpXMCA=,tag:LxOEbtbUseD8wkdFAD25yw==,type:str]
 backup:
     rsync-net:
         encryption-passphrase: ENC[AES256_GCM,data:FQ0nSCu59qCl5NfJhaI9QeVS,iv:WFcwcN6F2cwJ1HO3uL27mSRgZTx3WcZVqAlEp11s+2g=,tag:GwiH1t+VvUYTclE3XsC41A==,type:str]
@@ -30,7 +30,7 @@ sops:
             MG9LVjAvcXdsU1VDb2xqaG51MkxoRVkKCWiZxvzhayB++Tnorc6PD3AARq3ARZ5L
             TUeTSuclmjrWVAgiCTH2uBnxMKLrGbrYaVKkLCPgfMO+GOqyJhRNLQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-09T15:10:14Z"
-    mac: ENC[AES256_GCM,data:menBkS8suCrlgPBwMZ26FCVLLtLyPt9hVeuTirfNdx7nt5Hq91EVBepNN0cT2W5WKb1+jWH47Nj8HIYzkCBEOr0ax3aOSZ5y8sXAewWwYUgtnbJ2TWyghdXP6hsr0ynSzz4x5qdGkDdknr9aux6rPumWFps0RDH3Wa2iXHDFPTw=,iv:mId8HW1K850b0XZXiP8kwCDWu771Mn/84bN6f6SpMX8=,tag:fuHt9MMBt2Kdv/ujtfJXPw==,type:str]
+    lastmodified: "2025-09-19T10:11:02Z"
+    mac: ENC[AES256_GCM,data:RY+M3kMlgcCiHxA6zRrnf3G1FAk3JMcj+RKn2TK3Jd/LMgLOuYVKT6YGsQ/elpFnlrt5Xvw6Fmwc46zzOJB10WlJQ2aIfnDfVu5/sLR+nOuQsk/pUA/vrRwyMPA9RM38Ym95jv167NRODBEr6tsO8WQC4pLlKO29vobnYTilOFU=,iv:T7V8LYw1NAvrnPlNXFQtWTmAif05fPeqaYVrZR859rk=,tag:dcOE0lvzVHVRTDgV57tfSQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2

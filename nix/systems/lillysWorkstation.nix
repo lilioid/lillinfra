@@ -103,6 +103,7 @@
     niriDesktop.enable = true;
     devEnv.enable = true;
     devEnv.enableFuxVpn = true;
+    devEnv.enableAutSysMgmtVpn = true;
     user-syncthing.enable = true;
     gaming.enable = true;
     backup.enable = true;
