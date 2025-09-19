@@ -13,6 +13,11 @@ in
       enable = lib.options.mkEnableOption "installation of development utilities";
       enableFuxVpn = lib.options.mkEnableOption "configuration of fux vpn access";
       enableAutSysMgmtVpn = lib.options.mkEnableOption "configuration of aut-sys vpn";
+      autSysMgmtIpNum = lib.options.mkOption {
+        description = "Host identifying IP number inside the AutSys MGMT VPN";
+        type = lib.types.ints.u8;
+        default = 254;
+      };
     };
   };
 
@@ -71,7 +76,7 @@ in
           endpoint = "vpn.fux-eg.net:50199";
         };
       };
-      profiles."autSys" = lib.mkIf cfg.enableAutSysMgmtVpn {
+      profiles."autSysMgmt" = lib.mkIf cfg.enableAutSysMgmtVpn {
         connection = {
           id = "wgAutSysMgmt";
           type = "wireguard";
@@ -84,11 +89,11 @@ in
         };
         ipv4 = {
           method = "manual";
-          address1 = "10.233.227.2/24";
+          address1 = "10.233.227.${builtins.toString cfg.autSysMgmtIpNum}/24";
         };
         ipv6 = {
           method = "manual";
-          address1 = "2a07:c481:2:3::2/64";
+          address1 = "2a07:c481:2:3::${builtins.toString cfg.autSysMgmtIpNum}/64";
         };
         "wireguard-peer.SySg/p4N+TEx874Rnlt/7vNmXhQPQNE+WpBDk791dww=" = {
           allowed-ips = lib.strings.concatStringsSep ";" [

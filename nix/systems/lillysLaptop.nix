@@ -103,6 +103,7 @@
     devEnv.enable = true;
     devEnv.enableFuxVpn = true;
     devEnv.enableAutSysMgmtVpn = true;
+    devEnv.autSysMgmtIpNum = 2;
     user-syncthing.enable = true;
     backup.enable = true;
     gaming.enable = true;
