@@ -82,7 +82,7 @@
   documentation.nixos.options.warningsAreErrors = false;
   programs.command-not-found.enable = false;
 
-  # derive sops key from ssh key if ssh is enable and configure host sepcific secrets
+  # derive sops key from ssh key if ssh is enable and configure host specific secrets
   sops.age.sshKeyPaths = lib.mkIf config.services.openssh.enable [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.defaultSopsFile = ../data/host-secrets + "/${config.networking.fqdnOrHostName}.yml";
 

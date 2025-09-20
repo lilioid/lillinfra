@@ -7,6 +7,7 @@
     "x-scheme-handler/http" = [ "firefox.desktop" ];
     "x-scheme-handler/https" = [ "firefox.desktop" ];
     "x-scheme-handler/mailto" = [ "thunderbird.desktop" ];
+    "text/html" = [ "firefox.desktop" ];
 
     "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
     "image/png" = [ "org.gnome.Loupe.desktop" ];

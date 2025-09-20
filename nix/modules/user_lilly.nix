@@ -1,12 +1,12 @@
-{
-  modulesPath,
-  config,
-  lib,
-  pkgs,
-  ...
+{ modulesPath
+, config
+, lib
+, pkgs
+, ...
 }:
 let
   hasDesktop = config.custom.gnomeDesktop.enable;
+  hasDevEnv = config.custom.devEnv.enable;
 in
 {
   options = {
@@ -27,7 +27,7 @@ in
         "networkmanager"
         "dialout"
       ] ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ])
-        ++ (if config.virtualisation.docker.enable then [ "docker" ] else []);
+      ++ (if config.virtualisation.docker.enable then [ "docker" ] else [ ]);
       home = "/home/lilly";
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [
@@ -39,6 +39,9 @@ in
 
     home-manager.users.lilly = {
       home.preferXdgDirectories = true;
+      home.sessionSearchVariables = lib.mkIf hasDevEnv {
+        PATH = [ "$HOME/.krew/bin" ];
+      };
       programs.wezterm.enable = hasDesktop;
       programs.wezterm.extraConfig = lib.mkIf hasDesktop (
         builtins.readFile ../dotfiles/lilly/wezterm.lua
@@ -72,19 +75,30 @@ in
       programs.git = import ../dotfiles/lilly/git.nix { inherit lib pkgs; };
       programs.fish = import ../dotfiles/lilly/fish.nix;
       programs.helix = import ../dotfiles/lilly/helix.nix { inherit lib pkgs config; };
-      programs.taskwarrior = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior;
-      services.taskwarrior-sync = lib.mkIf config.custom.devEnv.enable (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior-sync;
+      programs.jujutsu = {
+        enable = true;
+        ediff = lib.mkForce false;
+      };
+      programs.taskwarrior = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior;
+      services.taskwarrior-sync = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior-sync;
     };
 
     sops = {
-      secrets."lilly/taskchampion-sync-client-id" = lib.mkIf config.custom.devEnv.enable {
+      secrets."lilly/kubeconfig.yml" = lib.mkIf hasDevEnv {
+        owner = "lilly";
+        group = "nogroup";
+        sopsFile = ../dotfiles/lilly/kubectl/config.secret.yml;
+        path = "/home/lilly/.kube/config";
+        key = ""; # force sops-nix to output the whole file and not just extract one key from the yaml content
+      };
+      secrets."lilly/taskchampion-sync-client-id" = lib.mkIf hasDevEnv {
         owner = "lilly";
       };
-      secrets."lilly/taskchampion-sync-encryption-secret" = lib.mkIf config.custom.devEnv.enable {
+      secrets."lilly/taskchampion-sync-encryption-secret" = lib.mkIf hasDevEnv {
         owner = "lilly";
         sopsFile = ../data/shared-secrets/task-sync.yml;
       };
-      templates."lilly/taskrc" = lib.mkIf config.custom.devEnv.enable {
+      templates."lilly/taskrc" = lib.mkIf hasDevEnv {
         owner = "lilly";
         content = ''
           sync.server.url=https://task-sync.lly.sh
@@ -95,7 +109,7 @@ in
     };
 
     environment.systemPackages = [
-      (lib.mkIf config.custom.devEnv.enable pkgs.taskwarrior-tui)
+      (lib.mkIf hasDevEnv pkgs.taskwarrior-tui)
     ];
   };
 }

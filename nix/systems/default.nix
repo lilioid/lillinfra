@@ -1,5 +1,11 @@
 { flake }:
 let
+  # read all files in ../modules and build the full path to them
+  customModules = builtins.map
+    (i: ../modules/${i})
+    (builtins.attrNames (builtins.readDir ../modules));
+
+  # helper to create a nixos system
   mkSystem =
     systemType: name: nixpkgs:
     let
@@ -14,18 +20,8 @@ let
         flake.inputs.sops-nix.nixosModules.default
         flake.inputs.lix.nixosModules.default
         flake.inputs.cookied.nixosModules.default
+      ] ++ customModules ++ [
 
-        ../modules/base_system.nix
-        ../modules/user_lilly.nix
-        ../modules/dev_env.nix
-        ../modules/gnome.nix
-        ../modules/kde.nix
-        ../modules/niri.nix
-        ../modules/backup.nix
-        ../modules/syncthing.nix
-        ../modules/auto_upgrade.nix
-        ../modules/mail_relay.nix
-        ../modules/gaming.nix
         systemModule
 
         (
@@ -83,4 +79,5 @@ in
   # others
   "lan-server.intern" = mkSystem "x86_64-linux" "lan-server.intern" flake.inputs.nixpkgs2505;
   "installer" = mkSystem "x86_64-linux" "installer" flake.inputs.nixpkgs2505;
+  "proxmox-lxc" = mkSystem "x86_64-linux" "proxmox-lxc" flake.inputs.nixpkgs2505;
 }

@@ -1,15 +1,12 @@
-{
-  modulesPath,
-  config,
-  lib,
-  pkgs,
-  ...
+{ modulesPath
+, config
+, lib
+, pkgs
+, ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../modules/sane_extra_config.nix
-    ../modules/vpn_client.nix
   ];
 
   # boot config
@@ -97,17 +94,42 @@
     sieve-connect
   ];
 
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+  };
+
   # options defined by other custom modules
   custom = {
     gnomeDesktop.enable = true;
-    niriDesktop.enable = true;
     devEnv.enable = true;
-    devEnv.enableFuxVpn = true;
-    devEnv.enableAutSysMgmtVpn = true;
-    devEnv.autSysMgmtIpNum = 4;
     user-syncthing.enable = true;
-    gaming.enable = true;
     backup.enable = true;
+
+    wg.profiles = {
+      "fux" = {
+        address = [ "172.17.2.251/29" "2a07:c481:0:2::251/64" ];
+        peers."fuxVpn" = {
+          pubKey = "bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=";
+          endpoint = "vpn.fux-eg.net:50199";
+          allowedIPs = [ "172.16.0.0/12" "2a07:c481:0:1::/64" "2a07:c481:0:2::/64" ];
+        };
+      };
+
+      "autSysMgmt" = {
+        address = [ "10.233.227.4/24" "2a07:c481:2:3::4/64" ];
+        peers."autSysRouter" = {
+          pubKey = "SySg/p4N+TEx874Rnlt/7vNmXhQPQNE+WpBDk791dww=";
+          endpoint = "vpn.aut-sys.de:13231";
+          allowedIPs = [
+            "10.233.226.0/24"    # mgmt network
+            "10.233.227.0/24"    # mgmt vpn
+            "2a07:c481:2:2::/64" # mgmt network
+            "2a07:c481:2:3::/64" # mgmt vpn
+          ];
+        };
+      };
+    };
   };
 
   services.openssh = {

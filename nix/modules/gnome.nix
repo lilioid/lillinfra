@@ -26,6 +26,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    environment.variables = {
+      "XCURSOR_THEME" = "Adwaita";
+    };
+
     services.xserver = {
       enable = true;
       displayManager.gdm.enable = true;

@@ -5,12 +5,16 @@
   pkgs,
   ...
 }:
-{
-  config = lib.mkIf config.custom.gnomeDesktop.enable {
-    environment.variables = {
-      "XCURSOR_THEME" = "Adwaita";
+let
+  cfg = config.custom.desktopApps;
+in {
+  options = with lib.options; {
+    custom.desktopApps = {
+      enableCommon = mkEnableOption "common desktop apps";
     };
+  };
 
+  config = lib.mkIf cfg.enableCommon {
     environment.systemPackages = with pkgs; [
       chromium
       element-desktop
