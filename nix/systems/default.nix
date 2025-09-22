@@ -11,6 +11,7 @@ let
     let
       lib = nixpkgs.lib;
       systemModule = if lib.pathIsDirectory ./${name} then ./${name}/system.nix else ./${name}.nix;
+      systemModule = if lib.pathIsDirectory ./${name} then ./${name} else ./${name}.nix;
     in
     nixpkgs.lib.nixosSystem {
       specialArgs = flake.inputs;
