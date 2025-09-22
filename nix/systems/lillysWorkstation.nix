@@ -132,6 +132,9 @@
     };
   };
 
+  # tell taskwarrior that this is the device on which it should generate recurring tasks
+  home-manager.users.lilly.programs.taskwarrior.config.recurrence = 1;
+
   services.openssh = {
     enable = true;
     settings = {

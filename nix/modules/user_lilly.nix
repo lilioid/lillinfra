@@ -79,8 +79,8 @@ in
         enable = true;
         ediff = lib.mkForce false;
       };
-      programs.taskwarrior = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior;
-      services.taskwarrior-sync = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs; }).taskwarrior-sync;
+      programs.taskwarrior = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs lib; }).taskwarrior;
+      services.taskwarrior-sync = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs lib; }).taskwarrior-sync;
     };
 
     sops = {

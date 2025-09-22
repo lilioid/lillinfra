@@ -1,9 +1,10 @@
 # this file is imported into the home-manager option programs.taskwarrior and programs.taskwarrior-sync
-{config, pkgs}: {
+{config, pkgs, lib}: {
   taskwarrior = {
     enable = true;
     package = pkgs.taskwarrior3;
     config = {
+      recurrence = lib.mkDefault 0;
       color = {
         alternate = "";
         scheduled = "on rgb345";
