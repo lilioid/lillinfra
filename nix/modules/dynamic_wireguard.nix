@@ -1,5 +1,6 @@
 { config
 , lib
+, pkgs
 , ...
 }:
 let
@@ -129,6 +130,10 @@ in
   # Implementation (by rendering into other NixOS options)
   #
   config = {
+    environment.systemPackages = with pkgs; [
+      wireguard-tools
+    ];
+
     # systemd-networkd implementation
     systemd.network = lib.mkIf (cfg.implementation == "systemd-networkd") {
       netdevs = lib.mapAttrs
