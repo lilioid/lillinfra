@@ -10,7 +10,6 @@ let
     systemType: name: nixpkgs:
     let
       lib = nixpkgs.lib;
-      systemModule = if lib.pathIsDirectory ./${name} then ./${name}/system.nix else ./${name}.nix;
       systemModule = if lib.pathIsDirectory ./${name} then ./${name} else ./${name}.nix;
     in
     nixpkgs.lib.nixosSystem {
@@ -71,6 +70,9 @@ in
   # servers at home
   "priv.srv.home.intern" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs2505;
   "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs2505;
+
+  # aut-sys.de
+  "db.z9.aut-num.de" = mkSystem "x86_64-linux" "db.z9.aut-num.de" flake.inputs.nixpkgs2505;
 
   # private systems
   lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2505;
