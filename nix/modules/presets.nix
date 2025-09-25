@@ -141,15 +141,9 @@ in
     (lib.mkIf (cfg == "aut-sys-vm") {
       # boot config
       boot.initrd.systemd.enable = true;
-      boot.initrd.availableKernelModules = [
-        "ahci"
-        "xhci_pci"
-        "virtio_pci"
-        "sr_mod"
-        "virtio_blk"
-      ];
+      boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
       boot.initrd.kernelModules = [ ];
-      boot.kernelModules = [ "kvm-intel" ];
+      boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
 
       # configure systemd-boot bootloader
@@ -168,9 +162,16 @@ in
             content = {
               type = "gpt";
               partitions = {
-                mbr = {
-                  type = "ef02";
-                  size = "1M";
+                esp = {
+                  type = "ef00";
+                  start = "1M";
+                  size = "500M";
+                  content = {
+                    type = "filesystem";
+                    format = "vfat";
+                    mountpoint = "/boot";
+                    mountOptions = [ "umask=0077" ];
+                  };
                 };
                 swap = {
                   size = lib.mkDefault "4G";
@@ -189,7 +190,6 @@ in
                     mountOptions = [
                       "defaults"
                       "noatime"
-                      "discard"
                     ];
                   };
                 };
