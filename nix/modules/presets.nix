@@ -7,7 +7,7 @@ in
     custom.preset = mkOption {
       description = "Choose a configuration preset based on the systems hosting environment";
       default = "standalone";
-      type = lib.types.enum [ "standalone" "hosting" "home" "aut-sys-lxc" ];
+      type = lib.types.enum [ "standalone" "hosting" "home" "aut-sys-lxc" "aut-sys-vm" ];
     };
   };
 
@@ -124,7 +124,7 @@ in
       #   "${modulesPath}/virtualisation/proxmox-lxc.nix"
       # ];
 
-      proxmoxLXC.enable = true;
+      #proxmoxLXC.enable = true;
 
       systemd.network.networks."eth0" = {
         matchConfig.Name = "eth0";
@@ -135,6 +135,93 @@ in
           [DHCPPrefixDelegation]
           UplinkInterface = :self
         '';
+      };
+    })
+
+    (lib.mkIf (cfg == "aut-sys-vm") {
+      # boot config
+      boot.initrd.systemd.enable = true;
+      boot.initrd.availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "virtio_pci"
+        "sr_mod"
+        "virtio_blk"
+      ];
+      boot.initrd.kernelModules = [ ];
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.extraModulePackages = [ ];
+
+      # configure systemd-boot bootloader
+      boot.loader.systemd-boot = {
+        enable = true;
+        editor = false;
+        configurationLimit = 4;
+      };
+
+      # partitioning and filesystems
+      disko.devices = lib.mkDefault {
+        disk = {
+          system = {
+            type = "disk";
+            device = lib.mkDefault "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
+            content = {
+              type = "gpt";
+              partitions = {
+                mbr = {
+                  type = "ef02";
+                  size = "1M";
+                };
+                swap = {
+                  size = lib.mkDefault "4G";
+                  content = {
+                    type = "swap";
+                    discardPolicy = "both";
+                  };
+                };
+                root = {
+                  type = "8300";
+                  size = "100%";
+                  content = {
+                    type = "filesystem";
+                    format = "ext4";
+                    mountpoint = "/";
+                    mountOptions = [
+                      "defaults"
+                      "noatime"
+                      "discard"
+                    ];
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+
+      # network config
+      systemd.network.networks."eth0" = {
+        matchConfig.Name = "eth0";
+        networkConfig.DHCP = "yes";
+        networkConfig.IPv6AcceptRA = "yes";
+        networkConfig.DHCPPrefixDelegation = "yes";
+        extraConfig = ''
+          [DHCPPrefixDelegation]
+          UplinkInterface = :self
+        '';
+      };
+
+      # general os config
+      services.qemuGuest.enable = true;
+      documentation.nixos.enable = false;
+
+      # ssh server
+      services.openssh = {
+        enable = true;
+        settings = {
+          PermitRootLogin = "no";
+          PasswordAuthentication = false;
+        };
       };
     })
   ];

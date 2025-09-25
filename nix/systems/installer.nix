@@ -19,6 +19,7 @@
     keyutils
     helix
     tmux
+    disko
   ];
 
   networking.hostName = lib.mkForce "lillys-nixos-installer";
