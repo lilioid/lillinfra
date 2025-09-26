@@ -10,6 +10,7 @@ keys:
   - &k8s-ctl-srv "age1ny4cv3stnnuvyf0qhhk7mha98rrhnwa4fpvdqt505qdsssn92flsayudjc"
   - &k8s-worker1-srv "age1ujymnlvetgl0kq7cpm9xsk4wuugdr869fynhawfe2gk4ucu2mycsd2yjta"
   - &k8s-worker2-srv "age13523e34ct38lf099wu5lag5f75j58tkee6f0ragzc40qqrxuqafs06alhd"
+  - &k8s-ctl-aut-num "age14k696cxmqr34ll2ytaqjmtzr0qpjskppsh4a6gwxj99yspplx4ksyykjdx"
   - &nas-myroot "age1gufa7z3leuufvps6wszfzyk7e8rqdpz3ryfneu9x4qfj0je95amq4gpd20"
   - &gtw-myroot "age186x5sfsv6txmtu8f9dfd84td6fq7cxup25nrtxlr43327xrqvpzsvqe6sv"
   - &home-proxy "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
@@ -49,6 +50,10 @@ creation_rules:
   - path_regex: "nix/data/host-secrets/priv.srv.home.intern.yml"
     key_groups:
       - age: [ *lilly, *priv-home-srv ]
+
+  - path_regex: "nix/data/host-secrets/k8s-ctl.z9.aut-num.de.yml"
+    key_groups:
+      - age: [ *lilly, *k8s-ctl-aut-num ]
 
   - path_regex: "nix/data/host-secrets/lillysLaptop.yml"
     key_groups:
