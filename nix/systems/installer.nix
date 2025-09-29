@@ -31,6 +31,7 @@
 
   # configure my own user account in the installer
   services.getty.autologinUser = lib.mkForce "lilly";
+  services.qemuGuest.enable = true;
 
   # this is only okay because the installer does not have any persistence so no data can be in an old/incompatible format
   system.stateVersion = config.system.nixos.release;
