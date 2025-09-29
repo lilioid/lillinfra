@@ -16,7 +16,7 @@
     nixpkgs2411.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     nixpkgs2505.url = "github:nixos/nixpkgs?ref=nixos-25.05";
 
-    # some helpers for writing flakes with less repitition
+    # some helpers for writing flakes with less repetition
     systems.url = "github:nix-systems/default-linux";
 
     # support for special hardware quirks

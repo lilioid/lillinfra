@@ -20,7 +20,7 @@
       --disable=servicelb
       --disable=local-storage
       --flannel-backend=host-gw
-      --cluster-cidr=2a07:c481:2:6::/64
+      --cluster-cidr=2a07:c481:2:100::/56
       --service-cidr=2a07:c481:2:7::/112
       --egress-selector-mode=disabled
       --tls-san=k8s.aut-sys.de
