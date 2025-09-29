@@ -156,10 +156,16 @@ in
         capabilities = "cap_net_raw+p";
         source = "${pkgs.iputils.out}/bin/ping";
       };
+      security.sudo.wheelNeedsPassword = false;
 
       services.openssh = {
         enable = lib.mkDefault true;
         startWhenNeeded = lib.mkDefault true;
+        settings = {
+          PermitRootLogin = "no";
+          PasswordAuthentication = false;
+          AllowUsers = lib.mkDefault [ config.users.users.lilly.name ];
+        };
       };
 
       systemd = {
@@ -263,6 +269,7 @@ in
       };
 
       # general os config
+      security.sudo.wheelNeedsPassword = false;
       services.qemuGuest.enable = true;
       documentation.nixos.enable = false;
 
@@ -272,6 +279,7 @@ in
         settings = {
           PermitRootLogin = "no";
           PasswordAuthentication = false;
+          AllowUsers = lib.mkDefault [ config.users.users.lilly.name ];
         };
       };
     })
