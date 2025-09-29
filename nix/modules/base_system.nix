@@ -81,6 +81,7 @@
   documentation.nixos.includeAllModules = true;
   documentation.nixos.options.warningsAreErrors = false;
   programs.command-not-found.enable = false;
+  networking.nftables.enable = lib.mkDefault true;
 
   # derive sops key from ssh key if ssh is enable and configure host specific secrets
   sops.age.sshKeyPaths = lib.mkIf config.services.openssh.enable [ "/etc/ssh/ssh_host_ed25519_key" ];
