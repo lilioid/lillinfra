@@ -1,4 +1,4 @@
-{ modulesPath, config, lib, ... }:
+{ modulesPath, config, lib, pkgs, ... }:
 let
   cfg = config.custom.preset;
 in
@@ -119,26 +119,82 @@ in
     })
 
     (lib.mkIf (cfg == "aut-sys-lxc") {
-      # must specify the follogwing import first
-      # imports = [
-      #   "${modulesPath}/virtualisation/proxmox-lxc.nix"
-      # ];
+      system.nixos.tags = [
+        "aut-sys"
+        "lxc"
+      ];
 
-      #proxmoxLXC.enable = true;
+      boot.postBootCommands = ''
+        # After booting, register the contents of the Nix store in the Nix
+        # database.
+        if [ -f /nix-path-registration ]; then
+          ${config.nix.package.out}/bin/nix-store --load-db < /nix-path-registration &&
+          rm /nix-path-registration
+        fi
 
-      systemd.network.networks."eth0" = {
-        matchConfig.Name = "eth0";
-        networkConfig.DHCP = "yes";
-        networkConfig.IPv6AcceptRA = "yes";
-        networkConfig.DHCPPrefixDelegation = "yes";
-        extraConfig = ''
-          [DHCPPrefixDelegation]
-          UplinkInterface = :self
-        '';
+        # nixos-rebuild also requires a "system" profile
+        ${config.nix.package.out}/bin/nix-env -p /nix/var/nix/profiles/system --set /run/current-system
+      '';
+
+      boot = {
+        isContainer = true;
+        loader.initScript.enable = true;
+      };
+
+      console.enable = true;
+
+      networking = {
+        useDHCP = false;
+        useHostResolvConf = false;
+        useNetworkd = true;
+      };
+
+      # unprivileged LXCs can't set net.ipv4.ping_group_range
+      security.wrappers.ping = {
+        owner = "root";
+        group = "root";
+        capabilities = "cap_net_raw+p";
+        source = "${pkgs.iputils.out}/bin/ping";
+      };
+
+      services.openssh = {
+        enable = lib.mkDefault true;
+        startWhenNeeded = lib.mkDefault true;
+      };
+
+      systemd = {
+        mounts = [
+          {
+            enable = false;
+            where = "/sys/kernel/debug";
+          }
+        ];
+
+        # By default only starts getty on tty0 but first on LXC is tty1
+        services."autovt@".unitConfig.ConditionPathExists = [
+          ""
+          "/dev/%I"
+        ];
+
+        # These are disabled by `console.enable` but console via tty is the default in Proxmox
+        services."getty@tty1".enable = lib.mkForce true;
+        services."autovt@".enable = lib.mkForce true;
+
+        # configure networking used in aut-sys
+        network.networks."eth0" = {
+          matchConfig.Name = "eth0";
+          networkConfig.DHCP = "yes";
+          networkConfig.IPv6AcceptRA = "yes";
+        };
       };
     })
 
     (lib.mkIf (cfg == "aut-sys-vm") {
+      system.nixos.tags = [
+        "aut-sys"
+        "vm"
+      ];
+
       # boot config
       boot.initrd.systemd.enable = true;
       boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
@@ -204,11 +260,6 @@ in
         matchConfig.Name = "eth0";
         networkConfig.DHCP = "yes";
         networkConfig.IPv6AcceptRA = "yes";
-        networkConfig.DHCPPrefixDelegation = "yes";
-        extraConfig = ''
-          [DHCPPrefixDelegation]
-          UplinkInterface = :self
-        '';
       };
 
       # general os config

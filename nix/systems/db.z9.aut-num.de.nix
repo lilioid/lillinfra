@@ -1,8 +1,4 @@
 { modulesPath, ... }: {
-  imports = [
-    "${modulesPath}/virtualisation/proxmox-lxc.nix"
-  ];
-
   custom.preset = "aut-sys-lxc";
 
   # allow connections from local network to postgres
