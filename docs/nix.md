@@ -59,6 +59,12 @@ nixos-rebuild-ng build-image --flake '.#proxmox-lxc' --image-variant proxmox-lxc
    sudo nixos-install --no-channel-copy --no-root-passwd --root /mnt --flake 'github:ftsell/finnfrastructure?ref=nix-config#…'
    ```
 
+   Or alternatively, if a disko based system (aut-sys) is used:
+
+   ```shell
+   sudo disko-install --disk system /dev/sda --write-efi-boot-entries --flake 'git+https://git.lly.sh/lilly/lillinfra.git#<system>'
+   ```
+
 4. Reboot the system
 
 

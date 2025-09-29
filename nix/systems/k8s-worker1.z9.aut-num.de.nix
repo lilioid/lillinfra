@@ -7,15 +7,19 @@
 
   # kubernetes setup
   services.k3s = {
-    enable = false;
+    enable = true;
     role = "agent";
-    serverAddr = "https://k8s-ctl.z9.aut-num.de";
-    #tokenFile = config.sops.secrets."k3s/token".path;
+    serverAddr = "https://k8s-ctl.z9.aut-num.de:6443";
+    extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
+      --node-ip=2a07:c481:2:5:be24:11ff:fe79:ddc7
+      --node-internal-dns=k8s-worker1.z9.aut-num.de
+    '';
+    tokenFile = config.sops.secrets."k3s/token".path;
   };
 
-  #sops.secrets."k3s/token" = {
-  #  sopsFile = ../data/shared-secrets/aut-sys-k8s.yml;
-  #};
+  sops.secrets."k3s/token" = {
+    sopsFile = ../data/shared-secrets/aut-sys-k8s.yml;
+  };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible

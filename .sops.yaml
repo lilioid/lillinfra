@@ -11,6 +11,7 @@ keys:
   - &k8s-worker1-srv "age1ujymnlvetgl0kq7cpm9xsk4wuugdr869fynhawfe2gk4ucu2mycsd2yjta"
   - &k8s-worker2-srv "age13523e34ct38lf099wu5lag5f75j58tkee6f0ragzc40qqrxuqafs06alhd"
   - &k8s-ctl-aut-num "age14k696cxmqr34ll2ytaqjmtzr0qpjskppsh4a6gwxj99yspplx4ksyykjdx"
+  - &k8s-worker1-aut-num "age1cwspvy0uatpkeyzpp08gh00pjekvek9lkp23rxk2fqhhh4k8vapszl4wn6"
   - &nas-myroot "age1gufa7z3leuufvps6wszfzyk7e8rqdpz3ryfneu9x4qfj0je95amq4gpd20"
   - &gtw-myroot "age186x5sfsv6txmtu8f9dfd84td6fq7cxup25nrtxlr43327xrqvpzsvqe6sv"
   - &home-proxy "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
@@ -86,6 +87,10 @@ creation_rules:
   - path_regex: "nix/data/shared-secrets/k8s-node.yml"
     key_groups:
       - age: [ *lilly, *k8s-ctl-srv, *k8s-worker1-srv, *k8s-worker2-srv, *mail-srv ]
+
+  - path_regex: "nix/data/shared-secrets/aut-sys-k8s.yml"
+    key_groups:
+      - age: [ *lilly, *k8s-ctl-aut-num, *k8s-worker1-aut-num ]
 
   - path_regex: "nix/data/shared-secrets/backup.yml"
     key_groups:
