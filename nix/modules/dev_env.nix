@@ -60,6 +60,7 @@ in
       nil
       reuse
       tig
+      nix-output-monitor
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       jetbrains.webstorm
