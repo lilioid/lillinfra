@@ -1,0 +1,17 @@
+k3s:
+    token: ENC[AES256_GCM,data:vQspZcJjxkLT6oEE9xm5HhiCjM3Nt4vufaShSz9+sjfMqscjKHnyrPcZSidvXZWq1+AfcPNb44djJCXg6GesBKrx/vRD5wnOxZvvGhMvoERBLCU/ry8G8U2Mv0L4IIOvvga8ax+oThiQdSra,iv:XSIGwuttWz0W4CPbzxwESysAoocEhcQRn6fIy1qsdkI=,tag:tPZWOrjna9kMx8mPWcACAQ==,type:str]
+sops:
+    age:
+        - recipient: age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTSGlCZmI2dUlwenJlelNx
+            cTRrL2RjZDVoOTlZS0lyd2NrWXhNeHRxNHhnCjFSVXUxcCtVV25WNDBJbUF3VGZC
+            Q1R6RjhHVjBXSjE3ZmpWMFB4cjFEajAKLS0tIDZKcWVBQm5ZdndHWWpvTU9nTHE5
+            QkhtRjlCL3p3SHlxdklXcC9tUklyUEUKH3tUkg3TJ9Co1wJsuzmQJUEyW6LZx08x
+            VlwW9fIYC1vH71D8F2aVfJ13tyEdFEZbfn7GQl4bhl4qMHBsHWeJjQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-29T11:43:27Z"
+    mac: ENC[AES256_GCM,data:hI602CJA8iXlo1jL6qT95P3jrfEpkIITAixdCkOuiFULwzYlisob849+nnQrfX4rtxhTODN1xSs9JC+jwcv9qW2e3rBKFEdxJ28xKPV0caUiSQ6QSq0nh+ZablQj/fVauwbgS55MBovAnAa/kFqjOj5Vqg7l4F5SWtXie+cJJJg=,iv:DAzViPRYGa9Io8INs+0d8zVpB85B7Hodu69pe3OWz6w=,tag:1Ig21NAU4KPlSbwaIbk5Uw==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.10.2
