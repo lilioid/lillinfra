@@ -2,8 +2,9 @@
   custom.preset = "aut-sys-vm";
 
   networking.firewall.allowedTCPPorts = [
-    6443 # k8s api server
+    6443  # k8s api server
     10250 # k8s kubelet metrics
+    7946  # metallb memberlist protocol
   ];
 
   # kubernetes setup
@@ -12,7 +13,7 @@
     role = "server";
     clusterInit = false;
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
-      --node-ip=2a07:c481:2:5:be24:11ff:fe9e:1d05
+      --node-ip=2a07:c481:2:5:be24:11ff:fe9e:1d05,185.161.130.4
       --node-external-dns=k8s.aut-sys.de
       --node-internal-dns=k8s.z9.aut-num.de
       --disable-helm-controller
@@ -20,8 +21,8 @@
       --disable=servicelb
       --disable=local-storage
       --flannel-backend=host-gw
-      --cluster-cidr=2a07:c481:2:100::/56
-      --service-cidr=2a07:c481:2:7::/112
+      --cluster-cidr=2a07:c481:2:100::/56,10.42.0.0/16
+      --service-cidr=2a07:c481:2:7::/112,10.43.0.0/16
       --egress-selector-mode=disabled
       --tls-san=k8s.aut-sys.de
       --node-taint node-role.kubernetes.io/control-plane=:NoSchedule

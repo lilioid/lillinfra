@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: List
+items:
+
+  # add common security headers
+  - apiVersion: traefik.io/v1alpha1
+    kind: Middleware
+    metadata:
+      name: secure-headers
+    spec:
+      headers:
+        frameDeny: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+
+  # redirect to HTTPS
+  - apiVersion: traefik.io/v1alpha1
+    kind: Middleware
+    metadata:
+      name: redirect-tls
+    spec:
+      redirectScheme:
+        scheme: https

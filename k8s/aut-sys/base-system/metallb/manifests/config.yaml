@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: List
+items:
+
+  # bgp config to speak to my router
+  - apiVersion: metallb.io/v1beta2
+    kind: BGPPeer
+    metadata:
+      name: aut-sys-router
+    spec:
+      myASN: 64512
+      peerASN: 64512
+      peerAddress: 2a07:c481:2:5::1
+      dualStackAddressFamily: true
+      enableGracefulRestart: true
+
+  # bgp config to publish all load-balanced IPs via bgp
+  - apiVersion: metallb.io/v1beta1
+    kind: BGPAdvertisement
+    metadata:
+      name: global
+    spec:
+      nodeSelectors:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: NotIn
+              values: [ "true" ]
+
+  # address-pool assigned from fux
+  - apiVersion: metallb.io/v1beta1
+    kind: IPAddressPool
+    metadata:
+      name: fux-ips
+    spec:
+      addresses:
+        - "185.161.130.10 - 185.161.130.14"
+        - "2a07:c481:2:6::/64"

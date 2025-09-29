@@ -3,6 +3,7 @@
 
   networking.firewall.allowedTCPPorts = [
     10250 # k8s kubelet metrics
+    7946  # metallb memberlist protocol
   ];
 
   # kubernetes setup
@@ -11,7 +12,7 @@
     role = "agent";
     serverAddr = "https://k8s-ctl.z9.aut-num.de:6443";
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
-      --node-ip=2a07:c481:2:5:be24:11ff:fe79:ddc7
+      --node-ip=2a07:c481:2:5:be24:11ff:fe79:ddc7,185.161.130.3
       --node-internal-dns=k8s-worker1.z9.aut-num.de
     '';
     tokenFile = config.sops.secrets."k3s/token".path;

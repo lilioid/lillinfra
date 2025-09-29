@@ -2,4 +2,5 @@
 .direnv
 **/__pycache__
 **/.terraform
+k8s/**/charts/**
 result
