@@ -1,17 +1,20 @@
-{ modulesPath
-, config
-, lib
-, pkgs
-, ...
-}: {
+{ config, ... }: {
   custom.preset = "aut-sys-vm";
+
+  networking.firewall.allowedTCPPorts = [
+    6443 # k8s api server
+    10250 # k8s kubelet metrics
+  ];
 
   # kubernetes setup
   services.k3s = {
     enable = true;
     role = "server";
     clusterInit = false;
-    extraFlags = builtins.replaceStrings ["\n"] [" "] ''
+    extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
+      --node-ip=2a07:c481:2:5:be24:11ff:fe9e:1d05
+      --node-external-dns=k8s.aut-sys.de
+      --node-internal-dns=k8s.z9.aut-num.de
       --disable-helm-controller
       --disable=traefik
       --disable=servicelb
