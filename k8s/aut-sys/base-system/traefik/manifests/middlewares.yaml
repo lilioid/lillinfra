@@ -24,3 +24,11 @@ items:
     spec:
       redirectScheme:
         scheme: https
+
+  # enable response compression support
+  - apiVersion: traefik.io/v1alpha1
+    kind: Middleware
+    metadata:
+      name: compress
+    spec:
+      compress: {}
