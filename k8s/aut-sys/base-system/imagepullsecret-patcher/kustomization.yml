@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: imagepullsecret-patcher
+
+resources:
+  - manifests/namespace.yml
+  - manifests/rbac.yml
+  - manifests/github.deployment.yml
+  - manifests/dockerhub.deployment.yml
+  - manifests/own-forgejo.deployment.yml
+
+images:
+  - name: quay.io/titansoft/imagepullsecret-patcher
+    newTag: "v0.14"
+
+configMapGenerator:
+  - name: imagepullsecret-patcher
+    envs:
+      - config.env
+
+generators:
+  - ./secret-generator.yml
