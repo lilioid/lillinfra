@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: lillinfra
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: "git@git.lly.sh:lilly/lillinfra.git"
+        revision: main
+        directories:
+          - path: "k8s/aut-sys/*/*"
+  template:
+    metadata:
+      name: "{{ .path.basenameNormalized }}"
+    spec:
+      project: "{{ index .path.segments 2 }}"
+      source:
+        repoURL: "git@git.lly.sh:lilly/lillinfra.git"
+        targetRevision: main
+        path: "{{ .path.path }}"
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+      destination:
+        name: "in-cluster"

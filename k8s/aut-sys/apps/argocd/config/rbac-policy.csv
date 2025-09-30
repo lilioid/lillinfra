@@ -1,0 +1,8 @@
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-rbac-cm-yaml/
+
+# lilly
+g,li@lly.sh,role:admin
+
+# group argocd-admins
+g,argocd-admins,role:admin
+
