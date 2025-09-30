@@ -6,6 +6,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-http
     traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
     traefik.ingress.kubernetes.io/router.middlewares: >-
+      traefik-compress@kubernetescrd,
       traefik-redirect-tls@kubernetescrd,
       traefik-secure-headers@kubernetescrd
 spec:
