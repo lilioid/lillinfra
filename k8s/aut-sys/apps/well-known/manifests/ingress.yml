@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: well-known
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  tls:
+    - secretName: tls-well-known
+      hosts:
+        - lly.sh
+        - li.lly.sh
+        - ftsell.de
+  rules:
+    - host: lly.sh
+      http: &http
+        paths:
+          - path: /.well-known/matrix/client
+            pathType: ImplementationSpecific
+            backend: &backend
+              service:
+                name: nginx
+                port:
+                  name: http
+          - path: /.well-known/matrix/server
+            pathType: ImplementationSpecific
+            backend: *backend
+
+    - host: li.lly.sh
+      http: *http
+    - host: ftsell.de
+      http: *http

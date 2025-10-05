@@ -1,0 +1,13 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: well-known
+spec:
+  entryPoints: [ web, websecure ]
+  routes:
+  - match: Method(`GET`) && Path(`/.well-known/security.txt`)
+    kind: Rule
+    priority: 500
+    services:
+    - name: nginx
+      port: 80

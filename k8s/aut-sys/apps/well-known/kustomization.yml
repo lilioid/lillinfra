@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: well-known
+
+resources:
+  - manifests/namespace.yml
+  - manifests/nginx.yml
+  - manifests/traefik-routes.yml
+
+configMapGenerator:
+  - name: nginx-config
+    files:
+      - "default.conf=config/nginx.conf"
+
+  - name: nginx-www
+    files:
+      - www/security.txt
