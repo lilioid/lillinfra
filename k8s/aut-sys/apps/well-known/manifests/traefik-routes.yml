@@ -8,6 +8,10 @@ spec:
   - match: Method(`GET`) && Path(`/.well-known/security.txt`)
     kind: Rule
     priority: 500
+    middlewares:
+      - name: "traefik-compress@kubernetescrd"
+      - name: "traefik-redirect-tls@kubernetescrd"
+      - name: "traefik-secure-headers@kubernetescrd"
     services:
     - name: nginx
       port: 80
