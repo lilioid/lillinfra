@@ -1,0 +1,4 @@
+{
+  "sharedFileSystemPath": "/srv/ceph-k8s",
+  "nodePathMap": []
+}

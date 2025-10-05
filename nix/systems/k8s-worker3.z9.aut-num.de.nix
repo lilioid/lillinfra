@@ -1,5 +1,23 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   custom.preset = "aut-sys-vm";
+
+  environment.systemPackages = with pkgs; [ ceph-client ];
+  fileSystems."ceph-k8s" = {
+    device = "[2a07:c481:2:2::101],[2a07:c481:2:2::102],[2a07:c481:2:2::103]:/volumes/k8s/";
+    mountPoint = "/srv/ceph-k8s";
+    fsType = "ceph";
+    options = [
+      "name=k8s"
+      "secretfile=${config.sops.secrets."aut-sys-ceph/k8s/secret".path}"
+      "fsid=13342310-b28f-4d7b-a893-af2984583a92"
+      "fs=data"
+      "rw"
+      "noatime"
+      "acl"
+    ];
+    neededForBoot = false;
+    noCheck = true;
+  };
 
   networking.firewall.allowedTCPPorts = [
     10250 # k8s kubelet metrics
@@ -19,6 +37,9 @@
   };
 
   sops.secrets."k3s/token" = {
+    sopsFile = ../data/shared-secrets/aut-sys-k8s.yml;
+  };
+  sops.secrets."aut-sys-ceph/k8s/secret" = {
     sopsFile = ../data/shared-secrets/aut-sys-k8s.yml;
   };
 
