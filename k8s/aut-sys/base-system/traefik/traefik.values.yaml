@@ -1,5 +1,9 @@
 # ref: https://artifacthub.io/packages/helm/traefik/traefik
 
+logs:
+  general:
+    level: "DEBUG"
+
 # achieve some form of graceful restart by running multiple pods
 priorityClassName: custom-critical
 deployment:
