@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   custom.preset = "aut-sys-vm";
 
   environment.systemPackages = with pkgs; [ ceph-client ];
@@ -20,14 +20,15 @@
   };
 
   networking.firewall.allowedTCPPorts = [
-    6443  # k8s api server
+    6443 # k8s api server
     10250 # k8s kubelet metrics
-    7946  # metallb memberlist protocol
+    7946 # metallb memberlist protocol
   ];
 
   # kubernetes setup
   services.k3s = {
     enable = true;
+    package = pkgs.k3s-custom;
     role = "server";
     clusterInit = false;
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''

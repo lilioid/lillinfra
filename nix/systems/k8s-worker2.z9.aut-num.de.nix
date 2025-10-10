@@ -27,6 +27,7 @@
   # kubernetes setup
   services.k3s = {
     enable = true;
+    package = pkgs.k3s-custom;
     role = "agent";
     serverAddr = "https://k8s-ctl.z9.aut-num.de:6443";
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''

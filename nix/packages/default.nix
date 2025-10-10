@@ -8,7 +8,7 @@ let
   dirPkgs = pkgs.lib.mapAttrs'
     (iName: iValue: {
       name = (pkgs.lib.removeSuffix ".nix" iName);
-      value = pkgs.callPackage ./${iName} {};
+      value = pkgs.callPackage ./${iName} { };
     })
     dirNonDefault;
 
@@ -29,10 +29,27 @@ let
       }
     );
 
+    # a k3s package that applies my custom patch to use my custom flannel version
+    k3s-custom =
+      let
+        overrides = {
+          patches = [ ./k3s.patch ];
+          vendorHash = "sha256-SctFg2GQSspQjg6ViTwCiqufitaylfN6jpukzqQ2W6s=";
+        };
+        k3s_def = flake.inputs.nixpkgs + "/pkgs/applications/networking/cluster/k3s";
+        k3s_all = (pkgs.callPackage k3s_def {
+          overrideBundleAttrs = overrides;
+        });
+        k3s = k3s_all.k3s_1_32.overrideAttrs overrides;
+      in
+      k3s;
+
     # pull in signal from nixos-unstable because the current signal binary fails in its build
-    signal-desktop = let
-      pkgs-unstable = import flake.inputs.nixpkgs-unstable { system = pkgs.system; };
-    in pkgs-unstable.signal-desktop;
+    signal-desktop =
+      let
+        pkgs-unstable = import flake.inputs.nixpkgs-unstable { system = pkgs.system; };
+      in
+      pkgs-unstable.signal-desktop;
   };
 in
-  pkgs.lib.mergeAttrs dirPkgs manualPkgs
+pkgs.lib.mergeAttrs dirPkgs manualPkgs

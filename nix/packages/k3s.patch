@@ -1,0 +1,34 @@
+diff --git a/go.mod b/go.mod
+index 4517953e81..81435c2a69 100644
+--- a/go.mod
++++ b/go.mod
+@@ -14,6 +14,7 @@ replace (
+ 	github.com/docker/distribution => github.com/docker/distribution v2.8.3+incompatible
+ 	github.com/docker/docker => github.com/docker/docker v25.0.8+incompatible
+ 	github.com/emicklei/go-restful/v3 => github.com/emicklei/go-restful/v3 v3.11.0
++	github.com/flannel-io/flannel => github.com/lilioid/flannel v0.0.0-20251011141135-4e1a4bef78b4
+ 	github.com/golang/protobuf => github.com/golang/protobuf v1.5.4
+ 	github.com/google/cadvisor => github.com/k3s-io/cadvisor v0.51.0-k3s1
+ 	github.com/googleapis/gax-go/v2 => github.com/googleapis/gax-go/v2 v2.12.0
+diff --git a/go.sum b/go.sum
+index 282655d4de..e8725d3de2 100644
+--- a/go.sum
++++ b/go.sum
+@@ -466,8 +466,6 @@ github.com/fatih/color v1.16.0 h1:zmkK9Ngbjj+K0yRhTVONQh1p/HknKYSlNT+vZCzyokM=
+ github.com/fatih/color v1.16.0/go.mod h1:fL2Sau1YI5c0pdGEVCbKQbLXB6edEj1ZgiY4NijnWvE=
+ github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
+ github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
+-github.com/flannel-io/flannel v0.27.0 h1:tuEqejAeY9V+dVuzDcs/V5QK43r8GLjA3oCJxqfAtok=
+-github.com/flannel-io/flannel v0.27.0/go.mod h1:HJZ/4+7/3YSA2mLRUrca8pLqD2dYuKwzfZfaqcnkXE8=
+ github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568/go.mod h1:xEzjJPgXI435gkrCt3MPfRiAkVrwSbHsst4LCFVfpJc=
+ github.com/flynn/noise v1.1.0 h1:KjPQoQCEFdZDiP03phOvGi11+SVVhBG2wOWAorLsstg=
+ github.com/flynn/noise v1.1.0/go.mod h1:xbMo+0i6+IGbYdJhF31t2eR1BIU0CYc12+BNAKwUTag=
+@@ -933,6 +931,8 @@ github.com/libp2p/go-yamux/v5 v5.0.0 h1:2djUh96d3Jiac/JpGkKs4TO49YhsfLopAoryfPmf
+ github.com/libp2p/go-yamux/v5 v5.0.0/go.mod h1:en+3cdX51U0ZslwRdRLrvQsdayFt3TSUKvBGErzpWbU=
+ github.com/liggitt/tabwriter v0.0.0-20181228230101-89fcab3d43de h1:9TO3cAIGXtEhnIaL+V+BEER86oLrvS+kWobKpbJuye0=
+ github.com/liggitt/tabwriter v0.0.0-20181228230101-89fcab3d43de/go.mod h1:zAbeS9B/r2mtpb6U+EI2rYA5OAXxsYw6wTamcNW+zcE=
++github.com/lilioid/flannel v0.0.0-20251011141135-4e1a4bef78b4 h1:IF0/CIzmT16UfOuNt5KxGq0YVrjE1HqGZ2kT6jDRmsU=
++github.com/lilioid/flannel v0.0.0-20251011141135-4e1a4bef78b4/go.mod h1:HJZ/4+7/3YSA2mLRUrca8pLqD2dYuKwzfZfaqcnkXE8=
+ github.com/lithammer/dedent v1.1.0 h1:VNzHMVCBNG1j0fh3OrsFRkVUwStdDArbgBWoPAffktY=
+ github.com/lithammer/dedent v1.1.0/go.mod h1:jrXYCQtgg0nJiN+StA2KgR7w6CiQNv9Fd/Z9BP0jIOc=
+ github.com/lunixbochs/vtclean v1.0.0/go.mod h1:pHhQNgMf3btfWnGBVipUOjRYhoOsdGqdm/+2c2E2WMI=
