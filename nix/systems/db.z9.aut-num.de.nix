@@ -25,7 +25,7 @@ in {
   # allow connections from local network to postgres
   networking.firewall.extraInputRules = ''
     ip saddr { 185.161.130.4 } tcp dport 5432 accept
-    ip6 saddr { 2a07:c481:2:5::/64, 2a07:c481:2:6::/64, 2a07:c481:2:7::/64 } tcp dport 5432 accept
+    ip6 saddr { 2a07:c481:2:5::/64, 2a07:c481:2:6::/64, 2a07:c481:2:7::/64, 2a07:c481:2:100::/56 } tcp dport 5432 accept
   '';
 
   environment.systemPackages = with pkgs; [
