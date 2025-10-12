@@ -78,18 +78,12 @@
 
   # additional packages
   environment.systemPackages = with pkgs; [
-    nixpkgs-fmt
     virt-manager
     libreoffice-fresh
     evince
     ranger
-    sops
-    git-crypt
-    gnupg
     mumble
-    openssl
     tree
-    kicad
     makemkv
     sieve-connect
   ];

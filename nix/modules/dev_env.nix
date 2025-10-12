@@ -27,7 +27,11 @@ in
     };
 
     environment.systemPackages = with pkgs; [
+      nixpkgs-fmt
       nixos-rebuild-ng
+      sops
+      git-crypt
+      gnupg
       glab
       helmfile
       jq
