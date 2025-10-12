@@ -20,6 +20,30 @@ Some common nix related tasks are documented here.
 | [sane_extra_config](../nix/modules/sane_extra_config.nix) | `hardware.sane.extraConfig` | Helper module to inject additional lines into the SANE config file                                                                                                             |
 
 
+## Manage and Login my own nix cache
+
+I run a nix cache at https://babe-do-you-need-anything-from-the-nix.store
+To use it, run the following commands
+
+1. Generate a token on the server
+
+   ```shell
+   kubectl -n nix-binary-cache exec deployments/attic-server -- atticadm -f /etc/attic/config.toml  make-token --sub "$(hostname)" --validity "10y" --pull '*' --push '*' --create-cache '*' --configure-cache '*' --configure-cache-retention '*'
+   ```
+
+2. Log in to the server on the local machine
+   ```shell
+   read -sx TOKEN
+   attic login babe-store https://babe-do-you-need-anything-from-the-nix.store $TOKEN
+   ```
+   
+3. (optional) Create a new cache on the server. This needs to only be done once
+
+   ```shell
+   attic cache create $name
+   ```
+
+
 ## Generate an installer ISO
 
 ```bash

@@ -29,14 +29,6 @@ in
     ip6 saddr { 2a07:c481:2:5::/64, 2a07:c481:2:6::/64, 2a07:c481:2:7::/64, 2a07:c481:2:100::/56 } tcp dport 5432 accept
   '';
 
-  # configure direct routes to kubernetes network
-  systemd.network.networks."eth0".routes = lib.map
-    (i: {
-      Destination = "2a07:c481:2:100::/56";
-      Gateway = i;
-    })
-    [ "2a07:c481:2:5:be24:11ff:fe9e:1d05" "2a07:c481:2:5:be24:11ff:fe79:ddc7" "2a07:c481:2:5:be24:11ff:fe9e:291b" "2a07:c481:2:5:be24:11ff:feac:5082" ];
-
   environment.systemPackages = with pkgs; [
     #(pgUpgradeScript config.services.postgresql.package postgresql_17)
   ];
