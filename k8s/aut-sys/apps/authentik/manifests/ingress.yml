@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authentik
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.middlewares: >-
+      traefik-compress@kubernetescrd,
+      traefik-redirect-tls@kubernetescrd,
+      traefik-secure-headers@kubernetescrd
+spec:
+  tls:
+    - secretName: tls-auth.aut-sys.de
+      hosts: [ auth.aut-sys.de ]
+  rules:
+    - host: auth.aut-sys.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: authentik-server
+                port:
+                  name: http
