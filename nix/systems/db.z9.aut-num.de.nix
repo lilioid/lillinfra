@@ -25,7 +25,7 @@ in
 
   # allow connections from local network to postgres
   networking.firewall.extraInputRules = ''
-    ip saddr { 185.161.130.4 } tcp dport 5432 accept
+    ip saddr { 185.161.130.0/28 } tcp dport 5432 accept
     ip6 saddr { 2a07:c481:2:5::/64, 2a07:c481:2:6::/64, 2a07:c481:2:7::/64, 2a07:c481:2:100::/56 } tcp dport 5432 accept
   '';
 
@@ -38,6 +38,8 @@ in
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
+    extensions = ps: with ps; [ pgvector vectorchord ];
+    settings.shared_preload_libraries = [ "vchord" ];
     enableTCPIP = true;
     ensureDatabases = [
       "lilly"

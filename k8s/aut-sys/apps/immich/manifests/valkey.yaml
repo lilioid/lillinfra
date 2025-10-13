@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: valkey
+      labels: &labels
+        app.kubernetes.io/name: valkey
+        app.kubernetes.io/component: cache
+    spec:
+      selector: *labels
+      ipFamilyPolicy: SingleStack
+      ipFamilies: [ IPv4 ]
+      ports:
+        - name: valkey
+          port: 6379
+          targetPort: valkey
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: valkey
+      labels: *labels
+    spec:
+      replicas: 1 # HA is not set up so fixed to one
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          containers:
+            - name: valkey
+              image: docker.io/valkey/valkey
+              ports:
+                - name: valkey
+                  containerPort: 6379
+              readinessProbe:
+                exec:
+                  command: [ "redis-cli", "ping" ]

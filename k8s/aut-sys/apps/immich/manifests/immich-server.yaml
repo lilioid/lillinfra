@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: immich-server
+      labels: &labels
+        app.kubernetes.io/name: immich-server
+        app.kubernetes.io/component: webserver
+    spec:
+      selector: *labels
+      ports:
+        - name: http
+          targetPort: http
+          port: 2883
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: immich-server
+      labels: *labels
+    spec:
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: immich-data
+          containers:
+            - name: immich
+              image: ghcr.io/immich-app/immich-server
+              env:
+                - name: IMMICH_WORKERS_INCLUDE
+                  value: api
+              envFrom:
+                - secretRef:
+                    name: immich-env
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+              ports:
+                - name: http
+                  containerPort: 2283
+                - name: metrics
+                  containerPort: 8081
+                - name: svc-metrics
+                  containerPort: 8082
+              readinessProbe:
+                httpGet:
+                  port: http

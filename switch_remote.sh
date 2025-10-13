@@ -9,7 +9,6 @@ set -x
 exec nixos-rebuild "$ACTION" \
   --fast \
   --use-remote-sudo \
-  --use-substitutes \
   --target-host "$CONNECT" \
   --flake ".#$SYSTEM"
 
