@@ -18,7 +18,7 @@ let
         mkdir -p "$HOME/www"
 
         echo "ensuring the www directory and its files have correct permissions"
-        chmod -R u=rwX,g=r,o= "$HOME/www"
+        chmod -R u=rwX "$HOME/www"
         setfacl --modify "u:${config.services.nginx.user}:x" "$HOME"
         setfacl -R --modify "default:u:${config.services.nginx.user}:rX,u:${config.services.nginx.user}:rX" "$HOME/www"
       }
