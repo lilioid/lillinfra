@@ -90,6 +90,11 @@ in
                 default = [ ];
                 type = listOf str;
               };
+              nginxIndex = mkOption {
+                description = "Value of an nginx index directive";
+                default = "index.html";
+                type = nullOr str;
+              };
             };
           }
         ));
@@ -122,6 +127,7 @@ in
           root = "/home/${config.name}/www";
           forceSSL = true;
           enableACME = true;
+          locations."/".index = config.nginxIndex;
         })
         cfg.users;
     };
