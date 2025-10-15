@@ -164,7 +164,7 @@ in
         settings = {
           PermitRootLogin = "no";
           PasswordAuthentication = false;
-          AllowUsers = lib.mkDefault [ config.users.users.lilly.name ];
+          AllowGroups = lib.mkDefault [ "users" ];
         };
       };
 
@@ -279,7 +279,7 @@ in
         settings = {
           PermitRootLogin = "no";
           PasswordAuthentication = false;
-          AllowUsers = lib.mkDefault [ config.users.users.lilly.name ];
+          AllowGroups = lib.mkDefault [ "users" ];
         };
       };
     })
