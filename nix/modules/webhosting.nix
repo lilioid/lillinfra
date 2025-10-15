@@ -4,13 +4,22 @@ let
 
   mkCtlScript = userCfg: pkgs.writeShellApplication {
     name = "webctl";
-    runtimeInputs = with pkgs; [ coreutils findutils acl jq ];
+    runtimeInputs = with pkgs; [ coreutils findutils acl jq bind.host ];
     text = ''
       function info {
+        echo "--------------- Hosting Information ---------------"
         echo "ssh conection: ${userCfg.name}@${config.networking.fqdnOrHostName}"
         echo "internal host: https://${userCfg.defaultDomain}/"
         echo "additional hosts: ${lib.concatStringsSep " " (lib.map (i: "https://${i}/") userCfg.domains)}"
         echo "ip addresses: $(ip --json address show scope global | jq -r '[.[].addr_info.[].local] | map(select(. != null)) | join(", ")')"
+
+        echo ""
+        echo "----- Live DNS Information about your domains -----"
+        # shellcheck disable=SC2043
+        for domain in ${lib.concatStringsSep " " userCfg.domains}; do
+          host "$domain"
+          echo ""
+        done
       }
 
       function fix {
