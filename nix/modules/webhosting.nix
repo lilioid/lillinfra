@@ -12,6 +12,8 @@ let
         echo "internal host: https://${userCfg.defaultDomain}/"
         echo "additional hosts: ${lib.concatStringsSep " " (lib.map (i: "https://${i}/") userCfg.domains)}"
         echo "ip addresses: $(ip --json address show scope global | jq -r '[.[].addr_info.[].local] | map(select(. != null)) | join(", ")')"
+        echo "automatic index file name: ${if userCfg.nginxIndex == null then "*disabled*" else userCfg.nginxIndex}"
+        echo "404 page file: $HOME/www/404.html"
 
         echo ""
         echo "----- Live DNS Information about your domains -----"
@@ -115,7 +117,7 @@ in
   # Implementation (by rendering into other NixOS options)
   #
   config = {
-    # add required linux users users
+    # add required linux users
     users.users = lib.attrsets.mapAttrs'
       (name: config: lib.nameValuePair config.name {
         name = config.name;
@@ -133,10 +135,15 @@ in
       virtualHosts = lib.attrsets.mapAttrs'
         (name: config: lib.nameValuePair config.defaultDomain {
           serverAliases = config.domains;
-          root = "/home/${config.name}/www";
           forceSSL = true;
           enableACME = true;
-          locations."/".index = config.nginxIndex;
+          locations."/" = {
+            root = "/home/${config.name}/www";
+            index = config.nginxIndex;
+            extraConfig = ''
+              error_page 404 /404.html;
+            '';
+          };
         })
         cfg.users;
     };
