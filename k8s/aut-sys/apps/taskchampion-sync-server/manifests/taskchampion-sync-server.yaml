@@ -38,3 +38,6 @@ items:
               ports:
                 - name: http
                   containerPort: 8080
+              readinessProbe:
+                httpGet:
+                  port: http

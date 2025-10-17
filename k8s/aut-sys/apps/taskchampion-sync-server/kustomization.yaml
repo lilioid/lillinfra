@@ -1,12 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 namespace: taskchampion-sync-server
-labels:
-  - includeTemplates: true
-    includeSelectors: true
-    pairs:
-      app.kubernetes.io/part-of: taskchampion-sync-server
 
 resources:
   - manifests/namespace.yaml
@@ -14,7 +8,7 @@ resources:
   - manifests/taskchampion-sync-server.yaml
 
 generators:
-  - ./secret-generator.yml
+  - secret-generator.yml
 
 images:
   - name: ghcr.io/gothenburgbitfactory/taskchampion-sync-server-postgres

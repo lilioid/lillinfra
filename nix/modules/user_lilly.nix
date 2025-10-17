@@ -101,7 +101,7 @@ in
       templates."lilly/taskrc" = lib.mkIf hasDevEnv {
         owner = "lilly";
         content = ''
-          sync.server.url=https://task-sync.lly.sh
+          sync.server.url=https://task-sync.aut-sys.de
           sync.server.client_id=${config.sops.placeholder."lilly/taskchampion-sync-client-id"}
           sync.encryption_secret=${config.sops.placeholder."lilly/taskchampion-sync-encryption-secret"}
         '';
