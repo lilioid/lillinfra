@@ -6,9 +6,7 @@ metadata:
     app.kubernetes.io/name: actual-budget
     app.kubernetes.io/component: webserver
 spec:
-  storageClassName: nfs-fast
-  accessModes:
-    - ReadWriteOnce
+  accessModes: [ ReadWriteOnce ]
   resources:
     requests:
       storage: "2G"

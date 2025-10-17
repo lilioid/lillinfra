@@ -7,14 +7,17 @@ metadata:
     app.kubernetes.io/component: webserver
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.middlewares: >-
+      traefik-compress@kubernetescrd,
+      traefik-redirect-tls@kubernetescrd,
+      traefik-secure-headers@kubernetescrd
 spec:
   tls:
-    - secretName: tls-budget.ftsell.de
-      hosts:
-        - budget.lly.sh
-        - budget.ftsell.de
+    - secretName: tls-budget.aut-sys.de
+      hosts: [ budget.aut-sys.de ]
   rules:
-    - host: budget.lly.sh
+    - host: budget.aut-sys.de
       http: &httpConfig
         paths:
           - path: /
@@ -24,6 +27,3 @@ spec:
                 name: actual-budget
                 port:
                   name: http
-
-    - host: budget.ftsell.de
-      http: *httpConfig
