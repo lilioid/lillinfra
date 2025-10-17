@@ -4,6 +4,11 @@ metadata:
   name: homepage
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.middlewares: >-
+      traefik-compress@kubernetescrd,
+      traefik-redirect-tls@kubernetescrd,
+      traefik-secure-headers@kubernetescrd
 spec:
   tls:
     - secretName: tls-li.lly.sh
@@ -11,9 +16,6 @@ spec:
         - li.lly.sh
         - lly.sh
         - ftsell.de
-        - www.ftsell.de
-        - finn-thorben.me
-        - www.finn-thorben.me
   rules:
     - host: li.lly.sh
       http: &http
@@ -49,10 +51,4 @@ spec:
     - host: lly.sh
       http: *http
     - host: ftsell.de
-      http: *http
-    - host: www.ftsell.de
-      http: *http
-    - host: finn-thorben.me
-      http: *http
-    - host: www.finn-thorben.me
       http: *http

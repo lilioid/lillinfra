@@ -3,8 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: homepage-state
 spec:
-  storageClassName: nfs-fast
-  accessModes: [ReadWriteMany]
+  accessModes: [ ReadWriteMany ]
   resources:
     requests:
       storage: 100M

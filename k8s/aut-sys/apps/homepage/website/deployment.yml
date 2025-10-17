@@ -21,6 +21,7 @@ spec:
       containers:
         - name: homepage
           image: git.lly.sh/lilly/homepage
+          args: [ "--ipv6", "[::]:8000" ]
           envFrom:
             - secretRef:
                 name: website-env
