@@ -6,6 +6,8 @@ metadata:
     app.kubernetes.io/name: actual-budget
     app.kubernetes.io/component: webserver
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels: *labels
   template:
