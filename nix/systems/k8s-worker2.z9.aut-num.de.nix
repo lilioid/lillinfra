@@ -1,19 +1,25 @@
 { config, pkgs, ... }: {
   custom.preset = "aut-sys-vm";
 
+  # mount shared kubernetes filesystem
   environment.systemPackages = with pkgs; [ ceph-client ];
+  environment.etc."ceph/ceph.conf".text = ''
+    [global]
+          fsid = 13342310-b28f-4d7b-a893-af2984583a92
+          mon_host = [v2:[2a07:c481:2:2::101]:3300/0,v1:[2a07:c481:2:2::101]:6789/0] [v2:[2a07:c481:2:2::102]:3300/0,v1:[2a07:c481:2:2::102]:6789/0] [v2:[2a07:c481:2:2::103]:3300/0,v1:[2a07:c481:2:2::103]:6789/0]
+          keyfile=${config.sops.secrets."aut-sys-ceph/k8s/secret".path}
+  '';
   fileSystems."ceph-k8s" = {
-    device = "[2a07:c481:2:2::101],[2a07:c481:2:2::102],[2a07:c481:2:2::103]:/volumes/k8s/";
+    # mount from ceph with user "k8s", cephfs named "data", and volume path "/volumes/k8s/"
+    device = "k8s@.data=/volumes/k8s/";
     mountPoint = "/srv/ceph-k8s";
     fsType = "ceph";
     options = [
-      "name=k8s"
-      "secretfile=${config.sops.secrets."aut-sys-ceph/k8s/secret".path}"
-      "fsid=13342310-b28f-4d7b-a893-af2984583a92"
-      "fs=data"
       "rw"
       "noatime"
       "acl"
+      "crush_location=host:pve2"
+      "read_from_replica=localize"
     ];
     neededForBoot = false;
     noCheck = true;
@@ -33,6 +39,8 @@
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
       --node-ip=2a07:c481:2:5:be24:11ff:fe9e:291b,185.161.130.5
       --node-internal-dns=k8s-worker2.z9.aut-num.de
+      --node-label=topology.kubernetes.io/zone=z9
+      --node-label=topology.aut-sys.de/hypervisor=pve2
     '';
     tokenFile = config.sops.secrets."k3s/token".path;
   };
