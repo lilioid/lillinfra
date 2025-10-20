@@ -24,10 +24,10 @@ in {
       wl-clipboard
       thunderbird
       spotify
-      drawio
       discord
       vlc
       obsidian
+      logseq
       kdePackages.okular
       wezterm
       gimp
