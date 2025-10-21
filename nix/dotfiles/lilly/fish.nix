@@ -1,8 +1,10 @@
-# Configuration for Home-Managers programs.fish options
+# configuration for Home-Managers programs.fish options
+# https://home-manager-options.extranix.com/?query=programs.fish&release=release-25.05
 {
   enable = true;
   shellAliases = {
     "sshpw" = "ssh -o \"PreferredAuthentications=password\"";
+    "jwl" = "watch -c -t jj log --no-pager --color=always";
   };
   shellAbbrs = {
     "ga" = "git add";
