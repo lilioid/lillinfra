@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: syncthing-lilly
+      labels: &labels
+        app.kubernetes.io/name: syncthing
+        app.kubernetes.io/instance: lilly
+    spec:
+      selector: *labels
+      ports:
+        - name: http
+          port: 80
+          targetPort: http
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: syncthing-lilly
+      labels: *labels
+    spec:
+      replicas: 1   # HA is not set up so this is statically set to 1
+      strategy:
+        type: Recreate
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          hostname: aut-sys-syncthing-lilly
+          hostNetwork: true
+          volumes:
+            - name: sthome
+              persistentVolumeClaim:
+                claimName: syncthing-lilly-data
+          containers:
+            - name: syncthing
+              image: ghcr.io/syncthing/syncthing
+              volumeMounts:
+                - name: sthome
+                  mountPath: /var/syncthing
+              ports:
+                - name: http
+                  containerPort: 8384
+                - name: sync-tcp
+                  protocol: TCP
+                  containerPort: 22000
+                - name: sync-udp
+                  protocol: UDP
+                  containerPort: 22000
+                - name: discovery
+                  protocol: UDP
+                  containerPort: 21027
+
+  # pvc
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: syncthing-lilly-data
+      labels: *labels
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: 10Gi
