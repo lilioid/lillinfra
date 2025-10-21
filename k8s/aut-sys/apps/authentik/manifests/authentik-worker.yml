@@ -27,7 +27,7 @@ spec:
             - secretRef:
                 name: authentik-env
           livenessProbe:
-            timeoutSeconds: 5
+            timeoutSeconds: 15
             exec:
               command: [ ak, healthcheck ]
           startupProbe:
@@ -35,7 +35,7 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 10
             successThreshold: 1
-            timeoutSeconds: 5
+            timeoutSeconds: 15
             exec:
               command: [ ak, healthcheck ]
           resources:
