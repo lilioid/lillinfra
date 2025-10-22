@@ -4,9 +4,12 @@
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "li@lly.sh";
 
-  custom.webhosting.users.skye = {
-    domains = [ "lihesys.de" ];
-    sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2vP9rQP6f6o61VUssBFvgY+O2sZ7T4OGaNkJTAk8G2 skye";
+  custom.webhosting = {
+    enable = true;
+    users.skye = {
+      domains = [ "lihesys.de" ];
+      sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2vP9rQP6f6o61VUssBFvgY+O2sZ7T4OGaNkJTAk8G2 skye";
+    };
   };
 
   # DO NOT CHANGE

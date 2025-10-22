@@ -74,6 +74,7 @@ in
   # aut-sys.de
   "db.z9.aut-num.de" = mkSystem "x86_64-linux" "db.z9.aut-num.de" flake.inputs.nixpkgs2505;
   "webhost.z9.aut-num.de" = mkSystem "x86_64-linux" "webhost.z9.aut-num.de" flake.inputs.nixpkgs2505;
+  "syncthing.z9.aut-num.de" = mkSystem "x86_64-linux" "syncthing.z9.aut-num.de" flake.inputs.nixpkgs2505;
   "k8s-ctl.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-ctl.z9.aut-num.de" flake.inputs.nixpkgs2505;
   "k8s-worker1.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker1.z9.aut-num.de" flake.inputs.nixpkgs2505;
   "k8s-worker2.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker2.z9.aut-num.de" flake.inputs.nixpkgs2505;

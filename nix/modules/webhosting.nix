@@ -63,6 +63,7 @@ in
   #
   options = with lib.options; with lib.types; {
     custom.webhosting = {
+      enable = mkEnableOption "custom webhosting";
       openPorts = mkOption {
         description = "Whether port 80 and 443 should automatically be opened on the firewall";
         default = true;
@@ -116,7 +117,7 @@ in
   #
   # Implementation (by rendering into other NixOS options)
   #
-  config = {
+  config = lib.mkIf cfg.enable {
     # add required linux users
     users.users = lib.attrsets.mapAttrs'
       (name: config: lib.nameValuePair config.name {

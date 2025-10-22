@@ -22,7 +22,7 @@ in
       user = "lilly";
       dataDir = "/home/lilly/";
       settings.options.urAccepted = -1;
-      openDefaultPorts = false;
+      openDefaultPorts = lib.mkDefault false;
       overrideFolders = false;
       overrideDevices = false;
     };
