@@ -29,8 +29,15 @@ service:
 ports:
   web:
     port: 80
+    transport:
+      respondingTimeouts: &transportTimeouts
+        readTimeout: 5m
+        writeTimeout: 5m
+        idleTimeout: 5m
   websecure:
     port: 443
+    transport:
+      respondingTimeouts: *transportTimeouts
 
 # enable traefik dashboard exposition
 ingressRoute:
