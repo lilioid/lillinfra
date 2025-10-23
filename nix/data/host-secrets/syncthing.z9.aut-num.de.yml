@@ -1,4 +1,7 @@
 authentik-outpost-token: ENC[AES256_GCM,data:tJPRVkUnBc/7yhckJeK5F1QQ6UjVLlJdeCPvS1WuFfZgGczwGya5Jb+Kadoq1w3rzimvjo4EKMsAUgsc,iv:hqzl8t9/w8TGtsjD+p8GAj7wQoLm62HX9Koa+A7GdXI=,tag:AvLyqQxfxIJr6jednMUnIw==,type:str]
+aut-sys-ceph:
+    syncthing:
+        secret: ENC[AES256_GCM,data:MGTGZ1rZNVCW/TgHe/yEgDW7TQjQsCojcw3iPeaz8T/cUI2E8ynSEg==,iv:4fibimkcJ7RbGk/siUSk1oC6TrEYAyjJJJfop86eNWU=,tag:YRO/NG3VLt13QL9326By7Q==,type:str]
 sops:
     age:
         - recipient: age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d
@@ -19,7 +22,7 @@ sops:
             dTFkcFcxQlh1Qk15STR4c0NzaDN6cVEKR/CSls2FttxSiGalM6BXLol+IvidCEs+
             jGALHXAfcBADWn/9cfSyxZ1lUl99ZY+6GCEGktCRU5DoBVzHRhtGyA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-23T12:33:58Z"
-    mac: ENC[AES256_GCM,data:yXW36Sya6HZeVQK26EnrqKBGqOU21vYRGB8uWtaP9oe5ZGLMA3Tc7pvsqIEtnVYdTYzaLG1oKOQ37DumMhBJbFiY6aUndKsZW0njkNFsD5UiuJlXHpz9ZtTxR3ItV4STtdzxO54erq8t63DJ3A7jK0rxqxJYzFe189kjR+mxiPg=,iv:ehCKXV+dfC9c79w2Q+K+iW8YTk7a4R19yN4Z3iv5buo=,tag:bhcbtbAViAxgnUHLRHVo/Q==,type:str]
+    lastmodified: "2025-10-23T19:03:10Z"
+    mac: ENC[AES256_GCM,data:qQ77AUUIlEdnEW8zJ36FtfryvnPBwmMxi8PveK22Thf85MC/GNSxnLI4Ie4sNnbZ3z8Bj6kMnwOxDvfuSPuGfC9qV1qHlACswJfeAeejKe45ZeStukvB5015L1VkowaIfza8exKDYPZ0z772fe1+gQ0rHReZPtVqul5prG5F8I8=,iv:QSxga1x/dRfxb7nO31LoOgFkLK/iwIJeVyGofmD97Gg=,tag:iq8sjxPvYj09EqJ/0qQ3FQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0
