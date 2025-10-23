@@ -10,8 +10,8 @@
           keyfile=${config.sops.secrets."aut-sys-ceph/k8s/secret".path}
   '';
   fileSystems."ceph-k8s" = {
-    # mount from ceph with user "k8s", cephfs named "data", and volume path "/volumes/k8s/"
-    device = "k8s@.data=/volumes/k8s/";
+    # mount from ceph with user "k8s", cephfs named "data", and subvolume "k8s"
+    device = "k8s@.data=/volumes/_nogroup/k8s/83fef1ef-824c-4815-b1f4-477a50b72376";
     mountPoint = "/srv/ceph-k8s";
     fsType = "ceph";
     options = [
