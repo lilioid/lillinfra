@@ -25,15 +25,29 @@
     noCheck = true;
   };
 
-  # enable my standard syncthing integration
-  custom.user-syncthing.enable = true;
+  # enable syncthing
+  systemd.services."syncthing" = {
+    requires = [ "srv-ceph\\x2dsyncthing.mount" ];
+    after = [ "srv-ceph\\x2dsyncthing.mount" ];
+  };
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "lilly";
+    dataDir = "/srv/ceph-syncthing/data";
+    configDir = "/srv/ceph-syncthing/config";
+    settings.options.urAccepted = -1;
+    openDefaultPorts = true;
+    overrideFolders = false;
+    overrideDevices = false;
+  };
 
   # expose the service ports and the WebGUI via a reverse proxy
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "li@lly.sh";
-  services.syncthing.openDefaultPorts = true;
   services.nginx = {
-    enable = false;
+    enable = true;
     recommendedTlsSettings = true;
     recommendedProxySettings = true;
     recommendedOptimisation = true;
@@ -57,8 +71,8 @@
   };
 
   sops = {
-    secrets."aut-sys-ceph/syncthing/secret" = {};
-    secrets."authentik-outpost-token" = {};
+    secrets."aut-sys-ceph/syncthing/secret" = { };
+    secrets."authentik-outpost-token" = { };
     templates."authentik-env" = {
       restartUnits = [ config.systemd.services."authentik-ldap-outpost".name ];
       content = ''
