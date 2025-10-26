@@ -6,6 +6,7 @@ email = "li@lly.sh"
 
 [aliases]
 init = [ "git", "init", "--colocate" ]
+clone = [ "git", "clone", "--colocate" ]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
 [signing]
@@ -14,7 +15,7 @@ backend = "ssh"
 key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPohjBYcg4GR9hKH6vdT5V2OA+rpTBkDOJZzipnotpR+"
 
 [ui]
-default_command = "log"
+default-command = "log"
 
 [colors]
 "diff removed token" = { fg = "bright red", bg = "#400000", underline = false }

@@ -14,6 +14,7 @@
     "gp" = "git push";
     "gc" = "git commit";
     "gb" = "git branch";
+    "jst" = "jj status --no-pager";
     "kc" = "kubectl";
     "kubel" = "kubectl --context=lly-sh";
     "kubem" = "kubectl --context=mafiasi";
