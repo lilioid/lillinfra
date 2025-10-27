@@ -12,6 +12,9 @@ let
     })
     dirNonDefault;
 
+  # a ready-to-use version of pkgs pulled from nixos-unstable
+  pkgs-unstable = import flake.inputs.nixpkgs-unstable { system = pkgs.system; };
+
   # manually defined packages or overrides from existing nixpkgs packages
   manualPkgs = {
     installer = flake.outputs.nixosConfigurations.installer.config.system.build.isoImage;
@@ -44,12 +47,9 @@ let
       in
       k3s;
 
-    # pull in signal from nixos-unstable because the current signal binary fails in its build
-    signal-desktop =
-      let
-        pkgs-unstable = import flake.inputs.nixpkgs-unstable { system = pkgs.system; };
-      in
-      pkgs-unstable.signal-desktop;
+    # overwrite certain programs from nixos-unstable because of newer versions
+    signal-desktop = pkgs-unstable.signal-desktop;
+    glab = pkgs-unstable.glab;
   };
 in
 pkgs.lib.mergeAttrs dirPkgs manualPkgs
