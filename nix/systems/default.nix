@@ -35,6 +35,14 @@ let
               flake.outputs.overlays.default
               flake.inputs.cookied.overlays.default
             ];
+            nix.nixPath = [
+              "nixpkgs=${lib.cleanSource nixpkgs}"
+              "nixpkgs-unstable=${lib.cleanSource flake.inputs.nixpkgs-unstable}"
+            ];
+            nix.registry = {
+              nixpkgs.flake = nixpkgs;
+              nixpkgs-unstable.flake = flake.inputs.nixpkgs-unstable;
+            };
 
             # set hostname based on function inputs
             networking.hostName = builtins.head fqdnParts;
