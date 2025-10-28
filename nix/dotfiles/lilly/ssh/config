@@ -270,6 +270,14 @@ Host *.ef29.aut-sys.de
   IdentityFile ~/.ssh/id_lilly@ccc.pub
 
 
+######
+# Hanse e.V.
+#
+Host *.hanse.de *.zs64.net
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@hanse.de.pub
+
+
 # Global Override Settings
 Host *
   ForwardAgent no
