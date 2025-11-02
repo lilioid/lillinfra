@@ -9,7 +9,7 @@
           mon_host = [v2:[2a07:c481:2:2::101]:3300/0,v1:[2a07:c481:2:2::101]:6789/0] [v2:[2a07:c481:2:2::102]:3300/0,v1:[2a07:c481:2:2::102]:6789/0] [v2:[2a07:c481:2:2::103]:3300/0,v1:[2a07:c481:2:2::103]:6789/0]
           keyfile=${config.sops.secrets."aut-sys-ceph/syncthing/secret".path}
   '';
-  fileSystems."ceph-" = {
+  fileSystems."ceph-syncthing" = {
     # mount from ceph with user "syncthing", cephfs named "data", and subvolume "syncthing"
     device = "syncthing@.data=/volumes/_nogroup/syncthing/a47016f1-bab1-4f54-a70b-dfe0d356354a";
     mountPoint = "/srv/ceph-syncthing";

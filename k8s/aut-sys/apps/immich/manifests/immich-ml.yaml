@@ -43,6 +43,9 @@ items:
             - name: data
               persistentVolumeClaim:
                 claimName: immich-data
+            - name: syncthing-data
+              hostPath:
+                path: /srv/ceph-syncthing/data
           containers:
             - name: immich
               image: ghcr.io/immich-app/immich-machine-learning
@@ -56,6 +59,9 @@ items:
               volumeMounts:
                 - name: data
                   mountPath: /data
+                - name: syncthing-data
+                  mountPath: /external-data/syncthing
+                  readOnly: true
               ports:
                 - name: http
                   containerPort: 3003
