@@ -3,7 +3,7 @@
 
   nixConfig = {
     extra-substituters = [ "https://babe-do-you-need-anything-from-the-nix.store/lillinfra" ];
-    extra-trusted-public-keys = [ "lillinfra:2tw1d8pQ4EmiFJ/mEiTUJYFP65txNUpyIBNdnZeqRjY=" ];
+    extra-trusted-public-keys = [ "lillinfra:1oor1T8FgQ3DwH0Y0altYYU/+ZRa3oBb1zGhltxPu1Y=" ];
   };
 
   inputs = {
