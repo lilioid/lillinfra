@@ -86,6 +86,7 @@
     tree
     makemkv
     sieve-connect
+    darktable
   ];
 
   programs.steam = {
