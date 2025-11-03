@@ -48,7 +48,6 @@ let
       k3s;
 
     # overwrite certain programs from nixos-unstable because of newer versions
-    signal-desktop = pkgs-unstable.signal-desktop;
     glab = pkgs-unstable.glab;
   };
 in
