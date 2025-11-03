@@ -26,7 +26,6 @@ in {
       spotify
       discord
       vlc
-      obsidian
       logseq
       kdePackages.okular
       wezterm
