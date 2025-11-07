@@ -87,6 +87,7 @@
     makemkv
     sieve-connect
     darktable
+    heroic
   ];
 
   programs.steam = {
