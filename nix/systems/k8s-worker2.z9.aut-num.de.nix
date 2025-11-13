@@ -24,21 +24,6 @@
     neededForBoot = false;
     noCheck = true;
   };
-  fileSystems."ceph-syncthing" = {
-    # mount from ceph with user "k8s", cephfs named "data", and subvolume "syncthing"
-    device = "k8s@.data=/volumes/_nogroup/syncthing/a47016f1-bab1-4f54-a70b-dfe0d356354a";
-    mountPoint = "/srv/ceph-syncthing";
-    fsType = "ceph";
-    options = [
-      "rw"
-      "noatime"
-      "acl"
-      "crush_location=host:pve1"
-      "read_from_replica=localize"
-    ];
-    neededForBoot = false;
-    noCheck = true;
-  };
 
   networking.firewall.allowedTCPPorts = [
     10250 # k8s kubelet metrics
