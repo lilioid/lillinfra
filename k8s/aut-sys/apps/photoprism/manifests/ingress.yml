@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: photoprism
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.middlewares: >-
+      traefik-compress@kubernetescrd,
+      traefik-redirect-tls@kubernetescrd,
+      traefik-secure-headers@kubernetescrd
+spec:
+  tls:
+    - secretName: tls-prism.aut-sys.de
+      hosts: [ prism.aut-sys.de ]
+  rules:
+    - host: prism.aut-sys.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: photoprism-server
+                port:
+                  name: http
