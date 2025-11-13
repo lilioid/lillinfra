@@ -24,7 +24,7 @@ items:
       name: photoprism-server
       labels: *labels
     spec:
-      replicas: 1 # photoprism explicitly mentions not supporting horizontal scaling
+      #replicas: 1 # photoprism explicitly mentions not supporting horizontal scaling
       selector:
         matchLabels: *labels
       template:
