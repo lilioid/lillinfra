@@ -24,6 +24,21 @@
     neededForBoot = false;
     noCheck = true;
   };
+  fileSystems."photoprism-originals" = {
+    # mount photoprism PersistentVolumeClaim in syncthing so that I can sync photos directly into it
+    device = "syncthing@.data=/volumes/_nogroup/k8s/83fef1ef-824c-4815-b1f4-477a50b72376/pvc-34a22a90-bf9c-4b29-9891-9b18595d4e3b_photoprism_photoprism-originals";
+    mountPoint = "/srv/photoprism-originals";
+    fsType = "ceph";
+    options = [
+      "rw"
+      "noatime"
+      "acl"
+      "crush_location=host:pve1"
+      "read_from_replica=localize"
+    ];
+    neededForBoot = false;
+    noCheck = true;
+  };
 
   # enable syncthing
   systemd.services."syncthing" = {
