@@ -5,7 +5,13 @@
     {
       "matchPackageNames": [ "docker.io/woodpeckerci/*" ],
       "groupName": "woodpecker"
-    }
+    },
+    {
+      // configure the date calendar versioning with the date as major version and nothing else
+      // the "v20" prefix of "v2025" is optional because photoprism seems to use both
+      "matchPackageNames": [ "docker.io/photoprism/photoprism" ],
+      "versioning": "regex:^v?\\d?\\d?(?<major>\\d\\d\\d\\d\\d\\d)$"
+    },
   ],
 
   "customManagers": [
