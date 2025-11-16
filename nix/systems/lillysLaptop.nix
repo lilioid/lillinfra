@@ -100,7 +100,10 @@
     gnomeDesktop.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
-    backup.enable = true;
+    backup = {
+      enable = true;
+      destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+    };
 
     wg.profiles = {
       "fux" = {

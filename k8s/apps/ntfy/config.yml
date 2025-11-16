@@ -11,4 +11,3 @@ cache-duration: "48h"
 attachment-expiry-duration: "12h"
 cache-file: /var/lib/ntfy/cache.sqlite3
 attachment-cache-dir: /var/lib/ntfy/attachment-cache/
-
