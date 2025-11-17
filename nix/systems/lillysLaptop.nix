@@ -161,6 +161,10 @@
   services.resolved.enable = true;
   services.openssh.enable = true;
   programs.gnupg.agent.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+  };
 
   services.timesyncd.servers = [ "151.216.48.11" "151.216.48.12" ];
 
