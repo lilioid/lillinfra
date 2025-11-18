@@ -8,6 +8,10 @@ let
 
   # utility function to filter an AttrSet to only include the members who have their .enable attr set to true
   filterEnabled = lib.attrsets.filterAttrs (_: i: i.enable);
+
+  # seconds to $something conversion helpers
+  minutes = 60;
+  hours = 60 * minutes;
 in
 {
   imports = [ ];
@@ -122,7 +126,7 @@ in
           ".nobackup"
         ];
         relocated_repo_access_is_ok = true;
-        keep_hourly = 48;
+        lock_wait = 1 * hours;
         keep_daily = 7;
         keep_weekly = 8;
 
