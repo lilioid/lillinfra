@@ -107,6 +107,7 @@ in
           "/home/*/.local/share/Trash"
           "/home/*/.local/share/pnpm/store"
           "/home/*/.npm"
+          "/home/*/.docker/"
           "/home/*/Projects/**/target/"
           "/home/*/Projects/**/.venv/"
           "/home/*/Projects/**/.terraform/"
