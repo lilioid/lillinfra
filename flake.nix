@@ -80,21 +80,25 @@
     let
       # instantiate nixpkgs for the given system, configuring this flake's overlay too
       mkPkgs =
-        system:
+        nixpkgs: system:
         import nixpkgs {
           inherit system;
           overlays = [
             self.overlays.default
             cookied.overlays.default
           ];
+          config = {
+            allowUnfree = true;
+            nvidia.acceptLicense = true;
+          };
         };
       # helper to iterate over all supported systems, passing the corresponding nixpkgs set
-      eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f (mkPkgs system));
+      eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f (mkPkgs nixpkgs system));
       # evaluate the treefmt.nix module given an instantiated nixpkgs
       treefmtEval = pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
     in
     {
-      nixosConfigurations = import ./nix/systems { flake = self; };
+      nixosConfigurations = import ./nix/systems { flake = self; mkPkgs = mkPkgs; };
       overlays.default =
         final: prev:
         import ./nix/packages {

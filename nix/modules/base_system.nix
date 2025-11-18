@@ -9,8 +9,6 @@
 }:
 {
   # settings for nix and nixos
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.nvidia.acceptLicense = true;
   nix.channel.enable = false;
   nix.settings = {
     tarball-ttl = 60;

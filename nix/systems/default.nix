@@ -1,4 +1,4 @@
-{ flake }:
+{ flake, mkPkgs }:
 let
   # read all files in ../modules and build the full path to them
   customModules = builtins.map
@@ -11,6 +11,7 @@ let
     let
       lib = nixpkgs.lib;
       systemModule = if lib.pathIsDirectory ./${name} then ./${name} else ./${name}.nix;
+      pkgs = mkPkgs nixpkgs systemType;
     in
     nixpkgs.lib.nixosSystem {
       specialArgs = flake.inputs;
@@ -30,11 +31,7 @@ let
           in
           {
             # nixpkgs settings based on function inputs
-            nixpkgs.hostPlatform = systemType;
-            nixpkgs.overlays = [
-              flake.outputs.overlays.default
-              flake.inputs.cookied.overlays.default
-            ];
+            nixpkgs.pkgs = pkgs;
             nix.nixPath = [
               "nixpkgs=${lib.cleanSource nixpkgs}"
               "nixpkgs-unstable=${lib.cleanSource flake.inputs.nixpkgs-unstable}"
