@@ -101,6 +101,7 @@ in
           "/home/*/.local/share/Steam/"
           "/home/*/.nv/"
           "/home/*/.local/share/uv/"
+          "/home/*/.local/share/docker/"
           "/home/*/Downloads"
           "/home/*/Games"
           "/home/*/.cache"

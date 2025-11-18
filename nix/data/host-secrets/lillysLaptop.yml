@@ -4,9 +4,9 @@ wg:
     autSysMgmt:
         privkey: ENC[AES256_GCM,data:rIyaozal+eTxyDGzyJysbstaEF7IkdZxtuiGlWkjABGCVKnL75KstT9n6xk=,iv:U6tnIK7wYrNg++I4qDl2hctD2FGJUTZRw7CISAf2eRY=,tag:5Wv+Sh1bD4y9t74fCohRMQ==,type:str]
 backup:
-    rsync-net:
-        encryption-passphrase: ENC[AES256_GCM,data:FQ0nSCu59qCl5NfJhaI9QeVS,iv:WFcwcN6F2cwJ1HO3uL27mSRgZTx3WcZVqAlEp11s+2g=,tag:GwiH1t+VvUYTclE3XsC41A==,type:str]
-        ssh-key: ENC[AES256_GCM,data:1aV4TvjrSIMaWdBxznJJdz6ZhiA97QDbmJRkM1sNrejZJ2debS6aCdEfb5zoJdr/ub+QTp3YngvZ5JyQukRvbVuCD0S9FwuYF9HYxuEOOTEvyHKuKewjZ+u6Xjnw2b6qkUCtSqqRoJN5i4CjDy/7I8duRDNN7iT+1TqH38rNKgJPZM06/3vh2eCfAuM3mKTNabnjAENldlSVtvw4m/KM/Ol9e5zyrNXa5JayBGRkFIRAYpKQOwE/ICE1gY7KACvWZeH5ubQbJZwynttJiiZOg9lgjNb6qkzqdKz6TV056RpZ19TWyPekuYpaFNYHtIAoyojH6Ixc7DLyeHd9CMLKbHt9z8vREusdAndmfsKw6CBfFVadPMKc+bBZru0DKEHgwktHBShmFSQudtvrf6eIzcbnQbwoHQdC6Xt+uviojxcuAQ9/bq7/jonveU3qDPORkqkuV+XZFoDee2ncB8PQTHaBvFtykjB84hA7vf8WQMxWFWPizYJkjixMRMv+crYkZJRSHwZhVZrs2wY2mFFpPldyIRPiuXpVjYiC,iv:Vt1QZ1CXbEfO6WFbtdJPASaLsrRFSGvzX156fxpGMrU=,tag:fSpqqvwTU3Sm2AJc2lo8/w==,type:str]
+    repoPass: ENC[AES256_GCM,data:WptdqOuqtj7HSTvuCMaD8hgp9jMHpaks,iv:wRuIWFrbk4WKyHEqzX11dM+2uay+p0RLfS9V2HYwRqM=,tag:ic4TnfQGHhQ5zi1vRB+4+w==,type:str]
+    ntfyToken: ENC[AES256_GCM,data:/eVefZe4KThfq8WklYg6CtpYfkb41xnBLpF8kfFRBLs=,iv:psTdB9Cg/8aw+8TR/oRdMrAw8eR8e8RQT72pma0jv1w=,tag:mCdL8X3DPDOUnIVKfXc21g==,type:str]
+    sshKey: ENC[AES256_GCM,data:HROtrtye+nga1oydAvHCvRxNC3saKTR3IPQzPZU8mjPdDFJ1ZpdlZNYtiNjnSnL9YLtW4JLyeldHxprruxYUZhIqrqKWIsUsTSEMaUJHOk1Yuu370Hfad30pkViC9ep0I/F5ris/A+T9b+6okxZOP4PSzRMoThRvzd+rK9B+KNtoRsPWrTcb2Z+QgxmTOXc4L9Zo+/elYnHIhCxCg6WfoRpLmTKlfcy61rGQksGAFMYGeNL6xBZkywqzG3ig9zodG9fW0yyIDOAn+5VR/hAKF2ikqVkUCMUCnCqjbKwW8N/3TQMC/WNP4dr/hyY4vGBIAdDmexBF2vSbckErDJfLcwo29v+nNZCjjeLcJZvBVPyy1Mzvw27zta7AYsY5qtzdtVoY3mPE6KTkpKsga0En5V23OfJhFDxJtyOtcmxXiyE/yXibC4O1e3jkvsYYQxMffbiy+GnCt89EbTbAe9bvTv394VgnZi5siBtVHZbyql7wz9w9JnxyANGxNhzrIHUan86XAW3DMbZ/5pMJx5pw,iv:R8KTkrvDjLEsCFV9tLpU3E6ZOfU6rZYIIzCQq3A8rQM=,tag:PIon+u02oUztrZCGcLoy3g==,type:str]
 lilly:
     taskchampion-sync-client-id: ENC[AES256_GCM,data:I2ItuNDsVwofdMH9jiuY+/ubsUDb2bZd4qd9GHYVxjCVyl3h,iv:srMPMLsupFTJcmt3r7mED5sG4zNFoOj2D2ihRKzqLtM=,tag:qkF2e8oSwqJS5tZwoQ+5mA==,type:str]
 sops:
@@ -29,7 +29,7 @@ sops:
             MG9LVjAvcXdsU1VDb2xqaG51MkxoRVkKCWiZxvzhayB++Tnorc6PD3AARq3ARZ5L
             TUeTSuclmjrWVAgiCTH2uBnxMKLrGbrYaVKkLCPgfMO+GOqyJhRNLQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-20T14:09:42Z"
-    mac: ENC[AES256_GCM,data:7/zWAvGUCn+TPutK449auB0aIai7JFm+aVHagTC5bFf8PhtZMqP4nTSmWM5ReAnuNcdk7wpYI6aEG9UyaGglWJUqMSgJJBXqR+Hamfd4co6LyKyMDd5sunKx+T5c8sB0ELHzsIIQrzyXUFVRWA6TBE0t/qMlnUtJ7W5h5v0mJyg=,iv:cj45DJ2zC+Oe1jKnGR2ihpbsFdU2q4R7pP62Z5fZ+54=,tag:GnY/aIMGsOZ62zAgL+Z6nw==,type:str]
+    lastmodified: "2025-11-18T17:08:34Z"
+    mac: ENC[AES256_GCM,data:/8VsAtI8OeGvIrGw6K4RyqseWBSE6NL5KB2IvhtsYIA+/L/tG6L5CfUJ5akpgSenxZcubdA1ihW6nr7d8uUJAWpwc0zNppfHOX7bDrUUS17DJR3NjepNUc/DBwfohUhOEmC/bf7dEbvCdi6XgQsVvxm5HWS8hjgyiRy6adpaIJ4=,iv:3RnwlwyR3vw+KrEO3soaeiO6V2iNjpWaYxUbmdO9Ucw=,tag:48Kzd8NBRookX0wJGIqnGA==,type:str]
     unencrypted_suffix: _unencrypted
-    version: 3.10.2
+    version: 3.11.0
