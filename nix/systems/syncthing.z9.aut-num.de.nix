@@ -85,6 +85,13 @@
     serviceConfig."EnvironmentFile" = config.sops.templates."authentik-env".path;
   };
 
+  # configure backups
+  custom.backup = {
+    enable = true;
+    backupDirectories = [ "/srv/ceph-syncthing" ];
+    destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+  };
+
   sops = {
     secrets."aut-sys-ceph/syncthing/secret" = { };
     secrets."authentik-outpost-token" = { };

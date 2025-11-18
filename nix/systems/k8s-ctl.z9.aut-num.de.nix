@@ -57,6 +57,16 @@
     environmentFile = config.sops.secrets."k3s/secret.env".path;
   };
 
+  # configure backups
+  custom.backup = {
+    enable = true;
+    backupDirectories = [
+      "/var/lib/rancher/k3s"
+      "/srv/ceph-k8s"
+    ];
+    destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+  };
+
   sops.secrets."k3s/secret.env" = {
     restartUnits = [ "k3s.service" ];
     key = "k3s/secretEnv";
