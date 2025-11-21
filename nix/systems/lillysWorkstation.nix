@@ -64,6 +64,7 @@
     device = "nodev";
   };
   boot.loader.efi.canTouchEfiVariables = true;
+  nix.settings.system-features = [ "gccarch-znver3" ];
 
   virtualisation.docker.storageDriver = "zfs";
 

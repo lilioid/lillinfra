@@ -82,7 +82,7 @@
       mkPkgs =
         nixpkgs: system:
         import nixpkgs {
-          inherit system;
+          localSystem = nixpkgs.lib.systems.systemToAttrs system;
           overlays = [
             self.overlays.default
             cookied.overlays.default

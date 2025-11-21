@@ -86,9 +86,9 @@ in
   "k8s-worker3.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker3.z9.aut-num.de" flake.inputs.nixpkgs2505;
 
   # private systems
-  lillysLaptop = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2505;
-  lillysWorkLaptop = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs2505;
-  lillysWorkstation = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2505;
+  "lillysLaptop" = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2505;
+  "lillysWorkLaptop" = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs2505;
+  "lillysWorkstation" = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2505;
 
   # others
   "lan-server.intern" = mkSystem "x86_64-linux" "lan-server.intern" flake.inputs.nixpkgs2505;

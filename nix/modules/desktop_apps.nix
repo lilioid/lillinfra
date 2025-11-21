@@ -26,10 +26,10 @@ in {
       spotify
       discord
       vlc
-      logseq
       kdePackages.okular
       wezterm
       gimp
+      obsidian
     ];
 
     programs.firefox = {
