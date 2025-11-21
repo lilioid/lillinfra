@@ -37,6 +37,7 @@ in
   options = {
     hardware.sane.extraConfig = mkOption {
       type = types.attrsOf types.lines;
+      description = "Extra lines to add to SANE config files";
       default = { };
       example = {
         "some-backend" = "# some lines to add to its .conf";

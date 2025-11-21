@@ -88,6 +88,11 @@ in
   # private systems
   "lillysLaptop" = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2505;
   "lillysWorkLaptop" = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs2505;
+  # "lillysWorkstation" = mkSystem {
+  #   system = "x86_64-linux";
+  #   gcc.arch = "znver3";
+  #   gcc.tune = "znver3";
+  # } "lillysWorkstation" flake.inputs.nixpkgs2505;
   "lillysWorkstation" = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2505;
 
   # others
