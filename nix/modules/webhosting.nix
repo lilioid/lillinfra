@@ -13,7 +13,7 @@ let
         echo "additional hosts: ${lib.concatStringsSep " " (lib.map (i: "https://${i}/") userCfg.domains)}"
         echo "ip addresses: $(ip --json address show scope global | jq -r '[.[].addr_info.[].local] | map(select(. != null)) | join(", ")')"
         echo "automatic index file name: ${if userCfg.nginxIndex == null then "*disabled*" else userCfg.nginxIndex}"
-        echo "404 page file: $HOME/www/404.html"
+        echo "404 page file: /home/${userCfg.name}/www/404.html"
 
         echo ""
         echo "----- Live DNS Information about your domains -----"
@@ -26,12 +26,12 @@ let
 
       function fix {
         echo "ensuring the www directory exists"
-        mkdir -p "$HOME/www"
+        mkdir -p "/home/${userCfg.name}/www"
 
         echo "ensuring the www directory and its files have correct permissions"
-        chmod -R u=rwX "$HOME/www"
-        setfacl --modify "u:${config.services.nginx.user}:x" "$HOME"
-        setfacl -R --modify "default:u:${config.services.nginx.user}:rX,u:${config.services.nginx.user}:rX" "$HOME/www"
+        chmod -R u=rwX "/home/${userCfg.name}/www"
+        setfacl --modify "u:${config.services.nginx.user}:x" "/home/${userCfg.name}"
+        setfacl -R --modify "default:u:${config.services.nginx.user}:rX,u:${config.services.nginx.user}:rX" "/home/${userCfg.name}/www"
       }
 
       case ''${1:--help} in
@@ -154,6 +154,15 @@ in
       80
       443
     ];
+
+    # add a custom activation snippet that fixes users home directory permissions on startup
+    system.activationScripts."webhosting-permissions" = {
+      deps = [ "users" "usrbinenv" "specialfs" ];
+      text = lib.concatStringsSep "\n"
+        (lib.mapAttrsToList
+          (name: config: "${lib.getExe config.ctlScript} fix   # ${name}")
+          cfg.users);
+    };
 
     # relax some security settings that would prevent nginx from reading website directories
     systemd.services.nginx.serviceConfig.ProtectHome = "read-only";
