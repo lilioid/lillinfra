@@ -143,7 +143,7 @@ in
           server = "https://ntfy.lly.sh";
           topic = "backups";
           access_token = "{credential file ${config.sops.secrets."${cfg.secretNamespace}/ntfyToken".path}}";
-          states = [ "start" "finish" "fail" ];
+          states = [ "fail" ];
           start = {
             title = "Backup started";
             message = "${config.networking.fqdnOrHostName} has started its scheduled backup";
