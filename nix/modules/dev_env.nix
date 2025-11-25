@@ -66,6 +66,7 @@ in
       tig
       go
       nix-output-monitor
+      distrobox
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       jetbrains.webstorm
