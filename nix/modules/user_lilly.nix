@@ -5,7 +5,8 @@
 , ...
 }:
 let
-  hasDesktop = config.custom.gnomeDesktop.enable;
+  hasGnome = config.custom.gnomeDesktop.enable;
+  hasNiri = config.custom.niri.enable;
   hasDevEnv = config.custom.devEnv.enable;
 in
 {
@@ -42,13 +43,13 @@ in
       home.sessionSearchVariables = lib.mkIf hasDevEnv {
         PATH = [ "$HOME/.krew/bin" ];
       };
-      programs.wezterm.enable = hasDesktop;
-      programs.wezterm.extraConfig = lib.mkIf hasDesktop (
+      programs.wezterm.enable = hasGnome;
+      programs.wezterm.extraConfig = lib.mkIf hasGnome (
         builtins.readFile ../dotfiles/lilly/wezterm.lua
       );
-      xdg.mimeApps = lib.mkIf hasDesktop (import ../dotfiles/lilly/mimeapps.nix);
+      xdg.mimeApps = lib.mkIf hasGnome (import ../dotfiles/lilly/mimeapps.nix);
       xdg.configFile = {
-        "mimeapps.list" = lib.mkIf hasDesktop { force = true; };
+        "mimeapps.list" = lib.mkIf hasGnome { force = true; };
         "nixpkgs/config.nix".text = ''
           {
             allowUnfree = true;
@@ -57,6 +58,10 @@ in
         "jj/config.toml" = {
           enable = config.home-manager.users.lilly.programs.jujutsu.enable;
           source = ../dotfiles/lilly/jj/config.toml;
+        };
+        "niri/config.kdl" = {
+          enable = hasNiri;
+          source = ../dotfiles/lilly/niri.kdl;
         };
       };
       home.file = {
@@ -81,6 +86,24 @@ in
       };
       programs.taskwarrior = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs lib; }).taskwarrior;
       services.taskwarrior-sync = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs lib; }).taskwarrior-sync;
+      programs.rofi = lib.mkIf hasNiri {
+        enable = true;
+        modes = [ "drun" "emoji" "calc" "recursivebrowser" ];
+        terminal = lib.getExe pkgs.kitty;
+        plugins = with pkgs; [ rofi-calc rofi-emoji ];
+      };
+      services.swaync = {
+        enable = hasNiri;
+      };
+      services.ssh-agent.enable = true;
+      home.pointerCursor = {
+        enable = true;
+        # package = pkgs.kdePackages.breeze;
+        # name = "breeze_cursors";
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Classic";
+        size = 24;
+      };
     };
 
     sops = {

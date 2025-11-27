@@ -8,6 +8,7 @@ email = "li@lly.sh"
 init = [ "git", "init", "--colocate" ]
 clone = [ "git", "clone", "--colocate" ]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+rebase-all = ["rebase", "-s", "all:roots(trunk()..mutable())", "-d", "trunk()"]
 
 [signing]
 behavior = "own"

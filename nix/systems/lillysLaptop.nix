@@ -98,6 +98,7 @@
   # settings defined by my own custom modules
   custom = {
     gnomeDesktop.enable = true;
+    niri.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
     backup = {

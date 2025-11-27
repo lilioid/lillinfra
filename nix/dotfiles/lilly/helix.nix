@@ -14,6 +14,7 @@
       marksman
       python312Packages.python-lsp-server
       python312Packages.python-lsp-ruff
+      beam27Packages.elixir-ls
       rust-analyzer
     ]
   );

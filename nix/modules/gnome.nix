@@ -28,9 +28,9 @@ in
   config = lib.mkIf cfg.enable {
     custom.desktopApps.enableCommon = true;
   
-    environment.variables = {
-      "XCURSOR_THEME" = "Adwaita";
-    };
+    # environment.variables = {
+    #   "XCURSOR_THEME" = "Adwaita";
+    # };
 
     services.xserver = {
       enable = true;
