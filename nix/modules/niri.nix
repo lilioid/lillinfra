@@ -9,6 +9,26 @@
   isUserEnabled = config.custom.user.enable;
   niriActions = homeConfig.lib.niri.actions;
 
+  # define color
+  colors = {
+    pinkMain = "#F5ABB9";
+    blueComp = "#abdef5";
+    greenComp = "#abf5c2";
+    purpleComp = "#abb9f5";
+    black = "#000000";
+
+    pinkDark1 = "#d2929e";
+    pinkDark2 = "#af7983";
+    pinkDark3 = "#8e616a";
+    pinkDark4 = "#6e4b51";
+    pinkDark5 = "#50353a";
+    pinkLight1 = "#f7b4c1";
+    pinkLight2 = "#f9bec8";
+    pinkLight3 = "#fac7d0";
+    pinkLight4 = "#fbd0d8";
+    pinkLight5 = "#fcdadf";
+  };
+
   # helper scripts which are used in multiple locations
   scripts.lock-niri = pkgs.writeShellScriptBin "lock-niri.sh" ''
      exec swaylock \
@@ -33,11 +53,14 @@ in {
     #
     # general system configuration
     # 
+    custom.desktopApps.enableCommon = true;
     niri-flake.cache.enable = lib.mkForce false;
     programs.niri.enable = true;
     programs.niri.package = pkgs.niri;
     qt.style = "adwaita";
-
+    networking.networkmanager.enable = true;
+    services.upower.enable = true;
+    
     xdg.portal = {
       enable = true;
       wlr.enable = true;
@@ -59,6 +82,12 @@ in {
       pulse.enable = true;
     };
 
+    services.displayManager.enable = true;
+    services.xserver = {
+      displayManager.gdm.enable = true;
+    };
+
+
     environment.systemPackages = with pkgs; [
       xwayland-satellite
       swaylock
@@ -69,6 +98,8 @@ in {
     # user-specific settings, rendered via home-manager
     #
     home-manager.users.lilly = lib.mkIf isUserEnabled {
+      services.ssh-agent.enable = true;
+
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
       programs.niri.settings = {
         input = {
@@ -113,7 +144,7 @@ in {
           gaps = 6;
           center-focused-column = "never";
           always-center-single-column = true;
-          background-color = "#000000";
+          background-color = colors.black;
           preset-column-widths = [
             { proportion = 1.0 / 3.0; }
             { proportion = 0.5; }
@@ -130,8 +161,8 @@ in {
           default-column-width = { proportion = 0.5; };
           focus-ring = {
             width = 2;
-            active = { color ="#f5abb9"; };
-            inactive = { color = "#bfadf5"; };
+            active = { color = colors.pinkMain; };
+            inactive = { color = colors.pinkDark3; };
           };
           struts = rec {
             left = 24;
@@ -165,6 +196,13 @@ in {
             block-out-from = "screen-capture";
           }
           {
+            # resize floating windows to be smaller
+            matches = [{ is-floating = true; }];
+            default-column-width = { fixed = 800; };
+            default-window-height = { fixed = 500; };
+          }
+          {
+            # default matcher that styles all windows
             geometry-corner-radius = rec {
               top-left = 4.0;
               top-right = top-left;
@@ -190,20 +228,28 @@ in {
           "Mod+L" = {
             hotkey-overlay.title = "Lock the Screen";
             repeat = false;
-            action = niriActions.spawn [ "${scripts.lock-niri}" ];
+            action = niriActions.spawn [ "${lib.getExe scripts.lock-niri}" ];
           };
-          "Mod+T" = {
+          "Mod+Dead_Circumflex" = {
             hotkey-overlay.title = "Toggle Notification-Center";
-            cooldown-ms = 2 * 1000;
             action = niriActions.spawn [ "swaync-client" "--toggle-panel" ];
+          };
+          "Mod+Shift+Dead_Circumflex" = {
+            hotkey-overlay.title = "Toggle DnD";
+            action = niriActions.spawn [ "swaync-client" "--togle-dnd" ];
           };
           "Mod+O" = {
             hotkey-overlay.title = "Toggle Overview";
             action = niriActions.toggle-overview;
           };
-          "Alt+F4" = {
+          "Mod+Q" = {
             repeat = false;
             action = niriActions.close-window;
+          };
+          "Mod+E" = {
+            hotkey-overlay.title = "Open Emoji Picker";
+            repeat = false;
+            action = niriActions.spawn [ "rofi" "-show" "emoji" ];
           };
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
@@ -270,6 +316,11 @@ in {
           "Mod+Shift+8".action.move-column-to-workspace = 8;
           "Mod+Shift+9".action.move-column-to-workspace = 9;
 
+          "Ctrl+Shift+Left".action = niriActions.set-column-width "-5%";
+          "Ctrl+Shift+Down".action = niriActions.set-window-height "+5%";
+          "Ctrl+Shift+Up".action = niriActions.set-window-height "-5%";
+          "Ctrl+Shift+Right".action = niriActions.set-column-width "+5%";
+
           "Mod+Comma".action = niriActions.consume-or-expel-window-left;
           "Mod+Period".action = niriActions.consume-or-expel-window-right;
 
@@ -278,14 +329,91 @@ in {
           "Mod+F".action = niriActions.maximize-column;
           "Mod+Shift+F".action = niriActions.fullscreen-window;
           "Mod+C".action = niriActions.center-column;
-          "Mod+Minus".action = niriActions.set-column-width "-10%";
-          "Mod+Plus".action = niriActions.set-column-width "+10%";
-          "Mod+Space".action = niriActions.toggle-window-floating;
-
-          # "Print".action = niriActions.screenshot { show-pointer = false; };
+          "Mod+Shift+Space".action = niriActions.toggle-window-floating;
           "Print".action.screenshot = {};
           "Ctrl+Alt+Delete".action = niriActions.quit;
         };
+      };
+
+      # application picker
+      programs.rofi = {
+        enable = true;
+        modes = [ "drun" "emoji" "calc" "recursivebrowser" ];
+        terminal = lib.getExe pkgs.kitty;
+        plugins = with pkgs; [ rofi-calc rofi-emoji ];
+      };
+
+      # notification center
+      services.swaync = {
+        enable = true;
+      };
+
+      # status bar
+      programs.waybar = {
+        enable = true;
+        systemd.target = "niri.service";
+        settings = {
+          topBar = {
+            layer = "top";
+            position = "top";
+            modules-left = [ "niri/workspaces" "niri/window" ];
+            modules-center = [ "clock" ];
+            modules-right = [ "network" "wireplumber" "power-profiles-daemon" "tray" "group/group-power" ];
+            clock = {
+              timezone = "Europe/Berlin";
+              tooltip-format = "<tt>{calendar}</tt>";
+              calendar = {
+                mode = "month";
+                mode-mon-col = 3;
+                weeks-pos = "left";
+                on-scroll = 1;
+                format = {
+                  months = "<span color='#ffead3'><b>{}</b></span>";
+                  days = "<span color='#ecc6d9'><b>{}</b></span>";
+                  weeks  = "<span color='#99ffdd'><b>W{}</b></span>";
+                  weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+                  today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+                };
+              };
+              actions = {
+                on-click-right = "shift_reset";
+                on-scroll-up = "shift_up";
+                on-scroll-down = "shift_down";
+              };
+            };
+            tray = {};
+            "group/group-power" = {
+              orientation = "inherit";
+              drawer = {
+                transition-duration = 500;
+                children-class = "not-power";
+                transition-left-to-right = false;
+              };
+              modules = [ "custom/poweroff" "custom/lock" "custom/quit" "custom/reboot" ];
+            };
+            "custom/poweroff" = {
+              format = "";
+              tooltip-format = "Poweroff";
+              on-click = "systemctl poweroff";
+            };
+            "custom/lock" = {
+              format = "󰍁";
+              tooltip-format = "Lock";
+              on-click = "swaylock --show-keyboard-layout --indicator-caps-lock --image=~/Sync/Wallpapers/ccc-camp.jpg";
+            };
+            "custom/quit" = {
+              format = "󰗼";
+              tooltip-format = "Exit Niri";
+              on-click = "niri msg action quit";
+            };
+            "custom/reboot" = {
+              format = "󰜉";
+              tooltip-format = "Reboot";
+              on-click = "systemctl reboot";
+            };
+          };
+        };
+        style = null;
       };
 
       # configure a background image daemon

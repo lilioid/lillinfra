@@ -55,6 +55,7 @@
     }
   ];
   hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
+  hardware.bluetooth.enable = true;
   nixpkgs.hostPlatform = "x86_64-linux";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
@@ -97,7 +98,7 @@
 
   # settings defined by my own custom modules
   custom = {
-    gnomeDesktop.enable = true;
+    #gnomeDesktop.enable = true;
     niri.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
