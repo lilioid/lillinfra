@@ -89,6 +89,22 @@ output "eDP-1" {
     position x=1280 y=0
 }
 
+// TODO: Use the niri home-manager flake to make this a configuration specific to lillysWorkstation
+output "DP-3" {
+    mode "2560x1440@239.970"
+    position x=0 y=0
+}
+
+output "DP-2" {
+    mode "1920x1080@60.000"
+    position x=2560 y=0
+}
+
+output "DP-1" {
+    mode "3840x2160@59.997"
+    position x=-2560 y=0
+}
+
 cursor {
     xcursor-theme "Bibata-Modern-Classic"
     xcursor-size 24

@@ -20,7 +20,6 @@ in {
   # implementation
   config = lib.mkIf cfg.enable {
     programs.niri.enable = true;
-    programs.waybar.enable = true;
     qt.style = "adwaita";
 
     xdg.portal = {
