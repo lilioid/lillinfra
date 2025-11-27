@@ -30,6 +30,7 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
+      xwayland-satellite
       swaylock
       swaynotificationcenter
     ];
