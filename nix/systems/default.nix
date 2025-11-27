@@ -21,6 +21,7 @@ let
         flake.inputs.sops-nix.nixosModules.default
         flake.inputs.lix.nixosModules.default
         flake.inputs.cookied.nixosModules.default
+        flake.inputs.niri.nixosModules.niri
       ] ++ customModules ++ [
 
         systemModule

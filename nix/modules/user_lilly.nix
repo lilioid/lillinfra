@@ -59,10 +59,6 @@ in
           enable = config.home-manager.users.lilly.programs.jujutsu.enable;
           source = ../dotfiles/lilly/jj/config.toml;
         };
-        "niri/config.kdl" = {
-          enable = hasNiri;
-          source = ../dotfiles/lilly/niri.kdl;
-        };
       };
       home.file = {
         ".ssh/config".source = ../dotfiles/lilly/ssh/config;
