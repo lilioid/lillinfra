@@ -20,7 +20,7 @@ spec:
             claimName: homepage-state
       containers:
         - name: homepage
-          image: git.lly.sh/lilly/homepage
+          image: git.hanse.de/lilly/homepage
           args: [ "--ipv6", "[::]:8000" ]
           envFrom:
             - secretRef:
