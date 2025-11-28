@@ -45,6 +45,11 @@ in {
   options = with lib.options; {
     custom.niri = {
       enable = mkEnableOption "a configured niri desktop environment";
+      configOverride = mkOption {
+        description = "Niri configuration overrides";
+        default = {};
+        type = lib.types.attrsOf lib.types.attrs;
+      };
     };
   };
 
@@ -125,15 +130,7 @@ in {
           trackpoint = {};
         };
 
-        outputs = {
-          "eDP-1" = {
-            mode.height = 1800;
-            mode.width = 2880;
-            mode.refresh = 90.001;
-            scale = 1.5;
-            focus-at-startup = true;
-          };
-        };
+        outputs = {};  # override this via the configOverride option
 
         cursor = {
           theme = homeConfig.home.pointerCursor.name;
@@ -148,21 +145,18 @@ in {
           preset-column-widths = [
             { proportion = 1.0 / 3.0; }
             { proportion = 0.5; }
-            { proportion = 1.0 / 3.0 * 2.0; }
+            { proportion = 2.0 / 3.0; }
           ];
           preset-window-heights = [
             { proportion = 0.2; }
-            { proportion = 1.0 / 3.0; }
             { proportion = 0.5; }
-            { proportion = 1.0 / 3.0 * 2.0; }
             { proportion = 0.8; }
-            { proportion = 1.0; }
           ];
           default-column-width = { proportion = 0.5; };
           focus-ring = {
-            width = 2;
+            width = 3;
             active = { color = colors.pinkMain; };
-            inactive = { color = colors.pinkDark3; };
+            inactive = { color = colors.pinkDark5; };
           };
           struts = rec {
             left = 24;
@@ -186,9 +180,13 @@ in {
           zoom = 0.8;
         };
 
+        workspaces = {
+          "comm" = {};
+        };
+
         window-rules = [
           {
-            matches = [{ app-id="firefox$"; title="^Picture-in-Picture$"; }];
+            matches = [{ app-id="^firefox$"; title="^Picture-in-Picture$"; }];
             open-floating = true;
           }
           {
@@ -196,10 +194,27 @@ in {
             block-out-from = "screen-capture";
           }
           {
-            # resize floating windows to be smaller
-            matches = [{ is-floating = true; }];
-            default-column-width = { fixed = 800; };
-            default-window-height = { fixed = 500; };
+            matches = [{ app-id="^thunderbid$"; title = "^\\d+ Reminder(s?)$"; }];
+            open-floating = true;
+            open-focused = true;
+            open-on-workspace = null;
+          }
+          {
+            # open some windows with 1/3 proportion by default because they dont scale well
+            matches = [{ app-id="^firefox$"; is-floating=false; }];
+            default-column-width = { proportion = 2.0 / 3.0; };
+          }
+          {
+            matches = [{ app-id="^thunderbid$"; }];
+            open-maximized = true;
+            open-on-workspace = "comm";
+          }
+          {
+            # open certain apps on comms workspace
+            matches = [
+              { app-id="^thunderbird$"; }
+            ];
+            open-on-workspace = "comms";
           }
           {
             # default matcher that styles all windows
@@ -238,7 +253,7 @@ in {
             hotkey-overlay.title = "Toggle DnD";
             action = niriActions.spawn [ "swaync-client" "--togle-dnd" ];
           };
-          "Mod+O" = {
+          "Mod+Escape" = {
             hotkey-overlay.title = "Toggle Overview";
             action = niriActions.toggle-overview;
           };
@@ -289,12 +304,12 @@ in {
           "Mod+Shift+Page_Up".action = niriActions.move-column-to-workspace-up;
 
           "Mod+WheelScrollDown" = {
-            cooldown-ms = 150;
-            action = niriActions.focus-workspace-down;
+            cooldown-ms = 100;
+            action = niriActions.focus-column-right;
           };
           "Mod+WheelScrollUp" = {
-            cooldown-ms = 150;
-            action = niriActions.focus-workspace-up;
+            cooldown-ms = 100;
+            action = niriActions.focus-column-left;
           };
 
           "Mod+1".action = niriActions.focus-workspace 1;
@@ -328,12 +343,12 @@ in {
           "Mod+Shift+R".action = niriActions.switch-preset-window-height;
           "Mod+F".action = niriActions.maximize-column;
           "Mod+Shift+F".action = niriActions.fullscreen-window;
-          "Mod+C".action = niriActions.center-column;
+          "Mod+C".action = niriActions.center-visible-columns;
           "Mod+Shift+Space".action = niriActions.toggle-window-floating;
           "Print".action.screenshot = {};
           "Ctrl+Alt+Delete".action = niriActions.quit;
         };
-      };
+      } // cfg.configOverride;
 
       # application picker
       programs.rofi = {

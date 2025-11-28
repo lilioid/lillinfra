@@ -99,12 +99,42 @@
   # options defined by other custom modules
   custom = {
     gnomeDesktop.enable = true;
-    niri.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
     backup = {
       enable = true;
       destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+    };
+
+    niri = {
+      enable = true;
+      configOverride = {
+        outputs = {
+          "Dell Inc. AW2725DF 6B87ZZ3" = {
+            mode.height = 1440;
+            mode.width = 2560;
+            mode.refresh = 239.970;
+            focus-at-startup = true;
+            position.x = 0;
+            position.y = 0;
+          };
+          "LG Electronics 2D FHD LG TV 0x01010101" = {
+            mode.height = 1080;
+            mode.width = 1920;
+            mode.refresh = 60.0;
+            position.x = 2560;
+            position.y = 0;
+          };
+          "LG Electronics LG Ultra HD 0x00084B5E" = {
+            mode.height = 2160;
+            mode.width = 3840;
+            mode.refresh = 59.997;
+            scale = 1.5;
+            position.x = -2560;
+            position.y = 0;
+          };
+        };
+      };
     };
 
     wg.profiles = {

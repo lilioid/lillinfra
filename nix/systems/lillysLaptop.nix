@@ -99,12 +99,24 @@
   # settings defined by my own custom modules
   custom = {
     #gnomeDesktop.enable = true;
-    niri.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
     backup = {
       enable = true;
       destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+    };
+
+    niri = {
+      enable = true;
+      configOverride = {
+        outputs."eDP-1" = {
+          mode.height = 1800;
+          mode.width = 2880;
+          mode.refresh = 90.001;
+          scale = 1.5;
+          focus-at-startup = true;
+        };
+      };
     };
 
     wg.profiles = {
