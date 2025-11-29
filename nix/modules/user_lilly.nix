@@ -7,6 +7,7 @@
 let
   hasGnome = config.custom.gnomeDesktop.enable;
   hasNiri = config.custom.niri.enable;
+  hasDesktop = hasNiri || hasGnome;
   hasDevEnv = config.custom.devEnv.enable;
 in
 {
@@ -47,9 +48,9 @@ in
       programs.wezterm.extraConfig = lib.mkIf hasGnome (
         builtins.readFile ../dotfiles/lilly/wezterm.lua
       );
-      xdg.mimeApps = lib.mkIf hasGnome (import ../dotfiles/lilly/mimeapps.nix);
+      xdg.mimeApps = lib.mkIf hasDesktop (import ../dotfiles/lilly/mimeapps.nix);
       xdg.configFile = {
-        "mimeapps.list" = lib.mkIf hasGnome { force = true; };
+        "mimeapps.list" = lib.mkIf hasDesktop{ force = true; };
         "nixpkgs/config.nix".text = ''
           {
             allowUnfree = true;

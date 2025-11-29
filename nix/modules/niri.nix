@@ -16,6 +16,7 @@
     greenComp = "#abf5c2";
     purpleComp = "#abb9f5";
     black = "#000000";
+    white = "#FFFFFF";
 
     pinkDark1 = "#d2929e";
     pinkDark2 = "#af7983";
@@ -28,14 +29,6 @@
     pinkLight4 = "#fbd0d8";
     pinkLight5 = "#fcdadf";
   };
-
-  # helper scripts which are used in multiple locations
-  scripts.lock-niri = pkgs.writeShellScriptBin "lock-niri.sh" ''
-     exec swaylock \
-       --show-keyboard-layout \
-       --indicator-caps-lock \
-       --image=~/Sync/Wallpapers/ccc-camp.jpg;
-  '';
 in {
   imports = [
     ./desktop_apps.nix
@@ -64,7 +57,7 @@ in {
     programs.niri.package = pkgs.niri;
     qt.style = "adwaita";
     networking.networkmanager.enable = true;
-    services.upower.enable = true;
+    services.power-profiles-daemon.enable = true;
     
     xdg.portal = {
       enable = true;
@@ -74,9 +67,10 @@ in {
     };
 
     fonts = {
-      packages = with pkgs; [ inter nerd-fonts.jetbrains-mono ];
+      packages = with pkgs; [ inter nerd-fonts.jetbrains-mono nerd-fonts.symbols-only ];
       fontconfig.defaultFonts = {
-        sansSerif = [ "Inter" ];
+        sansSerif = [ "Symbols Nerd Font" "Inter" ];
+        monospace = [ "JetBrainsMono NF" ];
       };
     };
     
@@ -104,6 +98,7 @@ in {
     #
     home-manager.users.lilly = lib.mkIf isUserEnabled {
       services.ssh-agent.enable = true;
+      services.network-manager-applet.enable = true;
 
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
       programs.niri.settings = {
@@ -154,7 +149,7 @@ in {
           ];
           default-column-width = { proportion = 0.5; };
           focus-ring = {
-            width = 3;
+            width = 2;
             active = { color = colors.pinkMain; };
             inactive = { color = colors.pinkDark5; };
           };
@@ -243,7 +238,7 @@ in {
           "Mod+L" = {
             hotkey-overlay.title = "Lock the Screen";
             repeat = false;
-            action = niriActions.spawn [ "${lib.getExe scripts.lock-niri}" ];
+            action = niriActions.spawn [ "swaylock" ];
           };
           "Mod+Dead_Circumflex" = {
             hotkey-overlay.title = "Toggle Notification-Center";
@@ -371,23 +366,40 @@ in {
           topBar = {
             layer = "top";
             position = "top";
-            modules-left = [ "niri/workspaces" "niri/window" ];
+            modules-left = [
+              "niri/workspaces"
+              "niri/window"
+            ];
             modules-center = [ "clock" ];
-            modules-right = [ "network" "wireplumber" "power-profiles-daemon" "tray" "group/group-power" ];
+            modules-right = [
+              "custom/arrow5"
+              "network"
+              "custom/arrow4"
+              "wireplumber#sink"
+              "wireplumber#source"
+              "custom/arrow3"
+              "power-profiles-daemon"
+              "custom/arrow2"
+              "tray"
+              "custom/arrow1"
+              "battery"
+              "group/group-power"
+            ];
             clock = {
+              format = " {:%H:%M}";
               timezone = "Europe/Berlin";
               tooltip-format = "<tt>{calendar}</tt>";
               calendar = {
-                mode = "month";
+                mode = "year";
                 mode-mon-col = 3;
                 weeks-pos = "left";
                 on-scroll = 1;
                 format = {
-                  months = "<span color='#ffead3'><b>{}</b></span>";
-                  days = "<span color='#ecc6d9'><b>{}</b></span>";
-                  weeks  = "<span color='#99ffdd'><b>W{}</b></span>";
-                  weekdays = "<span color='#ffcc66'><b>{}</b></span>";
-                  today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+                  months = "<span color='${colors.white}'><b>{}</b></span>";
+                  days = "<span color='${colors.pinkDark1}'><b>{}</b></span>";
+                  weeks  = "<span color='${colors.blueComp}'><b>W{}</b></span>";
+                  weekdays = "<span color='${colors.greenComp}'><b>{}</b></span>";
+                  today = "<span color='${colors.pinkLight4}'><b><u>{}</u></b></span>";
                 };
               };
               actions = {
@@ -396,25 +408,72 @@ in {
                 on-scroll-down = "shift_down";
               };
             };
-            tray = {};
+            "network" = {
+              format-ethernet = "󰈀 {ifname}";
+              format-wifi = " {essid}";
+              format-disconnected = "";
+              tooltip-format = "{ipaddr}/{cidr}";
+              on-click-right = "nm-connection-editor";
+            };
+            "wireplumber#sink" = {
+              format = "{icon} {volume}%";
+              format-muted = "󰖁";
+              format-icons = [ "󰕿" "󰖀" "󰕾" ];
+              node-type = "Audio/Sink";
+              on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            };
+            "wireplumber#source" = {
+              format = "{icon} {volume}%";
+              format-muted = "";
+              format-icons = [ "󰍬" ];
+              node-type = "Audio/Source";
+              on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+            };
+            power-profiles-daemon = {
+              format = "{icon}";
+              format-icons = {
+                default = "󰓅";
+                performance = "󰓅";
+                balanced = "󰾅";
+                power-saver = "󰾆";
+              };
+            };
+            tray = {
+              icon-size = 20;
+              spacing = 10;
+            };
+            battery = {
+              format = "{icon} {capacity}%";
+              format-charging = "{icon}󱐋 {capacity}%";
+              format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+            };
             "group/group-power" = {
               orientation = "inherit";
               drawer = {
-                transition-duration = 500;
-                children-class = "not-power";
+                children-class = "group-power";
                 transition-left-to-right = false;
               };
-              modules = [ "custom/poweroff" "custom/lock" "custom/quit" "custom/reboot" ];
+              modules = [
+                "custom/power-menu"
+                "custom/lock"
+                "custom/quit"
+                "custom/reboot"
+                "custom/poweroff"
+              ];
+            };
+            "custom/power-menu" = {
+              format = "󰐥";
+              tooltip-format = "Power Menu";
             };
             "custom/poweroff" = {
-              format = "";
+              format = "󰚥";
               tooltip-format = "Poweroff";
               on-click = "systemctl poweroff";
             };
             "custom/lock" = {
               format = "󰍁";
               tooltip-format = "Lock";
-              on-click = "swaylock --show-keyboard-layout --indicator-caps-lock --image=~/Sync/Wallpapers/ccc-camp.jpg";
+              on-click = "swaylock";
             };
             "custom/quit" = {
               format = "󰗼";
@@ -426,10 +485,192 @@ in {
               tooltip-format = "Reboot";
               on-click = "systemctl reboot";
             };
+            "custom/arrow1" = {
+              format = "";
+              tooltip = false;
+            };
+            "custom/arrow2" = {
+              format = "";
+              tooltip = false;
+            };
+            "custom/arrow3" = {
+              format = "";
+              tooltip = false;
+            };
+            "custom/arrow4" = {
+              format = "";
+              tooltip = false;
+            };
+            "custom/arrow5" = {
+              format = "";
+              tooltip = false;
+            };
           };
         };
-        style = null;
+        style = ''
+          * {
+          	border: none;
+          	border-radius: 0;
+          	font-family: sans-serif;
+          	font-size: 11pt;
+          	color: white;
+          }
+
+          window#waybar {
+            background: alpha(${colors.pinkDark4}, 0.5);
+          	/*background: rgba(43, 48, 59, 0.8);*/
+          	/*background: alpha(#abdef5, 0.8);*/
+          	border-bottom: white 1px solid;
+          }
+
+          window#waybar > .horizontal {
+          	margin-bottom: 1px;
+          	margin-left: 12px;
+          }
+
+          tooltip {
+          	background: rgb(43, 48, 59);
+          	border: 1px solid rgb(100, 114, 125);
+          }
+          tooltip label {
+          	color: white;
+          }
+
+          #workspaces button:hover {
+            background: rgba(0, 0, 0, 0.2);
+          }
+
+          #workspaces button.active {
+              background: inherit;
+              box-shadow: inset 0 -3px #ffbcff;
+          }
+
+          #workspaces button.focused {
+              background-color: #64727D;
+              box-shadow: inset 0 -3px #ffffff;
+          }
+
+          #workspaces button.urgent {
+              /* background-color: #eb4d4b; */
+              box-shadow: inset 0 -3px #eb4d4b, inset -3px 0px #eb4d4b, inset 0 3px #eb4d4b, inset 3px 0px #eb4d4b;
+          }
+
+
+          #clock {
+          	background-color: ${colors.pinkDark1};
+          	border-radius: 6px;
+          	padding: 0px 10px;
+          	margin: 4px 0px;
+          }
+
+          #custom-arrow5 {
+            font-size: 24pt;
+            color: ${colors.pinkDark5};
+            background: transparent;
+          }
+          #network {
+            padding: 0 16px;
+            background: ${colors.pinkDark5};
+          }
+
+          #custom-arrow4 {
+            font-size: 24pt;
+            color: ${colors.pinkDark4};
+            background: ${colors.pinkDark5};
+          }
+          #wireplumber {
+            padding: 0 16px;
+            background: ${colors.pinkDark4};
+          }
+
+          #custom-arrow3 {
+            font-size: 24pt;
+            color: ${colors.pinkDark3};
+            background: ${colors.pinkDark4};
+          }
+          #power-profiles-daemon {
+            padding-left: 16px;
+            padding-right: 16px;
+            color: white;
+            background: ${colors.pinkDark3};
+          }
+          label#power-profiles-daemon {
+            font-size: 14pt;
+          }
+          label#power-profiles-daemon.performance {
+            color: lighter(red);
+          }
+          label#power-profiles-daemon.balanced {
+            color: inherit;
+          }
+          label#power-profiles-daemon.power-saver {
+            color: ${colors.greenComp};
+          }
+
+          #custom-arrow2 {
+            font-size: 24pt;
+            color: ${colors.pinkDark2};
+            background: ${colors.pinkDark3};
+          }
+          #tray {
+            padding: 0 16px;
+            background: ${colors.pinkDark2};
+          }
+          #tray > .passive {
+            -gtk-icon-effect: dim;
+          }
+          #tray > .needs-attention {
+            -gtk-icon-effect: highlight;
+          }
+
+          #custom-arrow1 {
+            font-size: 24pt;
+            color: ${colors.pinkDark1};
+            background: ${colors.pinkDark2};
+          }
+          #battery {
+            padding: 0 16px;
+            background: ${colors.pinkDark1};
+          }
+          #group-power {
+            font-size: 12pt;
+            background: ${colors.pinkDark1};
+          }
+
+          #custom-power-menu {
+            padding-left: 6px;
+            padding-right: 12px;
+          }
+          
+          #custom-lock,
+          #custom-quit,
+          #custom-reboot,
+          #custom-poweroff {
+            font-size: 12pt;
+            padding-left: 6px;
+            padding-right: 6px;
+            background: ${colors.pinkDark3};
+            margin-top: 2px;
+            margin-bottom: 2px;
+            border-top: 2px solid ${colors.pinkDark3};
+            border-bottom: 2px solid ${colors.pinkDark3};
+          }
+          #custom-lock {
+            border-left: 2px solid ${colors.pinkDark3};
+          }
+          #custom-poweroff {
+            border-right: 2px solid ${colors.pinkDark3};
+          }
+        '';
       };
+
+      # lock screen
+      xdg.configFile."swaylock/config".text = ''
+        show-keyboard-layout
+        indicator-caps-lock
+        font=Inter
+        image=~/Sync/Wallpapers/ccc-camp.jpg
+      '';
 
       # configure a background image daemon
       systemd.user.services."swaybg" = {

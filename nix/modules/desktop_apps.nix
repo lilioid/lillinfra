@@ -31,6 +31,7 @@ in {
       kitty
       gimp
       obsidian
+      gnome-font-viewer
     ];
 
     programs.firefox = {
