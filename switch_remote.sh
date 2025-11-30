@@ -7,9 +7,9 @@ SYSTEM=${3:-$2}
 
 set -x
 exec nixos-rebuild "$ACTION" \
-  --fast \
+  --no-reexec \
   --use-substitutes \
-  --use-remote-sudo \
+  --sudo \
   --target-host "$CONNECT" \
   --flake ".#$SYSTEM"
 
