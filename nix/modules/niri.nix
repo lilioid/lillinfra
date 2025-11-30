@@ -103,6 +103,10 @@ in {
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
       programs.niri.settings = {
         input = {
+          focus-follows-mouse = {
+            enable = true;
+            max-scroll-amount = "5%";
+          };
           warp-mouse-to-focus.enable = true;
           keyboard = {
             numlock = true;
@@ -175,10 +179,6 @@ in {
           zoom = 0.8;
         };
 
-        workspaces = {
-          "comm" = {};
-        };
-
         window-rules = [
           {
             matches = [{ app-id="^firefox$"; title="^Picture-in-Picture$"; }];
@@ -202,14 +202,6 @@ in {
           {
             matches = [{ app-id="^thunderbid$"; }];
             open-maximized = true;
-            open-on-workspace = "comm";
-          }
-          {
-            # open certain apps on comms workspace
-            matches = [
-              { app-id="^thunderbird$"; }
-            ];
-            open-on-workspace = "comms";
           }
           {
             # default matcher that styles all windows
@@ -263,7 +255,7 @@ in {
           };
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "wpctl" "set-volume" "@DEFAULT_ADUIO_SINK@" "0.1+" ];
+            action = niriActions.spawn [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" ];
           };
           "XF86AudioLowerVolume" = {
             allow-when-locked = true;
