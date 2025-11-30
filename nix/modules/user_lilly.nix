@@ -73,7 +73,6 @@ in
         ".ietf/ietf.config".source = ../dotfiles/lilly/ietf.config;
       };
       programs.direnv = import ../dotfiles/lilly/direnv;
-      programs.ssh.enable = true;
       programs.git = import ../dotfiles/lilly/git.nix { inherit lib pkgs; };
       programs.fish = import ../dotfiles/lilly/fish.nix;
       programs.helix = import ../dotfiles/lilly/helix.nix { inherit lib pkgs config; };

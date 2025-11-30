@@ -82,10 +82,7 @@ in {
     };
 
     services.displayManager.enable = true;
-    services.xserver = {
-      displayManager.gdm.enable = true;
-    };
-
+    services.displayManager.gdm.enable = true;
 
     environment.systemPackages = with pkgs; [
       xwayland-satellite

@@ -34,7 +34,6 @@ in
   ];
 
   # postgres config
-  systemd.services."postgresql".serviceConfig."Restart" = "on-failure";
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;

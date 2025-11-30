@@ -96,7 +96,6 @@
     gnomeDesktop.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
-    backup.enable = true;
   };
 
   # additional packages
@@ -112,12 +111,6 @@
     sbctl
   ];
 
-  virtualisation.podman = {
-    enable = true;
-    dockerSocket.enable = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
-  };
   services.earlyoom.enable = true;
   services.resolved.enable = true;
   services.openssh.enable = true;

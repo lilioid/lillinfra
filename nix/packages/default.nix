@@ -48,10 +48,10 @@ let
       k3s;
 
     # overwrite certain programs from nixos-unstable because of newer versions
-    glab = pkgs-unstable.glab;
-    rofi = pkgs-unstable.rofi;
-    rofi-calc = pkgs-unstable.rofi-calc;
-    rofi-emoji = pkgs-unstable.rofi-emoji;
+    # glab = pkgs-unstable.glab;
+    # rofi = pkgs-unstable.rofi;
+    # rofi-calc = pkgs-unstable.rofi-calc;
+    # rofi-emoji = pkgs-unstable.rofi-emoji;
   };
 in
 pkgs.lib.mergeAttrs dirPkgs manualPkgs

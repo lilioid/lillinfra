@@ -3,13 +3,13 @@
 
   inputs = {
     # nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
-    nixpkgs-small.url = "github:nixos/nixpkgs?ref=nixos-25.05-small";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
+    nixpkgs-small.url = "github:nixos/nixpkgs?ref=nixos-25.11-small";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     # version-specific nixpkgs
-    nixpkgs2411.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     nixpkgs2505.url = "github:nixos/nixpkgs?ref=nixos-25.05";
+    nixpkgs2511.url = "github:nixos/nixpkgs?ref=nixos-25.11";
 
     # some helpers for writing flakes with less repetition
     systems.url = "github:nix-systems/default-linux";
@@ -19,7 +19,7 @@
 
     # dotfile (and user package) manager
     home-manager = {
-      url = "github:nix-community/home-manager?ref=release-25.05";
+      url = "github:nix-community/home-manager?ref=release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

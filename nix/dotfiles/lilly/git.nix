@@ -7,27 +7,27 @@
     "**/__pycache__"
     ".idea"
   ];
-  aliases = {
-    # git auf deutsch
-    eroeffne = "init";
-    machnach = "clone";
-    zieh = "pull";
-    fueghinzu = "add";
-    drueck = "push";
-    pfusch = "push";
-    zweig = "branch";
-    verzweige = "branch";
-    uebergib = "commit";
-    erde = "rebase";
-    unterscheide = "diff";
-    vereinige = "merge";
-    bunkere = "stash";
-    markiere = "tag";
-    nimm = "checkout";
-    tagebuch = "log";
-    zustand = "status";
-  };
-  extraConfig = {
+  settings = {
+    aliases = {
+      # git auf deutsch
+      eroeffne = "init";
+      machnach = "clone";
+      zieh = "pull";
+      fueghinzu = "add";
+      drueck = "push";
+      pfusch = "push";
+      zweig = "branch";
+      verzweige = "branch";
+      uebergib = "commit";
+      erde = "rebase";
+      unterscheide = "diff";
+      vereinige = "merge";
+      bunkere = "stash";
+      markiere = "tag";
+      nimm = "checkout";
+      tagebuch = "log";
+      zustand = "status";
+    };
     user = {
       name = "lilly";
       email = "li@lly.sh";
