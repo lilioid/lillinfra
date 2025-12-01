@@ -380,21 +380,18 @@ in {
               tooltip-format = "<tt>{calendar}</tt>";
               calendar = {
                 mode = "year";
-                mode-mon-col = 3;
+                mode-mon-col = 4;
                 weeks-pos = "left";
-                on-scroll = 1;
                 format = {
                   months = "<span color='${colors.white}'><b>{}</b></span>";
                   days = "<span color='${colors.pinkDark1}'><b>{}</b></span>";
                   weeks  = "<span color='${colors.blueComp}'><b>W{}</b></span>";
                   weekdays = "<span color='${colors.greenComp}'><b>{}</b></span>";
-                  today = "<span color='${colors.pinkLight4}'><b><u>{}</u></b></span>";
+                  today = "<span color='${colors.white}'><b><u>{}</u></b></span>";
                 };
               };
               actions = {
                 on-click-right = "shift_reset";
-                on-scroll-up = "shift_up";
-                on-scroll-down = "shift_down";
               };
             };
             "network" = {
