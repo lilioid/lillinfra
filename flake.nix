@@ -56,9 +56,14 @@
 
     # lanzaboot for secure-boot on nixos
     # https://github.com/nix-community/lanzaboote
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay?ref=59c45eb69d9222a4362673141e00ff77842cd219";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote?ref=v0.4.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
 
     # cookied (not yet merged in nixpkgs)

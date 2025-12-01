@@ -150,15 +150,11 @@
     nixpkgs-fmt
     virt-manager
     libreoffice-fresh
-    openscad
-    freecad
     prusa-slicer
-    evince
     ranger
     sops
     git-crypt
     gnupg
-    sieveshell
     nftables
     file
     sbctl
