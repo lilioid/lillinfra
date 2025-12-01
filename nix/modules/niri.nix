@@ -521,9 +521,6 @@ in {
           	background: rgb(43, 48, 59);
           	border: 1px solid rgb(100, 114, 125);
           }
-          tooltip label {
-          	color: white;
-          }
 
           #workspaces button:hover {
             background: rgba(0, 0, 0, 0.2);
@@ -670,7 +667,12 @@ in {
         };
         Service = {
           Type = "exec";
-          ExecStart = ''${lib.getExe pkgs.swaybg} --image "/home/lilly/Sync/Wallpapers/Queer Smoke/aesthr-smoke-trans.png" --output "*" --mode fill'';
+          ExecStart = ''
+            ${lib.getExe pkgs.swaybg} \
+              --image "${../dotfiles/lilly/wallpapers/escape_velocity.png}" \
+              --output "*" \
+              --mode fill
+          '';
         };
         Install = {
           WantedBy = [ "niri.service" ];
