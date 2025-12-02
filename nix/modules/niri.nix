@@ -705,7 +705,7 @@ in {
           Type = "exec";
           ExecStart = ''
             ${lib.getExe pkgs.swaybg} \
-              --image "${../dotfiles/lilly/wallpapers/escape_velocity.png}" \
+              --image "${../dotfiles/lilly/wallpapers/dino.jpg}" \
               --output "*" \
               --mode fill
           '';
