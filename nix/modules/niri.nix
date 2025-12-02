@@ -58,6 +58,7 @@ in {
     qt.style = "adwaita";
     networking.networkmanager.enable = true;
     services.power-profiles-daemon.enable = true;
+    # programs.dconf.enable = true;    # needed to set gtk theme
     
     xdg.portal = {
       enable = true;
@@ -88,6 +89,8 @@ in {
       xwayland-satellite
       swaylock
       swaynotificationcenter
+      brightnessctl
+      playerctl
     ];
 
     #
@@ -96,6 +99,18 @@ in {
     home-manager.users.lilly = lib.mkIf isUserEnabled {
       services.ssh-agent.enable = true;
       services.network-manager-applet.enable = true;
+
+      gtk = {
+        enable = true;
+        iconTheme.package = pkgs.papirus-icon-theme;
+        colorScheme = "dark";
+        iconTheme.name = "Papirus";
+        gtk3.extraCss = ''
+          @define_color accent_color ${colors.pinkMain};
+          @define_color accent_bg_color ${colors.white};
+        '';
+        gtk4.extraCss = homeConfig.gtk.gtk3.extraCss;
+      };
 
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
       programs.niri.settings = {
@@ -126,6 +141,10 @@ in {
           trackpoint = {};
         };
 
+        switch-events = {
+          lid-close.action = niriActions.spawn [ "swaylock" ];
+        };
+
         outputs = {};  # override this via the configOverride option
 
         cursor = {
@@ -154,10 +173,10 @@ in {
             active = { color = colors.pinkMain; };
             inactive = { color = colors.pinkDark5; };
           };
-          struts = rec {
-            left = 24;
-            right = left;
-          };
+          # struts = rec {
+          #   left = 24;
+          #   right = left;
+          # };
         };
 
         prefer-no-csd = true;
@@ -266,6 +285,26 @@ in {
             allow-when-locked = true;
             action = niriActions.spawn [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
           };
+          XF86MonBrightnessUp = {
+            allow-when-locked = true;
+            action = niriActions.spawn [ "brightnessctl" "set" "+10%" ];
+          };
+          XF86MonBrightnessDown = {
+            allow-when-locked = true;
+            action = niriActions.spawn [ "brightnessctl" "set" "10%-" ];
+          };
+          XF86AudioPrev = {
+            allow-when-locked = true;
+            action = niriActions.spawn [ "playerctl" "previous" ];
+          };
+          XF86AudioNext = {
+            allow-when-locked = true;
+            action = niriActions.spawn [ "playerctl" "next" ];
+          };
+          XF86AudioPlay = {
+            allow-when-locked = true;
+            action = niriActions.spawn [ "playerctl" "play-pause" ];
+          };
 
           "Mod+Left".action = niriActions.focus-column-or-monitor-left;
           "Mod+Down".action = niriActions.focus-window-down;
@@ -296,24 +335,24 @@ in {
             action = niriActions.focus-column-left;
           };
 
-          "Mod+1".action = niriActions.focus-workspace 1;
-          "Mod+2".action = niriActions.focus-workspace 2;
-          "Mod+3".action = niriActions.focus-workspace 3;
-          "Mod+4".action = niriActions.focus-workspace 4;
-          "Mod+5".action = niriActions.focus-workspace 5;
-          "Mod+6".action = niriActions.focus-workspace 6;
-          "Mod+7".action = niriActions.focus-workspace 7;
-          "Mod+8".action = niriActions.focus-workspace 8;
-          "Mod+9".action = niriActions.focus-workspace 9;
-          "Mod+Shift+1".action.move-column-to-workspace = 1;
-          "Mod+Shift+2".action.move-column-to-workspace = 2;
-          "Mod+Shift+3".action.move-column-to-workspace = 3;
-          "Mod+Shift+4".action.move-column-to-workspace = 4;
-          "Mod+Shift+5".action.move-column-to-workspace = 5;
-          "Mod+Shift+6".action.move-column-to-workspace = 6;
-          "Mod+Shift+7".action.move-column-to-workspace = 7;
-          "Mod+Shift+8".action.move-column-to-workspace = 8;
-          "Mod+Shift+9".action.move-column-to-workspace = 9;
+          "Mod+1".action = niriActions.focus-workspace "1-";
+          "Mod+2".action = niriActions.focus-workspace "2-";
+          "Mod+3".action = niriActions.focus-workspace "3-";
+          "Mod+4".action = niriActions.focus-workspace "4-";
+          "Mod+5".action = niriActions.focus-workspace "5-";
+          "Mod+6".action = niriActions.focus-workspace "6-";
+          "Mod+7".action = niriActions.focus-workspace "7-";
+          "Mod+8".action = niriActions.focus-workspace "8-";
+          "Mod+9".action = niriActions.focus-workspace "9-";
+          "Mod+Shift+1".action.move-column-to-workspace = "1-";
+          "Mod+Shift+2".action.move-column-to-workspace = "2-";
+          "Mod+Shift+3".action.move-column-to-workspace = "3-";
+          "Mod+Shift+4".action.move-column-to-workspace = "4-";
+          "Mod+Shift+5".action.move-column-to-workspace = "5-";
+          "Mod+Shift+6".action.move-column-to-workspace = "6-";
+          "Mod+Shift+7".action.move-column-to-workspace = "7-";
+          "Mod+Shift+8".action.move-column-to-workspace = "8-";
+          "Mod+Shift+9".action.move-column-to-workspace = "9-";
 
           "Ctrl+Shift+Left".action = niriActions.set-column-width "-5%";
           "Ctrl+Shift+Down".action = niriActions.set-window-height "+5%";
