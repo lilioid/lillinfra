@@ -164,7 +164,9 @@ in {
           ];
           preset-window-heights = [
             { proportion = 0.2; }
+            { proportion = 1.0 / 3.0; }
             { proportion = 0.5; }
+            { proportion = 2.0 / 3.0; }
             { proportion = 0.8; }
           ];
           default-column-width = { proportion = 0.5; };
@@ -211,8 +213,14 @@ in {
             open-on-workspace = null;
           }
           {
-            # open some windows with 1/3 proportion by default because they dont scale well
-            matches = [{ app-id="^firefox$"; is-floating=false; }];
+            # open some windows with 2/3 proportion by default because they dont scale well or require more space
+            matches = [
+              { app-id="^firefox$"; is-floating=false; }
+              { app-id="^org\\.keepassxc\\.KeePassXC$"; }
+              { app-id="^org\\.telegram\\.desktop$"; }
+              { app-id="^Element$"; }
+              { app-id="^signal$"; }
+            ];
             default-column-width = { proportion = 2.0 / 3.0; };
           }
           {
@@ -341,35 +349,36 @@ in {
             action = niriActions.focus-column-left;
           };
 
-          "Mod+1".action = niriActions.focus-workspace "1-";
-          "Mod+2".action = niriActions.focus-workspace "2-";
-          "Mod+3".action = niriActions.focus-workspace "3-";
-          "Mod+4".action = niriActions.focus-workspace "4-";
-          "Mod+5".action = niriActions.focus-workspace "5-";
-          "Mod+6".action = niriActions.focus-workspace "6-";
-          "Mod+7".action = niriActions.focus-workspace "7-";
-          "Mod+8".action = niriActions.focus-workspace "8-";
-          "Mod+9".action = niriActions.focus-workspace "9-";
-          "Mod+Shift+1".action.move-column-to-workspace = "1-";
-          "Mod+Shift+2".action.move-column-to-workspace = "2-";
-          "Mod+Shift+3".action.move-column-to-workspace = "3-";
-          "Mod+Shift+4".action.move-column-to-workspace = "4-";
-          "Mod+Shift+5".action.move-column-to-workspace = "5-";
-          "Mod+Shift+6".action.move-column-to-workspace = "6-";
-          "Mod+Shift+7".action.move-column-to-workspace = "7-";
-          "Mod+Shift+8".action.move-column-to-workspace = "8-";
-          "Mod+Shift+9".action.move-column-to-workspace = "9-";
+          "Mod+1".action = niriActions.focus-workspace 1;
+          "Mod+2".action = niriActions.focus-workspace 2;
+          "Mod+3".action = niriActions.focus-workspace 3;
+          "Mod+4".action = niriActions.focus-workspace 4;
+          "Mod+5".action = niriActions.focus-workspace 5;
+          "Mod+6".action = niriActions.focus-workspace 6;
+          "Mod+7".action = niriActions.focus-workspace 7;
+          "Mod+8".action = niriActions.focus-workspace 8;
+          "Mod+9".action = niriActions.focus-workspace 9;
+          "Mod+Shift+1".action.move-column-to-workspace = 1;
+          "Mod+Shift+2".action.move-column-to-workspace = 2;
+          "Mod+Shift+3".action.move-column-to-workspace = 3;
+          "Mod+Shift+4".action.move-column-to-workspace = 4;
+          "Mod+Shift+5".action.move-column-to-workspace = 5;
+          "Mod+Shift+6".action.move-column-to-workspace = 6;
+          "Mod+Shift+7".action.move-column-to-workspace = 7;
+          "Mod+Shift+8".action.move-column-to-workspace = 8;
+          "Mod+Shift+9".action.move-column-to-workspace = 9;
 
-          "Ctrl+Shift+Left".action = niriActions.set-column-width "-5%";
-          "Ctrl+Shift+Down".action = niriActions.set-window-height "+5%";
-          "Ctrl+Shift+Up".action = niriActions.set-window-height "-5%";
-          "Ctrl+Shift+Right".action = niriActions.set-column-width "+5%";
+          "Mod+Ctrl+Left".action = niriActions.set-column-width "-5%";
+          "Mod+Ctrl+Down".action = niriActions.set-window-height "+5%";
+          "Mod+Ctrl+Up".action = niriActions.set-window-height "-5%";
+          "Mod+Ctrl+Right".action = niriActions.set-column-width "+5%";
 
           "Mod+Comma".action = niriActions.consume-or-expel-window-left;
           "Mod+Period".action = niriActions.consume-or-expel-window-right;
 
           "Mod+R".action = niriActions.switch-preset-column-width;
           "Mod+Shift+R".action = niriActions.switch-preset-window-height;
+          "Mod+Ctrl+R".action = niriActions.reset-window-height;
           "Mod+F".action = niriActions.maximize-column;
           "Mod+Shift+F".action = niriActions.fullscreen-window;
           "Mod+C".action = niriActions.center-visible-columns;
