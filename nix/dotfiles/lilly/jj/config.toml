@@ -43,8 +43,8 @@ concat(
 '''
 
 [[--scope]]
-"--when.repositories" = ["~/Projects/b1/woodpecker", "~/Projects/mafiasi/py_simple_openid_connect"]
+--when.repositories = [ "~/Projects/b1" ]
 
-[scope.user]
+[--scope.user]
 name = "Lilly Sell"
 email = "sell@b1-systems.de"
