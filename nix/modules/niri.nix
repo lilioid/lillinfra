@@ -207,7 +207,7 @@ in {
             block-out-from = "screen-capture";
           }
           {
-            matches = [{ app-id="^thunderbid$"; title = "^\\d+ Reminder(s?)$"; }];
+            matches = [{ app-id="^thunderbird$"; title = "^\\d+ Reminder(s?)$"; }];
             open-floating = true;
             open-focused = true;
             open-on-workspace = null;
@@ -224,7 +224,7 @@ in {
             default-column-width = { proportion = 2.0 / 3.0; };
           }
           {
-            matches = [{ app-id="^thunderbid$"; }];
+            matches = [{ app-id="^thunderbird$"; }];
             open-maximized = true;
           }
           {
