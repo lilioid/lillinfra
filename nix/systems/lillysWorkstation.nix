@@ -135,6 +135,18 @@
           };
         };
       };
+      additionalWindowRules = [
+        {
+          # open some things on the right monitor
+          matches = [
+            { app-id="^org\\.keepassxc\\.KeePassXC$"; }
+            { app-id="^org\\.telegram\\.desktop$"; }
+            { app-id="^Element$"; }
+            { app-id="^signal$"; }
+          ];
+          open-on-output = "LG Electronics 2D FHD LG TV 0x01010101";
+        }
+      ];
     };
 
     wg.profiles = {

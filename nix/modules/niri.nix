@@ -43,6 +43,11 @@ in {
         default = {};
         type = lib.types.attrsOf lib.types.attrs;
       };
+      additionalWindowRules = mkOption {
+        description = "Additional window-rules to add without overriding existing ones";
+        default = [];
+        type = lib.types.listOf lib.types.attrs;
+      };
     };
   };
 
@@ -243,7 +248,7 @@ in {
             };
             clip-to-geometry = true;
           }
-        ];
+        ] ++ cfg.additionalWindowRules ;
 
         binds = {
           "F1".action = niriActions.show-hotkey-overlay;
