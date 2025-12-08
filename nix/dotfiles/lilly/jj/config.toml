@@ -46,5 +46,5 @@ concat(
 --when.repositories = [ "~/Projects/b1" ]
 
 [--scope.user]
-name = "Lilly Sell"
+name = "Sell, Lilly"
 email = "sell@b1-systems.de"
