@@ -96,6 +96,7 @@ in {
       swaynotificationcenter
       brightnessctl
       playerctl
+      nemo
     ];
 
     #
