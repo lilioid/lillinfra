@@ -10,6 +10,10 @@
       domains = [ "lihesys.de" ];
       sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2vP9rQP6f6o61VUssBFvgY+O2sZ7T4OGaNkJTAk8G2 skye";
     };
+    users.lilly = {
+      shell = pkgs.fish;
+      sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzGnNKyn6jmVxig4SRnTBfpi6okPU2aOHPwFnAPTxJm ftsell@ftsell.de";
+    };
   };
 
   custom.backup = {

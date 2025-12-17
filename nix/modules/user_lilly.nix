@@ -31,7 +31,7 @@ in
       ] ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ])
       ++ (if config.virtualisation.docker.enable then [ "docker" ] else [ ]);
       home = "/home/lilly";
-      shell = pkgs.fish;
+      shell = lib.mkForce pkgs.fish;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzGnNKyn6jmVxig4SRnTBfpi6okPU2aOHPwFnAPTxJm ftsell@ftsell.de"
       ];
