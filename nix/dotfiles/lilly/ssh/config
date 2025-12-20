@@ -278,6 +278,26 @@ Host *.hanse.de *.zs64.net
   IdentityFile ~/.ssh/id_lilly@hanse.de.pub
 
 
+#####
+# 39C3 NOC
+#
+
+# Matches most of the hostnames we use for congress, and when I'm *not* on the Event NOC LANs, automatically add a jumphost
+# Match host *.c3noc.net,*.congress.ccc.de,*.camp.ccc.de,mx-*,rt-*,JL*,94.45.224.0/19,94.45.224.*,94.45.225.*,217.243.217.162  !localnetwork 94.45.230.0/23
+#   ProxyJump jumphost
+
+# For Congress hosts, among other things:
+#  * automatically pick which ssh pub key
+#  * accept the old ssh-rsa algo for old switches
+#  * use a unique known_hosts file, so I can trivially clean it up after every event
+Host noc.events.ccc.de *.c3noc.net 94.45.22?.* 94.45.23?.* 94.45.24?.* 94.45.25?.* 2001:67c:20a1:*:*:*:*:* *.congress.ccc.de *.camp.ccc.de mx-* rt-* qfx-* ex-* sw-* SW??? JL??? 217.243.217.162
+  PubkeyAuthentication yes
+  PubkeyAcceptedAlgorithms=+ssh-rsa
+  PasswordAuthentication no
+  IdentityFile ~/.ssh/id_lilly@ccc.pub
+  UserKnownHostsFile ~/.ssh/39C3_known_hosts
+
+
 # Global Override Settings
 Host *
   ForwardAgent no
