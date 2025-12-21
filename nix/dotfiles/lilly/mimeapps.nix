@@ -8,6 +8,7 @@
     "x-scheme-handler/https" = [ "firefox.desktop" ];
     "x-scheme-handler/mailto" = [ "thunderbird.desktop" ];
     "text/html" = [ "firefox.desktop" ];
+    "inode/directory" = [ "nemo.desktop" ];
 
     "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
     "image/png" = [ "org.gnome.Loupe.desktop" ];

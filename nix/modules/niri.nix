@@ -97,7 +97,8 @@ in {
       brightnessctl
       playerctl
       nemo
-      eog
+      loupe
+      trash-cli
     ];
 
     #
