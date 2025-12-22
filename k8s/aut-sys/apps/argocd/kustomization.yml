@@ -66,7 +66,7 @@ secretGenerator:
       labels:
         argocd.argoproj.io/secret-type: repository
     literals:
-        - "url=git@git.lly.sh:lilly/lillinfra.git"
+        - "url=git@git.hanse.de:lilly/lillinfra.git"
 
 generators:
   - ./secret-generator.yml
