@@ -1,33 +1,62 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: website-riddles
-  labels: &labels
-    app.kubernetes.io/name: website-riddles
-    app.kubernetes.io/component: riddles-server
-spec:
-  selector:
-    matchLabels: *labels
-  template:
+apiVersion: v1
+kind: List
+items:
+
+  - apiVersion: apps/v1
+    kind: Deployment
     metadata:
-      labels: *labels
+      name: website-riddles
+      labels: &labels
+        app.kubernetes.io/name: website-riddles
+        app.kubernetes.io/component: riddles-server
     spec:
-      containers:
-        - name: riddles
-          image: git.lly.sh/lilly/homepage-riddles
-          envFrom:
-            - secretRef:
-                name: website-riddles
-          ports:
-            - name: http
-              containerPort: 80
-          readinessProbe:
-            tcpSocket:
-              port: http
-          resources:
-            requests:
-              cpu: "0.5"
-              memory: "500M"
-            limits:
-              cpu: "2"
-              memory: "1G"
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          securityContext:
+            fsGroup: 10000
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: riddles-data
+          containers:
+            - name: riddles
+              image: git.hanse.de/lilly/homepage-riddles
+              args: [ "[::]:8000" ]
+              envFrom:
+                - secretRef:
+                    name: website-riddles
+              ports:
+                - name: http
+                  containerPort: 8000
+              volumeMounts:
+                - name: data
+                  mountPath: /var/lib/homepage-riddles/
+              readinessProbe:
+                httpGet:
+                  port: http
+                  httpHeaders:
+                    - name: Host
+                      value: li.lly.sh
+              resources:
+                requests:
+                  cpu: "0.5"
+                  memory: "500M"
+                limits:
+                  cpu: "2"
+                  memory: "1G"
+
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: riddles-data
+      labels: &labels
+    spec:
+      accessModes: [ ReadWriteMany ]
+      resources:
+        requests:
+          storage: "1Gi"
+

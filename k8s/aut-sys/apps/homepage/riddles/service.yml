@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/component: riddles-server
 spec:
   selector: *labels
+  ipFamilyPolicy: SingleStack
+  ipFamilies: [ IPv6 ]
   ports:
     - name: http
       port: 80
