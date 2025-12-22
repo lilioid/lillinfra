@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: riddles
-          image: git.lly.sh/lilly/homepage-riddles
+          image: git.hanse.de/lilly/homepage-riddles
           envFrom:
             - secretRef:
                 name: website-riddles
