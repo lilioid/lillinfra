@@ -97,6 +97,7 @@ in {
       brightnessctl
       playerctl
       nemo
+      nautilus
       loupe
       trash-cli
     ];
