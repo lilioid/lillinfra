@@ -16,7 +16,7 @@ resources:
 
 images:
   - name: docker.io/redis
-    newTag: "7-alpine"
+    newTag: "8-alpine"
   - name: docker.io/netboxcommunity/netbox
     newTag: "v4.3"
 
