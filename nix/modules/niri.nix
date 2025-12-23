@@ -287,10 +287,25 @@ in {
             repeat = false;
             action = niriActions.close-window;
           };
+          "Mod+Shift+E" = {
+            hotkey-overlay.title = "Open File Browser";
+            repeat = false;
+            action = niriActions.spawn [ "nautilus" ];
+          };
           "Mod+E" = {
+            hotkey-overlay.title = "Open File Picker";
+            repeat = false;
+            action = niriActions.spawn [ "rofi" "-show" "recursivebrowser" ];
+          };
+          "Mod+Shift+D" = {
             hotkey-overlay.title = "Open Emoji Picker";
             repeat = false;
             action = niriActions.spawn [ "rofi" "-show" "emoji" ];
+          };
+          "Mod+Shift+C" = {
+            hotkey-overlay.title = "Open Calculator";
+            repeat = false;
+            action = niriActions.spawn [ "rofi" "-show" "calc" ];
           };
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
@@ -403,6 +418,7 @@ in {
         modes = [ "drun" "emoji" "calc" "recursivebrowser" ];
         terminal = lib.getExe pkgs.kitty;
         plugins = with pkgs; [ rofi-calc rofi-emoji ];
+        theme = "DarkBlue";
       };
 
       # notification center
