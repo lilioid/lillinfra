@@ -420,9 +420,8 @@ in {
             position = "top";
             modules-left = [
               "niri/workspaces"
-              "niri/window"
             ];
-            modules-center = [ "clock" ];
+            modules-center = [ "niri/window" ];
             modules-right = [
               "custom/arrow5"
               "network"
@@ -430,15 +429,17 @@ in {
               "wireplumber#sink"
               "wireplumber#source"
               "custom/arrow3"
-              "power-profiles-daemon"
-              "custom/arrow2"
               "tray"
-              "custom/arrow1"
+              "custom/arrow2"
+              "power-profiles-daemon"
               "battery"
               "group/group-power"
+              "custom/arrow1"
+              "clock"
             ];
             clock = {
-              format = " {:%H:%M}";
+              format = " {:%H:%M   󰃭  %d.%m.%Y}";
+              /*format = " {:%H:%M} 󰃭 {:%d}.{:%d}.{:%m}.{:%Y}";*/
               timezone = "Europe/Berlin";
               tooltip-format = "<tt>{calendar}</tt>";
               calendar = {
@@ -582,32 +583,32 @@ in {
           	border: 1px solid rgb(100, 114, 125);
           }
 
+          #workspaces {
+            margin-right: 2px;
+          }
           #workspaces button:hover {
             background: rgba(0, 0, 0, 0.2);
           }
-
           #workspaces button.active {
               background: inherit;
-              box-shadow: inset 0 -3px #ffbcff;
+              box-shadow: inset 0 -3px ${colors.pinkLight1};
           }
-
           #workspaces button.focused {
-              background-color: #64727D;
-              box-shadow: inset 0 -3px #ffffff;
+              background-color: alpha(${colors.pinkDark5}, 0.4);
+              box-shadow: inset 0 -3px ${colors.pinkLight4};
           }
-
           #workspaces button.urgent {
-              /* background-color: #eb4d4b; */
-              box-shadow: inset 0 -3px #eb4d4b, inset -3px 0px #eb4d4b, inset 0 3px #eb4d4b, inset 3px 0px #eb4d4b;
+              box-shadow: inset 0 -3px ${colors.pinkLight5}, inset -3px 0px ${colors.pinkLight5}, inset 0 3px ${colors.pinkLight5}, inset 3px 0px ${colors.pinkLight5};
           }
 
 
-          #clock {
-          	background-color: ${colors.pinkDark1};
+          #window {
+            background-color: alpha(${colors.pinkDark5}, 0.4);
           	border-radius: 6px;
           	padding: 0px 10px;
           	margin: 4px 0px;
           }
+
 
           #custom-arrow5 {
             font-size: 24pt;
@@ -634,11 +635,27 @@ in {
             color: ${colors.pinkDark3};
             background: ${colors.pinkDark4};
           }
+          #tray {
+            padding: 0 16px;
+            background: ${colors.pinkDark3};
+          }
+          #tray > .passive {
+            -gtk-icon-effect: dim;
+          }
+          #tray > .needs-attention {
+            -gtk-icon-effect: highlight;
+          }
+
+          #custom-arrow2 {
+            font-size: 24pt;
+            color: ${colors.pinkDark2};
+            background: ${colors.pinkDark3};
+          }
           #power-profiles-daemon {
             padding-left: 16px;
-            padding-right: 16px;
+            padding-right: 4px;
             color: white;
-            background: ${colors.pinkDark3};
+            background: ${colors.pinkDark2};
           }
           label#power-profiles-daemon {
             font-size: 14pt;
@@ -653,22 +670,6 @@ in {
             color: ${colors.greenComp};
           }
 
-          #custom-arrow2 {
-            font-size: 24pt;
-            color: ${colors.pinkDark2};
-            background: ${colors.pinkDark3};
-          }
-          #tray {
-            padding: 0 16px;
-            background: ${colors.pinkDark2};
-          }
-          #tray > .passive {
-            -gtk-icon-effect: dim;
-          }
-          #tray > .needs-attention {
-            -gtk-icon-effect: highlight;
-          }
-
           #custom-arrow1 {
             font-size: 24pt;
             color: ${colors.pinkDark1};
@@ -676,11 +677,11 @@ in {
           }
           #battery {
             padding: 0 16px;
-            background: ${colors.pinkDark1};
+            background: ${colors.pinkDark2};
           }
           #group-power {
             font-size: 12pt;
-            background: ${colors.pinkDark1};
+            background: ${colors.pinkDark2};
           }
 
           #custom-power-menu {
@@ -707,6 +708,12 @@ in {
           #custom-poweroff {
             border-right: 2px solid ${colors.pinkDark3};
           }
+
+          #clock {
+            background: ${colors.pinkDark1};
+            padding-right: 8px;
+          }
+
         '';
       };
 
