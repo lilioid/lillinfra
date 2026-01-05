@@ -4,7 +4,7 @@ namespace: photoprism
 
 images:
   - name: "docker.io/photoprism/photoprism"
-    newTag: "250707"
+    newTag: "251130"
 
 resources:
   - manifests/namespace.yaml
