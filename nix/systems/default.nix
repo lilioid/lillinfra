@@ -80,6 +80,7 @@ in
   # aut-sys.de
   "db.z9.aut-num.de" = mkSystem "x86_64-linux" "db.z9.aut-num.de" flake.inputs.nixpkgs2511;
   "webhost.z9.aut-num.de" = mkSystem "x86_64-linux" "webhost.z9.aut-num.de" flake.inputs.nixpkgs2511;
+  "jumphost.z9.aut-num.de" = mkSystem "x86_64-linux" "jumphost.z9.aut-num.de" flake.inputs.nixpkgs2511;
   "syncthing.z9.aut-num.de" = mkSystem "x86_64-linux" "syncthing.z9.aut-num.de" flake.inputs.nixpkgs2511;
   "k8s-ctl.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-ctl.z9.aut-num.de" flake.inputs.nixpkgs2511;
   "k8s-worker1.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker1.z9.aut-num.de" flake.inputs.nixpkgs2511;

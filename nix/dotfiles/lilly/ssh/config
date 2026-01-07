@@ -1,3 +1,15 @@
+# Matchers which go first because they can retrigger config file parsing
+Match tagged legacy
+  KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
+  Ciphers +aes128-cbc,aes192-cbc,aes256-cbc,3des-cbc
+  HostkeyAlgorithms +ssh-rsa
+  PubkeyAcceptedKeyTypes +ssh-rsa 
+
+Match !localnetwork 2000::/3
+  ProxyJump jumphost.z9.aut-num.de
+
+
+
 Host rsync.net zh4525.rsync.net
   User zh4525
   HostName zh4525.rsync.net
@@ -77,6 +89,10 @@ Host priv.srv.home.intern
 #
 
 Host nas-ole.vpn.intern
+  User lilly
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
+
+Host *.aut-num.de
   User lilly
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
@@ -260,14 +276,6 @@ Host btv-migration
   User fedora
   IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
 
-
-
-######
-# Eurofurence 29
-#
-Host *.ef29.aut-sys.de
-  User lilly
-  IdentityFile ~/.ssh/id_lilly@ccc.pub
 
 
 ######
