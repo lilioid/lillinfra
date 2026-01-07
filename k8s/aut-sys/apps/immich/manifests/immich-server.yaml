@@ -30,6 +30,14 @@ items:
         metadata:
           labels: *labels
         spec:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 50
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels: *labels
           volumes:
             - name: data
               persistentVolumeClaim:

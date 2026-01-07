@@ -19,12 +19,10 @@ items:
         spec:
           affinity:
             podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 50
-                  podAffinityTerm:
-                    labelSelector:
-                      matchLabels: *labels
-                    topologyKey: kubernetes.io/hostname
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels: *labels
+                  topologyKey: kubernetes.io/hostname
           volumes:
             - name: data
               persistentVolumeClaim:
