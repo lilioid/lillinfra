@@ -142,6 +142,18 @@
           ];
         };
       };
+
+      "ccchh-vpn" = {
+        address = [ "172.31.202.16/24" "fc00:ca::/64" ];
+        peers."ccchh-opnsense" = {
+          pubKey = "fmlxjh3iOfpgrHQQpK3dyOD0BvDppGCUkFuMSroqQR4=";
+          endpoint = "213.240.180.39:51820";
+          allowedIPs = [
+            "172.31.202.16/24"
+            "fc00:ca::/64"
+          ];
+        };
+      };
     };
   };
 

@@ -116,6 +116,11 @@ in
                       description = "WireGuard allowed-ips of this peer";
                       type = listOf str;
                     };
+                    psk = mkOption {
+                      description = "Preshared-Key";
+                      type = nullOr str;
+                      default = null;
+                    };
                   };
                 });
               };

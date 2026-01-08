@@ -3,6 +3,8 @@ wg:
         privkey: ENC[AES256_GCM,data:7VqXPLb1xaQ2Z5k4K6VkTfirx5UPqzFwa0Q1KZjSfTODzDZHpDurL5SNPxI=,iv:45WLdGtv9y4U/Atk1fd3FqOjPMQE2m7C9h4Hgacfc3c=,tag:fSEcEmrBo2l8ToBGF2yOBg==,type:str]
     autSysMgmt:
         privkey: ENC[AES256_GCM,data:rIyaozal+eTxyDGzyJysbstaEF7IkdZxtuiGlWkjABGCVKnL75KstT9n6xk=,iv:U6tnIK7wYrNg++I4qDl2hctD2FGJUTZRw7CISAf2eRY=,tag:5Wv+Sh1bD4y9t74fCohRMQ==,type:str]
+    ccchh-vpn:
+        privkey: ENC[AES256_GCM,data:XnhcQ7EUAQDUHiYZOkN2n17NrTUnjJrfYoF+FX7h8neb+s7RK33Rzkumzn4=,iv:ajcB+mEcwUC739jtxZIBLf8ShZ9WGwdwtXqh4w5W8Ik=,tag:RPRP50J3whWlYUlwui/Mfg==,type:str]
 backup:
     repoPass: ENC[AES256_GCM,data:WptdqOuqtj7HSTvuCMaD8hgp9jMHpaks,iv:wRuIWFrbk4WKyHEqzX11dM+2uay+p0RLfS9V2HYwRqM=,tag:ic4TnfQGHhQ5zi1vRB+4+w==,type:str]
     ntfyToken: ENC[AES256_GCM,data:/eVefZe4KThfq8WklYg6CtpYfkb41xnBLpF8kfFRBLs=,iv:psTdB9Cg/8aw+8TR/oRdMrAw8eR8e8RQT72pma0jv1w=,tag:mCdL8X3DPDOUnIVKfXc21g==,type:str]
@@ -29,7 +31,7 @@ sops:
             MG9LVjAvcXdsU1VDb2xqaG51MkxoRVkKCWiZxvzhayB++Tnorc6PD3AARq3ARZ5L
             TUeTSuclmjrWVAgiCTH2uBnxMKLrGbrYaVKkLCPgfMO+GOqyJhRNLQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-18T17:08:34Z"
-    mac: ENC[AES256_GCM,data:/8VsAtI8OeGvIrGw6K4RyqseWBSE6NL5KB2IvhtsYIA+/L/tG6L5CfUJ5akpgSenxZcubdA1ihW6nr7d8uUJAWpwc0zNppfHOX7bDrUUS17DJR3NjepNUc/DBwfohUhOEmC/bf7dEbvCdi6XgQsVvxm5HWS8hjgyiRy6adpaIJ4=,iv:3RnwlwyR3vw+KrEO3soaeiO6V2iNjpWaYxUbmdO9Ucw=,tag:48Kzd8NBRookX0wJGIqnGA==,type:str]
+    lastmodified: "2026-01-06T22:13:01Z"
+    mac: ENC[AES256_GCM,data:vv3Pxdu/dER8yHcATqJaTX0Ay1Z3AzG1g1W+i431I1AeWd9+5RLakmMm5+vaVL4Nwqd1Xgj9mHDTqK+WQdpKt6uRjoWYcR30wwJ8M9gprY2AE6JDmW7PDLyp+i3EgrcpJfIS3tHumcx+s2JgVrbPcGsOawagxlf238kJYVURooc=,iv:rdaVbSOpUjeiO7eljF2JQWd8omVt9S1gln8dhxSlsbw=,tag:HTkM2wcyHI/bcsxgYUF7ug==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0

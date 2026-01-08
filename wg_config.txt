@@ -1,0 +1,9 @@
+[Interface]
+PrivateKey = KM2g5uQkGC3wgtUIKTRX+mO2YVrM0YIewTgTiPGiBWQ=
+Address = 172.31.202.16/32,fc00:ca::/128
+
+[Peer]
+PublicKey = fmlxjh3iOfpgrHQQpK3dyOD0BvDppGCUkFuMSroqQR4=
+PresharedKey = Q7v+0y+cD0OtHsEMWlZIT22h9UtA0fZr4k7z+RIDx/U=
+Endpoint = 
+AllowedIPs = 172.31.202.16/32,fc00:ca::/128
