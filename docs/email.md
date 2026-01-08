@@ -67,7 +67,7 @@ It is deployed via [k8s/apps/mailserver](../k8s/apps/mailserver).
    This record dictates how e-mails for the domain are delivered to different mail servers.
    Multiple records can be specified with different priorities (lower number takes precedence).
 
-   The value of the record should probably be `mail.srv.ftsell.de`.
+   The value of the record should probably be `mail.srv.lly.sh`.
 
 3. Configure [SPF Policy](https://en.wikipedia.org/wiki/Sender_Policy_Framework) via DNS.
 
