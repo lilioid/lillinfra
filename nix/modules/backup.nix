@@ -39,16 +39,12 @@ in
         defaultText = "backup/<name>";
         type = types.str;
       };
-      sshUser = mkOption {
-        description = "Username for logging into the backup destination";
-        type = types.str;
+      backupPostgres = mkOption {
+        default = config.services.postgresql.enable;
+        defaultText = "services.postgresql.enable";
+        description = "Whether to enable automatic backups of postgresql databases";
+        type = types.bool;
       };
-      #      backupPostgres = mkOption {
-      #        default = config.services.postgresql.enable;
-      #        defaultText = "services.postgresql.enable";
-      #        description = "Whether to enable automatic backups of postgresql databases";
-      #        type = types.bool;
-      #      };
       destinations = mkOption {
         description = "Definition of destination to which backups should be sent";
         default = [ ];
@@ -79,7 +75,6 @@ in
     };
   };
 
-  # TODO: Enable postgres backups
   config = lib.mkIf cfg.enable {
     # configure borgmatic
     services.borgmatic = {
@@ -163,6 +158,20 @@ in
             tags = "rotating_light";
           };
         };
+
+        # enable postgres backup if required
+        postgresql_databases = lib.mkIf cfg.backupPostgres (
+          let
+            pgConfig = config.services.postgresql;
+          in [
+          {
+            name = "all";
+            format = "directory";
+            psql_command = lib.getExe' pgConfig.package "psql";
+            pg_dump_command = lib.getExe' pgConfig.package "pg_dump";
+            pg_restore_command = lib.getExe' pgConfig.package "pg_restore";
+          }
+        ]);
 
         #        postgresql_databases = lib.mkIf cfg.rsync-net.backupPostgres [
         #          {
