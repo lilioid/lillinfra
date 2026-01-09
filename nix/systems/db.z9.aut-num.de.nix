@@ -65,6 +65,13 @@ in
     '';
   };
 
+  # backup config
+  custom.backup = {
+    enable = true;
+    backupDirectories = [];
+    destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+  };
+
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
   home-manager.users.lilly.home.stateVersion = "24.05";

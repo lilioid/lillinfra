@@ -15,6 +15,7 @@ keys:
   - &k8s-worker2-aut-num "age15eh366hrdz07ca4a3qzs8rtxr8nkhuj3fg3qvz94axyzf0zc8c9qgtare8"
   - &k8s-worker3-aut-num "age1k22c0uq675f5phyzevf36nj0yyvt3k97prxfz96m9xlec3rfhqjsvh5u0z"
   - &syncthing-aut-num "age1xz3g0du33t9mdyj33sj9n8hmc0fnmp8ec2lryawdcgldzuhfjd8s4u8wv5"
+  - &db-aut-num "age1caeu2zle7swq93xy6glc897g5jxzsyzztjqyy8j6zhp6cuymw3fs54xksv"
   - &webhost-aut-num "age1c54zwe67dwmw5swaf0qgzxtv49ryfczfyp2v5g42k5z66wzq55ksphx8fv"
   - &actions-runner-aut-num "age1ml0mt9d87lkjtj4pu27hn5hayz40zy05qam6u8524ck40r5f4ugqc9dme8"
   - &nas-myroot "age1gufa7z3leuufvps6wszfzyk7e8rqdpz3ryfneu9x4qfj0je95amq4gpd20"
@@ -72,6 +73,10 @@ creation_rules:
   - path_regex: "nix/data/host-secrets/actions-runner.z9.aut-num.de.yml"
     key_groups:
       - age: [ *lilly, *actions-runner-aut-num ]
+
+  - path_regex: "nix/data/host-secrets/db.z9.aut-num.de.yml"
+    key_groups:
+      - age: [ *lilly, *db-aut-num ]
 
   - path_regex: "nix/data/host-secrets/lillysLaptop.yml"
     key_groups:
