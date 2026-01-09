@@ -4,3 +4,5 @@
 **/.terraform
 k8s/**/charts/**
 result
+id_ed25519
+id_ed25519.pub
