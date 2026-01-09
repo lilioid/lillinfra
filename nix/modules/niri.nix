@@ -100,6 +100,8 @@ in {
       nautilus
       loupe
       trash-cli
+      gnome-connections
+      wl-mirror
     ];
 
     #
