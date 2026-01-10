@@ -172,15 +172,6 @@ in
             pg_restore_command = lib.getExe' pgConfig.package "pg_restore";
           }
         ]);
-
-        #        postgresql_databases = lib.mkIf cfg.rsync-net.backupPostgres [
-        #          {
-        #            name = "all";
-        #            format = "directory";
-        #            psql_command = with pkgs; "${postgresql}/bin/psql";
-        #            pg_dump_command = with pkgs; "${postgresql}/bin/pg_dump";
-        #          }
-        #        ];
       } // cfg.settings;
     };
 
