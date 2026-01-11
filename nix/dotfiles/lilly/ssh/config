@@ -294,6 +294,17 @@ Host noc.events.ccc.de *.c3noc.net 94.45.22?.* 94.45.23?.* 94.45.24?.* 94.45.25?
   UserKnownHostsFile ~/.ssh/39C3_known_hosts
 
 
+
+#####
+# Eurofurence NOC
+#
+Host noc2.eurofurence.org
+  ProxyJump jumphost.z9.aut-num.de
+
+Host *.eurofurence.org
+  IdentityFile ~/.ssh/id_lilly@eurofurence.pub
+
+
 # Global Override Settings
 Host *
   ForwardAgent no
