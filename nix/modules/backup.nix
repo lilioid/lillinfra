@@ -45,6 +45,11 @@ in
         description = "Whether to enable automatic backups of postgresql databases";
         type = types.bool;
       };
+      notify = mkOption {
+        default = "on-failure";
+        description = "In which cases a notification should be sent via ntfy";
+        type = types.enum [ "always" "on-failure" "never" ];
+      };
       destinations = mkOption {
         description = "Definition of destination to which backups should be sent";
         default = [ ];
@@ -139,19 +144,19 @@ in
           topic = "backups";
           access_token = "{credential file ${config.sops.secrets."${cfg.secretNamespace}/ntfyToken".path}}";
           states = [ "fail" ];
-          start = {
+          start = lib.mkIf (cfg.notify == "always") {
             title = "Backup started";
             message = "${config.networking.fqdnOrHostName} has started its scheduled backup";
             priority = "min";
             tags = "card_file_box";
           };
-          finish = {
+          finish = lib.mkIf (cfg.notify == "always") {
             title = "Backup finished";
             message = "${config.networking.fqdnOrHostName} has successfully finished its scheduled backup";
             priority = "min";
             tags = "heavy_check_mark";
           };
-          fail = {
+          fail = lib.mkIf (cfg.notify == "always" || cfg.notify == "on-failure") {
             title = "Backup failed";
             message = "${config.networking.fqdnOrHostName} failed to backup its data";
             priority = "default";
