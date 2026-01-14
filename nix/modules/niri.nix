@@ -256,6 +256,14 @@ in {
           }
         ] ++ cfg.additionalWindowRules ;
 
+        layer-rules = [
+          {
+            # open desktop menu with float animation
+            matches = [{ namespace="rofi"; }];
+            baba-is-float = true;
+          }
+        ];
+
         binds = {
           "F1".action = niriActions.show-hotkey-overlay;
           "Mod+Return" = {
