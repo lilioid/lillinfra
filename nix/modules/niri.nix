@@ -235,7 +235,10 @@ in {
             default-column-width = { proportion = 2.0 / 3.0; };
           }
           {
-            matches = [{ app-id="^thunderbird$"; }];
+            matches = [
+              { app-id="^thunderbird$"; }
+              { app-id="^org.gnome.Evolution$"; }
+            ];
             open-maximized = true;
           }
           {
