@@ -70,7 +70,7 @@ in
       go
       nix-output-monitor
       distrobox
-      jetbrains.pycharm-professional
+      jetbrains.pycharm
       jetbrains.rust-rover
       jetbrains.webstorm
       jetbrains.goland
