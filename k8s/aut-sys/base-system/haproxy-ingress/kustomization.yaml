@@ -9,7 +9,7 @@ helmCharts:
   - name: haproxy-ingress
     repo: https://haproxy-ingress.github.io/charts
     releaseName: haproxy-ingress
-    version: "0.15.0"
+    version: "0.15.1"
     valuesFile: haproxy-ingress.values.yaml
     namespace: haproxy-ingress
     includeCRDs: false

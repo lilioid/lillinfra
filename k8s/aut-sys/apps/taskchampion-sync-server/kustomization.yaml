@@ -12,4 +12,4 @@ generators:
 
 images:
   - name: ghcr.io/gothenburgbitfactory/taskchampion-sync-server-postgres
-    newTag: "0.7.0"
+    newTag: "0.7.1"

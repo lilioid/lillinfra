@@ -10,14 +10,14 @@ helmCharts:
   - name: traefik-crds
     repo: https://traefik.github.io/charts
     releaseName: traefik-crds
-    version: "1.11.0"
+    version: "1.13.1"
     valuesFile: traefik-crds.values.yaml
     includeCRDs: true
 
   - name: traefik
     repo: https://traefik.github.io/charts
     releaseName: traefik
-    version: "37.1.1"
+    version: "37.4.0"
     valuesFile: traefik.values.yaml
     namespace: traefik
     includeCRDs: false

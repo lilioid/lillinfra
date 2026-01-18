@@ -4,7 +4,7 @@ namespace: argocd
 
 images:
   - name: quay.io/viaductoss/ksops
-    newTag: "v4.3.3"
+    newTag: "v4.4.0"
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.6/manifests/install.yaml

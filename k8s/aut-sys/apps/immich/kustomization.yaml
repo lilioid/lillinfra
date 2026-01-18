@@ -4,9 +4,9 @@ namespace: immich
 
 images:
   - name: ghcr.io/immich-app/immich-server
-    newTag: "v2.1.0"
+    newTag: "v2.4.1"
   - name: ghcr.io/immich-app/immich-machine-learning
-    newTag: "v2.1.0"
+    newTag: "v2.4.1"
   - name: docker.io/valkey/valkey
     newTag: "8-bookworm"
 
