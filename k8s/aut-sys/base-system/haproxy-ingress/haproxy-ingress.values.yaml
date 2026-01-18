@@ -1,0 +1,10 @@
+# ref: https://artifacthub.io/packages/helm/haproxy-ingress/haproxy-ingress
+controller:
+  config:
+    proxy-body-size: "1k"
+  ingressClassResource:
+    enabled: true
+    default: false
+  service:
+    externalTrafficPolicy: Local      
+
