@@ -237,14 +237,9 @@ in {
           {
             matches = [
               { app-id="^thunderbird$"; }
-              { app-id="^org.gnome.Evolution$"; }
+              { app-id="^org.gnome.Evolution$"; title="Inbox"; }
             ];
             open-maximized = true;
-          }
-          {
-            matches = [{ app-id="^org.gnome.Evolution$"; title="Compose Message"; }];
-            open-maximized = false;
-            default-column-width = { proportion = 1.0 / 3.0; };
           }
           {
             matches = [{ app-id="^jetbrains-pycharm$"; title = "^Welcome to PyCharm$"; }];
