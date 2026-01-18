@@ -9,7 +9,7 @@ metadata:
 spec:
   description: basic-cluster configuration from lillinfra
   sourceRepos: 
-    - "git@git.lly.sh:lilly/lillinfra.git"
+    - "*"
   destinations:
     - name: in-cluster
       server: https://kubernetes.default.svc
@@ -30,7 +30,6 @@ metadata:
 spec:
   description: apps from lillinfra
   sourceRepos:
-    - "git@git.lly.sh:lilly/lillinfra.git"
     - "*"
   destinations:
     - name: in-cluster

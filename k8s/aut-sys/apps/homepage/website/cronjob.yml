@@ -28,7 +28,7 @@ spec:
                 claimName: homepage-state
           containers:
             - name: homepage
-              image: git.lly.sh/lilly/homepage
+              image: git.hanse.de/lilly/homepage
               command: [ "/bin/sh", "-c" ]
               args:
                 - |
