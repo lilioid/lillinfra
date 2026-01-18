@@ -4,12 +4,9 @@ metadata:
   name: attic
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
-    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
-    traefik.ingress.kubernetes.io/router.middlewares: >-
-      traefik-compress@kubernetescrd,
-      traefik-redirect-tls@kubernetescrd,
-      traefik-secure-headers@kubernetescrd
+    haproxy-ingress.github.io/proxy-body-size: "1g"
 spec:
+  ingressClassName: haproxy
   tls:
     - secretName: tls-nix-store
       hosts: [ babe-do-you-need-anything-from-the-nix.store ]
