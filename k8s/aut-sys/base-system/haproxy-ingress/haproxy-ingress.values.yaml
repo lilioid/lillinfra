@@ -1,0 +1,15 @@
+# ref: https://artifacthub.io/packages/helm/haproxy-ingress/haproxy-ingress
+controller:
+  livenessProbe:
+    port: 10254
+  readinessProbe:
+    port: 10254
+  config:
+    proxy-body-size: "1k"
+    # healthz-addr: "[::]:10253"
+  ingressClassResource:
+    enabled: true
+    default: false
+  service:
+    externalTrafficPolicy: Local      
+
