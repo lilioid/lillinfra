@@ -6,7 +6,8 @@ controller:
     port: 10254
   config:
     proxy-body-size: "1k"
-    # healthz-addr: "[::]:10253"
+    bind-http: ":::80,:80"
+    bind-https: ":::443,:443"
   ingressClassResource:
     enabled: true
     default: false
