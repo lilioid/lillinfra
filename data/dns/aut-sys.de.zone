@@ -7,5 +7,5 @@ $TTL 3600
 @	3600	IN	NS	ns2.desec.org.
 
 ; redirect everything to my gateway
-@   A       37.153.156.169
-*.  CNAME   gtw.srv.lly.sh.
+@   A       185.161.130.10
+*.  CNAME   www1.z9.aut-num.de.

@@ -1,0 +1,6 @@
+$TTL 3600
+
+; SOA is managed by desec so we skip it
+@    3600	IN	NS	ns1.desec.io.
+@    3600	IN	NS	ns2.desec.org.
+

@@ -6,8 +6,9 @@ $TTL 3600
 @	NS	ns2.desec.org.
 
 ; redirect everything to my gateway
-@   A     37.153.156.169
-*. CNAME gtw.srv.lly.sh.
+@   A     185.161.130.10
+@   AAAA  2a07:c481:2:6::
+*.  CNAME gtw.srv.lly.sh.
 
 ; mail
 _dmarc      	TXT	"v=DMARC1; p=reject; ruf=mailto:dmarc-reports@ftsell.de;"
