@@ -237,7 +237,7 @@ in {
           {
             matches = [
               { app-id="^thunderbird$"; }
-              { app-id="^org.gnome.Evolution$"; title="Inbox"; }
+              { app-id="^org.gnome.Evolution$"; title="^Mail|Inbox$"; }
             ];
             open-maximized = true;
           }
