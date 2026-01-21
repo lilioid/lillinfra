@@ -8,4 +8,14 @@ $TTL 3600
 
 ; redirect everything to my gateway
 @   A       185.161.130.10
-*.  CNAME   www1.z9.aut-num.de.
+@   AAAA    2a07:c481:2:6::
+*   CNAME   www1.z9.aut-num.de.
+
+; functional records (quick access to specific hosts or functionality)
+spf.hosted-on  TXT      "v=spf1 +a:mail.srv.lly.sh -all"
+k8s            CNAME    k8s-ctl.z9.aut-num.de.
+vpn            CNAME    rt-wan.z9.aut-num.de.
+mail           CNAME    mail.srv.lly.sh.
+sync           CNAME    syncthing.z9.aut-num.de.
+*.hosted-on    CNAME    webhost.z9.aut-num.de.
+hosted-on      CNAME    webhost.z9.aut-num.de.

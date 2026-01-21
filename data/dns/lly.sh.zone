@@ -1,8 +1,8 @@
 $TTL 3600
 
 ; SOA is managed by desec so we skip it
-lly.sh.	3600	IN	NS	ns1.desec.io.
-lly.sh.	3600	IN	NS	ns2.desec.org.
+@    3600	IN	NS	ns1.desec.io.
+@    3600	IN	NS	ns2.desec.org.
 
 ; generic
 @	        A	    185.161.130.10

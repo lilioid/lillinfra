@@ -1,13 +1,32 @@
 $TTL 3600
 
 ; SOA is managed by desec so we skip it
-; aut-num.de.	300     IN	SOA	get.desec.io. get.desec.io. 2025053101 86400 3600 2419200 3600
-
 @	3600	IN	NS	ns1.desec.io.
 @	3600	IN	NS	ns2.desec.org.
 
 ; z9 (stuff hosted at Fux e.G.)
-rt.z9       AAAA 2a07:c481:2:2::1
-pve1.z9     AAAA 2a07:c481:2:2::101
-pve2.z9     AAAA 2a07:c481:2:2::102
-pve3.z9     AAAA 2a07:c481:2:2::103
+rt-warn.z9           A       185.161.129.148
+rt-wan.z9            AAAA    2a07:c481::2:1
+rt.z9                A       10.233.226.1
+rt.z9                AAAA    2a07:c481:2:2::1
+pve1.z9              AAAA    2a07:c481:2:2::101
+pve2.z9              AAAA    2a07:c481:2:2::102
+pve3.z9              AAAA    2a07:c481:2:2::103
+k8s-ctl.z9           A       185.161.130.4
+k8s-ctl.z9           AAAA    2a07:c481:2:5:be24:11ff:fe9e:1d05
+k8s-worker1.z9       AAAA    2a07:c481:2:5:be24:11ff:fe79:ddc7
+k8s-worker2.z9       AAAA    2a07:c481:2:5:be24:11ff:fe9e:291b
+k8s.worker3.z9       AAAA    2a07:c481:2:5:be24:11ff:feac:5082
+db.z9                A       185.161.130.2
+db.z9                AAAA    2a07:c481:2:5:be24:11ff:fe4e:828a
+www1.z9              A       185.161.130.10
+www1.z9              AAAA    2a07:c481:2:6::
+www2.z9              A       185.161.130.11
+www2.z9              AAAA    2a07:c481:2:6::1
+jumphost.z9          A       185.161.130.3
+jumphost.z9          AAAA    2a07:c481:2:5:be24:11ff:fed8:cbc1
+actions-runner.z9    AAAA    2a07:c481:2:5:be24:11ff:fee7:9592
+syncthing.z9         A       185.161.130.8
+syncthing.z9         AAAA    2a07:c481:2:5:be24:11ff:fe38:a167
+webhost.z9           A       185.161.130.7
+webhost.z9           AAAA    2a07:c481:2:5:be24:11ff:fed0:b3ca

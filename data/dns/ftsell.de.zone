@@ -1,20 +1,19 @@
 $TTL 3600
 
 ; SOA is managed by desec so we skip it
-; @	300	IN	SOA	get.desec.io. get.desec.io. 2025020401 86400 3600 2419200 3600
 @	NS	ns1.desec.io.
 @	NS	ns2.desec.org.
 
-; redirect everything to my gateway
-@   A     185.161.130.10
-@   AAAA  2a07:c481:2:6::
-*.  CNAME gtw.srv.lly.sh.
+; handle everything with my webserver
+@   A     185.161.130.11
+@   AAAA  2a07:c481:2:6::1
+*   CNAME www2.z9.aut-num.de.
 
 ; mail
-_dmarc      	TXT	"v=DMARC1; p=reject; ruf=mailto:dmarc-reports@ftsell.de;"
+_dmarc      	TXT	"v=DMARC1; p=none;"
 main._domainkey	TXT	"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2Aq7HNQZmuk438HUlcYsxkmRuHJOz4ZpPRfIIml6C3Qp5hY5O7l8cSmvhsj1vLoMoPi4CWwHyOVl2hRTMQqsYz+l6ZFAcwI3YBDTD7hjaB3nNjGfOVo1X2Cq7c+sFaeMAZwTqC2R1TusfVb7QBuUTRxVnHStvc7crmOdJb0NCVBZvJ0juYkmXtA" "i6S/VhBZxDSpMb69Eef48yeyFEhK5qcRSAA2D/RnaZwY1/RrKS4RpP6YEhkgFkLtgiQuYjslk64zDYiJu3pmIhW1an+qv984C55FowifyGVaLkCkvXrnO/kMMX5Ya05N6RnurVCP9w6Vu2yX8zThY1F8yyro6SwIDAQAB"
-@	            TXT	"v=spf1 +include:lly.sh -all"
-@	            MX	100 mail.srv.lly.sh.
+@	            TXT	"v=spf1 +include:spf.hosted-on.aut-sys.de. -all"
+@	            MX	100 mx1.aut-sys.de.
 @	            MX	200 mxext1.mailbox.org.
 @               MX	200 mxext2.mailbox.org.
 @           	MX	210 mxext3.mailbox.org.
