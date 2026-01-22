@@ -1,5 +1,5 @@
 name: Authentik
-issuer: https://auth.lly.sh/application/o/argocd/
+issuer: https://auth.aut-sys.de/application/o/argocd/
 clientID: DAUHQwUiWPiYwG98yUM42z7ZhtziZLiUTVfRAzcu
 clientSecret: $oidc.authentik.clientSecret
 # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
