@@ -10,7 +10,7 @@ controller:
     bind-https: ":::443,:443"
   ingressClassResource:
     enabled: true
-    default: false
+    default: true
   service:
     externalTrafficPolicy: Local      
 
