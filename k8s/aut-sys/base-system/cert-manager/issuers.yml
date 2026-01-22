@@ -5,6 +5,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
+    profile: shortlived
     email: li@lly.sh
     privateKeySecretRef:
       name: letsencrypt-account-key
