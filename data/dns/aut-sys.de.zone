@@ -8,7 +8,7 @@ $TTL 3600
 
 ; redirect everything to my gateway
 @   A       185.161.130.11
-@   AAAA    2a07:c481:2:6::2
+@   AAAA    2a07:c481:2:6::1
 *   CNAME   www2.z9.aut-num.de.
 
 ; functional records (quick access to specific hosts or functionality)
