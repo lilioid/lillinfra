@@ -7,6 +7,7 @@ $TTL 3600
 ; generic
 @	        A	    185.161.130.11
 @           AAAA    2a07:c481:2:6::1
+li          CNAME   www2.z9.aut-sys.de.
 
 ; legacy (TODO: Remove once all services are migrated)
 *	        CNAME	gtw.srv.lly.sh.
