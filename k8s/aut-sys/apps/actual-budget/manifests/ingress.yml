@@ -13,6 +13,7 @@ metadata:
       traefik-redirect-tls@kubernetescrd,
       traefik-secure-headers@kubernetescrd
 spec:
+  ingressClassName: haproxy
   tls:
     - secretName: tls-budget.aut-sys.de
       hosts: [ budget.aut-sys.de ]
