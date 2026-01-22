@@ -5,10 +5,9 @@ $TTL 3600
 @    3600	IN	NS	ns2.desec.org.
 
 ; generic
-@	        A	    185.161.130.10
-@           AAAA    2a07:c481:2:6::
-*	        CNAME	gtw.srv.lly.sh.
-gtw.srv     CNAME	vps0.hosting.srv.lly.sh.
+@	        A	    185.161.130.11
+@           AAAA    2a07:c481:2:6::1
+*	        CNAME	www2.z9.aut-num.de.
 
 ; mail
 mail        	CNAME	mail.srv.lly.sh.
