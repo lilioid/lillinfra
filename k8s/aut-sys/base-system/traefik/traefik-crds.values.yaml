@@ -1,3 +1,0 @@
-# ref: https://artifacthub.io/packages/helm/traefik/traefik-crds
-traefik: true
-gatewayAPI: false
