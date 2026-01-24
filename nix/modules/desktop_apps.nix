@@ -51,6 +51,7 @@ in {
         "browser.tabs.groups.smart.enabled" = false;
         "browser.tabs.groups.smart.userEnable" = false;
         "extensions.ml.enabled" = false;
+        "gfx.wayland.hdr" = true;
       };
       policies = {
         DisableTelemetry = true;
