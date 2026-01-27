@@ -22,6 +22,7 @@
         "nixos-latest:docker://nixos/nix"
       ];
       settings = {
+        runner.capacity = 4;
         container = {
           docker_host = "automount";
         };
