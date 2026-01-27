@@ -1,0 +1,60 @@
+name: build-nix-system
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: nixos-latest
+    strategy:
+      matrix:
+        system:
+          - "actions-runner.z9.aut-num.de"
+          - "installer"
+          - "jumphost.z9.aut-num.de"
+          - "k8s-ctl.z9.aut-num.de"
+          - "k8s-worker1.z9.aut-num.de"
+          - "k8s-worker2.z9.aut-num.de"
+          - "k8s-worker3.z9.aut-num.de"
+          - "syncthing.z9.aut-num.de"
+          - "webhost.z9.aut-num.de"
+    container:
+      image: git.hanse.de/lilly/lillinfra-nix-builder
+      volumes:
+        - shared-nix-store:/shared-nix-store
+    steps:
+      
+      - name: Checkout Source
+        uses: actions/checkout@v6
+
+      - name: Setup caching
+        uses: actions/cache@v5
+        with:
+          key: nix-cache-${{ hashFiles('flake.lock', 'flake.nix') }}
+          path: "/root/.cache/nix/**"
+
+      - name: Setup attic
+        run: |
+          nix profile add nixpkgs#attic-client
+          attic login lillinfra https://babe-do-you-need-anything-from-the-nix.store "${{ secrets.NIX_CACHE_TOKEN }}"
+
+      - name: Build system
+        id: build-system
+        run: |
+          echo -n "nix_path=" >> "$FORGEJO_OUTPUT"
+          set -x
+          nix build \
+            --fallback --log-format "raw" --no-link \
+            --print-out-paths \
+            --eval-store "/shared-nix-store" --store "/shared-nix-store" \
+            '.#nixosConfigurations."${{ matrix.system }}".config.system.build.toplevel' \
+            >> "$FORGEJO_OUTPUT"
+
+      - name: Push build results into cache
+        env:
+          NIX_CONFIG: |
+            store = local?root=/shared-nix-store
+        run:  |
+          attic push lillinfra "${{ steps.build-system.outputs.nix_path }}" ||true
+          attic push lillinfra "${{ steps.build-system.outputs.nix_path }}" ||true
+          attic push lillinfra "${{ steps.build-system.outputs.nix_path }}"

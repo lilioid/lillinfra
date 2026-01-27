@@ -1,5 +1,7 @@
 FROM docker.io/nixos/nix
 
 ADD nix.conf /etc/nix/nix.conf
-RUN nix profile add nixpkgs#nodejs
+RUN nix profile add \
+  nixpkgs#nodejs \
+  nixpkgs#attic-client
 
