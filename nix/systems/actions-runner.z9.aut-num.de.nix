@@ -19,7 +19,7 @@
       labels = [
         "debian-latest:docker://node:current"
         "alpine-latest:docker://node:current-alpine"
-        "nixos-latest:docker://nixos/nix"
+        "nixos-latest:docker://git.hanse.de/lilly/lillinfra-nix-builder"
       ];
       settings = {
         runner.capacity = 4;
