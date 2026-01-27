@@ -1,0 +1,10 @@
+name: build-container
+on:
+  workflow_dispatch:
+    inputs:
+      description: "which container to build"
+      required: true
+      type: string
+
+
+

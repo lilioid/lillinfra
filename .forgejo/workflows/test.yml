@@ -1,0 +1,24 @@
+on:
+  push:
+jobs:
+  matrix-generator:
+    runs-on: alpine-latest
+    outputs:
+      variants: ${{ steps.generate_matrix.outputs.variants }}
+      nodes: ${{ steps.generate_matrix.outputs.nodes }}
+    steps:
+      - id: generate_matrix
+        run: |
+          echo 'variants=["bookworm", "bullseye"]' >> $GITHUB_OUTPUT
+          echo 'nodes=["18", "20"]' >> $GITHUB_OUTPUT
+  test:
+    needs: matrix-generator
+    runs-on: alpine-latest
+    strategy:
+      matrix:
+        variant: ${{ fromJSON(needs.matrix-generator.outputs.variants) }}
+        node: ${{ fromJSON(needs.matrix-generator.outputs.nodes) }}
+    steps:
+      - uses: https://code.forgejo.org/actions/setup-node@v4
+        with:
+          node-version: '${{ matrix.node }}'

@@ -1,0 +1,40 @@
+name: containers
+on:
+  push: {}
+  workflow_call: {}
+  schedule:
+    - cron: "@weekly"
+
+jobs:
+  generate-build-matrix:
+    runs-on: alpine-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+      - id: discover-containers
+        name: discover container definitions
+        run: |
+          echo -n "container_names=[" >> "$FORGEJO_OUTPUT"
+          for i in containers/*; do
+            echo -n "{ container: \"$i\" }, " >> "$FORGEJO_OUTPUT"
+          done
+          echo "]" >> "$FORGEJO_OUTPUT"
+          cat "$FORGEJO_OUTPUT"
+    outputs:
+      container_names: ${{ steps.discover-containers.outputs.container_names }}
+    
+  build-container:
+    runs-on: alpine-latest
+    needs: generate-build-matrix
+    strategy:
+      matrix: 
+        bla: [ blub, foo ]
+        container_name: ${{ fromJSON(needs.generate-build-matrix.outputs.container_names) }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+      - run: |
+          echo "${{ toJSON(needs.generate-build-matrix.outputs.container_names) }}"
+          echo "-----"
+          echo "${{ toJSON(matrix) }}"
+
