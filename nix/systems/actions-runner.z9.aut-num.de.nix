@@ -8,7 +8,7 @@
     enable = true;
     autoPrune.enable = true;
   };
-  systemd.services."gitea-actions-runner".description = lib.mkForce "Forgejo Actions Runner";
+  networking.firewall.allowedTCPPorts = [ 45540 45541 ];
   services.gitea-actions-runner = {
     package = pkgs.forgejo-runner;
     instances."git.hanse.de" = {
@@ -19,12 +19,31 @@
       labels = [
         "debian-latest:docker://node:current"
         "alpine-latest:docker://node:current-alpine"
+      ];
+      settings = {
+        runner.capacity = 1;
+        cache.proxy_port = 45540;
+        container = {
+          docker_host = "automount";
+          valid_volumes = [ "shared-nix-store" ];
+        };
+      };
+    };
+    instances."git.hanse.de-nix" = {
+      enable = true;
+      name = "aut-sys-runner--nix";
+      tokenFile = config.sops.templates."forgejo-actions-runner/tokenFile".path;
+      url = "https://git.hanse.de/";
+      labels = [
         "nixos-latest:docker://git.hanse.de/lilly/lillinfra-nix-builder"
       ];
       settings = {
-        runner.capacity = 4;
+        runner.capacity = 1;
+        cache.proxy_port = 45541;
         container = {
+          privileged = true;
           docker_host = "automount";
+          valid_volumes = ["shared-nix-store"];
         };
       };
     };

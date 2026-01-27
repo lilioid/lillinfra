@@ -1,7 +1,8 @@
 name: containers
 on:
-  push: {}
-  workflow_call: {}
+  push:
+    paths: [ "containers/**" ]
+  workflow_dispatch: {}
   schedule:
     - cron: "@weekly"
 
