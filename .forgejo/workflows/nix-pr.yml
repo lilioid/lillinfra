@@ -1,0 +1,67 @@
+name: nix-pr
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "@weekly"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  open-pr:
+    runs-on: nixos-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: true
+
+      - name: Update nix flake inputs
+        run: |
+          #nix flake update
+          echo "dummy update, TODO: remove"
+
+      - name: Populate cache with updated flake inputs
+        uses: actions/cache/save@v5
+        with:
+          key: nix-cache-${{ hashFiles('flake.lock', 'flake.nix') }}
+          path: "/root/.cache/nix/**"
+
+      - name: Push changes
+        run: |
+          git config user.name "forgejo-actions"
+          git config user.email "noreply@forgejo.org"
+          git switch -c "update-flake-inputs"
+          git add .
+          git commit -m "update flake inputs" --allow-empty
+          git push --force origin update-flake-inputs
+
+      - name: Open Pull-Request
+        id: open-pr
+        uses: ./.forgejo/local-actions/open-pr
+        with:
+          target: main
+          src: update-flake-inputs
+          title: Update flake inputs
+          body: |
+            Automatic update of nix flake inputs and therefore system updates.
+            See comments below for version changes caused by this upgrade.
+
+      - name: Post test comment
+        uses: ./.forgejo/local-actions/forgejo-pr-comment
+        with:
+          pr-num: "${{ steps.open-pr.outputs.pr-num }}"
+          body: Test Review
+          comments: |
+            [
+              {
+                "body": "test comment 1"
+              },
+              {
+                "body": "test comment 2",
+                "path": "test path"
+              },
+              "test comment 3"
+            ]
+

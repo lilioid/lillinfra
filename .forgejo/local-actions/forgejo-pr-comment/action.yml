@@ -1,0 +1,22 @@
+name: forgejo-pr-comment
+description: Add a comment to an existing Pull-Request
+
+inputs:
+  pr-num:
+    description: Number of the Pull-Request to add a comment to
+    required: true
+  body:
+    description: Text of the comment to add
+    required: true
+  comments:
+    description: Additional comments attached to the review
+    default: "[]"
+
+outputs:
+  review-id:
+    description: The ID of the created review
+
+runs:
+  using: node24
+  main: dist.mjs
+

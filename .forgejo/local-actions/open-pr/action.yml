@@ -1,0 +1,28 @@
+name: open-pr
+description: Open a PR on Forgejo
+
+inputs:
+  target:
+    description: Target (or base) branch to use in the PR
+    default: main
+  src:
+    description: Source branch to request to be pulled into *target*
+    required: true
+  title:
+    description: PR title
+    required: true
+  body:
+    description: PR body
+    required: true
+  allow-updates:
+    description: Whether updates of existing PR from *src* to *target* are allowed
+    default: "true"
+
+outputs:
+  pr-num:
+    description: The numeric ID of the Pull-Request
+
+runs:
+  using: node24
+  main: dist.mjs
+

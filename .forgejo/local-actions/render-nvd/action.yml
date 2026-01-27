@@ -1,0 +1,21 @@
+name: render-nvd
+description: Render a nix-version-diff between two branches and comment that diff to a PR
+
+inputs:
+  ref1:
+    description: Git ref 1 of the diff
+    required: true
+  ref2:
+    description: Git ref 2 of the diff
+    required: true
+  pr-number:
+    description: Number of the Pull-Request to which the diff comment should be added
+    required: true
+  nix-systems:
+    description: List of nix systems for which a diff should be produced
+    required: true
+
+runs:
+  using: node24
+  main: dist.mjs
+
