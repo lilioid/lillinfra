@@ -1,0 +1,54 @@
+name: containers
+on:
+  push: {}
+  workflow_call: {}
+  schedule:
+    - cron: "@weekly"
+
+jobs:
+  generate-build-matrix:
+    runs-on: alpine-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+      - name: Install python
+        run: apk add --no-cache python3
+      - id: discover-containers
+        name: Discover contained container definitions
+        shell: "python3 {0}"
+        run: |
+          import json
+          import os
+          with open(os.environ["FORGEJO_OUTPUT"], "a") as f:
+            container_names = os.listdir("containers/")
+            print(f"Found container definitions {container_names}")
+            print(f"container_names={json.dumps(container_names)}", file=f)
+    outputs:
+      container_names: ${{ steps.discover-containers.outputs.container_names }}
+
+  build-container:
+    runs-on: alpine-latest
+    needs: [ generate-build-matrix ]
+    strategy:
+      matrix: 
+        container_name: ${{ fromJSON(needs.generate-build-matrix.outputs.container_names) }}
+    steps:
+      - name: Setup docker
+        run: apk add --no-cache docker-cli docker-cli-buildx
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build image
+        run: |
+          echo "Building ${{ matrix.container_name }}"
+          docker build "containers/${{ matrix.container_name }}/" \
+            -f "containers/${{ matrix.container_name }}/Containerfile" \
+            -t "${{ matrix.container_name }}:latest" \
+            --label "org.opencontainers.image.source=${{ forgejo.server_url }}/${{ forgejo.repository }}"
+      - name: Push image
+        if: ${{ github.ref }} == "main"
+        run: |
+          echo "Publishing ${{ matrix.container_name }} as git.hanse.de/${{ forgejo.repository }}-${{ matrix.container_name }}:latest"
+          docker login -u lilly -p "${{ secrets.HANSE_PACKAGES_ACCESS }}" git.hanse.de
+          docker tag "${{ matrix.container_name }}:latest" "git.hanse.de/${{ forgejo.repository }}-${{ matrix.container_name }}:latest"
+          docker push "git.hanse.de/${{ forgejo.repository }}-${{ matrix.container_name }}:latest"
+
