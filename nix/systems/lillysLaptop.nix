@@ -110,6 +110,8 @@
       enable = true;
       configOverride = {
         outputs."eDP-1" = {
+          position.x = 0;
+          position.y = 0;
           mode.height = 1800;
           mode.width = 2880;
           mode.refresh = 90.001;
@@ -118,8 +120,8 @@
         };
         outputs."LG Electronics 25BL56WY 911NTFA73947" = {
           # CCCHH Werkstatt Monitor
-          # position.x = 0;
-          # position.y = -1500;
+          position.x = 0;
+          position.y = -1500;
           scale = 0.8;
         };
       };
