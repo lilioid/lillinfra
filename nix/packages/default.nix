@@ -37,7 +37,7 @@ let
       let
         overrides = {
           patches = [ ./k3s.patch ];
-          vendorHash = "sha256-SctFg2GQSspQjg6ViTwCiqufitaylfN6jpukzqQ2W6s=";
+          vendorHash = "sha256-5cgkts1jdLxHQrLaoY7Qg1QBU6vGgbEsYetJ39Dz8ng=";
         };
         k3s_def = flake.inputs.nixpkgs + "/pkgs/applications/networking/cluster/k3s";
         k3s_all = (pkgs.callPackage k3s_def {
