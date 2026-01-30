@@ -210,6 +210,18 @@ in {
 
         window-rules = [
           {
+            # hide certain apps from screen capture
+            matches = [
+              { app-id="^signal$"; }
+              { app-id="^Element$"; }
+              { app-id="^org.telegram.desktop$"; }
+              { app-id="^org.gnome.Evolution$"; }
+              { app-id="^thunderbird$"; }
+              { app-id="^org.keepassxc.KeePassXC"; }
+            ];
+            block-out-from = "screen-capture";
+          }
+          {
             matches = [{ app-id="^firefox$"; title="^Picture-in-Picture$"; }];
             open-floating = true;
           }
@@ -264,6 +276,14 @@ in {
             # open desktop menu with float animation
             matches = [{ namespace="rofi"; }];
             baba-is-float = true;
+          }
+          {
+            # hide notification tray from screen capture
+            matches = [
+              { namespace="swaync-control-center"; }
+              { namespace="swaync-notification-window"; }
+            ];
+            block-out-from = "screen-capture";
           }
         ];
 
