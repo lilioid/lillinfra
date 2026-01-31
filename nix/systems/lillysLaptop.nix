@@ -124,6 +124,14 @@
           position.y = -1500;
           scale = 0.8;
         };
+        outputs."Optoma Corporation Optoma WXGA Q7C6351C0097" = {
+          # Fux Turmzimmer
+          position.x = 0;
+          position.y = -1080;
+          mode.width = 1920;
+          mode.height = 1080;
+          mode.refresh = 59.940;
+        };
       };
     };
 
