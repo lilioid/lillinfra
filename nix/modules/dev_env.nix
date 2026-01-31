@@ -70,10 +70,10 @@ in
       go
       nix-output-monitor
       distrobox
-      jetbrains.pycharm
-      jetbrains.rust-rover
-      jetbrains.webstorm
-      jetbrains.goland
+      # jetbrains.pycharm
+      # jetbrains.rust-rover
+      # jetbrains.webstorm
+      # jetbrains.goland
     ];
 
     programs.fish.shellInit = ''
