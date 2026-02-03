@@ -274,6 +274,15 @@ Host *.hanse.de *.zs64.net
   IdentityFile ~/.ssh/id_lilly@hanse.de.pub
 
 
+
+#####
+# CCCHH
+#
+Host *.hosts.hamburg.ccc.de
+  User chaos
+  IdentityFile ~/.ssh/id_lilly@ccc.pub
+
+
 #####
 # 39C3 NOC
 #
