@@ -73,10 +73,10 @@ in {
     };
 
     fonts = {
-      packages = with pkgs; [ inter nerd-fonts.jetbrains-mono nerd-fonts.symbols-only ];
+      packages = with pkgs; [ inter maple-mono.variable nerd-fonts.symbols-only ];
       fontconfig.defaultFonts = {
         sansSerif = [ "Symbols Nerd Font" "Inter" ];
-        monospace = [ "JetBrainsMono NF" ];
+        monospace = [ "Maple Mono" "Symbols Nerd Font Mono" ];
       };
     };
     
