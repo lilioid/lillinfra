@@ -1,5 +1,6 @@
 forgejo-actions-runner:
     registration-token: ENC[AES256_GCM,data:2hQoZ+XLFl+/q1JIt54cOgNe9I40I9/LANS6JyGzKVimxRy42D6lqw==,iv:pKAPWihUp/evPDllovOyAMNq+2pOddKs2qoOWMX6+2E=,tag:rE/HzmmDgzN57a6CaHdRGQ==,type:str]
+    did-registration-token: ENC[AES256_GCM,data:bkvOY5/Glce7+zgPWJ6xpxrzob/p0PiubNFFGl3xslM3757AodkkuA==,iv:cvexaJfjVWZMEgk2Wrz2h+nWEZnW8zG6YUL4gMQ5Jmg=,tag:y9+bS+5nnrBH07H8v7Pxpw==,type:str]
 sops:
     age:
         - recipient: age19h7xtfmt3py3ydgl8d8fgh8uakxqxjr74flrxev3pgmvvx94kvtq5d932d
@@ -20,7 +21,7 @@ sops:
             Q1U2SFYzYkJWRzBqQzhOYzBUeENCcVUKa0C1+FU/C0YzzGSuFuIpvLTAPID66s8t
             u3vEbB750Qr72RHUxOLw+Qxxs37q2Aaf2o2K+oOAzEb0b82f5szaiA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-12-15T20:44:04Z"
-    mac: ENC[AES256_GCM,data:2igvNpoQUDuEObrhX89chlEMlT1FztRJ3kFi90NmDf9X5hNyIcAW3AdtFl+0zr246NTQZiDS9cJKWcvgsdZEQdt7W43M775Hd/LDnJLX23wRe6Q13LaftsXQktHrtcQMQEoZQ7mrY8+ajn7tkMel7vLHgvoJYa497Mq6lzBojG0=,iv:jq7mgXKmeDWLulhTNWI3cXf8p+jXu4oZGgrFh5OY2aE=,tag:jsLjZl9gL2vKmcWeTdZbzA==,type:str]
+    lastmodified: "2026-02-17T21:03:29Z"
+    mac: ENC[AES256_GCM,data:wKOWYlX2UyMY/h4f+mSGNPsldq3ZBWfaCuWJ8TsQR6fhHIo5n0+FMBD7r4PR9PAKZzXoDxYGgSTR/2ICG7x1XZ9oaUlaS83mqLm/d0/Pr+tCv5859OJ1/f5uaq4Ae3f+k9bZ+yX6WlynRQ0hdrWcRPqP+7/chzok4fHfm7erZzs=,iv:5FlLxiMYxGS2+WTCcOmWeHiLLiH3gy2m8G24THgBhZ0=,tag:y+42CjX105kWR7tlrYDw+w==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0
