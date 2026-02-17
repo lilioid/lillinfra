@@ -49,33 +49,12 @@
       };
     };
 
-    instances."codeberg.org" = {
-      enable = true;
-      name = "aut-sys-runner--diday";
-      tokenFile = config.sops.templates."forgejo-actions-runner/did-tokenFile".path;
-      url = "https://codeberg.org/";
-      labels = [
-        "debian-latest:docker://node:current"
-        "alpine-latest:docker://node:current-alpine"
-      ];
-      settings = {
-        runner.capacity = 1;
-        cache.proxy_port = 45542;
-        container = {
-          docker_host = "automount";
-        };
-      };
-    };
   };
 
   # provide registration token to runner
   sops.secrets."forgejo-actions-runner/registration-token" = {};
   sops.templates."forgejo-actions-runner/tokenFile".content = ''
     TOKEN=${config.sops.placeholder."forgejo-actions-runner/registration-token"}
-  '';
-  sops.secrets."forgejo-actions-runner/did-registration-token" = {};
-  sops.templates."forgejo-actions-runner/did-tokenFile".content = ''
-    TOKEN=${config.sops.placeholder."forgejo-actions-runner/did-registration-token"}
   '';
 
   # DO NOT CHANGE
