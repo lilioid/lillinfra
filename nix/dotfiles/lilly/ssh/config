@@ -278,9 +278,12 @@ Host *.hanse.de *.zs64.net
 #####
 # CCCHH
 #
-Host *.hosts.hamburg.ccc.de
+Host *.hamburg.ccc.de
   User chaos
   IdentityFile ~/.ssh/id_lilly@ccc.pub
+
+Host *-intern.hamburg.ccc.de
+  ProxyJump public-reverse-proxy.hamburg.ccc.de
 
 
 #####
