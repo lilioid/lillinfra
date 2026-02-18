@@ -1,0 +1,12 @@
+$TTL 3600
+
+; SOA is managed by desec so we skip it
+@    3600	IN	NS	ns1.desec.io.
+@    3600	IN	NS	ns2.desec.org.
+
+; delegate all content to k8s.hanse.de
+@ IN A    212.12.50.232
+@ IN AAAA 2a00:14b0:4200:32e0::1e8
+* IN A    212.12.50.232
+* IN AAAA 2a00:14b0:4200:32e0::1e8
+
