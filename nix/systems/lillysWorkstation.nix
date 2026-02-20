@@ -172,6 +172,18 @@
           ];
         };
       };
+
+      "autSysVpn" = {
+        address = [ "10.233.228.4/24" "2a07:c481:2:4::4/64" ];
+        peers."autSysRouter" = {
+          pubKey = "3Bt7GFzA2PIzhwCWHr8D9+T19H6JMfYoH1ZrRNGMmG8=";
+          endpoint = "vpn.aut-sys.de:51820";
+          allowedIPs = [
+            "10.233.228.0/24"    # vpn network
+            "2a07:c481:2:4::/64" # vpn network
+          ];
+        };
+      };
     };
   };
 

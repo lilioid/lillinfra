@@ -1,6 +1,8 @@
 wg:
     autSysMgmt:
         privkey: ENC[AES256_GCM,data:TeUtkPYySvKqqGCl3kko2EvEO1hBybNqeaaKxqms5/909fN/0TEVtQ4Qt8U=,iv:1knr8fKBryXn5CzxdpKvxtKxnED4Kf3uNg8YT7rNgq4=,tag:mH/59gprfX3ZOCAPND4C4Q==,type:str]
+    autSysVpn:
+        privkey: ENC[AES256_GCM,data:z+IKBSuVS6/Dynyb8uyoPmh6WQLJcZjQpJ/NK/e6S9T/1tDn0L9d3yq9gs8=,iv:RAME/4lv9U8Vf5P9fyXyGY7xJSscZbjXMVklDTHHFRY=,tag:SlAejdSf3Pjac04CbVJs8w==,type:str]
     fux:
         privkey: ENC[AES256_GCM,data:0ojyqJOnJcbAMZUEYlpbm0Gd0OlpWk5xNSeNBGU3mZl8oNqgyAlKfKESAmc=,iv:U7c4NXq0/ioOL2CeZ1gWVoQnNBBUj37zGY2K9//osoM=,tag:s0BUO8Z8N1kgPNziP0Hldw==,type:str]
 lilly:
@@ -29,7 +31,7 @@ sops:
             UG1GYkh1bU5WSlk2VWtnN0k4cTV1OEUKDs6AqkaMIx6zDuDIplSxPcSvUl+L9fog
             v1K0DbdH4aTzhZVSAK3d0kJ4ayX/A3yy5u+B6QAQGZdvw6l2RB0jRg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-16T13:45:08Z"
-    mac: ENC[AES256_GCM,data:g1utwBjoMIh/1NEB/IX40o6m1dkwurzKF+O6IDy7qwa6lLmaRLmfTJ7gDW24oRT6+cOlhMdcT40bXpGWlnNOoG3rrY4zhZLYkubtdrbmiLB49xcicGPNt1J/CFoY08nI6r3S/VsTJmDdOkKOf583RcH4xeL8ZehEsJfMU9jZ+A4=,iv:gtximL3lNfYhEq4fx/6edIJOaNW1uTGg5oPVcNOA3d4=,tag:j6VCWt644RhE4AeEPr64Dg==,type:str]
+    lastmodified: "2026-02-20T21:01:39Z"
+    mac: ENC[AES256_GCM,data:xOHCfOrV6l9GN4chfachwvrW7/vDE3DOlCUC+d8iFMsYZiBYyRtdHpX2q5yGBOu8C+HVnGhQgH2f3sE8D4sbL9hdzh8FfQVwWDIrFddFsPO/EX/ScTdoWTDLeBG0Bd4nhKiPx6CNrBNG3p3oOnIIR5TxNyJYx+MuAMDavrLULVM=,iv:oS01FNm7C8YkWkDLXdKz53I8AffYk4k5cgHTAqibe8M=,tag:fd9gTbbJF8IK4WceBuokcw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0
