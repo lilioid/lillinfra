@@ -17,4 +17,4 @@ resources:
 
 images:
   - name: docker.io/nextcloud
-    newTag: "31"
+    newTag: "33"
