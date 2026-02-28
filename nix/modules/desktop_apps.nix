@@ -32,6 +32,7 @@ in {
       gimp
       obsidian
       gnome-font-viewer
+      feishin
     ];
 
     services.gnome.evolution-data-server.enable = true;
