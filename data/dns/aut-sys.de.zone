@@ -19,3 +19,5 @@ mail           CNAME    mail.srv.lly.sh.
 sync           CNAME    syncthing.z9.aut-num.de.
 *.hosted-on    CNAME    webhost.z9.aut-num.de.
 hosted-on      CNAME    webhost.z9.aut-num.de.
+music          CNAME    h.oleb.it.
+media          CNAME    h.oleb.it.
