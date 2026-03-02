@@ -33,6 +33,7 @@ in {
       obsidian
       gnome-font-viewer
       feishin
+      picard
     ];
 
     services.gnome.evolution-data-server.enable = true;
