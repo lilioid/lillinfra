@@ -102,6 +102,7 @@ in {
       trash-cli
       gnome-connections
       wl-mirror
+      pavucontrol
     ];
 
     #
