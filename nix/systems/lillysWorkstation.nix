@@ -1,8 +1,9 @@
-{ modulesPath
-, config
-, lib
-, pkgs
-, ...
+{
+  modulesPath,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 {
   imports = [
@@ -10,66 +11,105 @@
   ];
 
   # boot config
+  nixpkgs.hostPlatform = "x86_64-linux";
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "nvme"
     "usb_storage"
     "sd_mod"
     "rtsx_pci_sdmmc"
-    "hid_roccat_isku"
   ];
   boot.kernelModules = [
     "kvm-intel"
     "sg"
   ];
-  boot.zfs.extraPools = [ "lillyPc" ];
-  fileSystems = {
-    "/" = {
-      device = "lillyPc/root";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/nix" = {
-      device = "lillyPc/nix";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/home" = {
-      device = "lillyPc/home";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/5620-B429";
-      fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
-    };
-  };
-  swapDevices = [
-    {
-      device = "/dev/disk/by-partuuid/56505436-7b17-4613-8a53-0ce1cbcfb000";
-      randomEncryption.enable = true;
-    }
-  ];
   hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
-  nixpkgs.hostPlatform = "x86_64-linux";
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    configurationLimit = 10;
-    useOSProber = true;
-    device = "nodev";
-  };
   boot.loader.efi.canTouchEfiVariables = true;
-  nix.settings.system-features = [ "gccarch-znver3" ];
+  boot.loader.systemd-boot = {
+    enable = true;
+    # enable = lib.mkForce false; # lanzaboote is currently implemented as an alternative option to systemd-boot
+    configurationLimit = 10;
+    editor = false;
+  };
+  # boot.lanzaboote = {
+  #   enable = true;
+  #   pkiBundle = "/etc/secureboot";
+  # };
+  boot.initrd.systemd = {
+    enable = true;
 
-  virtualisation.docker.storageDriver = "zfs";
+  };
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+  };
+
+  # partitioning and filesystems
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_2TB_S4X1NJ0N700005V";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "5G";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "cryptroot";
+                settings = {
+                  allowDiscards = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "--label=${ config.networking.hostName }" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/nix-store" = {
+                      mountpoint = "/nix/store";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/swap" = {
+                      mountpoint = "/.swapvol";
+                      swap.swapfile.size = "16G";
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
 
   # hardware config
-  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
@@ -88,7 +128,6 @@
     makemkv
     sieve-connect
     darktable
-    heroic
   ];
 
   programs.steam = {
@@ -96,9 +135,8 @@
     gamescopeSession.enable = true;
   };
 
-  # options defined by other custom modules
+  # # options defined by other custom modules
   custom = {
-    gnomeDesktop.enable = true;
     devEnv.enable = true;
     user-syncthing.enable = true;
     backup = {
@@ -139,10 +177,10 @@
         {
           # open some things on the right monitor
           matches = [
-            { app-id="^org\\.keepassxc\\.KeePassXC$"; }
-            { app-id="^org\\.telegram\\.desktop$"; }
-            { app-id="^Element$"; }
-            { app-id="^signal$"; }
+            { app-id = "^org\\.keepassxc\\.KeePassXC$"; }
+            { app-id = "^org\\.telegram\\.desktop$"; }
+            { app-id = "^Element$"; }
+            { app-id = "^signal$"; }
           ];
           open-on-output = "LG Electronics 2D FHD LG TV 0x01010101";
         }
@@ -151,22 +189,32 @@
 
     wg.profiles = {
       "fux" = {
-        address = [ "172.17.2.251/29" "2a07:c481:0:2::251/64" ];
+        address = [
+          "172.17.2.251/29"
+          "2a07:c481:0:2::251/64"
+        ];
         peers."fuxVpn" = {
           pubKey = "bMbuZ+vYhnW2rmme8k2APLpqqMENlQHJrMza6SDEKzw=";
           endpoint = "vpn.fux-eg.net:50199";
-          allowedIPs = [ "172.16.0.0/12" "2a07:c481:0:1::/64" "2a07:c481:0:2::/64" ];
+          allowedIPs = [
+            "172.16.0.0/12"
+            "2a07:c481:0:1::/64"
+            "2a07:c481:0:2::/64"
+          ];
         };
       };
 
       "autSysMgmt" = {
-        address = [ "10.233.227.4/24" "2a07:c481:2:3::4/64" ];
+        address = [
+          "10.233.227.4/24"
+          "2a07:c481:2:3::4/64"
+        ];
         peers."autSysRouter" = {
           pubKey = "SySg/p4N+TEx874Rnlt/7vNmXhQPQNE+WpBDk791dww=";
           endpoint = "vpn.aut-sys.de:13231";
           allowedIPs = [
-            "10.233.226.0/24"    # mgmt network
-            "10.233.227.0/24"    # mgmt vpn
+            "10.233.226.0/24" # mgmt network
+            "10.233.227.0/24" # mgmt vpn
             "2a07:c481:2:2::/64" # mgmt network
             "2a07:c481:2:3::/64" # mgmt vpn
           ];
@@ -174,21 +222,21 @@
       };
 
       "autSysVpn" = {
-        address = [ "10.233.228.4/24" "2a07:c481:2:4::4/64" ];
+        address = [
+          "10.233.228.4/24"
+          "2a07:c481:2:4::4/64"
+        ];
         peers."autSysRouter" = {
           pubKey = "3Bt7GFzA2PIzhwCWHr8D9+T19H6JMfYoH1ZrRNGMmG8=";
           endpoint = "vpn.aut-sys.de:51820";
           allowedIPs = [
-            "10.233.228.0/24"    # vpn network
+            "10.233.228.0/24" # vpn network
             "2a07:c481:2:4::/64" # vpn network
           ];
         };
       };
     };
   };
-
-  # tell taskwarrior that this is the device on which it should generate recurring tasks
-  home-manager.users.lilly.programs.taskwarrior.config.recurrence = 1;
 
   services.openssh = {
     enable = true;
@@ -202,7 +250,6 @@
   services.earlyoom.enable = true;
   programs.gnupg.agent.enable = true;
   services.resolved.enable = true;
-  services.cookied.enable = true;
   hardware.sane = {
     enable = true;
     extraConfig."epson2" = ''
@@ -216,7 +263,7 @@
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
-  home-manager.users.lilly.home.stateVersion = "24.05";
-  system.stateVersion = "24.05";
+  home-manager.users.lilly.home.stateVersion = "25.11";
+  system.stateVersion = "25.11";
   networking.hostId = "0744a9ed";
 }

@@ -33,6 +33,7 @@ let
           {
             # nixpkgs settings based on function inputs
             nixpkgs.pkgs = pkgs;
+
             nix.nixPath = [
               "nixpkgs=${lib.cleanSource nixpkgs}"
               "nixpkgs-unstable=${lib.cleanSource flake.inputs.nixpkgs-unstable}"
