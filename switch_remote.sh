@@ -10,6 +10,7 @@ exec nixos-rebuild "$ACTION" \
   --no-reexec \
   --use-substitutes \
   --sudo \
+  --fallback \
   --target-host "$CONNECT" \
   --flake ".#$SYSTEM"
 
