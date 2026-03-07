@@ -108,6 +108,7 @@ in
           "/home/*/.local/share/docker/"
           "/home/*/Downloads"
           "/home/*/Games"
+          "/home/*/go"
           "/home/*/.cache"
           "/home/*/.local/share/Trash"
           "/home/*/.local/share/pnpm/store"
