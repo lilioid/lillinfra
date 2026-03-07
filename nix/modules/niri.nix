@@ -89,6 +89,7 @@ in {
 
     services.displayManager.enable = true;
     services.displayManager.gdm.enable = true;
+    services.gvfs.enable = true;
 
     environment.systemPackages = with pkgs; [
       xwayland-satellite
