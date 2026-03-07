@@ -97,7 +97,6 @@ in {
       brightnessctl
       playerctl
       nemo
-      nautilus
       loupe
       trash-cli
       gnome-connections
@@ -324,7 +323,7 @@ in {
           "Mod+Shift+E" = {
             hotkey-overlay.title = "Open File Browser";
             repeat = false;
-            action = niriActions.spawn [ "nautilus" ];
+            action = niriActions.spawn [ "nemo" ];
           };
           "Mod+E" = {
             hotkey-overlay.title = "Open File Picker";
