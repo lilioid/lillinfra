@@ -14,6 +14,7 @@
       marksman
       python312Packages.python-lsp-server
       python312Packages.python-lsp-ruff
+      ruff
       beam27Packages.elixir-ls
       rust-analyzer
     ]
@@ -24,12 +25,4 @@
       bufferline = "always";
     };
   };
-  # themes = {
-  #   base16_custom = {
-  #     inherits = "base16_default";
-  #     "ui.cursor" = {
-  #       modifiers = [ "reversed" ];
-  #     };
-  #   };
-  # };
 }

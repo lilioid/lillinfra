@@ -97,7 +97,8 @@ in {
       swaynotificationcenter
       brightnessctl
       playerctl
-      nemo
+      nemo-with-extensions
+      nautilus   # needed for "open file" dialogs
       loupe
       trash-cli
       gnome-connections
