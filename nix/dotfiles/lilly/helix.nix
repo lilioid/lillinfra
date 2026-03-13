@@ -19,17 +19,17 @@
     ]
   );
   settings = {
-    theme = "base16_custom";
+    theme = "rose_pine";
     editor = {
       bufferline = "always";
     };
   };
-  themes = {
-    base16_custom = {
-      inherits = "base16_default";
-      "ui.cursor" = {
-        modifiers = [ "reversed" ];
-      };
-    };
-  };
+  # themes = {
+  #   base16_custom = {
+  #     inherits = "base16_default";
+  #     "ui.cursor" = {
+  #       modifiers = [ "reversed" ];
+  #     };
+  #   };
+  # };
 }
