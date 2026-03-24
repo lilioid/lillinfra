@@ -95,6 +95,23 @@ in
     };
   };
 
+  custom.wg = {
+    profiles."autSysVpn" = {
+      address = [
+        "10.233.228.6/24"
+        "2a07:c481:2:4::6/64"
+      ];
+      peers."autSysRouter" = {
+        pubKey = "3Bt7GFzA2PIzhwCWHr8D9+T19H6JMfYoH1ZrRNGMmG8=";
+        endpoint = "vpn.aut-sys.de:51820";
+        allowedIPs = [
+          "10.233.228.0/24" # vpn network
+          "2a07:c481:2:4::/64" # vpn network
+        ];
+      };
+    };
+  };
+
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
   home-manager.users.lilly.home.stateVersion = "24.05";

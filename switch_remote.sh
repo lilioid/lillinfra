@@ -11,6 +11,7 @@ exec nixos-rebuild "$ACTION" \
   --use-substitutes \
   --sudo \
   --fallback \
+  --ask-sudo-password \
   --target-host "$CONNECT" \
   --flake ".#$SYSTEM"
 
