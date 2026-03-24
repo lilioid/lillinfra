@@ -1,6 +1,4 @@
 {
-  modulesPath,
-  config,
   lib,
   pkgs,
   ...
@@ -22,9 +20,7 @@ let
   '';
 in
 {
-  imports = [
-    ../modules/home_vm.nix
-  ];
+  custom.preset = "home-vm";
 
   # boot config
   boot.supportedFilesystems.zfs = true;
@@ -304,7 +300,10 @@ in
     };
 
   # backup config
-  custom.backup.enable = true;
+  custom.backup = {
+    enable = true;
+    destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+  };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible

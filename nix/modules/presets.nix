@@ -1,4 +1,9 @@
-{ modulesPath, config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.custom.preset;
 in
@@ -7,7 +12,13 @@ in
     custom.preset = mkOption {
       description = "Choose a configuration preset based on the systems hosting environment";
       default = "standalone";
-      type = lib.types.enum [ "standalone" "hosting" "home" "aut-sys-lxc" "aut-sys-vm" ];
+      type = lib.types.enum [
+        "standalone"
+        "hosting"
+        "home-vm"
+        "aut-sys-lxc"
+        "aut-sys-vm"
+      ];
     };
   };
 
@@ -68,54 +79,61 @@ in
       #      };
     })
 
-    (lib.mkIf (cfg == "home") {
-      #      imports = [
-      #        (modulesPath + "/profiles/qemu-guest.nix")
-      #      ];
-      #
-      #      # boot config
-      #      boot.initrd.systemd.enable = true;
-      #      boot.initrd.availableKernelModules = [
-      #        "ahci"
-      #        "xhci_pci"
-      #        "virtio_pci"
-      #        "sr_mod"
-      #        "virtio_blk"
-      #      ];
-      #      boot.initrd.kernelModules = [ ];
-      #      boot.kernelModules = [ "kvm-intel" ];
-      #      boot.extraModulePackages = [ ];
-      #      boot.loader.systemd-boot = {
-      #        enable = true;
-      #        editor = false;
-      #      };
-      #
-      #      # general os config
-      #      services.qemuGuest.enable = true;
-      #      documentation.nixos.enable = false;
-      #
-      #      # configure systemd-networkd to listen for DHCP and router advertisements on all ethernet interfaces by default
-      #      networking.useDHCP = false;
-      #      systemd.network = {
-      #        enable = true;
-      #        networks."99-default-ether" = {
-      #          matchConfig = {
-      #            Type = "ether";
-      #            Kind = "!veth";
-      #          };
-      #          DHCP = "yes";
-      #          networkConfig.IPv6AcceptRA = lib.mkDefault true;
-      #        };
-      #      };
-      #
-      #      # ssh server
-      #      services.openssh = {
-      #        enable = true;
-      #        settings = {
-      #          PermitRootLogin = "no";
-      #          PasswordAuthentication = false;
-      #        };
-      #      };
+    (lib.mkIf (cfg == "home-vm") {
+      # boot config
+      boot.initrd.systemd.enable = true;
+      boot.initrd.availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "sr_mod"
+        "virtio_blk"
+        "virtio_net"
+        "virtio_pci"
+        "virtio_mmio"
+        "virtio_blk"
+        "virtio_scsi"
+        "9p"
+        "9pnet_virtio"
+      ];
+      boot.initrd.kernelModules = [
+        "virtio_balloon"
+        "virtio_console"
+        "virtio_rng"
+        "virtio_gpu"
+      ];
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.extraModulePackages = [ ];
+      boot.loader.systemd-boot = {
+        enable = true;
+        editor = false;
+      };
+
+      # general os config
+      services.qemuGuest.enable = true;
+      documentation.nixos.enable = false;
+
+      # configure systemd-networkd to listen for DHCP and router advertisements on all ethernet interfaces by default
+      networking.useDHCP = false;
+      systemd.network = {
+        enable = true;
+        networks."99-default-ether" = {
+          matchConfig = {
+            Type = "ether";
+            Kind = "!veth";
+          };
+          DHCP = "yes";
+          networkConfig.IPv6AcceptRA = lib.mkDefault true;
+        };
+      };
+
+      # ssh server
+      services.openssh = {
+        enable = true;
+        settings = {
+          PermitRootLogin = "no";
+          PasswordAuthentication = false;
+        };
+      };
     })
 
     (lib.mkIf (cfg == "aut-sys-lxc") {
@@ -203,7 +221,14 @@ in
 
       # boot config
       boot.initrd.systemd.enable = true;
-      boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
+      boot.initrd.availableKernelModules = [
+        "ata_piix"
+        "uhci_hcd"
+        "virtio_pci"
+        "virtio_scsi"
+        "sd_mod"
+        "sr_mod"
+      ];
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
