@@ -304,6 +304,7 @@ in
     enable = true;
     destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
   };
+  systemd.services.borgmatic.unitConfig.AssertPathIsMountPoint = "/srv/data/encrypted";
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
