@@ -9,7 +9,7 @@ let
   # owner of the files in /run/secrets (sops-nix stuff)
   secretOwner =
     if cfg.implementation == "systemd-networkd" then
-      "systemd-networkd"
+      "systemd-network"
     else if cfg.implementation == "network-manager" then
       "root"
     else
