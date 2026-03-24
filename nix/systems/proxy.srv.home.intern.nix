@@ -89,10 +89,6 @@ in
         locations."/".proxyPass = "http://priv.srv.home.intern:8000";
       };
 
-      "pics.home.lly.sh" = vhostDefaults // {
-        locations."/".proxyPass = "http://priv.srv.home.intern:3001";
-      };
-
       "unifi.home.lly.sh" = vhostDefaults // {
         locations."/" = {
           proxyPass = "https://priv.srv.home.intern:8443";

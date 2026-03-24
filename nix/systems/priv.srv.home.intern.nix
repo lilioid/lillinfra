@@ -11,9 +11,6 @@ let
   vGotenberg = "8.7";
   vTika = "latest";
 
-  vImmich = "v1.117.0";
-  vImmichRedis = "6.2-alpine";
-
   vHomeAssistant = "stable";
 
   vUnify = "9.2.87";
@@ -74,7 +71,6 @@ in
   networking.firewall.allowedTCPPorts = [
     8000 # paperless web
     8384 # syncthing gui
-    3001 # immich server
     8123 # home assistant
     1883 # mqtt server (exposed so that tasmota devices can access it)
     8080 # unifi network application (web interface)
@@ -139,7 +135,6 @@ in
       "root"
       "lilly"
       "paperless"
-      "immich"
     ];
     ensureUsers = [
       {
@@ -154,10 +149,6 @@ in
       }
       {
         name = "paperless";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "immich";
         ensureDBOwnership = true;
       }
     ];
@@ -215,54 +206,6 @@ in
   # paperless tika
   virtualisation.oci-containers.containers."paperless-tika" = {
     image = "docker.io/apache/tika:${vTika}";
-    extraOptions = [ "--net=host" ];
-  };
-
-  # immich webserver
-  systemd.services."podman-immich-server".wantedBy = lib.mkForce [ "encrypted-services.target" ];
-  virtualisation.oci-containers.containers."immich-server" = {
-    image = "ghcr.io/immich-app/immich-server:${vImmich}";
-    dependsOn = [ "immich-redis" ];
-    volumes = [
-      "/srv/data/encrypted/immich/media:/usr/src/app/upload"
-      "/srv/data/encrypted/syncthing/SyncPictures:/usr/src/app/extern/SyncPictures:ro"
-      "/etc/localtime:/etc/localtime:ro"
-    ];
-    environment = {
-      TZ = "Europe/Berlin";
-      IMMICH_TRUSTED_PROXIES = "192.168.20.102";
-      DB_HOSTNAME = "localhost";
-      DB_USERNAME = "immich";
-      DB_PASSWORD = "immich";
-      DB_DATABASE_NAME = "immich";
-      DB_VECTOR_EXTENSION = "pgvector";
-      REDIS_HOSTNAME = "localhost";
-      REDIS_PORT = "6380";
-    };
-    extraOptions = [
-      "--net=host"
-      "--group-add=237"
-    ];
-  };
-
-  # immich machine-learning
-  systemd.services."podman-immich-ml".wantedBy = lib.mkForce [ "encrypted-services.target" ];
-  virtualisation.oci-containers.containers."immich-ml" = {
-    image = "ghcr.io/immich-app/immich-machine-learning:${vImmich}";
-    volumes = [
-      "/srv/data/encrypted/immich/ml-cache:/cache"
-    ];
-    environment = config.virtualisation.oci-containers.containers."immich-server".environment;
-    extraOptions = [ "--net=host" ];
-  };
-
-  # immich redis
-  virtualisation.oci-containers.containers."immich-redis" = {
-    image = "docker.io/library/redis:${vImmichRedis}";
-    cmd = [
-      "--port"
-      "6380"
-    ];
     extraOptions = [ "--net=host" ];
   };
 
