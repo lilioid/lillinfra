@@ -1,8 +1,5 @@
 {
-  modulesPath,
   config,
-  lib,
-  pkgs,
   ...
 }:
 let
@@ -12,10 +9,9 @@ let
   };
 in
 {
-  imports = [
-    ../modules/home_vm.nix
-    ../modules/vpn_client.nix
-  ];
+  custom.preset = "home-vm";
+
+  # TODO: Reconfigure vpn client
 
   # boot config
   fileSystems = {
@@ -33,8 +29,6 @@ in
     };
   };
 
-  custom.mailRelay.enable = true;
-
   # network config
   networking.firewall.allowedTCPPorts = [
     80
@@ -47,11 +41,12 @@ in
   ];
 
   # dyndns for home.lly.sh
+  sops.secrets."ddclient/desec_token" = { };
   services.ddclient = {
     enable = true;
     verbose = true;
     usev4 = "webv4, webv4=https://checkipv4.dedyn.io/";
-#    usev6 = "webv6, webv6=https://checkipv6.dedyn.io/";
+    #    usev6 = "webv6, webv6=https://checkipv6.dedyn.io/";
     usev6 = "disabled";
     server = "update.dedyn.io";
     username = "lly.sh";
@@ -99,9 +94,6 @@ in
       };
     };
   };
-
-  # decrypted sops secrets
-  sops.secrets."ddclient/desec_token" = { };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
