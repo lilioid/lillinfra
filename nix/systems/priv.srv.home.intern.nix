@@ -303,6 +303,7 @@ in
   custom.backup = {
     enable = true;
     destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+    backupDirectories = [ "/root" "/home" "/srv" "/srv/data" "/srv/data/encrypted" ];
   };
   systemd.services.borgmatic.unitConfig.AssertPathIsMountPoint = "/srv/data/encrypted";
 
