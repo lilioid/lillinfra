@@ -4,7 +4,7 @@
   ...
 }:
 let
-  vPaperless = "latest";
+  vPaperless = "2.20";
   vPaperlessRedis = "7";
   vGotenberg = "8.7";
   vTika = "latest";
