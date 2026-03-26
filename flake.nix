@@ -41,13 +41,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # lix package manager
-    # https://lix.systems
-    lix = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module.git?ref=release-2.93";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # treeformat for specifying how to properly format files in this repo
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -75,7 +68,8 @@
     };
   };
 
-  outputs = {
+  outputs =
+    {
       self,
       nixpkgs,
       systems,
@@ -84,12 +78,27 @@
       ...
     }:
     let
+      # define a lix overlay to use Lix everywhere
+      # https://lix.systems/add-to-config/
+      lixOverlay = (
+        final: prev: {
+          inherit (final.lixPackageSets.stable)
+            nixpkgs-review
+            nix-update
+            nix-eval-jobs
+            nix-fast-build
+            nix-serve-ng
+            ;
+        }
+      );
+
       # instantiate nixpkgs for the given system, configuring this flake's overlay too
       mkPkgs =
         nixpkgs: system:
         import nixpkgs {
           localSystem = nixpkgs.lib.systems.systemToAttrs system;
           overlays = [
+            lixOverlay
             self.overlays.default
             cookied.overlays.default
           ];
@@ -104,14 +113,23 @@
       treefmtEval = pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
     in
     {
-      nixosConfigurations = import ./nix/systems { flake = self; mkPkgs = mkPkgs; };
+      nixosConfigurations = import ./nix/systems {
+        flake = self;
+        mkPkgs = mkPkgs;
+      };
       overlays.default =
         final: prev:
         import ./nix/packages {
           flake = self;
           pkgs = prev;
         };
-      packages = eachSystem (pkgs: import ./nix/packages { inherit pkgs; flake = self; });
+      packages = eachSystem (
+        pkgs:
+        import ./nix/packages {
+          inherit pkgs;
+          flake = self;
+        }
+      );
 
       devShells = eachSystem (pkgs: {
         default = pkgs.mkShell {

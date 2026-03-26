@@ -19,7 +19,6 @@ let
         flake.inputs.disko.nixosModules.disko
         flake.inputs.home-manager.nixosModules.home-manager
         flake.inputs.sops-nix.nixosModules.default
-        flake.inputs.lix.nixosModules.default
         flake.inputs.cookied.nixosModules.default
         flake.inputs.niri.nixosModules.niri
       ] ++ customModules ++ [
@@ -34,6 +33,7 @@ let
             # nixpkgs settings based on function inputs
             nixpkgs.pkgs = pkgs;
 
+            nix.package = pkgs.lix;
             nix.nixPath = [
               "nixpkgs=${lib.cleanSource nixpkgs}"
               "nixpkgs-unstable=${lib.cleanSource flake.inputs.nixpkgs-unstable}"
