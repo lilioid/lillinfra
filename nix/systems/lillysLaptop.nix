@@ -2,6 +2,7 @@
   modulesPath,
   config,
   pkgs,
+  lib,
   lanzaboote,
   ...
 }:
@@ -24,8 +25,6 @@
   hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
-    # enable = lib.mkForce false;
-    enable = true;
     configurationLimit = 10;
     editor = false;
   };
@@ -91,10 +90,11 @@
     };
   };
 
-  # boot.lanzaboote = {
-  #   enable = true;
-  #   pkiBundle = "/etc/secureboot";
-  # };
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   hardware.bluetooth.enable = true;
 
@@ -132,6 +132,7 @@
      backup = {
        enable = true;
        destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
+       backupDirectories = [ "/home" "/root" "/var/lib/sbctl" ];
      };
 
      niri = {
