@@ -120,10 +120,6 @@ creation_rules:
     key_groups:
       - age: [ *lilly, *k8s-ctl-aut-num, *k8s-worker1-aut-num, *k8s-worker2-aut-num, *k8s-worker3-aut-num ]
 
-  - path_regex: "nix/data/shared-secrets/task-sync.yml"
-    key_groups:
-      - age: [ *lilly, *lillysLaptop, *lillysWorkstation ]
-
   # generic secrets
   - path_regex: "nix/data/(.+-)?secrets/.+.yml"
     key_groups:

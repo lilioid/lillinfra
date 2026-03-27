@@ -81,8 +81,6 @@ in
         enable = true;
         ediff = lib.mkForce false;
       };
-      programs.taskwarrior = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs lib; }).taskwarrior;
-      services.taskwarrior-sync = lib.mkIf hasDevEnv (import ../dotfiles/lilly/taskwarrior.nix { inherit config pkgs lib; }).taskwarrior-sync;
       
       home.pointerCursor = {
         enable = true;
@@ -100,25 +98,6 @@ in
         path = "/home/lilly/.kube/config";
         key = ""; # force sops-nix to output the whole file and not just extract one key from the yaml content
       };
-      secrets."lilly/taskchampion-sync-client-id" = lib.mkIf hasDevEnv {
-        owner = "lilly";
-      };
-      secrets."lilly/taskchampion-sync-encryption-secret" = lib.mkIf hasDevEnv {
-        owner = "lilly";
-        sopsFile = ../data/shared-secrets/task-sync.yml;
-      };
-      templates."lilly/taskrc" = lib.mkIf hasDevEnv {
-        owner = "lilly";
-        content = ''
-          sync.server.url=https://task-sync.aut-sys.de
-          sync.server.client_id=${config.sops.placeholder."lilly/taskchampion-sync-client-id"}
-          sync.encryption_secret=${config.sops.placeholder."lilly/taskchampion-sync-encryption-secret"}
-        '';
-      };
     };
-
-    environment.systemPackages = [
-      (lib.mkIf hasDevEnv pkgs.taskwarrior-tui)
-    ];
   };
 }
