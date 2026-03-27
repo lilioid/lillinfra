@@ -1,5 +1,4 @@
 { lib
-, pkgs
 , config
 , ...
 }:
@@ -117,6 +116,26 @@ in
           "/home/*/Projects/**/target/"
           "/home/*/Projects/**/.venv/"
           "/home/*/Projects/**/.terraform/"
+          "/home/*/.gtkrc-2.0"
+          "/home/*/.manpath"
+          "/home/*/.pulse-cookie"
+          "/home/*/.steampath"
+          "/home/*/.steampid"
+          "/home/*/.nix-defexpr"
+          "/home/*/.nix-profile"
+          "/home/*/.nv"
+          "/home/*/.ansible"
+          "/home/*/.cargo"
+          "/home/*/.gnupg"
+          "/home/*/.icons"
+          "/home/*/.ipython"
+          "/home/*/.kube"
+          "/home/*/.mono"
+          "/home/*/.pki"
+          "/home/*/.rustup"
+          "/home/*/.ssh"
+          "/home/*/.steam"
+          "/home/*/.terraform.d"
           "/root/.cache"
           "**/node_modules/"
           "**/cache/"
