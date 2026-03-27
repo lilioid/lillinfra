@@ -66,6 +66,7 @@ in
     qt.style = "adwaita";
     networking.networkmanager.enable = true;
     services.power-profiles-daemon.enable = true;
+    services.upower.enable = true;
     services.gvfs.enable = true;
 
     # configure my preferred system fonts
@@ -185,6 +186,9 @@ in
                 }
                 {
                   id = "Battery";
+                  displayMode = "icon-always";
+                  hideIfNotDetected = true;
+                  showPowerProfiles = true;
                 }
                 {
                   id = "Volume";
