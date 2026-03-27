@@ -338,7 +338,7 @@ in
         };
 
         switch-events = {
-          lid-close.action = niriActions.spawn [ "swaylock" ];
+          lid-close.action = niriActions.spawn [ "noctalia-shell" "ipc" "call" "sessionMenu" "lock" ];
         };
 
         outputs = { }; # override this via the configOverride option
@@ -409,6 +409,7 @@ in
               { app-id = "^org.gnome.Evolution$"; }
               { app-id = "^thunderbird$"; }
               { app-id = "^org.keepassxc.KeePassXC"; }
+              { app-id = "^org\\.keepasxc\\.KeePassXC$"; }
             ];
             block-out-from = "screen-capture";
           }
@@ -420,10 +421,6 @@ in
               }
             ];
             open-floating = true;
-          }
-          {
-            matches = [ { app-id = "^org\\.keepasxc\\.KeePassXC$"; } ];
-            block-out-from = "screen-capture";
           }
           {
             matches = [
@@ -463,21 +460,6 @@ in
             open-maximized = true;
           }
           {
-            matches = [
-              {
-                app-id = "^jetbrains-pycharm$";
-                title = "^Welcome to PyCharm$";
-              }
-            ];
-            open-floating = true;
-            default-column-width = {
-              proportion = 1.0 / 3.0;
-            };
-            default-window-height = {
-              proportion = 0.5;
-            };
-          }
-          {
             # default matcher that styles all windows
             geometry-corner-radius = rec {
               top-left = 4.0;
@@ -489,22 +471,6 @@ in
           }
         ]
         ++ cfg.additionalWindowRules;
-
-        layer-rules = [
-          {
-            # open desktop menu with float animation
-            matches = [ { namespace = "rofi"; } ];
-            baba-is-float = true;
-          }
-          {
-            # hide notification tray from screen capture
-            matches = [
-              { namespace = "swaync-control-center"; }
-              { namespace = "swaync-notification-window"; }
-            ];
-            block-out-from = "screen-capture";
-          }
-        ];
 
         binds = {
           "F1".action = niriActions.show-hotkey-overlay;
@@ -734,27 +700,6 @@ in
         };
       }
       // cfg.configOverride;
-
-      # configure a background image daemon
-      # systemd.user.services."swaybg" = {
-      #   Unit = {
-      #     Description = "niri background daemon";
-      #     PartOf = [ "graphical-session.target" ];
-      #     After = [ "graphical-session.target" ];
-      #   };
-      #   Service = {
-      #     Type = "exec";
-      #     ExecStart = ''
-      #       ${lib.getExe pkgs.swaybg} \
-      #         --image "${../dotfiles/lilly/wallpapers/dino.jpg}" \
-      #         --output "*" \
-      #         --mode fill
-      #     '';
-      #   };
-      #   Install = {
-      #     WantedBy = [ "niri.service" ];
-      #   };
-      # };
     };
   };
 }
