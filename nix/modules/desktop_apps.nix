@@ -34,6 +34,7 @@ in {
       gnome-font-viewer
       feishin
       picard
+      gnome-connections
     ];
 
     services.gnome.evolution-data-server.enable = true;
