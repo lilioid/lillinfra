@@ -2,8 +2,10 @@
   config,
   lib,
   pkgs,
+  noctalia,
   ...
-}: let
+}:
+let
   homeConfig = config.home-manager.users.lilly;
   cfg = config.custom.niri;
   isUserEnabled = config.custom.user.enable;
@@ -29,23 +31,24 @@
     pinkLight4 = "#fbd0d8";
     pinkLight5 = "#fcdadf";
   };
-in {
+in
+{
   imports = [
     ./desktop_apps.nix
   ];
-  
+
   # option definitions
   options = with lib.options; {
     custom.niri = {
       enable = mkEnableOption "a configured niri desktop environment";
       configOverride = mkOption {
         description = "Niri configuration overrides";
-        default = {};
+        default = { };
         type = lib.types.attrsOf lib.types.attrs;
       };
       additionalWindowRules = mkOption {
         description = "Additional window-rules to add without overriding existing ones";
-        default = [];
+        default = [ ];
         type = lib.types.listOf lib.types.attrs;
       };
     };
@@ -55,7 +58,7 @@ in {
   config = lib.mkIf cfg.enable {
     #
     # general system configuration
-    # 
+    #
     custom.desktopApps.enableCommon = true;
     niri-flake.cache.enable = lib.mkForce false;
     programs.niri.enable = true;
@@ -63,8 +66,28 @@ in {
     qt.style = "adwaita";
     networking.networkmanager.enable = true;
     services.power-profiles-daemon.enable = true;
-    # programs.dconf.enable = true;    # needed to set gtk theme
-    
+    services.gvfs.enable = true;
+
+    # configure my preferred system fonts
+    fonts = {
+      packages = with pkgs; [
+        inter
+        maple-mono.variable
+        nerd-fonts.symbols-only
+      ];
+      fontconfig.defaultFonts = {
+        sansSerif = [
+          "Symbols Nerd Font"
+          "Inter"
+        ];
+        monospace = [
+          "Maple Mono"
+          "Symbols Nerd Font Mono"
+        ];
+      };
+    };
+
+    # configure desktop portals to use standard gtk portal (which is recommended by niri)
     xdg.portal = {
       enable = true;
       wlr.enable = true;
@@ -72,46 +95,198 @@ in {
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
 
-    fonts = {
-      packages = with pkgs; [ inter maple-mono.variable nerd-fonts.symbols-only ];
-      fontconfig.defaultFonts = {
-        sansSerif = [ "Symbols Nerd Font" "Inter" ];
-        monospace = [ "Maple Mono" "Symbols Nerd Font Mono" ];
-      };
-    };
-    
-    services.pulseaudio.enable = false;
+    # enable pipewire audio handling with compatibility layers
     services.pipewire = {
       enable = true;
       alsa.enable = true;
       pulse.enable = true;
     };
 
+    # enable a DisplayManager
     services.displayManager.enable = true;
     services.displayManager.gdm.enable = true;
-    services.gvfs.enable = true;
 
     environment.systemPackages = with pkgs; [
       xwayland-satellite
-      swaylock
-      swaynotificationcenter
-      brightnessctl
-      playerctl
-      nemo-with-extensions
-      nautilus   # needed for "open file" dialogs
+      nemo # standard file manager
+      nautilus # needed for "open file" dialogs
       loupe
       trash-cli
-      gnome-connections
       wl-mirror
-      pavucontrol
     ];
 
     #
-    # user-specific settings, rendered via home-manager
+    # user-specific settings rendered via home-manager
     #
     home-manager.users.lilly = lib.mkIf isUserEnabled {
+      imports = [
+        noctalia.homeModules.default
+      ];
+
       services.ssh-agent.enable = true;
-      services.network-manager-applet.enable = true;
+
+      programs.noctalia-shell = {
+        enable = true;
+        settings = {
+          bar = {
+            barType = "simple";
+            position = "top";
+            density = "default";
+            showOutline = false;
+            showCapsule = true;
+            widgetSpacing = 6;
+            contentPadding = 2;
+            enableExclusionZoneInste = false;
+            marginVertical = 4;
+            marginHorizontal = 4;
+            frameThickness = 8;
+            frameRadius = 12;
+            outerCorners = false;
+            hideOnOverview = false;
+            displayMode = "always_visible";
+            widgets = {
+              left = [
+                {
+                  id = "Workspace";
+                  enableScrollWheel = true;
+                  labelMode = "index";
+                  occupiedColor = "none";
+                  focusedColor = "primary";
+                  showApplications = false;
+                }
+                {
+                  id = "Clock";
+                  formatHorizontal = "HH:mm ddd, dd.MM.yyyy";
+                }
+                {
+                  id = "SystemMonitor";
+                  showCpuUsage = true;
+                  showMemoryUsage = true;
+                  compactMode = false;
+                  usePadding = true;
+                }
+              ];
+              center = [
+                {
+                  id = "ActiveWindow";
+                  useFixedWidth = true;
+                }
+              ];
+              right = [
+                {
+                  id = "MediaMini";
+                }
+                {
+                  id = "Tray";
+                  drawerEnabled = false;
+                }
+                {
+                  id = "NotificationHistory";
+                }
+                {
+                  id = "Battery";
+                }
+                {
+                  id = "Volume";
+                  displayMode = "alwaysShow";
+                }
+                {
+                  id = "Brightness";
+                  displayMode = "alwaysShow";
+                }
+                {
+                  id = "Bluetooth";
+                }
+                {
+                  id = "Network";
+                  displayMode = "alwaysShow";
+                }
+                {
+                  id = "ControlCenter";
+                }
+              ];
+            };
+          };
+          general = {
+            avatarImage = "/home/lilly/Sync/ProfilePictures/poly_fox.jpg";
+
+          };
+          location = {
+            name = "Hamburg";
+          };
+          wallpaper = {
+            directory = "/home/lilly/Sync/Wallpapers";
+            viewMode = "browse";
+            setWallpaperOnAllMonitors = true;
+          };
+          appLauncher = {
+            enableClipboardHistory = false;
+            terminalCommand = "kitty -e";
+            enableSettingsSearch = false;
+            enableSessionSearch = false;
+          };
+          controlCenter = {
+            shortcuts = {
+              left = [
+                { id = "Network"; }
+                { id = "Bluetooth"; }
+                { id = "PowerProfile"; }
+              ];
+              right = [
+                { id = "Notifications"; }
+                { id = "KeepAwake"; }
+                { id = "NightLight"; }
+                { id = "DarkMode"; }
+              ];
+            };
+            cards = [
+              {
+                id = "profile-card";
+                enabled = true;
+              }
+              {
+                id = "shortcuts-card";
+                enabled = true;
+              }
+              {
+                id = "audio-card";
+                enabled = true;
+              }
+              {
+                id = "brightness-card";
+                enabled = true;
+              }
+              {
+                id = "weather-card";
+                enabled = true;
+              }
+              {
+                id = "media-sysmon-card";
+                enabled = true;
+              }
+            ];
+          };
+          dock = {
+            enabled = false;
+          };
+          desktopWidgets = {
+            enabled = false;
+          };
+          sessionMenu = {
+            showKeybinds = false;
+            largeButtonsStyle = false;
+
+          };
+          idle = {
+            enabled = true;
+            suspendTimeout = 0; # disable auto-suspend
+          };
+          colorSchemes = {
+            predefinedScheme = "Rose Pine";
+            darkMode = false;
+          };
+        };
+      };
 
       gtk = {
         enable = true;
@@ -127,6 +302,10 @@ in {
 
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
       programs.niri.settings = {
+        spawn-at-startup = [
+          { command = [ "noctalia-shell" ]; }
+        ];
+
         input = {
           focus-follows-mouse = {
             enable = true;
@@ -140,7 +319,7 @@ in {
             };
           };
           touchpad = {
-            tap  = true;
+            tap = true;
             dwt = true;
             drag = true;
             natural-scroll = true;
@@ -150,15 +329,15 @@ in {
             scroll-method = "two-finger";
             scroll-factor = 0.8;
           };
-          mouse = {};
-          trackpoint = {};
+          mouse = { };
+          trackpoint = { };
         };
 
         switch-events = {
           lid-close.action = niriActions.spawn [ "swaylock" ];
         };
 
-        outputs = {};  # override this via the configOverride option
+        outputs = { }; # override this via the configOverride option
 
         cursor = {
           theme = homeConfig.home.pointerCursor.name;
@@ -182,11 +361,17 @@ in {
             { proportion = 2.0 / 3.0; }
             { proportion = 0.8; }
           ];
-          default-column-width = { proportion = 0.5; };
+          default-column-width = {
+            proportion = 0.5;
+          };
           focus-ring = {
             width = 2;
-            active = { color = colors.pinkMain; };
-            inactive = { color = colors.pinkDark5; };
+            active = {
+              color = colors.pinkMain;
+            };
+            inactive = {
+              color = colors.pinkDark5;
+            };
           };
           # struts = rec {
           #   left = 24;
@@ -196,7 +381,7 @@ in {
 
         prefer-no-csd = true;
         screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
-        
+
         environment = {
           XDG_CURRENT_DESKTOP = "niri:GNOME";
           SSH_AUTH_SOCK = "/run/user/1000/ssh-agent";
@@ -214,25 +399,35 @@ in {
           {
             # hide certain apps from screen capture
             matches = [
-              { app-id="^signal$"; }
-              { app-id="^Element$"; }
-              { app-id="^org.telegram.desktop$"; }
-              { app-id="^org.gnome.Evolution$"; }
-              { app-id="^thunderbird$"; }
-              { app-id="^org.keepassxc.KeePassXC"; }
+              { app-id = "^signal$"; }
+              { app-id = "^Element$"; }
+              { app-id = "^org.telegram.desktop$"; }
+              { app-id = "^org.gnome.Evolution$"; }
+              { app-id = "^thunderbird$"; }
+              { app-id = "^org.keepassxc.KeePassXC"; }
             ];
             block-out-from = "screen-capture";
           }
           {
-            matches = [{ app-id="^firefox$"; title="^Picture-in-Picture$"; }];
+            matches = [
+              {
+                app-id = "^firefox$";
+                title = "^Picture-in-Picture$";
+              }
+            ];
             open-floating = true;
           }
           {
-            matches = [{ app-id="^org\\.keepasxc\\.KeePassXC$"; }];
+            matches = [ { app-id = "^org\\.keepasxc\\.KeePassXC$"; } ];
             block-out-from = "screen-capture";
           }
           {
-            matches = [{ app-id="^thunderbird$"; title = "^\\d+ Reminder(s?)$"; }];
+            matches = [
+              {
+                app-id = "^thunderbird$";
+                title = "^\\d+ Reminder(s?)$";
+              }
+            ];
             open-floating = true;
             open-focused = true;
             open-on-workspace = null;
@@ -240,26 +435,43 @@ in {
           {
             # open some windows with 2/3 proportion by default because they dont scale well or require more space
             matches = [
-              { app-id="^firefox$"; is-floating=false; }
-              { app-id="^org\\.keepassxc\\.KeePassXC$"; }
-              { app-id="^org\\.telegram\\.desktop$"; }
-              { app-id="^Element$"; }
-              { app-id="^signal$"; }
+              {
+                app-id = "^firefox$";
+                is-floating = false;
+              }
+              { app-id = "^org\\.keepassxc\\.KeePassXC$"; }
+              { app-id = "^org\\.telegram\\.desktop$"; }
+              { app-id = "^Element$"; }
+              { app-id = "^signal$"; }
             ];
-            default-column-width = { proportion = 2.0 / 3.0; };
+            default-column-width = {
+              proportion = 2.0 / 3.0;
+            };
           }
           {
             matches = [
-              { app-id="^thunderbird$"; }
-              { app-id="^org.gnome.Evolution$"; title="^Mail|Inbox$"; }
+              { app-id = "^thunderbird$"; }
+              {
+                app-id = "^org.gnome.Evolution$";
+                title = "^Mail|Inbox$";
+              }
             ];
             open-maximized = true;
           }
           {
-            matches = [{ app-id="^jetbrains-pycharm$"; title = "^Welcome to PyCharm$"; }];
+            matches = [
+              {
+                app-id = "^jetbrains-pycharm$";
+                title = "^Welcome to PyCharm$";
+              }
+            ];
             open-floating = true;
-            default-column-width = { proportion = 1.0 / 3.0; };
-            default-window-height = { proportion = 0.5; };
+            default-column-width = {
+              proportion = 1.0 / 3.0;
+            };
+            default-window-height = {
+              proportion = 0.5;
+            };
           }
           {
             # default matcher that styles all windows
@@ -271,19 +483,20 @@ in {
             };
             clip-to-geometry = true;
           }
-        ] ++ cfg.additionalWindowRules ;
+        ]
+        ++ cfg.additionalWindowRules;
 
         layer-rules = [
           {
             # open desktop menu with float animation
-            matches = [{ namespace="rofi"; }];
+            matches = [ { namespace = "rofi"; } ];
             baba-is-float = true;
           }
           {
             # hide notification tray from screen capture
             matches = [
-              { namespace="swaync-control-center"; }
-              { namespace="swaync-notification-window"; }
+              { namespace = "swaync-control-center"; }
+              { namespace = "swaync-notification-window"; }
             ];
             block-out-from = "screen-capture";
           }
@@ -299,20 +512,44 @@ in {
           "Mod+D" = {
             hotkey-overlay.title = "Open Application picker";
             repeat = false;
-            action = niriActions.spawn [ "rofi" "-show" "drun" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "launcher"
+              "toggle"
+            ];
           };
           "Mod+L" = {
             hotkey-overlay.title = "Lock the Screen";
             repeat = false;
-            action = niriActions.spawn [ "swaylock" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "sessionMenu"
+              "lock"
+            ];
           };
           "Mod+Dead_Circumflex" = {
             hotkey-overlay.title = "Toggle Notification-Center";
-            action = niriActions.spawn [ "swaync-client" "--toggle-panel" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "notifications"
+              "toggleHistory"
+            ];
           };
           "Mod+Shift+Dead_Circumflex" = {
             hotkey-overlay.title = "Toggle DnD";
-            action = niriActions.spawn [ "swaync-client" "--togle-dnd" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "notifications"
+              "toggleDND"
+            ];
           };
           "Mod+Escape" = {
             hotkey-overlay.title = "Toggle Overview";
@@ -322,61 +559,107 @@ in {
             repeat = false;
             action = niriActions.close-window;
           };
-          "Mod+Shift+E" = {
+          "Mod+E" = {
             hotkey-overlay.title = "Open File Browser";
             repeat = false;
             action = niriActions.spawn [ "nemo" ];
           };
-          "Mod+E" = {
-            hotkey-overlay.title = "Open File Picker";
-            repeat = false;
-            action = niriActions.spawn [ "rofi" "-show" "recursivebrowser" ];
-          };
           "Mod+Shift+D" = {
             hotkey-overlay.title = "Open Emoji Picker";
             repeat = false;
-            action = niriActions.spawn [ "rofi" "-show" "emoji" ];
-          };
-          "Mod+Shift+C" = {
-            hotkey-overlay.title = "Open Calculator";
-            repeat = false;
-            action = niriActions.spawn [ "rofi" "-show" "calc" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "launcher"
+              "emoji"
+            ];
           };
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" ];
+            action = niriActions.spawn [
+              "wpctl"
+              "set-volume"
+              "@DEFAULT_AUDIO_SINK@"
+              "0.1+"
+            ];
           };
           "XF86AudioLowerVolume" = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-" ];
+            action = niriActions.spawn [
+              "wpctl"
+              "set-volume"
+              "@DEFAULT_AUDIO_SINK@"
+              "0.1-"
+            ];
           };
           "XF86AudioMute" = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
+            action = niriActions.spawn [
+              "wpctl"
+              "set-mute"
+              "@DEFAULT_AUDIO_SINK@"
+              "toggle"
+            ];
           };
           "XF86AudioMicMute" = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
+            action = niriActions.spawn [
+              "wpctl"
+              "set-mute"
+              "@DEFAULT_AUDIO_SOURCE@"
+              "toggle"
+            ];
           };
           XF86MonBrightnessUp = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "brightnessctl" "set" "+10%" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "brightness"
+              "increase"
+            ];
           };
           XF86MonBrightnessDown = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "brightnessctl" "set" "10%-" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "brightness"
+              "decrease"
+            ];
           };
           XF86AudioPrev = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "playerctl" "previous" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "media"
+              "previous"
+            ];
           };
           XF86AudioNext = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "playerctl" "next" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "media"
+              "next"
+            ];
           };
           XF86AudioPlay = {
             allow-when-locked = true;
-            action = niriActions.spawn [ "playerctl" "play-pause" ];
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "media"
+              "playPause"
+            ];
           };
 
           "Mod+Left".action = niriActions.focus-column-or-monitor-left;
@@ -442,360 +725,32 @@ in {
           "Mod+Shift+F".action = niriActions.fullscreen-window;
           "Mod+C".action = niriActions.center-visible-columns;
           "Mod+Shift+Space".action = niriActions.toggle-window-floating;
-          "Print".action.screenshot = {};
-          "Ctrl+Alt+Delete".action = niriActions.quit;
+          "Print".action.screenshot = { };
+          "Ctrl+Alt+Delete".action = niriActions.spawn [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
         };
-      } // cfg.configOverride;
-
-      # application picker
-      programs.rofi = {
-        enable = true;
-        modes = [ "drun" "emoji" "calc" "recursivebrowser" ];
-        terminal = lib.getExe pkgs.kitty;
-        plugins = with pkgs; [ rofi-calc rofi-emoji ];
-        theme = "DarkBlue";
-      };
-
-      # notification center
-      services.swaync = {
-        enable = true;
-      };
-
-      # status bar
-      programs.waybar = {
-        enable = true;
-        systemd.target = "niri.service";
-        settings = {
-          topBar = {
-            layer = "top";
-            position = "top";
-            modules-left = [
-              "niri/workspaces"
-            ];
-            modules-center = [ "niri/window" ];
-            modules-right = [
-              "custom/arrow5"
-              "network"
-              "custom/arrow4"
-              "wireplumber#sink"
-              "wireplumber#source"
-              "custom/arrow3"
-              "tray"
-              "custom/arrow2"
-              "power-profiles-daemon"
-              "battery"
-              "group/group-power"
-              "custom/arrow1"
-              "clock"
-            ];
-            clock = {
-              format = " {:%H:%M   󰃭  %d.%m.%Y}";
-              /*format = " {:%H:%M} 󰃭 {:%d}.{:%d}.{:%m}.{:%Y}";*/
-              timezone = "Europe/Berlin";
-              tooltip-format = "<tt>{calendar}</tt>";
-              calendar = {
-                mode = "year";
-                mode-mon-col = 4;
-                weeks-pos = "left";
-                format = {
-                  months = "<span color='${colors.white}'><b>{}</b></span>";
-                  days = "<span color='${colors.pinkDark1}'><b>{}</b></span>";
-                  weeks  = "<span color='${colors.blueComp}'><b>W{}</b></span>";
-                  weekdays = "<span color='${colors.greenComp}'><b>{}</b></span>";
-                  today = "<span color='${colors.white}'><b><u>{}</u></b></span>";
-                };
-              };
-              actions = {
-                on-click-right = "shift_reset";
-              };
-            };
-            "network" = {
-              format-ethernet = "󰈀 {ifname}";
-              format-wifi = " {essid}";
-              format-disconnected = "";
-              tooltip-format = "{ipaddr}/{cidr}";
-              on-click-right = "nm-connection-editor";
-            };
-            "wireplumber#sink" = {
-              format = "{icon} {volume}%";
-              format-muted = "󰖁";
-              format-icons = [ "󰕿" "󰖀" "󰕾" ];
-              node-type = "Audio/Sink";
-              on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            };
-            "wireplumber#source" = {
-              format = "{icon} {volume}%";
-              format-muted = "";
-              format-icons = [ "󰍬" ];
-              node-type = "Audio/Source";
-              on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-            };
-            power-profiles-daemon = {
-              format = "{icon}";
-              format-icons = {
-                default = "󰓅";
-                performance = "󰓅";
-                balanced = "󰾅";
-                power-saver = "󰾆";
-              };
-            };
-            tray = {
-              icon-size = 20;
-              spacing = 10;
-            };
-            battery = {
-              format = "{icon} {capacity}%";
-              format-charging = "{icon}󱐋 {capacity}%";
-              format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-            };
-            "group/group-power" = {
-              orientation = "inherit";
-              drawer = {
-                children-class = "group-power";
-                transition-left-to-right = false;
-              };
-              modules = [
-                "custom/power-menu"
-                "custom/lock"
-                "custom/quit"
-                "custom/reboot"
-                "custom/poweroff"
-              ];
-            };
-            "custom/power-menu" = {
-              format = "󰐥";
-              tooltip-format = "Power Menu";
-            };
-            "custom/poweroff" = {
-              format = "󰚥";
-              tooltip-format = "Poweroff";
-              on-click = "systemctl poweroff";
-            };
-            "custom/lock" = {
-              format = "󰍁";
-              tooltip-format = "Lock";
-              on-click = "swaylock";
-            };
-            "custom/quit" = {
-              format = "󰗼";
-              tooltip-format = "Exit Niri";
-              on-click = "niri msg action quit";
-            };
-            "custom/reboot" = {
-              format = "󰜉";
-              tooltip-format = "Reboot";
-              on-click = "systemctl reboot";
-            };
-            "custom/arrow1" = {
-              format = "";
-              tooltip = false;
-            };
-            "custom/arrow2" = {
-              format = "";
-              tooltip = false;
-            };
-            "custom/arrow3" = {
-              format = "";
-              tooltip = false;
-            };
-            "custom/arrow4" = {
-              format = "";
-              tooltip = false;
-            };
-            "custom/arrow5" = {
-              format = "";
-              tooltip = false;
-            };
-          };
-        };
-        style = ''
-          * {
-          	border: none;
-          	border-radius: 0;
-          	font-family: sans-serif;
-          	font-size: 11pt;
-          	color: white;
-          }
-
-          window#waybar {
-            background: alpha(${colors.pinkDark4}, 0.5);
-          	/*background: rgba(43, 48, 59, 0.8);*/
-          	/*background: alpha(#abdef5, 0.8);*/
-          	border-bottom: white 1px solid;
-          }
-
-          window#waybar > .horizontal {
-          	margin-bottom: 1px;
-          	margin-left: 12px;
-          }
-
-          tooltip {
-          	background: rgb(43, 48, 59);
-          	border: 1px solid rgb(100, 114, 125);
-          }
-
-          #workspaces {
-            margin-right: 2px;
-          }
-          #workspaces button:hover {
-            background: rgba(0, 0, 0, 0.2);
-          }
-          #workspaces button.active {
-              background: inherit;
-              box-shadow: inset 0 -3px ${colors.pinkLight1};
-          }
-          #workspaces button.focused {
-              background-color: alpha(${colors.pinkDark5}, 0.4);
-              box-shadow: inset 0 -3px ${colors.pinkLight4};
-          }
-          #workspaces button.urgent {
-              box-shadow: inset 0 -3px ${colors.pinkLight5}, inset -3px 0px ${colors.pinkLight5}, inset 0 3px ${colors.pinkLight5}, inset 3px 0px ${colors.pinkLight5};
-          }
-
-
-          #window {
-            background-color: alpha(${colors.pinkDark5}, 0.4);
-          	border-radius: 6px;
-          	padding: 0px 10px;
-          	margin: 4px 0px;
-          }
-
-
-          #custom-arrow5 {
-            font-size: 24pt;
-            color: ${colors.pinkDark5};
-            background: transparent;
-          }
-          #network {
-            padding: 0 16px;
-            background: ${colors.pinkDark5};
-          }
-
-          #custom-arrow4 {
-            font-size: 24pt;
-            color: ${colors.pinkDark4};
-            background: ${colors.pinkDark5};
-          }
-          #wireplumber {
-            padding: 0 16px;
-            background: ${colors.pinkDark4};
-          }
-
-          #custom-arrow3 {
-            font-size: 24pt;
-            color: ${colors.pinkDark3};
-            background: ${colors.pinkDark4};
-          }
-          #tray {
-            padding: 0 16px;
-            background: ${colors.pinkDark3};
-          }
-          #tray > .passive {
-            -gtk-icon-effect: dim;
-          }
-          #tray > .needs-attention {
-            -gtk-icon-effect: highlight;
-          }
-
-          #custom-arrow2 {
-            font-size: 24pt;
-            color: ${colors.pinkDark2};
-            background: ${colors.pinkDark3};
-          }
-          #power-profiles-daemon {
-            padding-left: 16px;
-            padding-right: 4px;
-            color: white;
-            background: ${colors.pinkDark2};
-          }
-          label#power-profiles-daemon {
-            font-size: 14pt;
-          }
-          label#power-profiles-daemon.performance {
-            color: lighter(red);
-          }
-          label#power-profiles-daemon.balanced {
-            color: inherit;
-          }
-          label#power-profiles-daemon.power-saver {
-            color: ${colors.greenComp};
-          }
-
-          #custom-arrow1 {
-            font-size: 24pt;
-            color: ${colors.pinkDark1};
-            background: ${colors.pinkDark2};
-          }
-          #battery {
-            padding: 0 16px;
-            background: ${colors.pinkDark2};
-          }
-          #group-power {
-            font-size: 12pt;
-            background: ${colors.pinkDark2};
-          }
-
-          #custom-power-menu {
-            padding-left: 6px;
-            padding-right: 12px;
-          }
-          
-          #custom-lock,
-          #custom-quit,
-          #custom-reboot,
-          #custom-poweroff {
-            font-size: 12pt;
-            padding-left: 6px;
-            padding-right: 6px;
-            background: ${colors.pinkDark3};
-            margin-top: 2px;
-            margin-bottom: 2px;
-            border-top: 2px solid ${colors.pinkDark3};
-            border-bottom: 2px solid ${colors.pinkDark3};
-          }
-          #custom-lock {
-            border-left: 2px solid ${colors.pinkDark3};
-          }
-          #custom-poweroff {
-            border-right: 2px solid ${colors.pinkDark3};
-          }
-
-          #clock {
-            background: ${colors.pinkDark1};
-            padding-right: 8px;
-          }
-
-        '';
-      };
-
-      # lock screen
-      xdg.configFile."swaylock/config".text = ''
-        show-keyboard-layout
-        indicator-caps-lock
-        font=Inter
-        image=~/Sync/Wallpapers/ccc-camp.jpg
-      '';
+      }
+      // cfg.configOverride;
 
       # configure a background image daemon
-      systemd.user.services."swaybg" = {
-        Unit = {
-          Description = "niri background daemon";
-          PartOf = [ "graphical-session.target" ];
-          After = [ "graphical-session.target" ];
-        };
-        Service = {
-          Type = "exec";
-          ExecStart = ''
-            ${lib.getExe pkgs.swaybg} \
-              --image "${../dotfiles/lilly/wallpapers/dino.jpg}" \
-              --output "*" \
-              --mode fill
-          '';
-        };
-        Install = {
-          WantedBy = [ "niri.service" ];
-        };
-      };
+      # systemd.user.services."swaybg" = {
+      #   Unit = {
+      #     Description = "niri background daemon";
+      #     PartOf = [ "graphical-session.target" ];
+      #     After = [ "graphical-session.target" ];
+      #   };
+      #   Service = {
+      #     Type = "exec";
+      #     ExecStart = ''
+      #       ${lib.getExe pkgs.swaybg} \
+      #         --image "${../dotfiles/lilly/wallpapers/dino.jpg}" \
+      #         --output "*" \
+      #         --mode fill
+      #     '';
+      #   };
+      #   Install = {
+      #     WantedBy = [ "niri.service" ];
+      #   };
+      # };
     };
   };
 }
