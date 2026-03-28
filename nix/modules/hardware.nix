@@ -11,13 +11,8 @@ in {
 
   # implementations
   config = lib.mkIf cfg.enableNitrokey {
-    hardware.gpgSmartcards.enable = true;
     hardware.nitrokey.enable = true;
     services.pcscd.enable = true;
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
 
     environment.systemPackages = with pkgs; [
        nitrokey-app2
