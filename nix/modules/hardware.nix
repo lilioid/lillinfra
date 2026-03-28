@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.custom.hardware;
 in {
@@ -18,5 +18,10 @@ in {
       enable = true;
       enableSSHSupport = true;
     };
+
+    environment.systemPackages = with pkgs; [
+       nitrokey-app2
+       pynitrokey
+    ];
   };
 }

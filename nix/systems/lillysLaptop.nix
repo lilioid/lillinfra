@@ -217,8 +217,6 @@
      sbctl
      docker-compose
      minicom
-     nitrokey-app2
-     pynitrokey
    ];
 
    programs.steam = {
