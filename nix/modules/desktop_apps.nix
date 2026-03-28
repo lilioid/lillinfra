@@ -28,7 +28,6 @@ in {
       vlc
       kdePackages.okular
       wezterm
-      kitty
       gimp
       obsidian
       gnome-font-viewer

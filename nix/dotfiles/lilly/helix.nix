@@ -20,7 +20,7 @@
     ]
   );
   settings = {
-    theme = "rose_pine";
+    theme = "base16_default";
     editor = {
       bufferline = "always";
     };

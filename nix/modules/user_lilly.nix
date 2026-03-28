@@ -81,6 +81,12 @@ in
         enable = true;
         ediff = lib.mkForce false;
       };
+      programs.kitty = lib.mkIf hasDesktop {
+        enable = true;
+        extraConfig = ''
+          include themes/noctalia.conf
+        '';
+      };
       
       home.pointerCursor = {
         enable = true;

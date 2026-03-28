@@ -213,7 +213,10 @@ in
           };
           general = {
             avatarImage = "/home/lilly/Sync/ProfilePictures/poly_fox.jpg";
-
+            dimmerOpacity = 0;
+          };
+          ui = {
+            panelBackgroundOpacity = 1;
           };
           location = {
             name = "Hamburg";
@@ -289,19 +292,27 @@ in
             predefinedScheme = "Rose Pine";
             darkMode = false;
           };
+          templates = {
+            activeTemplates = [
+              {
+                id = "gtk";
+                enabled = true;
+              }
+              {
+                id = "kitty";
+                enabled = true;
+              }
+            ];
+          };
         };
       };
 
+      # set icon theme for gtk
+      # crucially, this only renders ~/.config/gtk-4.0/settings.ini so that theming can still be done from noctalia
       gtk = {
         enable = true;
         iconTheme.package = pkgs.papirus-icon-theme;
-        colorScheme = "dark";
         iconTheme.name = "Papirus";
-        gtk3.extraCss = ''
-          @define_color accent_color ${colors.pinkMain};
-          @define_color accent_bg_color ${colors.white};
-        '';
-        gtk4.extraCss = homeConfig.gtk.gtk3.extraCss;
       };
 
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
