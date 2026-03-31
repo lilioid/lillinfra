@@ -170,12 +170,13 @@ in
               center = [
                 {
                   id = "ActiveWindow";
-                  useFixedWidth = true;
+                  maxWidth = 300;
                 }
               ];
               right = [
                 {
                   id = "MediaMini";
+                  maxWidth = 200;
                 }
                 {
                   id = "Tray";
