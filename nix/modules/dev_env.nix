@@ -25,7 +25,7 @@ in
       enable = true;
       autoPrune.enable = true;
       daemon.settings = {
-        "default-address-pools" = [ { base = "10.206.209.0/24"; size = 24; } ];
+        "default-address-pools" = [ { base = "10.206.0.0/16"; size = 24; } ];
       };
     };
 
