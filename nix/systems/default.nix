@@ -32,6 +32,7 @@ let
           {
             # nixpkgs settings based on function inputs
             nixpkgs.pkgs = pkgs;
+            nixpkgs.hostPlatform = systemType;
 
             nix.package = pkgs.lix;
             nix.nixPath = [
