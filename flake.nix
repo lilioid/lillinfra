@@ -88,7 +88,8 @@
       # https://lix.systems/add-to-config/
       lixOverlay = (
         final: prev: {
-          inherit (final.lixPackageSets.stable)
+          inherit (final.lixPackageSets.latest)
+            lix
             nixpkgs-review
             nix-update
             nix-eval-jobs
