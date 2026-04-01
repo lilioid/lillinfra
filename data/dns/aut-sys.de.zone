@@ -21,3 +21,10 @@ sync           CNAME    syncthing.z9.aut-num.de.
 hosted-on      CNAME    webhost.z9.aut-num.de.
 music          CNAME    h.oleb.it.
 media          CNAME    h.oleb.it.
+
+; mail settings (handled by jan.hanse.de)
+@                    MX      10 jan.hanse.de.
+@                    TXT     "v=spf1 +mx -all"
+_dmarc               TXT     "v=DMARC1; p=reject; rua=mailto:mailauth-reports@lilly.hanse.de"
+dkim._domainkey      TXT     "v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5divkawzmWnmFMGZIabmCaD7E0aPX3gbHYVS8DCXIMLu2UNM8KgqnselaWSh9U6ebdaGkXubEpijeYgfUlruv+u6zEWKBBK4lLtbfr9xsScsYUiHimvHp1p79BR0QQi6AMGtriX9L0xpaf+aa0Kt0vw3QPPZ0fLskcEpJ7ZzJfQmRRxfoeUgazF0PJW7zG5gJPIwq4oN/d/qC3+fi5SatCqsySAGjvb+eyNEEVa4RJ+AAPy0TZn0zW0JI92B/qdbNSC+ZzfWVDcDkVoce3w8o1Bi+jJKzAxqxvwD+BeIWSC/F5G8L3Qb1Sxdp95R1i+iRojlme8N2K6G0o5fXhZMXQIDAQAB"
+

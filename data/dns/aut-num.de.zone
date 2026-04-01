@@ -28,3 +28,10 @@ syncthing.z9         A       185.161.130.8
 syncthing.z9         AAAA    2a07:c481:2:5:be24:11ff:fe38:a167
 webhost.z9           A       185.161.130.7
 webhost.z9           AAAA    2a07:c481:2:5:be24:11ff:fed0:b3ca
+
+; mail settings (handled by jan.hanse.de)
+@                    MX      10 jan.hanse.de.
+@                    TXT     "v=spf1 +mx -all"
+_dmarc               TXT     "v=DMARC1; p=reject; rua=mailto:mailauth-reports@lilly.hanse.de"
+dkim._domainkey      TXT     "v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5divkawzmWnmFMGZIabmCaD7E0aPX3gbHYVS8DCXIMLu2UNM8KgqnselaWSh9U6ebdaGkXubEpijeYgfUlruv+u6zEWKBBK4lLtbfr9xsScsYUiHimvHp1p79BR0QQi6AMGtriX9L0xpaf+aa0Kt0vw3QPPZ0fLskcEpJ7ZzJfQmRRxfoeUgazF0PJW7zG5gJPIwq4oN/d/qC3+fi5SatCqsySAGjvb+eyNEEVa4RJ+AAPy0TZn0zW0JI92B/qdbNSC+ZzfWVDcDkVoce3w8o1Bi+jJKzAxqxvwD+BeIWSC/F5G8L3Qb1Sxdp95R1i+iRojlme8N2K6G0o5fXhZMXQIDAQAB"
+
