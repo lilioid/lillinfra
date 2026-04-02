@@ -4,3 +4,9 @@ $TTL 3600
 @    3600	IN	NS	ns1.desec.io.
 @    3600	IN	NS	ns2.desec.org.
 
+; temporarily handled by c3cat.de
+@    A    212.12.48.125
+@    AAAA 2a00:14b0:4200:3000:125::1
+*    A    212.12.48.125
+*    AAAA 2a00:14b0:4200:3000:125::1
+
