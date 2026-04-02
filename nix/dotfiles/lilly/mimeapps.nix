@@ -6,9 +6,9 @@
     "application/pdf" = [ "okularApplication_pdf.desktop" ];
     "x-scheme-handler/http" = [ "firefox.desktop" ];
     "x-scheme-handler/https" = [ "firefox.desktop" ];
-    "x-scheme-handler/mailto" = [ "thunderbird.desktop" ];
-    "text/html" = [ "firefox.desktop" ];
-    "inode/directory" = [ "nemo.desktop" ];
+    "x-scheme-handler/mailto" = [ "evolutions.desktop" ];
+    "text/html" = [ "firefox.desktop" "thunderbird.desktop" ];
+    "inode/directory" = [ "nautilus.desktop" "nemo.desktop" ];
 
     "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
     "image/png" = [ "org.gnome.Loupe.desktop" ];
