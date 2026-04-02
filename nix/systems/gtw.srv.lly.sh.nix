@@ -48,7 +48,7 @@ in
     networks."10-ethExtern" = {
       matchConfig.Name = "ethExtern";
       address = [
-        "37.153.156.169/32"
+        "37.153.156.169/24"
         "2a10:9902:111:10:42:42:42:42/64"
         "2a10:9902:111:10:5054:ff:fe43:ffc6/64"
       ];
