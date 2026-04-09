@@ -10,7 +10,6 @@ spec:
     - secretName: tls-cloud.ftsell.de
       hosts:
         - cloud.lly.sh
-        - cloud.ftsell.de
   rules:
     - host: cloud.lly.sh
       http: &http
@@ -22,5 +21,3 @@ spec:
                 name: nextcloud
                 port:
                   name: http
-    - host: cloud.ftsell.de
-      http: *http
