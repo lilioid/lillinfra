@@ -97,11 +97,13 @@ in
         exclude_patterns = [
           "/home/*/.rustup/toolchains"
           "/home/*/.vim/undodir"
+          "/home/*/.config/heroic"
           "/home/*/.local/share/containers"
           "/home/*/.local/share/virtualenv"
           "/home/*/.local/share/virtualenvs"
           "/home/*/.local/share/JetBrains/Toolbox/apps/"
           "/home/*/.local/share/Steam/"
+          "/home/*/.local/share/umu"
           "/home/*/.nv/"
           "/home/*/.local/share/uv/"
           "/home/*/.local/share/docker/"
