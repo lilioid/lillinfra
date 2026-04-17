@@ -9,7 +9,6 @@ set -x
 exec nixos-rebuild "$ACTION" \
   --no-reexec \
   --use-substitutes \
-  --sudo \
   --fallback \
   --ask-sudo-password \
   --target-host "$CONNECT" \
