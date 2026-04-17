@@ -88,7 +88,7 @@ in
         '';
       };
       
-      home.pointerCursor = {
+      home.pointerCursor = lib.mkIf hasDesktop {
         enable = true;
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
