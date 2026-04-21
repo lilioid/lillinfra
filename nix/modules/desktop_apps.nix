@@ -26,8 +26,8 @@ in {
       spotify
       discord
       vlc
+      mpv
       kdePackages.okular
-      wezterm
       gimp
       obsidian
       gnome-font-viewer
