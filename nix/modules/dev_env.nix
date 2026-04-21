@@ -69,6 +69,7 @@ in
       tig
       go
       nix-output-monitor
+      nvd
       distrobox
       # jetbrains.pycharm
       # jetbrains.rust-rover
