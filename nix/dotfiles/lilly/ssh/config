@@ -23,6 +23,10 @@ Host rsync.net zh4525.rsync.net
   HostName zh4525.rsync.net
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
+Host github.com
+  User git
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
+
 
 
 ####
