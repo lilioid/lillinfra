@@ -80,5 +80,10 @@ in
     programs.fish.shellInit = ''
       fish_add_path $HOME/.krew/bin
     '';
+
+    programs.gnupg.agent = {
+      enable = true;
+      pinentryPackage = pkgs.pinentry-qt;
+    };
   };
 }
