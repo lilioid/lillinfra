@@ -331,8 +331,5 @@ Host *
   ForwardAgent no
   AddKeysToAgent no
   IdentitiesOnly yes
-  ControlMaster auto
-  ControlPath ~/.ssh/master-%r@%h:%p
-  ControlPersist 1s
   SetEnv TERM=xterm-256color
   StrictHostKeyChecking accept-new
