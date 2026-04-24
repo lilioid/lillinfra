@@ -29,6 +29,9 @@ syncthing.z9         AAAA    2a07:c481:2:5:be24:11ff:fe38:a167
 webhost.z9           A       185.161.130.7
 webhost.z9           AAAA    2a07:c481:2:5:be24:11ff:fed0:b3ca
 
+; external hosts
+monitoring.ex        AAAA    2a01:4f8:251:226:ef::
+
 ; mail settings (handled by jan.hanse.de)
 @                    MX      10 jan.hanse.de.
 @                    TXT     "v=spf1 +mx -all"
