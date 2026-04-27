@@ -27,6 +27,10 @@ Host github.com
   User git
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
+Host codeberg.org
+  User git
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
+
 
 
 ####
