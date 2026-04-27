@@ -10,7 +10,7 @@ labels:
 
 images:
   - name: ghcr.io/usememos/memos
-    newTag: "0.25"
+    newTag: "0.28"
 
 resources:
 - manifests/namespace.yml
