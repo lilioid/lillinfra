@@ -28,6 +28,7 @@ log = "present(@) | ancestors(immutable_heads().., 6) | present(trunk())"
 
 [git]
 auto-local-bookmark = true
+private-commits = "description('wip') | description('private:*')"
 
 [templates]
 draft_commit_description = '''
