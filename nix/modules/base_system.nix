@@ -8,6 +8,9 @@
   ...
 }:
 {
+  # copy.fail fix
+  boot.blacklistedKernelModules = [ "algif_aead" ];
+  
   # settings for nix and nixos
   nix.channel.enable = false;
   nix.settings = {
