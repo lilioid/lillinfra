@@ -4,8 +4,11 @@
   enable = true;
   ignores = [
     "**/.*.swp"
-    "**/__pycache__"
     ".idea"
+    "**/id_ed25519"
+    "**/*.id_ed25519"
+    "**/id_rsa"
+    "**/*.id_rsa"
   ];
   settings = {
     aliases = {
