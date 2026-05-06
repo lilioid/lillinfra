@@ -310,7 +310,7 @@ Host *.hamburg.ccc.de
   User chaos
   IdentityFile ~/.ssh/id_lilly@ccc.pub
 
-Host *-intern.hamburg.ccc.de
+Host *-intern.hamburg.ccc.de *.hosts.hamburg.ccc.de
   ProxyJump public-reverse-proxy.hamburg.ccc.de
 
 
