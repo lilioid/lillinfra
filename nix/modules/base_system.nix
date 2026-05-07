@@ -1,15 +1,12 @@
 {
-  modulesPath,
   config,
   lib,
   pkgs,
-  nixpkgs,
-  nixpkgs-unstable,
   ...
 }:
 {
-  # copy.fail fix
-  boot.blacklistedKernelModules = [ "algif_aead" ];
+  # copy.fail, dirtyfrag fix
+  boot.blacklistedKernelModules = [ "algif_aead" "esp4" "esp6" "rxrpc" ];
   
   # settings for nix and nixos
   nix.channel.enable = false;
