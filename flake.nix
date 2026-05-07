@@ -4,12 +4,7 @@
   inputs = {
     # nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
-    nixpkgs-small.url = "github:nixos/nixpkgs?ref=nixos-25.11-small";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-
-    # version-specific nixpkgs
-    nixpkgs2505.url = "github:nixos/nixpkgs?ref=nixos-25.05";
-    nixpkgs2511.url = "github:nixos/nixpkgs?ref=nixos-25.11";
 
     # some helpers for writing flakes with less repetition
     systems.url = "github:nix-systems/default-linux";

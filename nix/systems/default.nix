@@ -76,32 +76,32 @@ in
   # "nas.srv.myroot.intern" = mkSystem "x86_64-linux" "nas.srv.myroot.intern" flake.inputs.nixpkgs2505;
 
   # servers at home
-  "priv.srv.home.intern" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs2511;
-  "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs2511;
+  "priv.srv.home.intern" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs;
+  "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs;
 
   # aut-sys.de
-  "db.z9.aut-num.de" = mkSystem "x86_64-linux" "db.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "webhost.z9.aut-num.de" = mkSystem "x86_64-linux" "webhost.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "jumphost.z9.aut-num.de" = mkSystem "x86_64-linux" "jumphost.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "syncthing.z9.aut-num.de" = mkSystem "x86_64-linux" "syncthing.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "k8s-ctl.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-ctl.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "k8s-worker1.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker1.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "k8s-worker2.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker2.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "k8s-worker3.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker3.z9.aut-num.de" flake.inputs.nixpkgs2511;
-  "actions-runner.z9.aut-num.de" = mkSystem "x86_64-linux" "actions-runner.z9.aut-num.de" flake.inputs.nixpkgs2511;
+  "db.z9.aut-num.de" = mkSystem "x86_64-linux" "db.z9.aut-num.de" flake.inputs.nixpkgs;
+  "webhost.z9.aut-num.de" = mkSystem "x86_64-linux" "webhost.z9.aut-num.de" flake.inputs.nixpkgs;
+  "jumphost.z9.aut-num.de" = mkSystem "x86_64-linux" "jumphost.z9.aut-num.de" flake.inputs.nixpkgs;
+  "syncthing.z9.aut-num.de" = mkSystem "x86_64-linux" "syncthing.z9.aut-num.de" flake.inputs.nixpkgs;
+  "k8s-ctl.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-ctl.z9.aut-num.de" flake.inputs.nixpkgs;
+  "k8s-worker1.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker1.z9.aut-num.de" flake.inputs.nixpkgs;
+  "k8s-worker2.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker2.z9.aut-num.de" flake.inputs.nixpkgs;
+  "k8s-worker3.z9.aut-num.de" = mkSystem "x86_64-linux" "k8s-worker3.z9.aut-num.de" flake.inputs.nixpkgs;
+  "actions-runner.z9.aut-num.de" = mkSystem "x86_64-linux" "actions-runner.z9.aut-num.de" flake.inputs.nixpkgs;
 
   # private systems
-  "lillysLaptop" = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs2511;
-  "lillysWorkLaptop" = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs2511;
+  "lillysLaptop" = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs;
+  "lillysWorkLaptop" = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs;
   # "lillysWorkstation" = mkSystem {
   #   system = "x86_64-linux";
   #   gcc.arch = "znver3";
   #   gcc.tune = "znver3";
   # } "lillysWorkstation" flake.inputs.nixpkgs2505;
-  "lillysWorkstation" = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs2511;
+  "lillysWorkstation" = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs;
 
   # others
-  "lan-server.intern" = mkSystem "x86_64-linux" "lan-server.intern" flake.inputs.nixpkgs2511;
-  "installer" = mkSystem "x86_64-linux" "installer" flake.inputs.nixpkgs2511;
-  "proxmox-lxc" = mkSystem "x86_64-linux" "proxmox-lxc" flake.inputs.nixpkgs2511;
+  "lan-server.intern" = mkSystem "x86_64-linux" "lan-server.intern" flake.inputs.nixpkgs;
+  "installer" = mkSystem "x86_64-linux" "installer" flake.inputs.nixpkgs;
+  "proxmox-lxc" = mkSystem "x86_64-linux" "proxmox-lxc" flake.inputs.nixpkgs;
 }
