@@ -5,6 +5,7 @@ metadata:
   name: argocd-server-http
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
+    haproxy-ingress.github.io/proxy-body-size: "100k"
 spec:
   ingressClassName: haproxy
   tls:
