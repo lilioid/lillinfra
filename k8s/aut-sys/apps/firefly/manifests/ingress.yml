@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: firefly
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  ingressClassName: haproxy
+  tls:
+    - hosts: [ firefly.aut-sys.de ]
+      secretName: tls-firefly.aut-sys.de
+  rules:
+  - host: firefly.aut-sys.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: firefly-webserver
+            port:
+              name: http
+      - path: /outpost.goauthentik.io/
+        pathType: Prefix
+        backend:
+          service:
+            name: authentik-proxy
+            port:
+              name: http
+

@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: firefly
+
+resources:
+  - manifests/namespace.yml
+  - manifests/ingress.yml
+  - manifests/webserver.yml
+  - manifests/cronjob.yml
+  - manifests/authentik-proxy.yml
+
+images:
+  - name: docker.io/fireflyiii/core
+    newTag: "version-6.6.2"
+  - name: ghcr.io/goauthentik/proxy
+    newTag: "2025.10"
+
+configMapGenerator:
+  - name: firefly-env
+    envs:
+      - config/config.env
+
+generators:
+  - ./secret-generator.yml

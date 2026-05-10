@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: firefly-webserver
+      labels: &labels
+        app.kubernetes.io/name: firefly-iii
+        app.kubernetes.io/component: webserver
+      annotations:
+        # haproxy-ingress.github.io/auth-url: "http://ak-outpost-authentik-embedded-outpost.authentik.svc:9000/outpost.goauthentik.io/auth/traefik"
+        # haproxy-ingress.github.io/auth-url: "https://auth.aut-sys.de/outpost.goauthentik.io/auth/nginx"
+        haproxy-ingress.github.io/auth-url: "svc://authentik-proxy:9000/outpost.goauthentik.io/auth/nginx"
+    spec:
+      selector: *labels
+      ports:
+        - name: http
+          port: 80
+          protocol: TCP
+          targetPort: http
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: firefly-webserver
+      labels: *labels
+    spec:
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          volumes:
+            - name: firefly-uploads
+              persistentVolumeClaim:
+                claimName: firefly-uploads
+          containers:
+            - name: firefly
+              image: docker.io/fireflyiii/core
+              envFrom:
+                - configMapRef:
+                    name: firefly-env
+                - secretRef:
+                    name: firefly-env
+              ports:
+                - name: http
+                  containerPort: 8080
+              volumeMounts:
+                - name: firefly-uploads
+                  mountPath: /var/www/html/storage/upload
+              readinessProbe:
+                timeoutSeconds: 5
+                httpGet:
+                  port: http
+                  path: /health
+                  httpHeaders:
+                    - name: X-authentik-username
+                      value: kube-probe
+
+  # storage
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: firefly-uploads
+    spec:
+      accessModes: [ ReadWriteMany ]
+      resources:
+        requests:
+          storage: 10Gi
+
