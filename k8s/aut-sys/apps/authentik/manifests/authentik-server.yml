@@ -8,7 +8,7 @@ items:
     metadata:
       name: authentik-server
       labels: &labels
-        app.kubernetes.io/name: authentik-server
+        app.kubernetes.io/name: authentik
         app.kubernetes.io/component: server
     spec:
       selector: *labels

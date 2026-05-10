@@ -10,10 +10,6 @@ items:
       labels: &labels
         app.kubernetes.io/name: firefly-iii
         app.kubernetes.io/component: webserver
-      annotations:
-        # haproxy-ingress.github.io/auth-url: "http://ak-outpost-authentik-embedded-outpost.authentik.svc:9000/outpost.goauthentik.io/auth/traefik"
-        # haproxy-ingress.github.io/auth-url: "https://auth.aut-sys.de/outpost.goauthentik.io/auth/nginx"
-        haproxy-ingress.github.io/auth-url: "svc://authentik-proxy:9000/outpost.goauthentik.io/auth/nginx"
     spec:
       selector: *labels
       ports:

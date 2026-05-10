@@ -7,13 +7,10 @@ resources:
   - manifests/ingress.yml
   - manifests/webserver.yml
   - manifests/cronjob.yml
-  - manifests/authentik-proxy.yml
 
 images:
   - name: docker.io/fireflyiii/core
     newTag: "version-6.6.2"
-  - name: ghcr.io/goauthentik/proxy
-    newTag: "2026.2"
 
 configMapGenerator:
   - name: firefly-env

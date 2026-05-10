@@ -4,6 +4,8 @@ metadata:
   name: firefly
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
+    haproxy-ingress.github.io/auth-url: "https://auth.aut-sys.de/outpost.goauthentik.io/auth/caddy"
+    haproxy-ingress.github.io/proxy-body-size: "100k"
 spec:
   ingressClassName: haproxy
   tls:
