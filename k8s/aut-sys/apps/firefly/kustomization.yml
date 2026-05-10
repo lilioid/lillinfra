@@ -13,7 +13,7 @@ images:
   - name: docker.io/fireflyiii/core
     newTag: "version-6.6.2"
   - name: ghcr.io/goauthentik/proxy
-    newTag: "2025.10"
+    newTag: "2026.2"
 
 configMapGenerator:
   - name: firefly-env
