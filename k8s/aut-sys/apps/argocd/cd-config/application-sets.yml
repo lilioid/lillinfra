@@ -14,6 +14,8 @@ spec:
   template:
     metadata:
       name: "{{ .path.basenameNormalized }}"
+      annotations:
+        argocd.argoproj.io/compare-options: ServerSideDiff=true
     spec:
       project: "{{ index .path.segments 2 }}"
       source:
@@ -24,5 +26,8 @@ spec:
         automated:
           selfHeal: true
           prune: true
+        syncOptions:
+          - ServerSideApply=true
+          - FailOnSharedResource=true
       destination:
         name: "in-cluster"
