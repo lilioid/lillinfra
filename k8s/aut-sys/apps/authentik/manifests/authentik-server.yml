@@ -63,6 +63,7 @@ items:
                 - name: metrics
                   containerPort: 9300
               livenessProbe:
+                timeoutSeconds: 15
                 httpGet:
                   port: http
                   path: /-/health/live/
