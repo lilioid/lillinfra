@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: haproxy
   tls:
-    - hosts: [ firefly.aut-sys.de ]
+    - hosts: [ firefly.aut-sys.de, firefly-import.aut-sys.de ]
       secretName: tls-firefly.aut-sys.de
   rules:
   - host: firefly.aut-sys.de
@@ -22,11 +22,14 @@ spec:
             name: firefly-webserver
             port:
               name: http
-      - path: /outpost.goauthentik.io/
+  - host: firefly-import.aut-sys.de
+    http:
+      paths:
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: authentik-proxy
+            name: firefly-data-importer
             port:
               name: http
 

@@ -7,15 +7,21 @@ resources:
   - manifests/ingress.yml
   - manifests/webserver.yml
   - manifests/cronjob.yml
+  - manifests/data-importer.yml
 
 images:
   - name: docker.io/fireflyiii/core
     newTag: "version-6.6.2"
+  - name: docker.io/fireflyiii/data-importer
+    newTag: "version-2.3.2"
 
 configMapGenerator:
   - name: firefly-env
     envs:
       - config/config.env
+  - name: data-importer-env
+    envs:
+      - config/data-importer.env
 
 generators:
   - ./secret-generator.yml
