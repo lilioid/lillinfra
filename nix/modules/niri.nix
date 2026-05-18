@@ -435,17 +435,6 @@ in
             open-floating = true;
           }
           {
-            matches = [
-              {
-                app-id = "^thunderbird$";
-                title = "^\\d+ Reminder(s?)$";
-              }
-            ];
-            open-floating = true;
-            open-focused = true;
-            open-on-workspace = null;
-          }
-          {
             # open some windows with 2/3 proportion by default because they dont scale well or require more space
             matches = [
               {
@@ -470,6 +459,16 @@ in
               }
             ];
             open-maximized = true;
+          }
+          {
+            # open some windows floating on current workspace
+            matches = [
+              { app-id = "^thunderbird$"; title = "^\d+ Reminder(s?)$"; }
+              { app-id = "^org\\.keepassxc\\.KeePassXC$"; title = "KeePassXC - Passkey credentials"; }
+            ];
+            open-floating = true;
+            open-focused = true;
+            open-on-workspace = null;
           }
           {
             # default matcher that styles all windows
