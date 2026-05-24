@@ -229,7 +229,7 @@ in
           };
           appLauncher = {
             enableClipboardHistory = false;
-            terminalCommand = "kitty -e";
+            terminalCommand = "ghostty +new-window -e";
             enableSettingsSearch = false;
             enableSessionSearch = false;
           };
@@ -300,7 +300,7 @@ in
                 enabled = true;
               }
               {
-                id = "kitty";
+                id = "ghostty";
                 enabled = true;
               }
             ];
@@ -488,7 +488,7 @@ in
           "Mod+Return" = {
             hotkey-overlay.title = "Open Terminal";
             repeat = false;
-            action = niriActions.spawn [ "kitty" ];
+            action = niriActions.spawn [ "ghostty" "+new-window" ];
           };
           "Mod+D" = {
             hotkey-overlay.title = "Open Application picker";

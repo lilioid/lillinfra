@@ -44,6 +44,7 @@ in
       home.sessionSearchVariables = lib.mkIf hasDevEnv {
         PATH = [ "$HOME/.krew/bin" ];
       };
+      home.shell.enableFishIntegration = true;
       programs.wezterm.enable = hasGnome;
       programs.wezterm.extraConfig = lib.mkIf hasGnome (
         builtins.readFile ../dotfiles/lilly/wezterm.lua
@@ -81,11 +82,13 @@ in
         enable = true;
         ediff = lib.mkForce false;
       };
-      programs.kitty = lib.mkIf hasDesktop {
+      programs.ghostty = lib.mkIf hasDesktop {
         enable = true;
-        extraConfig = ''
-          include themes/noctalia.conf
-        '';
+        settings = {
+          quit-after-last-window-closed = false;
+          theme = "noctalia";
+          font-family = "Inter Mono";
+        };
       };
       
       home.pointerCursor = lib.mkIf hasDesktop {
