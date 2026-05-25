@@ -231,6 +231,8 @@ in
             directory = "/home/lilly/Sync/Wallpapers";
             viewMode = "browse";
             setWallpaperOnAllMonitors = true;
+            skipStartupTransition = true;
+            linkLightAndDarkWallpapers = false;
           };
           appLauncher = {
             enableClipboardHistory = false;
@@ -309,6 +311,17 @@ in
                 enabled = true;
               }
             ];
+          };
+        };
+      };
+
+      # set noctalia wallpapers
+      home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
+        defaultWallpaper = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
+        wallpapers = {
+          "" = {
+            "dark" = "/home/lilly/Sync/Wallpapers/ccc-camp.jpg";
+            "light" = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
           };
         };
       };
