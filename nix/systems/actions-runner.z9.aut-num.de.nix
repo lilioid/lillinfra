@@ -11,25 +11,6 @@
   networking.firewall.allowedTCPPorts = [ 45540 45541 45542 ];
   services.gitea-actions-runner = {
     package = pkgs.forgejo-runner;
-    instances."git.hanse.de" = {
-      enable = true;
-      name = "aut-sys-runner";
-      tokenFile = config.sops.templates."forgejo-actions-runner/tokenFile".path;
-      url = "https://git.hanse.de/";
-      labels = [
-        "debian-latest:docker://node:current"
-        "alpine-latest:docker://node:current-alpine"
-      ];
-      settings = {
-        runner.capacity = 1;
-        cache.proxy_port = 45540;
-        container = {
-          docker_host = "automount";
-          valid_volumes = [ "shared-nix-store" ];
-        };
-      };
-    };
-    
     instances."git.hanse.de-nix" = {
       enable = true;
       name = "aut-sys-runner--nix";
