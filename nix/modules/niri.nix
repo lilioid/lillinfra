@@ -69,6 +69,10 @@ in
     services.upower.enable = true;
     services.gvfs.enable = true;
 
+    # use gnome-keyring but only for secret management. ssh-agent is running independently
+    services.gnome.gnome-keyring.enable = true;
+    services.gnome.gcr-ssh-agent.enable = false;
+
     # configure my preferred system fonts
     fonts = {
       packages = with pkgs; [
@@ -125,6 +129,7 @@ in
       ];
 
       services.ssh-agent.enable = true;
+      home.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/ssh-agent";
 
       programs.noctalia-shell = {
         enable = true;
@@ -400,7 +405,6 @@ in
 
         environment = {
           XDG_CURRENT_DESKTOP = "niri:GNOME";
-          SSH_AUTH_SOCK = "/run/user/1000/ssh-agent";
           QT_QPA_PLATFORM = "wayland";
           ELECTRON_OZONE_PLATFORM_HINT = "auto";
           GTK_USE_PORTAL = "1";
