@@ -55,6 +55,12 @@
     commit.gpgsign = true;
     commit.verbose = true;
     tag.gpgsign = true;
+    sendemail = {
+      smtpEncryption = "tls";
+      smtpServer = "mail.srv.lly.sh";
+      smtpServerPort = 587;
+      smtpUser = "lilly";
+    };
   };
   includes =
     let
