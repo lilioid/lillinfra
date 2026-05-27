@@ -33,11 +33,9 @@
   # kubernetes setup
   services.k3s = {
     enable = true;
-    package = pkgs.k3s-custom;
     role = "agent";
     serverAddr = "https://k8s-ctl.z9.aut-num.de:6443";
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
-      --node-ip=2a07:c481:2:5:be24:11ff:fe79:ddc7,185.161.130.3
       --node-internal-dns=k8s-worker1.z9.aut-num.de
       --node-label=topology.kubernetes.io/zone=z9
       --node-label=topology.aut-sys.de/hypervisor=pve1

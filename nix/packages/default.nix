@@ -32,21 +32,6 @@ let
       }
     );
 
-    # a k3s package that applies my custom patch to use my custom flannel version
-    k3s-custom =
-      let
-        overrides = {
-          patches = [ ./k3s.patch ];
-          vendorHash = "sha256-5cgkts1jdLxHQrLaoY7Qg1QBU6vGgbEsYetJ39Dz8ng=";
-        };
-        k3s_def = flake.inputs.nixpkgs + "/pkgs/applications/networking/cluster/k3s";
-        k3s_all = (pkgs.callPackage k3s_def {
-          overrideBundleAttrs = overrides;
-        });
-        k3s = k3s_all.k3s_1_32.overrideAttrs overrides;
-      in
-      k3s;
-
     # overwrite certain programs from nixos-unstable because of newer versions
     # glab = pkgs-unstable.glab;
     # rofi = pkgs-unstable.rofi;

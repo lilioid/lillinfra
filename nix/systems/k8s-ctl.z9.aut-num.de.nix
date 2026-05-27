@@ -34,7 +34,6 @@
   # kubernetes setup
   services.k3s = {
     enable = true;
-    package = pkgs.k3s-custom;
     role = "server";
     clusterInit = false;
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
