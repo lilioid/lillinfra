@@ -36,7 +36,7 @@ Host codeberg.org
 ####
 # Private Hosts @myroot
 #
-Host *.srv.ftsell.de *.srv.lly.sh
+Host *.srv.ftsell.de *.srv.lly.sh *.srv.myroot.intern
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 Host hosting.srv.lly.sh
