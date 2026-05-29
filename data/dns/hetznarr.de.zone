@@ -1,0 +1,11 @@
+$TTL 3600
+
+; SOA is managed by desec so we skip it
+
+@   NS ns1.desec.io.
+@   NS ns2.desec.org.
+
+; redirect everything to my gateway
+@   A       185.161.130.11
+@   AAAA    2a07:c481:2:6::1
+*   CNAME   www2.z9.aut-num.de.
