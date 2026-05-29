@@ -306,7 +306,7 @@ Host *.hanse.de *.zs64.net
 #####
 # CCCHH
 #
-Host *.hamburg.ccc.de
+Host *.hamburg.ccc.de *.ccchh.net
   User chaos
   IdentityFile ~/.ssh/id_lilly@ccc.pub
 
