@@ -54,7 +54,6 @@ in
       k9s
       pass
       sshuttle
-      rustup
       pre-commit
       openssl
       gleam
