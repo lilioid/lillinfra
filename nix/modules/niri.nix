@@ -108,8 +108,8 @@ in
     };
 
     # enable a DisplayManager
-    services.displayManager.enable = true;
-    services.displayManager.gdm.enable = true;
+    # services.displayManager.gdm.enable = true;
+    services.displayManager.ly.enable = true;
 
     environment.systemPackages = with pkgs; [
       xwayland-satellite
@@ -484,7 +484,7 @@ in
           {
             # open some windows floating on current workspace
             matches = [
-              { app-id = "^thunderbird$"; title = "^\d+ Reminder(s?)$"; }
+              { app-id = "^thunderbird$"; title = "^\\d+ Reminder(s?)$"; }
               { app-id = "^org\\.keepassxc\\.KeePassXC$"; title = "KeePassXC - Passkey credentials"; }
             ];
             open-floating = true;

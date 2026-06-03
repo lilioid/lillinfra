@@ -20,7 +20,7 @@
     "usb_storage"
     "sd_mod"
   ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "thinkpad_acpi" "amdgpu" "kvm-amd" ];
   hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {

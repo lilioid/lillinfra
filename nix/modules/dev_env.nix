@@ -44,7 +44,7 @@ in
       direnv
       dig
       nodejs
-      nodePackages.pnpm
+      pnpm
       bun
       python3
       uv
