@@ -6,7 +6,6 @@ email = "li@lly.sh"
 
 [aliases]
 init = [ "git", "init", "--colocate" ]
-clone = [ "git", "clone", "--colocate" ]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 rebase-all = ["rebase", "-s", "all:roots(trunk()..mutable())", "-d", "trunk()"]
 
@@ -26,8 +25,10 @@ default-command = "log"
 # https://jj-vcs.github.io/jj/latest/config/#default-revisions
 log = "present(@) | ancestors(immutable_heads().., 6) | present(trunk())"
 
+[remotes.origin]
+auto-track-bookmarks = "*"
+
 [git]
-auto-local-bookmark = true
 private-commits = "description('wip') | description('private:*')"
 
 [templates]
