@@ -123,7 +123,10 @@ in
   };
 
   # postgres service
-  systemd.services."postgresql".wantedBy = lib.mkForce [ "encrypted-services.target" ];
+  systemd.targets."postgresql" = {
+    wantedBy = lib.mkForce [ "encrypted-services.target" ];
+    unitConfig.RequiresMountsFor = "/var/lib/postgresql";
+    };
   services.postgresql = {
     enable = true;
     extensions = ps: with ps; [ pgvector ];
