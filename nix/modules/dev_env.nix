@@ -56,7 +56,7 @@ in
       sshuttle
       pre-commit
       openssl
-      gleam
+      # gleam
       erlang
       terraform
       ietf-cli

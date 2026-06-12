@@ -10,7 +10,11 @@
     systems.url = "github:nix-systems/default-linux";
 
     # support for special hardware quirks
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
 
     # dotfile (and user package) manager
     home-manager = {
@@ -64,7 +68,7 @@
 
     # shell for niri
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "github:noctalia-dev/noctalia-shell?ref=legacy-v4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
