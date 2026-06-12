@@ -42,8 +42,8 @@
 
   # enable syncthing
   systemd.services."syncthing" = {
-    requires = [ "srv-ceph\\x2dsyncthing.mount" ];
-    after = [ "srv-ceph\\x2dsyncthing.mount" ];
+    requires = [ "srv-ceph\\x2dsyncthing.mount" "srv-photoprism\\x2doriginals.mount" ];
+    after = [ "srv-ceph\\x2dsyncthing.mount" "srv-photoprism\\x2doriginals.mount" ];
   };
   services.syncthing = {
     enable = true;
