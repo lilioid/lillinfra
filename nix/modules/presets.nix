@@ -295,6 +295,7 @@ in
         config.networkConfig."IPv6PrivacyExtensions" = false;
         networks."eth0" = {
           matchConfig.Type = "ether";
+          matchConfig.Kind = "!bond bridge gre tun veth";
           networkConfig.DHCP = "yes";
           networkConfig.IPv6AcceptRA = "yes";
         };
