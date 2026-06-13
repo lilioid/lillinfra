@@ -236,6 +236,7 @@
           allowedIPs = [
             "10.233.228.0/24" # vpn network
             "2a07:c481:2:4::/64" # vpn network
+            "2a07:c481:2:6::53/128" # vpn dns server
           ];
         };
       };

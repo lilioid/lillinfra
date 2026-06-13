@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: List
+items:
+
+  # services
+  # for some reason, kubernetes requires separete services when they share the same port even with different protocols
+  # using metallb colocation on the same IP works though
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: unbound-tcp
+      labels: &labels
+        app.kubernetes.io/name: unbound
+        app.kubernetes.io/component: dns-resolver
+      annotations:
+        metallb.io/loadBalancerIPs: "2a07:c481:2:6::53"
+        metallb.io/allow-shared-ip: "unbound-vpn-dns"
+    spec:
+      selector: *labels
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      ports:
+        - name: dns-tcp
+          port: 53
+          protocol: TCP
+
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: unbound-udp
+      labels: *labels
+      annotations:
+        metallb.io/loadBalancerIPs: "2a07:c481:2:6::53"
+        metallb.io/allow-shared-ip: "unbound-vpn-dns"
+    spec:
+      selector: *labels
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      ports:
+        - name: dns-udp
+          port: 53
+          protocol: UDP
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: unbound
+      labels: *labels
+    spec:
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          volumes:
+            - name: config
+              configMap:
+                name: unbound-config
+          containers:
+            - name: unbound
+              image: docker.io/alpinelinux/unbound
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/unbound/unbound.conf
+                  subPath: unbound.conf
+              ports:
+                - name: dns-tcp
+                  containerPort: 53
+                  protocol: TCP
+                - name: dns-udp
+                  containerPort: 53
+                  protocol: UDP
+              readinessProbe:
+                tcpSocket:
+                  port: dns-tcp
+          
