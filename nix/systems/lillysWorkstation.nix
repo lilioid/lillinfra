@@ -110,12 +110,14 @@
   };
 
   # hardware config
+  boot.blacklistedKernelModules = [ "nouveau" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
   hardware.nvidia = {
+    branch = "legacy_580";
     modesetting.enable = true;
-    open = false;
     nvidiaSettings = false;
-        branch = "legacy_580";
+    open = false;
   };
 
   # additional packages
