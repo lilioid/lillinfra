@@ -37,7 +37,6 @@
     role = "server";
     clusterInit = false;
     extraFlags = builtins.replaceStrings [ "\n" ] [ " " ] ''
-      --node-ip=2a07:c481:2:5:be24:11ff:fe9e:1d05,185.161.130.4
       --node-external-dns=k8s.aut-sys.de
       --node-internal-dns=k8s.z9.aut-num.de
       --disable-helm-controller

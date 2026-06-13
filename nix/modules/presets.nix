@@ -287,10 +287,17 @@ in
       };
 
       # network config
-      systemd.network.networks."eth0" = {
-        matchConfig.Name = "eth0";
-        networkConfig.DHCP = "yes";
-        networkConfig.IPv6AcceptRA = "yes";
+      # disable privacy extensions (because servers get cofused with multiple addresses sometimes)
+      # also enable managed configuration through my router
+      networking.useDHCP = false;
+      systemd.network = {
+        enable = true;
+        config.networkConfig."IPv6PrivacyExtensions" = false;
+        networks."eth0" = {
+          matchConfig.Type = "ether";
+          networkConfig.DHCP = "yes";
+          networkConfig.IPv6AcceptRA = "yes";
+        };
       };
 
       # general os config
