@@ -281,6 +281,11 @@ Host adenauer.systems.b1-systems.de
   Port 60000
   AddressFamily inet
 
+Host gitlab.opencode.de
+  Hostname gitlab.opencode.de
+  User lilly.sell
+  IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
+
 Host sna-proxy.central-monitoring.opendesk.b1-systems.de
   ProxyJump shell.intern.b1-systems.de
 
