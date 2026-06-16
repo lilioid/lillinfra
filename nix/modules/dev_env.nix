@@ -70,6 +70,8 @@ in
       nix-output-monitor
       nvd
       distrobox
+      fzf
+      findutils
       # jetbrains.pycharm
       # jetbrains.rust-rover
       # jetbrains.webstorm
@@ -78,6 +80,14 @@ in
 
     programs.fish.shellInit = ''
       fish_add_path $HOME/.krew/bin
+
+      alias cdt "cd (mktemp -d)"
+
+      function cdp --description="Interactively change into a Project directory" --wraps="cd" -a root
+        set root $root "$HOME/Projects"
+        set dir (find "$root" -type d -name .git -printf '%h\n' | sed "s|$HOME/Projects/||" | fzf --no-multi --preview-label="README.md" --preview 'cat {}/README.md')
+        cd $dir
+      end
     '';
 
     programs.gnupg.agent = {
