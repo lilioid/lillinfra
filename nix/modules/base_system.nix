@@ -67,7 +67,7 @@
 
   # software settings
   home-manager.useGlobalPkgs = lib.mkDefault true;
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
   documentation.nixos.includeAllModules = true;
   documentation.nixos.options.warningsAreErrors = false;
   programs.command-not-found.enable = false;
