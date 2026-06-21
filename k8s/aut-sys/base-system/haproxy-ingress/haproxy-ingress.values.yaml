@@ -1,5 +1,7 @@
 # ref: https://artifacthub.io/packages/helm/haproxy-ingress/haproxy-ingress
 controller:
+  publishService:
+    enabled: true
   livenessProbe:
     port: 10254
   readinessProbe:
