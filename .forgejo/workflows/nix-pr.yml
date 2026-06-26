@@ -23,7 +23,7 @@ jobs:
           echo "dummy update, TODO: remove"
 
       - name: Populate cache with updated flake inputs
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6
         with:
           key: nix-cache-${{ hashFiles('flake.lock', 'flake.nix') }}
           path: "/root/.cache/nix/**"
