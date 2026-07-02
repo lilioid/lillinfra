@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.81.0"
+      version = "0.111.0"
     }
     desec = {
       source  = "valodim/desec"
@@ -10,7 +10,7 @@ terraform {
     }
     zonefile = {
       source  = "ahamlinman/zonefile"
-      version = "0.1.2"
+      version = "0.2.0"
     }
   }
 }
