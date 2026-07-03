@@ -44,13 +44,13 @@ Host hosting.srv.lly.sh
   HostName hosting.srv.lly.sh
   AddressFamily inet
 
-Host mail.srv.ftsell.de
+Host mail.srv.lly.sh
   User lilly
-  HostName mail.srv.ftsell.de
+  HostName mail.srv.lly.sh
 
-Host rt-hosting.srv.ftsell.de
+Host rt-hosting.srv.lly.sh
   User lilly
-  HostName rt-hosting.srv.ftsell.de
+  HostName rt-hosting.srv.lly.sh
 
 Host gtw.srv.lly.sh
   User lilly
@@ -286,9 +286,6 @@ Host gitlab.opencode.de
   User lilly.sell
   IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
 
-Host sna-proxy.central-monitoring.opendesk.b1-systems.de
-  ProxyJump shell.intern.b1-systems.de
-
 Host shell.intern.b1-systems.de
   Hostname shell.intern.b1-systems.de
   Port 60000
@@ -296,6 +293,9 @@ Host shell.intern.b1-systems.de
 Host *.b1-systems.de
   User sell
   IdentityFile ~/.ssh/id_sell@b1-systems.de.pub
+
+Host *.opendesk.b1-systems.de
+  ProxyJump shell.intern.b1-systems.de
 
 
 
