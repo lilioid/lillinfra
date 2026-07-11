@@ -1,0 +1,10 @@
+# https://apps.db.ripe.net/db-web-ui/lookup?source=ripe&key=lilly-MNT&type=mntner
+
+MNTNER:     lilly-MNT
+mnt-by:     lilly-MNT
+mnt-nfy:    li@lly.sh
+upd-to:     li@lly.sh
+admin-c:    lly
+tech-c:     lly
+auth:       SSO ripe@ftsell.de
+source:     RIPE

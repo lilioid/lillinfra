@@ -1,0 +1,9 @@
+# https://apps.db.ripe.net/db-web-ui/lookup?source=ripe&key=lly&type=person
+
+PERSON:    Lilly Mau
+nic-hdl:   lly
+e-mail:    li@lly.sh
+contact:   https://li.lly.sh
+mnt-by:    lilly-MNT
+mnt-ref:   lilly-MNT
+source:    RIPE
