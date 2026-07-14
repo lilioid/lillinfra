@@ -21,7 +21,7 @@ items:
       ports:
         - name: http
           port: 80
-          tragetPort: http
+          targetPort: http
         - name: https
           port: 443
           targetPort: https
