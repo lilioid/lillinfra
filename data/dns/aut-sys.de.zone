@@ -12,10 +12,10 @@ $TTL 3600
 *   CNAME   www2.z9.aut-num.de.
 
 ; functional records (quick access to specific hosts or functionality)
-spf.hosted-on  TXT      "v=spf1 +a:mail.srv.lly.sh -all"
 k8s            CNAME    k8s-ctl.z9.aut-num.de.
 vpn            CNAME    rt-wan.z9.aut-num.de.
-mail           CNAME    mail.srv.lly.sh.
+mail           CNAME    mx1.z9.aut-num.de.
+rspamd         CNAME    www2.z9.aut-num.de.
 sync           CNAME    syncthing.z9.aut-num.de.
 *.hosted-on    CNAME    webhost.z9.aut-num.de.
 hosted-on      CNAME    webhost.z9.aut-num.de.
@@ -23,9 +23,17 @@ music          CNAME    h.oleb.it.
 media          CNAME    h.oleb.it.
 monitoring     CNAME    monitoring.ex.aut-num.de.
 
+; mail hosting records
+spf.hosted-on            TXT   "v=spf1 +a:mx1.z9.aut-num.de -all"
+dmarc.hosted-on          TXT   "v=DMARC1; p=reject; rua=mailto:dmarc-reports@aut-sys.de; ruf=mailto:dmarc-reports@aut-sys.de;"
+dkimkey-main.hosted-on   TXT   "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2Aq7HNQZmuk438HUlcYsxkmRuHJOz4ZpPRfIIml6C3Qp5hY5O7l8cSmvhsj1vLoMoPi4CWwHyOVl2hRTMQqsYz+l6ZFAcwI3YBDTD7hjaB3nNjGfOVo1X2Cq7c+sFaeMAZwTqC2R1TusfVb7QBuUTRxVnHStvc7crmOdJb0NCVBZvJ0juYkmXtA" "i6S/VhBZxDSpMb69Eef48yeyFEhK5qcRSAA2D/RnaZwY1/RrKS4RpP6YEhkgFkLtgiQuYjslk64zDYiJu3pmIhW1an+qv984C55FowifyGVaLkCkvXrnO/kMMX5Ya05N6RnurVCP9w6Vu2yX8zThY1F8yyro6SwIDAQAB"
+
+; ACME challenge records for DNS challenges
+_acme-challenge.mail     CNAME    lilly-k8s.gruenkohl.org.
+
 ; mail settings (handled by jan.hanse.de)
-@                    MX      10 jan.hanse.de.
-@                    TXT     "v=spf1 +mx -all"
-_dmarc               TXT     "v=DMARC1; p=reject; rua=mailto:mailauth-reports@lilly.hanse.de"
-dkim._domainkey      TXT     "v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5divkawzmWnmFMGZIabmCaD7E0aPX3gbHYVS8DCXIMLu2UNM8KgqnselaWSh9U6ebdaGkXubEpijeYgfUlruv+u6zEWKBBK4lLtbfr9xsScsYUiHimvHp1p79BR0QQi6AMGtriX9L0xpaf+aa0Kt0vw3QPPZ0fLskcEpJ7ZzJfQmRRxfoeUgazF0PJW7zG5gJPIwq4oN/d/qC3+fi5SatCqsySAGjvb+eyNEEVa4RJ+AAPy0TZn0zW0JI92B/qdbNSC+ZzfWVDcDkVoce3w8o1Bi+jJKzAxqxvwD+BeIWSC/F5G8L3Qb1Sxdp95R1i+iRojlme8N2K6G0o5fXhZMXQIDAQAB"
+;@                    MX      10 jan.hanse.de.
+;@                    TXT     "v=spf1 +mx -all"
+;_dmarc               TXT     "v=DMARC1; p=reject; rua=mailto:mailauth-reports@lilly.hanse.de"
+;dkim._domainkey      TXT     "v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5divkawzmWnmFMGZIabmCaD7E0aPX3gbHYVS8DCXIMLu2UNM8KgqnselaWSh9U6ebdaGkXubEpijeYgfUlruv+u6zEWKBBK4lLtbfr9xsScsYUiHimvHp1p79BR0QQi6AMGtriX9L0xpaf+aa0Kt0vw3QPPZ0fLskcEpJ7ZzJfQmRRxfoeUgazF0PJW7zG5gJPIwq4oN/d/qC3+fi5SatCqsySAGjvb+eyNEEVa4RJ+AAPy0TZn0zW0JI92B/qdbNSC+ZzfWVDcDkVoce3w8o1Bi+jJKzAxqxvwD+BeIWSC/F5G8L3Qb1Sxdp95R1i+iRojlme8N2K6G0o5fXhZMXQIDAQAB"
 

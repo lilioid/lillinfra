@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: List
+items:
+  
+  # internal service that has everything
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: mailserver-intern
+      labels: &labels
+        app.kubernetes.io/name: mailcalf
+    spec:
+      selector: *labels
+      ports:
+        - name: smtp
+          port: 25
+          targetPort: smtp
+        - name: submission
+          port: 587
+          targetPort: submission
+        - name: imaps
+          port: 993
+          targetPort: imaps
+        - name: rspamd-admin
+          port: 11334
+          targetPort: rspamd-admin
+        - name: sieve-manage
+          port: 4190
+          targetPort: sieve-manage
+
+  # external service that only exposes required ports
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: mailserver-extern
+      labels: *labels
+    spec:
+      selector: *labels
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      ipFamilies: [ "IPv6", "IPv4" ]
+      ipFamilyPolicy: "RequireDualStack"
+      ports:
+        - name: smtp
+          port: 25
+          targetPort: smtp
+        - name: submission
+          port: 587
+          targetPort: submission
+        - name: imaps
+          port: 993
+          targetPort: imaps
+        - name: sieve-manage
+          port: 4190
+          targetPort: sieve-manage

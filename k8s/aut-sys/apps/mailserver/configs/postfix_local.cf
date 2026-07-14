@@ -1,0 +1,8 @@
+###########################
+# Local config overrides
+#
+
+mydomain = aut-num.de
+myhostname = mx1.z9.$mydomain
+
+message_size_limit = 50000000

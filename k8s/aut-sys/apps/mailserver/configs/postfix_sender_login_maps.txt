@@ -1,0 +1,18 @@
+@noreply.lly.sh             noreply
+noreply@lly.sh              noreply
+
+@ftsell.de                  lilly
+@finn-thorben.me            lilly
+@lly.sh                     lilly
+@timonengelke.de            tengelke
+@sheaksadi.me               ssheak
+@bastianpermesang.com       geschox
+
+@powolygon.gay              polygon
+@critter.codes              polygon
+
+lilly@bit-bots.de           lilly
+jasper@bit-bots.de          bitbots-jasper
+info@bit-bots.de            lilly,bitbots-jasper,bitbots-sponsoring,bitbots-valerie
+sponsoring@bit-bots.de      bitbots-sponsoring,bitbots-valerie
+valerie@bit-bots.de         bitbots-valerie

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mailserver
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  tls:
+    - secretName: tls-rspamd.aut-sys.de
+      hosts:
+        - rspamd.aut-sys.de
+  rules:
+    - host: rspamd.aut-sys.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mailserver-intern
+                port:
+                  name: rspamd-admin

@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: mailserver
+
+resources:
+  - manifests/namespace.yml
+  - manifests/certificate.yml
+  - manifests/deployment.yml
+  - manifests/mgmt-ingress.yml
+  - manifests/services.yml
+  - manifests/storage.yml
+
+configMapGenerator:
+  - name: mailserver
+    files:
+      - dovecot_local.conf=configs/dovecot_local.conf
+      - postfix_local.cf=configs/postfix_local.cf
+      - postfix_virtual_alias_maps.txt=configs/postfix_virtual_alias_maps.txt
+      - postfix_virtual_domains.txt=configs/postfix_virtual_domains.txt
+      - postfix_sender_login_maps.txt=configs/postfix_sender_login_maps.txt
+      - postfix_recipient_access.txt=configs/postfix_recipient_access.txt
+      - rspamd_worker_controller.inc=configs/rspamd_worker_controller.inc
+      - opendkim_domains.txt=configs/opendkim_domains.txt
+      - dovecot-extra.passwd=configs/dovecot-extra.passwd
+
+generators:
+  - ./secret-generator.yml

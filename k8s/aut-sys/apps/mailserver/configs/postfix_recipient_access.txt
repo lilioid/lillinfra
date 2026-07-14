@@ -1,0 +1,10 @@
+# A table for configuring actions that postifx does for specific recipients
+# http://www.postfix.org/access.5.html
+timon@bit-bots.de   REJECT
+nils@bit-bots.de    REJECT
+marcel.hellwig@bit-bots.de REJECT
+maxim.holand@bit-bots.de REJECT
+rohow@bit-bots.de REJECT
+rohow-owner@bit-bots.de REJECT
+rohow-orga@bit-bots.de REJECT
+rohow-orga-owner@bit-bots.de REJECT
