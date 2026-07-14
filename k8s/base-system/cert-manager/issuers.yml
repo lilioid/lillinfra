@@ -1,3 +1,4 @@
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -8,6 +9,7 @@ spec:
     email: li@lly.sh
     privateKeySecretRef:
       name: letsencrypt-account-key
+    profile: "tlsserver"
     solvers:
     - http01:
         ingress:
@@ -16,3 +18,26 @@ spec:
           podTemplate:
             spec:
               priorityClassName: custom-critical
+
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: gruenkohl-org-dns
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: li@lly.sh
+    privateKeySecretRef:
+      name: letsencrypt-account-key
+    profile: "tlsserver"
+    solvers:
+      - dns01:
+          cnameStrategy: Follow
+          rfc2136:
+            nameserver: ns1.hanse.de
+            tsigKeyName: "gruenkohl.org-lilly"
+            tsigAlgorithm: "HMACSHA512"
+            tsigSecretSecretRef:
+              name: "tsig-gruenkohl.org-lilly"
+              key: "key"

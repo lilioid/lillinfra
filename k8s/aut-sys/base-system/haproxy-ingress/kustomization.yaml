@@ -4,7 +4,6 @@ namespace: haproxy-ingress
 
 resources:
   - manifests/namespace.yml
-  - manifests/extra-lb-services.yml
 
 patches:
   - target:

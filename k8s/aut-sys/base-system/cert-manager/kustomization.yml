@@ -12,3 +12,6 @@ patches:
       kind: Deployment
       name: cert-manager
     path: controller-deployment.patch.yml
+
+generators:
+  - ./secret-generator.yml
