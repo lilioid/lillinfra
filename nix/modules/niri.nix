@@ -70,7 +70,7 @@ in
     services.gvfs.enable = true;
 
     # use gnome-keyring but only for secret management. ssh-agent is running independently
-    services.gnome.gnome-keyring.enable = true;
+    services.gnome.gnome-keyring.enable = lib.mkForce false;
     services.gnome.gcr-ssh-agent.enable = false;
 
     # configure my preferred system fonts
