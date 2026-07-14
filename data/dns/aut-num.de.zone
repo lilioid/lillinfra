@@ -28,6 +28,8 @@ syncthing.z9         A       185.161.130.8
 syncthing.z9         AAAA    2a07:c481:2:5:be24:11ff:fe38:a167
 webhost.z9           A       185.161.130.7
 webhost.z9           AAAA    2a07:c481:2:5:be24:11ff:fed0:b3ca
+mx1.z9               A       185.161.130.10
+                     AAAA    2a07:c481:2:6::
 
 ; external hosts
 monitoring.ex        AAAA    2a01:4f8:251:226:ef::

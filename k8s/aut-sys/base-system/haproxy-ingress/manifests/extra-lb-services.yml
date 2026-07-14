@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: List
+items:
+
+  # mx1.z9.aut-num.de
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: mx1-z9-aut-num-de-ingress
+      labels: &labels
+        app.kubernetes.io/instance: haproxy-ingress
+        app.kubernetes.io/name: haproxy-ingress
+      annotations:
+        metallb.io/allow-shared-ip: "mx1-z9-aut-num-de"
+    spec:
+      selector: *labels
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      ipFamilies: [ "IPv6", "IPv4" ]
+      ipFamilyPolicy: "RequireDualStack"
+      ports:
+        - name: http
+          port: 80
+          tragetPort: http
+        - name: https
+          port: 443
+          targetPort: https
