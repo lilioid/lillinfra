@@ -10,3 +10,10 @@ $TTL 3600
 *    A    212.12.48.125
 *    AAAA 2a00:14b0:4200:3000:125::1
 
+; mail settings for this domain
+@                  MX    10 mx1.z9.aut-sys.de.
+_dmarc             CNAME dmarc.hosted-on.aut-sys.de.
+main._domainkey    CNAME dkimkey-main.hosted-on.aut-sys.de.
+@	               TXT	"v=spf1 +include:spf.hosted-on.aut-sys.de +include:mailbox.org ~all"
+
+
