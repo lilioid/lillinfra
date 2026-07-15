@@ -1,8 +1,0 @@
-###########################
-# Local config overrides
-#
-
-mydomain = lly.sh
-myhostname = mail.srv.$mydomain
-
-message_size_limit = 50000000

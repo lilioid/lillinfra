@@ -1,5 +1,0 @@
-# this patch annotates the target ingress class to be the default for all ingresses
-- op: add
-  path: /metadata/annotations
-  value:
-    "ingressclass.kubernetes.io/is-default-class": true
