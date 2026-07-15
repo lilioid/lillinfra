@@ -2,12 +2,9 @@
 ftsell.de                   _
 finn-thorben.me             _
 lly.sh                      _
+aut-sys.de                  _
 noreply.aut-sys.de          _
 
 # Hosted Domains
 timonengelke.de             _
-bit-bots.de                 _
-sheaksadi.me                _
 bastianpermesang.com        _
-powolygon.gay               _
-critter.codes               _
