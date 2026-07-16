@@ -153,7 +153,7 @@
 
     niri = {
       enable = true;
-      configOverride = {
+      configOverride = rec {
         outputs."eDP-1" = {
           position.x = 0;
           position.y = 0;
@@ -169,6 +169,7 @@
           position.y = -1500;
           scale = 0.8;
         };
+        outputs."LG Electronics 25BL56WY 911NTWG74041" = outputs."LG Electronics 25BL56WY 911NTFA73947";
         outputs."Optoma Corporation Optoma WXGA Q7C6351C0097" = {
           # Fux Turmzimmer
           position.x = 0;
