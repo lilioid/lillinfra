@@ -1,5 +1,6 @@
 { lib
 , config
+, pkgs
 , ...
 }:
 let
@@ -160,31 +161,15 @@ in
           create = "--list --filter=AME";
         };
 
-        # configure notifications via ntfy
-        ntfy = {
-          server = "https://ntfy.lly.sh";
-          topic = "backups";
-          access_token = "{credential file ${config.sops.secrets."${cfg.secretNamespace}/ntfyToken".path}}";
-          states = [ "fail" ];
-          start = lib.mkIf (cfg.notify == "always") {
-            title = "Backup started";
-            message = "${config.networking.fqdnOrHostName} has started its scheduled backup";
-            priority = "min";
-            tags = "card_file_box";
-          };
-          finish = lib.mkIf (cfg.notify == "always") {
-            title = "Backup finished";
-            message = "${config.networking.fqdnOrHostName} has successfully finished its scheduled backup";
-            priority = "min";
-            tags = "heavy_check_mark";
-          };
-          fail = lib.mkIf (cfg.notify == "always" || cfg.notify == "on-failure") {
-            title = "Backup failed";
-            message = "${config.networking.fqdnOrHostName} failed to backup its data";
-            priority = "default";
-            tags = "rotating_light";
-          };
-        };
+        # configure notifications via gotify
+        commands = [
+          {
+            after = "error";
+            run = [
+              "${lib.getExe pkgs.curl} -sSL -H @${config.sops.templates."${cfg.secretNamespace}/gotifyHeaders".path} https://gotify.hanse.de/message -X POST -F \"title=Backup Failed\" -F \"message=${config.networking.fqdnOrHostName} failed to backup its data: {error}\" -F \"priority=8\""
+            ];
+          }
+        ];
 
         # enable postgres backup if required
         postgresql_databases = lib.mkIf cfg.backupPostgres (
@@ -206,7 +191,12 @@ in
     sops.secrets = {
       "${cfg.secretNamespace}/sshKey" = { };
       "${cfg.secretNamespace}/repoPass" = { };
-      "${cfg.secretNamespace}/ntfyToken" = { };
+      "${cfg.secretNamespace}/gotifyToken" = { };
+    };
+    sops.templates = {
+      "${cfg.secretNamespace}/gotifyHeaders".content = ''
+        Authorization: Bearer ${config.sops.placeholder."${cfg.secretNamespace}/gotifyToken"}
+      '';
     };
   };
 }
