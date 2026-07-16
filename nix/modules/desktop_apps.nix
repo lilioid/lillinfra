@@ -34,6 +34,7 @@ in {
       feishin
       picard
       gnome-connections
+      openscad-unstable
     ];
 
     services.gnome.evolution-data-server.enable = true;
