@@ -28,6 +28,9 @@ spf.hosted-on            TXT   "v=spf1 +ip4:185.161.129.148/32 +ip6:2a07:c481:2:
 dmarc.hosted-on          TXT   "v=DMARC1; p=reject; rua=mailto:dmarc-reports@aut-sys.de; ruf=mailto:dmarc-reports@aut-sys.de;"
 dkimkey-main.hosted-on   TXT   "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2Aq7HNQZmuk438HUlcYsxkmRuHJOz4ZpPRfIIml6C3Qp5hY5O7l8cSmvhsj1vLoMoPi4CWwHyOVl2hRTMQqsYz+l6ZFAcwI3YBDTD7hjaB3nNjGfOVo1X2Cq7c+sFaeMAZwTqC2R1TusfVb7QBuUTRxVnHStvc7crmOdJb0NCVBZvJ0juYkmXtA" "i6S/VhBZxDSpMb69Eef48yeyFEhK5qcRSAA2D/RnaZwY1/RrKS4RpP6YEhkgFkLtgiQuYjslk64zDYiJu3pmIhW1an+qv984C55FowifyGVaLkCkvXrnO/kMMX5Ya05N6RnurVCP9w6Vu2yX8zThY1F8yyro6SwIDAQAB"
 
+; temporary record until basti has fixed his MX record
+mx1.z9.aut-sys.de. CNAME mx1.z9.aut-num.de.
+
 ; ACME challenge records for DNS challenges
 _acme-challenge.mail     CNAME    lilly-k8s.gruenkohl.org.
 
