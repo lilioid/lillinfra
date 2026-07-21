@@ -33,10 +33,19 @@ let
     );
 
     # overwrite certain programs from nixos-unstable because of newer versions
+    
+    # build keepass with patch that fixes evolution compatibility
+    # https://github.com/keepassxreboot/keepassxc/pull/13532
+    keepassxc = pkgs-unstable.keepassxc.overrideAttrs (finalAttrs: previousAttrs: {
+      patches = previousAttrs.patches ++ [
+        (pkgs-unstable.fetchurl {
+          url = "https://github.com/keepassxreboot/keepassxc/pull/13532.patch";
+          hash = "sha256-aUO/qPe90tX2pl8K2+h2s1pdUKhXfaOjVRpEjnhPWH0=";
+        })
+      ];
+    });
+
     # glab = pkgs-unstable.glab;
-    # rofi = pkgs-unstable.rofi;
-    # rofi-calc = pkgs-unstable.rofi-calc;
-    # rofi-emoji = pkgs-unstable.rofi-emoji;
   };
 in
 pkgs.lib.mergeAttrs dirPkgs manualPkgs
