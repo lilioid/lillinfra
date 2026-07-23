@@ -40,7 +40,7 @@ let
       patches = previousAttrs.patches ++ [
         (pkgs-unstable.fetchurl {
           url = "https://github.com/keepassxreboot/keepassxc/pull/13532.patch";
-          hash = "sha256-aUO/qPe90tX2pl8K2+h2s1pdUKhXfaOjVRpEjnhPWH0=";
+          hash = "sha256-TgVCGsuqQQTfSc1gZaojzxg9PA1CLjTFFhN5Z5kjKms=";
         })
       ];
     });
