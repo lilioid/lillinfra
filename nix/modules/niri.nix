@@ -522,6 +522,17 @@ in
               "toggle"
             ];
           };
+          "Mod+W" = {
+            hotkey-overlay.title = "Open Window picker";
+            repeat = false;
+            action = niriActions.spawn [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "launcher"
+              "windows"
+            ];
+          };
           "Mod+L" = {
             hotkey-overlay.title = "Lock the Screen";
             repeat = false;
