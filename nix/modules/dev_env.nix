@@ -72,6 +72,7 @@ in
       distrobox
       fzf
       findutils
+      file
       # jetbrains.pycharm
       # jetbrains.rust-rover
       # jetbrains.webstorm
