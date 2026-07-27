@@ -58,8 +58,8 @@ let
 in
 {
   # servers at home
-  "priv.srv.home.intern" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs;
-  "proxy.srv.home.intern" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs;
+  "priv.srv.home.internal" = mkSystem "aarch64-linux" "priv.srv.home.intern" flake.inputs.nixpkgs;
+  "proxy.srv.home.internal" = mkSystem "aarch64-linux" "proxy.srv.home.intern" flake.inputs.nixpkgs;
 
   # aut-sys.de
   "db.z9.aut-num.de" = mkSystem "x86_64-linux" "db.z9.aut-num.de" flake.inputs.nixpkgs;

@@ -70,23 +70,23 @@ in
     virtualHosts = {
 
       "sync.home.lly.sh" = vhostDefaults // {
-        locations."/".proxyPass = "http://priv.srv.home.intern:8384";
+        locations."/".proxyPass = "http://priv.srv.home.internal:8384";
       };
 
       "ha.home.lly.sh" = vhostDefaults // {
         locations."/" = {
-          proxyPass = "http://priv.srv.home.intern:8123";
+          proxyPass = "http://priv.srv.home.internal:8123";
           proxyWebsockets = true;
         };
       };
 
       "docs.home.lly.sh" = vhostDefaults // {
-        locations."/".proxyPass = "http://priv.srv.home.intern:8000";
+        locations."/".proxyPass = "http://priv.srv.home.internal:8000";
       };
 
       "unifi.home.lly.sh" = vhostDefaults // {
         locations."/" = {
-          proxyPass = "https://priv.srv.home.intern:8443";
+          proxyPass = "https://priv.srv.home.internal:8443";
           extraConfig = ''
             proxy_ssl_verify off; 
           '';
