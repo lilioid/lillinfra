@@ -102,5 +102,7 @@ in
       dumpcap.enable = true;
       package = pkgs.wireshark;
     };
+
+    programs.ghidra.enable = true;
   };
 }
