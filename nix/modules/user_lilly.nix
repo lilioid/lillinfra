@@ -1,8 +1,9 @@
-{ modulesPath
-, config
-, lib
-, pkgs
-, ...
+{
+  modulesPath,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   hasGnome = config.custom.gnomeDesktop.enable;
@@ -28,7 +29,8 @@ in
         "wheel"
         "networkmanager"
         "dialout"
-      ] ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ])
+      ]
+      ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ])
       ++ (if config.virtualisation.docker.enable then [ "docker" ] else [ ])
       ++ (if config.programs.wireshark.enable then [ "wireshark" ] else [ ]);
       home = "/home/lilly";
@@ -40,6 +42,11 @@ in
       isNormalUser = true;
     };
 
+    # home-manager and nixos options are equivalent so I use plain nixos for less indirection
+    programs.zoxide = {
+      enable = true;
+    };
+
     home-manager.users.lilly = {
       home.preferXdgDirectories = true;
       home.sessionSearchVariables = lib.mkIf hasDevEnv {
@@ -47,12 +54,10 @@ in
       };
       home.shell.enableFishIntegration = true;
       programs.wezterm.enable = hasGnome;
-      programs.wezterm.extraConfig = lib.mkIf hasGnome (
-        builtins.readFile ../dotfiles/lilly/wezterm.lua
-      );
+      programs.wezterm.extraConfig = lib.mkIf hasGnome (builtins.readFile ../dotfiles/lilly/wezterm.lua);
       xdg.mimeApps = lib.mkIf hasDesktop (import ../dotfiles/lilly/mimeapps.nix);
       xdg.configFile = {
-        "mimeapps.list" = lib.mkIf hasDesktop{ force = true; };
+        "mimeapps.list" = lib.mkIf hasDesktop { force = true; };
         "nixpkgs/config.nix".text = ''
           {
             allowUnfree = true;
@@ -91,7 +96,6 @@ in
           font-family = "Inter Mono";
         };
       };
-      
       home.pointerCursor = lib.mkIf hasDesktop {
         enable = true;
         package = pkgs.bibata-cursors;
