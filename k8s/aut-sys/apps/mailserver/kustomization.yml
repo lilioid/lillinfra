@@ -5,6 +5,9 @@ namespace: mailserver
 resources:
   - manifests/namespace.yml
 
+  # new mailserver
+  - manifests/dovecot.yml
+
   # mailcalf resources
   - mailcalf-manifests/mailcalf-certificate.yml
   - mailcalf-manifests/mailcalf-deployment.yml
@@ -12,7 +15,17 @@ resources:
   - mailcalf-manifests/mailcalf-services.yml
   - mailcalf-manifests/mailcalf-storage.yml
 
+images:
+  - name: docker.io/dovecot/dovecot
+    newTag: "2.4.4"
+
 configMapGenerator:
+  - name: dovecot-configs
+    files:
+      - protocols.conf=configs/dovecot/protocols.conf
+      - fts.conf=configs/dovecot/fts.conf
+      - sieve.conf=configs/dovecot/sieve.conf
+  
   # mailcalf
   - name: mailcalf-configs
     files:

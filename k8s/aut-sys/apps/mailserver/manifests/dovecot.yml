@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: List
+items:
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: dovecot
+      labels: &labels
+        app.kubernetes.io/name: dovecot
+        app.kubernetes.io/component: MDA
+    spec:
+      selector: *labels
+      ports:
+        - name: doveadm
+          port: 8080
+          targetPort: doveadm
+        - name: stats
+          port: 9090
+        - name: lmtps
+          targetPort: stats
+          port: 31024
+        - name: imap
+          port: 31143
+        - name: imaps
+          port: 31993
+        - name: managesieve
+          port: 34190
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: dovecot
+      labels: *labels
+    spec:
+      strategy:
+        type: Recreate
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          # dnsConfig:
+          # nameserer: # TODO: configure unbound
+          enableServiceLinks: false
+          automountServiceAccountToken: false
+          priorityClassName: custom-high
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+          volumes:
+            - name: mail-data
+              persistentVolumeClaim:
+                claimName: dovecot-mail
+            - name: plaintext-configs
+              configMap:
+                name: dovecot-configs
+            - name: secret-configs
+              secret:
+                secretName: dovecot-configs
+          containers:
+            - name: dovecot
+              image: docker.io/dovecot/dovecot
+              volumeMounts:
+                - mountPath: /srv/vmail
+                  name: mail-data
+                - mountPath: /etc/dovecot/conf.d/protocols.conf
+                  name: plaintext-configs
+                  subPath: protocols.conf
+                - mountPath: /etc/dovecot/conf.d/fts.conf
+                  name: plaintext-configs
+                  subPath: fts.conf
+                - mountPath: /etc/dovecot/conf.d/sieve.conf
+                  name: plaintext-configs
+                  subPath: sieve.conf
+                - mountPath: /etc/dovecot/conf.d/auth.conf
+                  name: secret-configs
+                  subPath: auth.conf
+                - mountPath: /etc/dovecot/dovecot-extra.passwd
+                  name: secret-configs
+                  subPath: dovecot-extra.passwd
+              ports:
+                - name: doveadm
+                  containerPort: 8080
+                - name: stats
+                  containerPort: 9090
+                - name: lmtps
+                  containerPort: 31024
+                - name: imap
+                  containerPort: 31143
+                - name: imaps
+                  containerPort: 31993
+                - name: managesieve
+                  containerPort: 34190
+
+  # actual mail storage
+  # very important to back up!
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: dovecot-mail
+      labels: *labels
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: 10Gi
