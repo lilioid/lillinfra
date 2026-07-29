@@ -4,24 +4,24 @@ namespace: mailserver
 
 resources:
   - manifests/namespace.yml
-  - manifests/certificate.yml
-  - manifests/deployment.yml
-  - manifests/mgmt-ingress.yml
-  - manifests/services.yml
-  - manifests/storage.yml
+  - mailcalf-manifests/mailcalf-certificate.yml
+  - mailcalf-manifests/mailcalf-deployment.yml
+  - mailcalf-manifests/mailcalf-mgmt-ingress.yml
+  - mailcalf-manifests/mailcalf-services.yml
+  - mailcalf-manifests/mailcalf-storage.yml
 
 configMapGenerator:
   - name: mailserver
     files:
-      - dovecot_local.conf=configs/dovecot_local.conf
-      - postfix_local.cf=configs/postfix_local.cf
-      - postfix_virtual_alias_maps.txt=configs/postfix_virtual_alias_maps.txt
-      - postfix_virtual_domains.txt=configs/postfix_virtual_domains.txt
-      - postfix_sender_login_maps.txt=configs/postfix_sender_login_maps.txt
-      - postfix_recipient_access.txt=configs/postfix_recipient_access.txt
-      - rspamd_worker_controller.inc=configs/rspamd_worker_controller.inc
-      - opendkim_domains.txt=configs/opendkim_domains.txt
-      - dovecot-extra.passwd=configs/dovecot-extra.passwd
+      - dovecot_local.conf=mailcalf-configs/dovecot_local.conf
+      - postfix_local.cf=mailcalf-configs/postfix_local.cf
+      - postfix_virtual_alias_maps.txt=mailcalf-configs/postfix_virtual_alias_maps.txt
+      - postfix_virtual_domains.txt=mailcalf-configs/postfix_virtual_domains.txt
+      - postfix_sender_login_maps.txt=mailcalf-configs/postfix_sender_login_maps.txt
+      - postfix_recipient_access.txt=mailcalf-configs/postfix_recipient_access.txt
+      - rspamd_worker_controller.inc=mailcalf-configs/rspamd_worker_controller.inc
+      - opendkim_domains.txt=mailcalf-configs/opendkim_domains.txt
+      - dovecot-extra.passwd=mailcalf-configs/dovecot-extra.passwd
 
 generators:
   - ./secret-generator.yml
