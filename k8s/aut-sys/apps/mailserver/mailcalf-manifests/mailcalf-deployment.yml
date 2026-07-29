@@ -20,10 +20,10 @@ spec:
           emptyDir: {}
         - name: conf-configmap
           configMap:
-            name: mailserver
+            name: mailcalf-configs
         - name: conf-secrets
           secret:
-            secretName: mailserver
+            secretName: mailcalf-configs
         - name: tls
           secret:
             secretName: tls-mx1.z9.aut-num.de

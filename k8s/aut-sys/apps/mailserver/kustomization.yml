@@ -4,6 +4,8 @@ namespace: mailserver
 
 resources:
   - manifests/namespace.yml
+
+  # mailcalf resources
   - mailcalf-manifests/mailcalf-certificate.yml
   - mailcalf-manifests/mailcalf-deployment.yml
   - mailcalf-manifests/mailcalf-mgmt-ingress.yml
@@ -11,7 +13,8 @@ resources:
   - mailcalf-manifests/mailcalf-storage.yml
 
 configMapGenerator:
-  - name: mailserver
+  # mailcalf
+  - name: mailcalf-configs
     files:
       - dovecot_local.conf=mailcalf-configs/dovecot_local.conf
       - postfix_local.cf=mailcalf-configs/postfix_local.cf
