@@ -1,19 +1,17 @@
 name: containers
 on:
   push:
-    paths: [ "containers/**" ]
+    paths: [ "containers/**", ".forgejo/workflows/containers.yml" ]
   workflow_dispatch: {}
   schedule:
     - cron: "@weekly"
 
 jobs:
   generate-build-matrix:
-    runs-on: alpine-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
-      - name: Install python
-        run: apk add --no-cache python3
       - id: discover-containers
         name: Discover contained container definitions
         shell: "python3 {0}"
@@ -33,23 +31,24 @@ jobs:
     strategy:
       matrix: 
         container_name: ${{ fromJSON(needs.generate-build-matrix.outputs.container_names) }}
+    container:
+      image: ghcr.io/osscontainertools/kaniko:alpine
     steps:
-      - name: Setup docker
-        run: apk add --no-cache docker-cli docker-cli-buildx
-      - name: Checkout
-        uses: actions/checkout@v7
-      - name: Build image
-        run: |
-          echo "Building ${{ matrix.container_name }}"
-          docker build "containers/${{ matrix.container_name }}/" \
-            -f "containers/${{ matrix.container_name }}/Containerfile" \
-            -t "${{ matrix.container_name }}:latest" \
-            --label "org.opencontainers.image.source=${{ forgejo.server_url }}/${{ forgejo.repository }}"
-      - name: Push image
-        if: ${{ github.ref }} == "main"
-        run: |
-          echo "Publishing ${{ matrix.container_name }} as git.hanse.de/${{ forgejo.repository }}-${{ matrix.container_name }}:latest"
-          docker login -u lilly -p "${{ secrets.HANSE_PACKAGES_ACCESS }}" git.hanse.de
-          docker tag "${{ matrix.container_name }}:latest" "git.hanse.de/${{ forgejo.repository }}-${{ matrix.container_name }}:latest"
-          docker push "git.hanse.de/${{ forgejo.repository }}-${{ matrix.container_name }}:latest"
+      - name: Install required system packages
+        run: apk add --no-cache nodejs git
 
+      - name: Checkout source code
+        uses: actions/checkout@v7
+
+      - name: Build Container Image
+        env:
+          KANIKO_NO_PUSH: ${{ forgejo.ref_name != 'main' }}
+          KANIKO_GIT_HANSE_DE_USER: forgejo-actions
+          KANIKO_GIT_HANSE_DE_PASSWORD: ${{ secrets.HANSE_PACKAGES_ACCESS }}
+        run: /kaniko/executor
+          --dockerfile="${{ forgejo.workspace }}/containers/${{ matrix.container_name }}/Containerfile" 
+          --context="dir://${{ forgejo.workspace }}/containers/${{ matrix.container_name }}"
+          --destination=git.hanse.de/${{ forgejo.repository }}-${{ matrix.container_name }}:latest
+          --no-push-cache
+          --credential-helpers=env
+          --annotation=org.opencontainers.image.source=${{ forgejo.server_url }}/${{ forgejo.repository }}
