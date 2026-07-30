@@ -20,12 +20,17 @@ in
     boot.binfmt.emulatedSystems = lib.mkIf (config.nixpkgs.hostPlatform.system == "x86_64-linux") [
       "aarch64-linux"
     ];
-  
+
     virtualisation.docker = {
       enable = true;
       autoPrune.enable = true;
       daemon.settings = {
-        "default-address-pools" = [ { base = "10.206.0.0/16"; size = 24; } ];
+        "default-address-pools" = [
+          {
+            base = "10.206.0.0/16";
+            size = 24;
+          }
+        ];
       };
     };
 

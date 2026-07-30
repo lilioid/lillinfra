@@ -3,12 +3,12 @@
 {
   enable = true;
   defaultApplications = {
-    "application/pdf" = [ "okularApplication_pdf.desktop" ];
+    "application/pdf" = [ "firefox.desktop" ];
     "x-scheme-handler/http" = [ "firefox.desktop" ];
     "x-scheme-handler/https" = [ "firefox.desktop" ];
     "x-scheme-handler/mailto" = [ "evolutions.desktop" ];
     "text/html" = [ "firefox.desktop" "thunderbird.desktop" ];
-    "inode/directory" = [ "nautilus.desktop" "nemo.desktop" ];
+    "inode/directory" = [ "yazi.desktop" "nautilus.desktop" "nemo.desktop" ];
 
     "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
     "image/png" = [ "org.gnome.Loupe.desktop" ];

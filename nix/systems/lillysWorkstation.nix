@@ -125,7 +125,6 @@
     virt-manager
     libreoffice-fresh
     evince
-    ranger
     mumble
     tree
     makemkv

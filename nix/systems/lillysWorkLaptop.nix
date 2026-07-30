@@ -102,7 +102,6 @@
   environment.systemPackages = with pkgs; [
     libreoffice-fresh
     evince
-    ranger
     sops
     git-crypt
     gnupg

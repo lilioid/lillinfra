@@ -239,7 +239,6 @@
     virt-manager
     libreoffice-fresh
     prusa-slicer
-    ranger
     sops
     git-crypt
     gnupg

@@ -113,7 +113,7 @@ in
 
     environment.systemPackages = with pkgs; [
       xwayland-satellite
-      nemo # standard file manager
+      # nemo # standard file manager
       nautilus # needed for "open file" dialogs
       loupe
       trash-cli
@@ -575,7 +575,7 @@ in
           "Mod+E" = {
             hotkey-overlay.title = "Open File Browser";
             repeat = false;
-            action = niriActions.spawn [ "nemo" ];
+            action = niriActions.spawn [ "xdg-open" "~" ];
           };
           "Mod+Shift+D" = {
             hotkey-overlay.title = "Open Emoji Picker";

@@ -27,7 +27,6 @@ in {
       discord
       vlc
       mpv
-      kdePackages.okular
       gimp
       obsidian
       gnome-font-viewer
