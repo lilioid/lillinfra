@@ -45,6 +45,9 @@ in
     # home-manager and nixos options are equivalent so I use plain nixos for less indirection
     programs.zoxide = {
       enable = true;
+      flags = [
+        "--cmd=cd"
+      ];
     };
 
     home-manager.users.lilly = {
