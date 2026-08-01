@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: List
+items:
+
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: rspamd
+      labels: &labels
+        app.kubernetes.io/name: rspamd
+        app.kubernetes.io/component: spam-filter
+        app.kubernetes.io/part-of: mailserver
+    spec:
+      selector: *labels
+      ports:
+        - name: proxy-worker
+          port: 11332
+          targetPort: proxy-worker
+        - name: http
+          port: 11334
+          targetPort: http
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: rspamd
+      labels: *labels
+    spec:
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          volumes:
+            - name: plaintext-config
+              configMap:
+                name: rspamd-configs
+            - name: secret-config
+              secret:
+                secretName: rspamd-configs
+            - name: data
+              persistentVolumeClaim:
+                claimName: rspamd-data
+          containers:
+            - name: rspamd
+              image: docker.io/rspamd/rspamd
+              volumeMounts:
+                - name: data
+                  mountPath: /var/lib/rspamd
+                - name: plaintext-config
+                  mountPath: /etc/rspamd/local.d/actions.conf
+                  subPath: actions.conf
+                - name: plaintext-config
+                  mountPath: /etc/rspamd/local.d/options.inc
+                  subPath: options.inc
+                - name: plaintext-config
+                  mountPath: /etc/rspamd/local.d/redis.conf
+                  subPath: redis.conf
+                - name: plaintext-config
+                  mountPath: /etc/rspamd/local.d/worker-proxy.inc
+                  subPath: worker-proxy.inc
+                - name: plaintext-config
+                  mountPath: /etc/rspamd/local.d/classifier-bayes.conf
+                  subPath: classifier-bayes.conf
+                - name: secret-config
+                  mountPath: /etc/rspamd/local.d/worker-controller.inc
+                  subPath: worker-controller.inc
+              ports:
+                - name: proxy-worker
+                  containerPort: 11332
+                - name: http
+                  containerPort: 11334
+      
+  # data
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: rspamd-data
+      labels: *labels
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: 1Gi

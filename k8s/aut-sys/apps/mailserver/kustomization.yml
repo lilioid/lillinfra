@@ -6,25 +6,50 @@ resources:
   - manifests/namespace.yml
 
   # new mailserver
+  - manifests/tls.yml
+  - manifests/ingress.yml
+  - manifests/mail-proxy.yml
   - manifests/dovecot.yml
+  - manifests/unbound.yml
+  - manifests/rspamd-redis.yml
+  - manifests/rspamd.yml
 
   # mailcalf resources
   - mailcalf-manifests/mailcalf-certificate.yml
   - mailcalf-manifests/mailcalf-deployment.yml
-  - mailcalf-manifests/mailcalf-mgmt-ingress.yml
   - mailcalf-manifests/mailcalf-services.yml
   - mailcalf-manifests/mailcalf-storage.yml
 
 images:
   - name: docker.io/dovecot/dovecot
     newTag: "2.4.4"
+  - name: docker.io/haproxy
+    newTag: "3.4.3"
+  - name: docker.io/rspamd/rspamd
+    newTag: "latest"
 
 configMapGenerator:
   - name: dovecot-configs
     files:
-      - protocols.conf=configs/dovecot/protocols.conf
+      - local.conf=configs/dovecot/local.conf
       - fts.conf=configs/dovecot/fts.conf
       - sieve.conf=configs/dovecot/sieve.conf
+
+  - name: haproxy-config
+    files:
+      - haproxy.cfg=configs/haproxy.cfg
+
+  - name: rspamd-configs
+    files:
+      - actions.conf=configs/rspamd/actions.conf
+      - options.inc=configs/rspamd/options.inc
+      - redis.conf=configs/rspamd/redis.conf
+      - worker-proxy.inc=configs/rspamd/worker-proxy.inc
+      - classifier-bayes.conf=configs/rspamd/classifier-bayes.conf
+
+  - name: unbound-config
+    files:
+      - unbound.conf=configs/unbound.conf
   
   # mailcalf
   - name: mailcalf-configs

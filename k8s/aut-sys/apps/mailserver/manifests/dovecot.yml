@@ -9,6 +9,7 @@ items:
       labels: &labels
         app.kubernetes.io/name: dovecot
         app.kubernetes.io/component: MDA
+        app.kubernetes.io/part-of: mailserver
     spec:
       selector: *labels
       ports:
@@ -22,10 +23,13 @@ items:
           port: 31024
         - name: imap
           port: 31143
+          targetPort: imap
         - name: imaps
           port: 31993
+          targetPort: imaps
         - name: managesieve
           port: 34190
+          targetPort: managesieve
 
   # deployment
   - apiVersion: apps/v1
@@ -60,15 +64,18 @@ items:
             - name: secret-configs
               secret:
                 secretName: dovecot-configs
+            - name: tls-material
+              secret:
+                secretName: tls-mx2.z9.aut-num.de
           containers:
             - name: dovecot
               image: docker.io/dovecot/dovecot
               volumeMounts:
                 - mountPath: /srv/vmail
                   name: mail-data
-                - mountPath: /etc/dovecot/conf.d/protocols.conf
+                - mountPath: /etc/dovecot/conf.d/local.conf
                   name: plaintext-configs
-                  subPath: protocols.conf
+                  subPath: local.conf
                 - mountPath: /etc/dovecot/conf.d/fts.conf
                   name: plaintext-configs
                   subPath: fts.conf
@@ -81,6 +88,8 @@ items:
                 - mountPath: /etc/dovecot/dovecot-extra.passwd
                   name: secret-configs
                   subPath: dovecot-extra.passwd
+                - mountPath: /etc/dovecot/ssl/
+                  name: tls-material
               ports:
                 - name: doveadm
                   containerPort: 8080
@@ -94,6 +103,10 @@ items:
                   containerPort: 31993
                 - name: managesieve
                   containerPort: 34190
+              readinessProbe:
+                httpGet:
+                  port: stats
+                  scheme: HTTPS
 
   # actual mail storage
   # very important to back up!

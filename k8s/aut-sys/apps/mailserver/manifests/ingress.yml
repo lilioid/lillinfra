@@ -17,6 +17,10 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mailserver-intern
+                # name: mailserver-intern
+                # port:
+                #   name: rspamd-admin
+                name: rspamd
                 port:
-                  name: rspamd-admin
+                  name: http
+
