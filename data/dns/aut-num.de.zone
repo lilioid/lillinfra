@@ -33,6 +33,7 @@ mx1.z9               A       185.161.130.10
 
 ; ACME challenge records for DNS challenges
 _acme-challenge.mx1.z9     CNAME    lilly-k8s.gruenkohl.org.
+_acme-challenge.mx2.z9     CNAME    lilly-k8s.gruenkohl.org.
 
 ; external hosts
 monitoring.ex        AAAA    2a01:4f8:251:226:ef::
