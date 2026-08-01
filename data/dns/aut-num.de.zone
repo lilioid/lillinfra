@@ -30,6 +30,8 @@ webhost.z9           A       185.161.130.7
 webhost.z9           AAAA    2a07:c481:2:5:be24:11ff:fed0:b3ca
 mx1.z9               A       185.161.130.10
                      AAAA    2a07:c481:2:6::
+mx2.z9               A       185.161.130.12
+                     AAAA    2a07:c481:2:6::2
 
 ; ACME challenge records for DNS challenges
 _acme-challenge.mx1.z9     CNAME    lilly-k8s.gruenkohl.org.
