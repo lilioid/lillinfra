@@ -230,6 +230,28 @@
           ];
         };
       };
+
+      "ccchhVpn" = {
+        address = [
+          "10.89.214.16/32"
+          "2a07:c481:1:37::16/128"
+        ];
+        peers."z9-router" = {
+          pubKey = "fmlxjh3iOfpgrHQQpK3dyOD0BvDppGCUkFuMSroqQR4=";
+          endpoint = "rt-wan.ccchh.net:51820";
+          allowedIPs = [
+            "172.31.200.0/23"  # z9 clients
+            "172.31.202.0/23"  # z9 vpn endpoints
+            "10.31.242.0/23"   # z9 management
+            "10.31.208.0/23"   # z9 InternalServer
+            "10.31.210.1/23"   # z9 IOT
+            "10.89.208.0/20"   # z9 internal v4
+            "2a07:c481:1::/48" # z9 assignment from fux 
+            "212.12.48.0/21"   # wieske assignment
+            "2a00:14b0:4200:3000::/64"  # wieske assignment
+          ];
+        };
+      };
     };
   };
 
