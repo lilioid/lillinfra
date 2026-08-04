@@ -1,6 +1,6 @@
 FROM docker.io/alpine
 
-RUN apk add --no-cache postfix postfix-pcre ca-certificates openssl cyrus-sasl cyrus-sasl-login
+RUN apk add --no-cache postfix postfix-pcre ca-certificates openssl
 
 VOLUME "/var/spool/postfix"
 CMD [ "/usr/sbin/postfix", "start-fg" ]
