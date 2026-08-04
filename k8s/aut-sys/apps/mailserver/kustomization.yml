@@ -13,6 +13,7 @@ resources:
   - manifests/unbound.yml
   - manifests/rspamd-redis.yml
   - manifests/rspamd.yml
+  - manifests/postfix.yml
 
   # mailcalf resources
   - mailcalf-manifests/mailcalf-certificate.yml
@@ -22,7 +23,7 @@ resources:
 
 images:
   - name: docker.io/dovecot/dovecot
-    newTag: "2.4.4"
+    newTag: "2.4.4-dev"
   - name: docker.io/haproxy
     newTag: "3.4.3"
   - name: docker.io/rspamd/rspamd
@@ -34,6 +35,7 @@ configMapGenerator:
       - local.conf=configs/dovecot/local.conf
       - fts.conf=configs/dovecot/fts.conf
       - sieve.conf=configs/dovecot/sieve.conf
+      - sasl.conf=configs/dovecot/sasl.conf
 
   - name: haproxy-config
     files:
@@ -46,10 +48,18 @@ configMapGenerator:
       - redis.conf=configs/rspamd/redis.conf
       - worker-proxy.inc=configs/rspamd/worker-proxy.inc
       - classifier-bayes.conf=configs/rspamd/classifier-bayes.conf
+      - dkim_signing.conf=configs/rspamd/dkim_signing.conf
 
   - name: unbound-config
     files:
       - unbound.conf=configs/unbound.conf
+
+  - name: postfix-configs
+    files:
+      - main.cf=configs/postfix/main.cf
+      - master.cf=configs/postfix/master.cf
+      - virtual_alias_maps.txt=configs/postfix/virtual_alias_maps.txt
+      - virtual_mailbox_domains.txt=configs/postfix/virtual_mailbox_domains.txt
   
   # mailcalf
   - name: mailcalf-configs

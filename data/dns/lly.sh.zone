@@ -14,11 +14,12 @@ li          CNAME   www2.z9.aut-num.de.
 gtw.srv     CNAME   vps0.hosting.srv.lly.sh.
 
 ; mail settings for this domain
-@                  MX    10 mx1.z9.aut-sys.de.
 _dmarc             CNAME dmarc.hosted-on.aut-sys.de.
 main._domainkey    CNAME dkimkey-main.hosted-on.aut-sys.de.
-@	               TXT	"v=spf1 +include:spf.hosted-on.aut-sys.de +include:mailbox.org ~all"
-@	               MX    100 mx1.z9.aut-num.de.
+mx2._domainkey     CNAME dkimkey-mx2.hosted-on.aut-sys.de.
+@	               TXT   "v=spf1 +include:spf.hosted-on.aut-sys.de +include:mailbox.org ~all"
+@	               MX    20 mx2.z9.aut-num.de.
+@                  MX    11 mx1.z9.aut-num.de.
 @	               MX    200 mxext1.mailbox.org.
 @                  MX    200 mxext2.mailbox.org.
 @           	   MX    210 mxext3.mailbox.org.

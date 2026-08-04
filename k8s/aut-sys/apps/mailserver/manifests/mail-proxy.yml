@@ -16,6 +16,7 @@ items:
       type: LoadBalancer
       ipFamilies: [ IPv6, IPv4 ]
       ipFamilyPolicy: RequireDualStack
+      externalTrafficPolicy: Local
       ports:
         - name: smtp
           port: 25

@@ -1,0 +1,110 @@
+# set own identity
+mydomain = aut-num.de
+myhostname = mx2.z9.$mydomain
+myorigin = aut-sys.de
+
+# only allow implicit authentication from localhost
+mynetworks_style = host
+
+# allow foor+bar@example.com to be delivered to foo@example.com
+recipient_delimiter = +
+
+
+
+############################
+# Virtual Mailbox Settings
+#
+
+# this postfix operates in virtual mail mode so the only hardcoded destination is localhost
+mydestination = localhost
+virtual_mailbox_domains = texthash:/etc/postfix/virtual_mailbox_domains.txt
+
+# do final mail delivery to dovecot over its LMTP socket
+virtual_transport = lmtp:inet:dovecot:31024
+
+# configure for which domains + addresses mail is accepted and where it is delivered to
+# http://www.postfix.org/postconf.5.html#virtual_alias_maps
+virtual_alias_maps = texthash:/etc/postfix/virtual_alias_maps.txt
+
+# virtual alias maps ultimately resolve to the target user for delivery
+# we use the same logic here to verify that the MAIL FROM address resolves to the authenticated user too
+smtpd_sender_login_maps = $virtual_alias_maps
+
+smtpd_relay_restrictions = permit_sasl_authenticated, reject_unauth_destination
+
+
+
+
+##################################
+# Authentication and Restrictions
+#
+
+# defer authentication to dovecot (it puts a socket in our runtime directory)
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = inet:dovecot:3000
+
+# TODO: configure restrictions via master.cf
+
+# require that helo hostnames are correctly formatted and resolvable
+# bypass for authenticated users
+smtpd_helo_required = yes
+# smtpd_helo_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_invalid_helo_hostname, reject_unknown_helo_hostname
+
+# require that the sender domain has an A or valid MX record
+# smtpd_sender_restrictions = reject_unknown_sender_domain, reject_authenticated_sender_login_mismatch
+
+# require that the destination is on this server or the user is authenticated
+# also allow configuration of specific actions for some recipients
+smtpd_recipient_restrictions = permit_sasl_authenticated,
+    reject_unauth_destination,
+
+# require authentication to use smtp pipelining
+smtpd_data_restrictions = reject_unauth_pipelining
+
+
+
+##############################
+# SSL config
+# smtpd_ values are for postfix as a server while smtp_ (without d) are for postfix as a client
+#
+
+# key and cert files
+smtpd_tls_cert_file = /etc/postfix/ssl/tls.crt
+smtpd_tls_key_file = /etc/postfix/ssl/tls.key
+
+# certificates stored in this directory are trsuted by postfix when it operates as a client
+# TODO: maybe remove because thisi is an smtpd_ setting and I don't do certificate auth
+# smtpd_tls_CApath = /etc/ssl/certs
+
+# postfix will prefer to use tls but doesn't require it
+smtp_tls_security_level = may
+smtp_tls_CAfile = /etc/ssl/cert.pem
+
+
+
+
+##############################
+# Milters (mail filters)
+#
+
+# pass all messages to rspamd
+smtpd_milters = inet:rspamd:11332
+non_smtpd_milters=$smtpd_milters
+
+
+
+##############################
+# Postfix internals
+#
+
+compatibility_level = 3.11
+
+smtp_host_lookup = native
+lmtp_host_lookup = native
+
+# unset default alias map because we don't configure it
+# this is only used by postfix when delivering local mail (which we don't) so it's fine
+alias_maps =
+alias_database =
+maillog_file = /dev/stdout
+

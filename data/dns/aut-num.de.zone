@@ -5,7 +5,7 @@ $TTL 3600
 @	3600	IN	NS	ns2.desec.org.
 
 ; z9 (stuff hosted at Fux e.G.)
-rt-warn.z9           A       185.161.129.148
+rt-wan.z9            A       185.161.129.148
 rt-wan.z9            AAAA    2a07:c481::2:1
 rt.z9                A       10.233.226.1
 rt.z9                AAAA    2a07:c481:2:2::1

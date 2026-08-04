@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: List
+items:
+  # service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: postfix
+      labels: &labels
+        app.kubernetes.io/name: postfix
+        app.kubernetes.io/component: MTA
+        app.kubernetes.io/part-of: mailserver
+    spec:
+      selector: *labels
+      ports:
+        - name: smtp-proxy
+          port: 30025
+          targetPort: smtp-proxy
+        - name: subm-proxy
+          port: 30587
+          targetPort: subm-proxy
+
+  # deployment
+  - apiVersion: apps/v1
+    kind: StatefulSet
+    metadata:
+      name: postfix
+      labels: *labels
+    spec:
+      serviceName: postfix
+      selector:
+        matchLabels: *labels
+      template:
+        metadata:
+          labels: *labels
+        spec:
+          enableServiceLinks: false
+          automountServiceAccountToken: false
+          priorityClassName: custom-high
+          volumes:
+            - name: plaintext-configs
+              configMap:
+                name: postfix-configs
+            - name: tls-material
+              secret:
+                secretName: tls-mx2.z9.aut-num.de
+          containers:
+            - name: postfix
+              image: git.hanse.de/lilly/lillinfra-postfix
+              volumeMounts:
+                - mountPath: /etc/postfix/main.cf
+                  name: plaintext-configs
+                  subPath: main.cf
+                - mountPath: /etc/postfix/master.cf
+                  name: plaintext-configs
+                  subPath: master.cf
+                - mountPath: /etc/postfix/virtual_alias_maps.txt
+                  name: plaintext-configs
+                  subPath: virtual_alias_maps.txt
+                - mountPath: /etc/postfix/virtual_mailbox_domains.txt
+                  name: plaintext-configs
+                  subPath: virtual_mailbox_domains.txt
+                - mountPath: /etc/postfix/ssl/
+                  name: tls-material
+                - mountPath: /var/spool/postfix
+                  name: postfix-mailqueue
+              ports:
+                - name: smtp-proxy
+                  containerPort: 30025
+                - name: subm-proxy
+                  containerPort: 30587
+              readinessProbe:
+                exec:
+                  command: [ "postfix", "status" ]
+      volumeClaimTemplates:
+        - apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: postfix-mailqueue
+            labels: *labels
+          spec:
+            accessModes: [ ReadWriteOnce ]
+            resources:
+              requests:
+                storage: 100Mi
+

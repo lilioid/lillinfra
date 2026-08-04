@@ -31,6 +31,11 @@
     7946 # metallb memberlist protocol
   ];
 
+  # overwrite network config to add an internal address for CNI traffic
+  systemd.network.networks."eth0" = {
+    networkConfig.Address = [ "10.228.136.4/24" ];
+  };
+
   # kubernetes setup
   services.k3s = {
     enable = true;

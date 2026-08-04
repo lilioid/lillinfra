@@ -65,9 +65,15 @@ items:
                 - name: plaintext-config
                   mountPath: /etc/rspamd/local.d/classifier-bayes.conf
                   subPath: classifier-bayes.conf
+                - name: plaintext-config
+                  mountPath: /etc/rspamd/local.d/dkim_signing.conf
+                  subPath: dkim_signing.conf
                 - name: secret-config
                   mountPath: /etc/rspamd/local.d/worker-controller.inc
                   subPath: worker-controller.inc
+                - name: secret-config
+                  mountPath: /etc/rspamd/dkimkey.pem
+                  subPath: dkimkey.pem
               ports:
                 - name: proxy-worker
                   containerPort: 11332

@@ -14,12 +14,12 @@ items:
       selector: *labels
       ports:
         - name: doveadm
-          port: 8080
+          port: 2425
           targetPort: doveadm
         - name: stats
           port: 9090
         - name: lmtps
-          targetPort: stats
+          targetPort: lmtps
           port: 31024
         - name: imap
           port: 31143
@@ -30,6 +30,9 @@ items:
         - name: managesieve
           port: 34190
           targetPort: managesieve
+        - name: sasl
+          port: 3000
+          targetPort: sasl
 
   # deployment
   - apiVersion: apps/v1
@@ -46,8 +49,6 @@ items:
         metadata:
           labels: *labels
         spec:
-          # dnsConfig:
-          # nameserer: # TODO: configure unbound
           enableServiceLinks: false
           automountServiceAccountToken: false
           priorityClassName: custom-high
@@ -82,6 +83,9 @@ items:
                 - mountPath: /etc/dovecot/conf.d/sieve.conf
                   name: plaintext-configs
                   subPath: sieve.conf
+                - mountPath: /etc/dovecot/conf.d/sasl.conf
+                  name: plaintext-configs
+                  subPath: sasl.conf
                 - mountPath: /etc/dovecot/conf.d/auth.conf
                   name: secret-configs
                   subPath: auth.conf
@@ -92,7 +96,7 @@ items:
                   name: tls-material
               ports:
                 - name: doveadm
-                  containerPort: 8080
+                  containerPort: 2425
                 - name: stats
                   containerPort: 9090
                 - name: lmtps
@@ -103,10 +107,11 @@ items:
                   containerPort: 31993
                 - name: managesieve
                   containerPort: 34190
+                - name: sasl
+                  containerPort: 3000
               readinessProbe:
-                httpGet:
-                  port: stats
-                  scheme: HTTPS
+                exec:
+                  command: [ "doveadm", "service", "status" ]
 
   # actual mail storage
   # very important to back up!
