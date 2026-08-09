@@ -33,18 +33,6 @@ let
     );
 
     # overwrite certain programs from nixos-unstable because of newer versions
-    
-    # build keepass with patch that fixes evolution compatibility
-    # https://github.com/keepassxreboot/keepassxc/pull/13532
-    keepassxc = pkgs-unstable.keepassxc.overrideAttrs (finalAttrs: previousAttrs: {
-      patches = previousAttrs.patches ++ [
-        (pkgs-unstable.fetchurl {
-          url = "https://github.com/keepassxreboot/keepassxc/pull/13532.patch";
-          hash = "sha256-TgVCGsuqQQTfSc1gZaojzxg9PA1CLjTFFhN5Z5kjKms=";
-        })
-      ];
-    });
-
     # glab = pkgs-unstable.glab;
   };
 in
