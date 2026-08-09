@@ -152,7 +152,6 @@
             python3
             python3Packages.ipython
             pre-commit
-            show-wg-conf
             show-nixos-diff
             kustomize-sops
             opentofu
