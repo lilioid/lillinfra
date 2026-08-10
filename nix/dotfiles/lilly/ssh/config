@@ -87,7 +87,7 @@ Host k8s-worker2.srv.myroot.intern
 # Private Hosts @home
 #
 
-Host raspi5.srv.home.internal
+Host raspi5.home.internal
   User lilly
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
