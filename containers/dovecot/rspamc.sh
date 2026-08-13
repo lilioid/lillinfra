@@ -1,3 +1,3 @@
 #!/bin/sh
 set -x
-exec rspamc --connect="${RSPAMD_HOST}" --password="${RSPAMD_PASSWORD}" $@
+exec rspamc --verbose --connect="${RSPAMD_HOST}" --password="${RSPAMD_PASSWORD}" $@
