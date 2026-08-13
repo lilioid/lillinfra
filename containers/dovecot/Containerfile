@@ -5,4 +5,5 @@ RUN apt-get update &&\
     apt-get install -y --no-install-recommends rspamd &&\
     rm -rf /var/cache/apt/
 USER vmail
+ADD --chown=vmail rspamc-learn-ham.sh rspamc-learn-spam.sh /usr/local/libexec/sieve/
 
