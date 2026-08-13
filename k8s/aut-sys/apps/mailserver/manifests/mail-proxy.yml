@@ -66,4 +66,9 @@ items:
                   containerPort: 993
                 - name: managesieve
                   containerPort: 4190
+            - name: debug
+              image: docker.io/alpine
+              tty: true
+              stdin: true
+              command: [ "cat", "-" ]
 
