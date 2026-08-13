@@ -1,0 +1,8 @@
+FROM docker.io/dovecot/dovecot:2.4.4-dev
+
+USER root
+RUN apt-get update &&\
+    apt-get install -y --no-install-recommends rspamd &&\
+    rm -rf /var/cache/apt/
+USER vmail
+
