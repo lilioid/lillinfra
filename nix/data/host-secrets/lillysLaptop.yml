@@ -7,6 +7,8 @@ wg:
         privkey: ENC[AES256_GCM,data:gh7WHRLio7YG+w9LeYxDIfH7VcG0ByzmpdaUdYkCpK2I0VwusMFBqaSUDW0=,iv:5YvgeLHrDZPV1HBmqXfvuLWjowYjGzsVbyjTTCwlPu8=,tag:AVpRygHbEncjyA/xFMc7Ig==,type:str]
     ccchhVpn:
         privkey: ENC[AES256_GCM,data:rEa44elocdg3BbGxO3FN4A4/wVc56Xc+YR7ZC1IzYt/GJzlDjGJVEpL/n8M=,iv:5FsKuoa4Gb7hdBvAYkjsSzAm9dvnJUw8svkZIDQR5+4=,tag:JUMV5dtyPRHbZ3eATPubsQ==,type:str]
+    efNocVpn:
+        privkey: ENC[AES256_GCM,data:I9ejmWaZZHe87lSkKc/X3Ww1jALpsBuN28ZC0atxJVGeCzWLi+/9+pVcBQA=,iv:Mj4a6Qx3FN1mvOpZKTRB3bLq8CqvMmxVwTPNcvLIKv0=,tag:+b0v0R12PXtkfF6AOf/e1A==,type:str]
 backup:
     repoPass: ENC[AES256_GCM,data:WptdqOuqtj7HSTvuCMaD8hgp9jMHpaks,iv:wRuIWFrbk4WKyHEqzX11dM+2uay+p0RLfS9V2HYwRqM=,tag:ic4TnfQGHhQ5zi1vRB+4+w==,type:str]
     gotifyToken: ENC[AES256_GCM,data:o8WlJ2TL3zCJkNevsGcQ8A0+mQmPCmzUXYY49cAqgvsevSGP/4mYhr4LkpPcqSqXBg==,iv:R50df8N4EdkjIcODO1QFHf0mcakK2+8zJCJhwSKWADA=,tag:gdkv3hWYPXHgF90MtmJNIA==,type:str]
@@ -33,7 +35,7 @@ sops:
             ZyYcgissJM4H24aulcsm9mZK+lf+jCdodVgQm8/dU2mGMNKHvLaPiQ==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1x84yrgq0nq247frmddjwgl5gn5wdcd8xlrdrf47v0ua9dulss35sxd763x
-    lastmodified: "2026-08-11T15:26:24Z"
-    mac: ENC[AES256_GCM,data:putScSGFRa14NuVFioBUG0XnbxyJJcuCiBkJswhDjbjFWMyLgvrC4LOtoip/DVqKOdUbi3cCtkyQmQ2LR3+LafB8qNmOznsenji3u/bShLIrcHOPdgn/qAD9Uyg1NdBFzk3Z88zD4eOiIxXv6x9OTza5t7+O3+ZQO5CgvkvwPNg=,iv:h99rE1OgEBfp57Jupj6pcVZXfvaO8foKs08kkxxwAyk=,tag:8uIrmfp1sgezyXhobPaUNA==,type:str]
+    lastmodified: "2026-08-15T12:40:18Z"
+    mac: ENC[AES256_GCM,data:vmZvm1iVU9GBPWQaHIANfrUIwMfmxVAFyiPWXl6rsGWj8wbYH0jrREfux49CACG9iYo8Xz3d3Giu7AU82kHY0bVz/iuedmD9vORJOG7M6GaSMRXMo6tBy8nRKS5g369N8ecOnHXWqeoaiXKaM15ynnNrNxXTsv9AbWPJv1eGA38=,iv:yughmFQqelJ2GWPi6gnKu/GPGzaE9VjBrf3KU85ixV0=,tag:YIW58cu7pMvHzsCQTaa4aQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

@@ -59,18 +59,25 @@ items:
             - name: mail-data
               persistentVolumeClaim:
                 claimName: dovecot-mail
+            - name: sieve-scripts
+              configMap:
+                name: dovecot-sieve-scripts
             - name: plaintext-configs
               configMap:
                 name: dovecot-configs
             - name: secret-configs
               secret:
                 secretName: dovecot-configs
+            - name: rspamc-env
+              secret:
+                secretName: dovecot-rspamc-env
             - name: tls-material
               secret:
                 secretName: tls-mx2.z9.aut-num.de
           containers:
             - name: dovecot
-              image: docker.io/dovecot/dovecot
+              image: git.hanse.de/lilly/lillinfra-dovecot
+              imagePullPolicy: Always
               volumeMounts:
                 - mountPath: /srv/vmail
                   name: mail-data
@@ -92,8 +99,13 @@ items:
                 - mountPath: /etc/dovecot/dovecot-extra.passwd
                   name: secret-configs
                   subPath: dovecot-extra.passwd
+                - mountPath: /etc/dovecot/rspamc.env
+                  name: secret-configs
+                  subPath: rspamc.env
                 - mountPath: /etc/dovecot/ssl/
                   name: tls-material
+                - mountPath: /etc/dovecot/sieve/
+                  name: sieve-scripts
               ports:
                 - name: doveadm
                   containerPort: 2425

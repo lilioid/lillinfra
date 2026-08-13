@@ -22,8 +22,6 @@ resources:
   - mailcalf-manifests/mailcalf-storage.yml
 
 images:
-  - name: docker.io/dovecot/dovecot
-    newTag: "2.4.4-dev"
   - name: docker.io/haproxy
     newTag: "3.4.3"
   - name: docker.io/rspamd/rspamd
@@ -36,6 +34,12 @@ configMapGenerator:
       - fts.conf=configs/dovecot/fts.conf
       - sieve.conf=configs/dovecot/sieve.conf
       - sasl.conf=configs/dovecot/sasl.conf
+
+  - name: dovecot-sieve-scripts
+    files:
+      - report-spam.sieve=configs/dovecot/sieve/report-spam.sieve
+      - report-ham.sieve=configs/dovecot/sieve/report-ham.sieve
+      - file-spam.sieve=configs/dovecot/sieve/file-spam.sieve
 
   - name: haproxy-config
     files:
