@@ -160,33 +160,13 @@ Host netsec-teaching
 # Fux e.G.
 #
 
-Host rt1.z9.fux-eg.net
+Host rt1.z9.fux-eg.net switch1.iphh.fux-eg.net
   User lilly
   PasswordAuthentication no
 
 Host *.fux-eg.net
   User noc
   IdentityFile ~/.ssh/id_lilly@fux.pub
-
-Host cr01.fux.intern
-  User noc
-  HostName 172.16.2.1
-  PubkeyAuthentication no
-
-Host cs01.fux.intern
-  User noc
-  HostName 172.16.2.2
-  PubkeyAuthentication no
-  KexAlgorithms diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
-  HostKeyAlgorithms +ssh-rsa
-
-Host cs02.fux.intern
-  User noc
-  HostName 172.16.2.3
-  PubkeyAuthentication no
-  KexAlgorithms diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
-  HostKeyAlgorithms +ssh-rsa
-  Ciphers +3des-cbc
 
 Host netbox.fux-eg.net 185.161.128.4
   User noc
