@@ -257,7 +257,7 @@
   hardware.sane = {
     enable = true;
     extraConfig."epson2" = ''
-      net EPSON79DA90.home.intern
+      net EPSON79DA90.home.internal
     '';
   };
   services.avahi = {

@@ -34,6 +34,7 @@ in {
       picard
       gnome-connections
       openscad-unstable
+      simple-scan
     ];
 
     services.gnome.evolution-data-server.enable = true;
