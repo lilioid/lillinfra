@@ -298,7 +298,6 @@ in
           };
           colorSchemes = {
             predefinedScheme = "Rose Pine";
-            darkMode = false;
           };
           templates = {
             activeTemplates = [
