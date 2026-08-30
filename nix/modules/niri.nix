@@ -113,7 +113,7 @@ in
 
     environment.systemPackages = with pkgs; [
       xwayland-satellite
-      # nemo # standard file manager
+      nemo # standard file manager
       nautilus # needed for "open file" dialogs
       loupe
       trash-cli

@@ -50,18 +50,6 @@ in
       ];
     };
 
-    programs.yazi = {
-      enable = true;
-      settings.yazi = {
-        mgr = {
-          ratio = [ 2 4 4 ];
-          sort_by = "natural";
-          sort-sensitive = false;
-          sort_dir_first = true;
-        };
-      };
-    };
-
     home-manager.users.lilly = {
       home.preferXdgDirectories = true;
       home.sessionSearchVariables = lib.mkIf hasDevEnv {
