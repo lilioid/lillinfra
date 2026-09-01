@@ -1,7 +1,7 @@
 [bar.default]
 center = [ "active_window" ]
-end = [ "clock", "tray", "media", "notifications", "volume", "bluetooth", "network", "battery", "control-center" ]
-start = [ "launcher", "workspaces" ]
+end = [ "tray", "media", "notifications", "volume", "bluetooth", "network", "battery", "control-center" ]
+start = [ "launcher", "workspaces", "clock" ]
 thickness = 30
 widget_spacing = 8
 
