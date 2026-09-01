@@ -64,10 +64,12 @@ in
     programs.niri.enable = true;
     programs.niri.package = pkgs.niri;
     qt.style = "adwaita";
+    services.gvfs.enable = true;
+
+    # noctalia requirements
     networking.networkmanager.enable = true;
     services.power-profiles-daemon.enable = true;
     services.upower.enable = true;
-    services.gvfs.enable = true;
 
     # use gnome-keyring but only for secret management. ssh-agent is running independently
     services.gnome.gnome-keyring.enable = true;
@@ -131,188 +133,194 @@ in
       services.ssh-agent.enable = true;
       home.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/ssh-agent";
 
-      programs.noctalia-shell = {
+      programs.noctalia = {
         enable = true;
-        settings = {
-          bar = {
-            barType = "simple";
-            position = "top";
-            density = "default";
-            showOutline = false;
-            showCapsule = true;
-            widgetSpacing = 6;
-            contentPadding = 2;
-            enableExclusionZoneInste = false;
-            marginVertical = 4;
-            marginHorizontal = 4;
-            frameThickness = 8;
-            frameRadius = 12;
-            outerCorners = false;
-            hideOnOverview = false;
-            displayMode = "always_visible";
-            widgets = {
-              left = [
-                {
-                  id = "Workspace";
-                  enableScrollWheel = true;
-                  labelMode = "index";
-                  occupiedColor = "none";
-                  focusedColor = "primary";
-                  showApplications = false;
-                }
-                {
-                  id = "Clock";
-                  formatHorizontal = "HH:mm ddd, dd.MM.yyyy";
-                }
-                {
-                  id = "SystemMonitor";
-                  showCpuUsage = true;
-                  showMemoryUsage = true;
-                  compactMode = false;
-                  usePadding = true;
-                }
-              ];
-              center = [
-                {
-                  id = "ActiveWindow";
-                  maxWidth = 300;
-                }
-              ];
-              right = [
-                {
-                  id = "MediaMini";
-                  maxWidth = 200;
-                }
-                {
-                  id = "Tray";
-                  drawerEnabled = false;
-                }
-                {
-                  id = "NotificationHistory";
-                }
-                {
-                  id = "Battery";
-                  displayMode = "icon-always";
-                  hideIfNotDetected = true;
-                  showPowerProfiles = true;
-                }
-                {
-                  id = "Volume";
-                  displayMode = "alwaysShow";
-                }
-                {
-                  id = "Brightness";
-                  displayMode = "alwaysShow";
-                }
-                {
-                  id = "Bluetooth";
-                }
-                {
-                  id = "Network";
-                  displayMode = "alwaysShow";
-                }
-                {
-                  id = "ControlCenter";
-                }
-              ];
-            };
-          };
-          general = {
-            avatarImage = "/home/lilly/Sync/ProfilePictures/poly_fox.jpg";
-            dimmerOpacity = 0;
-          };
-          ui = {
-            panelBackgroundOpacity = 1;
-          };
-          location = {
-            name = "Hamburg";
-          };
-          wallpaper = {
-            directory = "/home/lilly/Sync/Wallpapers";
-            viewMode = "browse";
-            setWallpaperOnAllMonitors = true;
-            skipStartupTransition = true;
-            linkLightAndDarkWallpapers = false;
-          };
-          appLauncher = {
-            enableClipboardHistory = false;
-            terminalCommand = "ghostty +new-window -e";
-            enableSettingsSearch = false;
-            enableSessionSearch = false;
-          };
-          controlCenter = {
-            shortcuts = {
-              left = [
-                { id = "Network"; }
-                { id = "Bluetooth"; }
-                { id = "PowerProfile"; }
-              ];
-              right = [
-                { id = "Notifications"; }
-                { id = "KeepAwake"; }
-                { id = "NightLight"; }
-                { id = "DarkMode"; }
-              ];
-            };
-            cards = [
-              {
-                id = "profile-card";
-                enabled = true;
-              }
-              {
-                id = "shortcuts-card";
-                enabled = true;
-              }
-              {
-                id = "audio-card";
-                enabled = true;
-              }
-              {
-                id = "brightness-card";
-                enabled = true;
-              }
-              {
-                id = "weather-card";
-                enabled = true;
-              }
-              {
-                id = "media-sysmon-card";
-                enabled = true;
-              }
-            ];
-          };
-          dock = {
-            enabled = false;
-          };
-          desktopWidgets = {
-            enabled = false;
-          };
-          sessionMenu = {
-            showKeybinds = false;
-            largeButtonsStyle = false;
-
-          };
-          idle = {
-            enabled = true;
-            suspendTimeout = 0; # disable auto-suspend
-          };
-          colorSchemes = {
-            predefinedScheme = "Rose Pine";
-          };
-          templates = {
-            activeTemplates = [
-              {
-                id = "gtk";
-                enabled = true;
-              }
-              {
-                id = "ghostty";
-                enabled = true;
-              }
-            ];
-          };
-        };
+        systemd.enable = true;
+        settings = ../dotfiles/lilly/noctalia.toml;
       };
+
+      # programs.noctalia-shell = {
+      #   enable = true;
+      #   settings = {
+      #     bar = {
+      #       barType = "simple";
+      #       position = "top";
+      #       density = "default";
+      #       showOutline = false;
+      #       showCapsule = true;
+      #       widgetSpacing = 6;
+      #       contentPadding = 2;
+      #       enableExclusionZoneInste = false;
+      #       marginVertical = 4;
+      #       marginHorizontal = 4;
+      #       frameThickness = 8;
+      #       frameRadius = 12;
+      #       outerCorners = false;
+      #       hideOnOverview = false;
+      #       displayMode = "always_visible";
+      #       widgets = {
+      #         left = [
+      #           {
+      #             id = "Workspace";
+      #             enableScrollWheel = true;
+      #             labelMode = "index";
+      #             occupiedColor = "none";
+      #             focusedColor = "primary";
+      #             showApplications = false;
+      #           }
+      #           {
+      #             id = "Clock";
+      #             formatHorizontal = "HH:mm ddd, dd.MM.yyyy";
+      #           }
+      #           {
+      #             id = "SystemMonitor";
+      #             showCpuUsage = true;
+      #             showMemoryUsage = true;
+      #             compactMode = false;
+      #             usePadding = true;
+      #           }
+      #         ];
+      #         center = [
+      #           {
+      #             id = "ActiveWindow";
+      #             maxWidth = 300;
+      #           }
+      #         ];
+      #         right = [
+      #           {
+      #             id = "MediaMini";
+      #             maxWidth = 200;
+      #           }
+      #           {
+      #             id = "Tray";
+      #             drawerEnabled = false;
+      #           }
+      #           {
+      #             id = "NotificationHistory";
+      #           }
+      #           {
+      #             id = "Battery";
+      #             displayMode = "icon-always";
+      #             hideIfNotDetected = true;
+      #             showPowerProfiles = true;
+      #           }
+      #           {
+      #             id = "Volume";
+      #             displayMode = "alwaysShow";
+      #           }
+      #           {
+      #             id = "Brightness";
+      #             displayMode = "alwaysShow";
+      #           }
+      #           {
+      #             id = "Bluetooth";
+      #           }
+      #           {
+      #             id = "Network";
+      #             displayMode = "alwaysShow";
+      #           }
+      #           {
+      #             id = "ControlCenter";
+      #           }
+      #         ];
+      #       };
+      #     };
+      #     general = {
+      #       avatarImage = "/home/lilly/Sync/ProfilePictures/poly_fox.jpg";
+      #       dimmerOpacity = 0;
+      #     };
+      #     ui = {
+      #       panelBackgroundOpacity = 1;
+      #     };
+      #     location = {
+      #       name = "Hamburg";
+      #     };
+      #     wallpaper = {
+      #       directory = "/home/lilly/Sync/Wallpapers";
+      #       viewMode = "browse";
+      #       setWallpaperOnAllMonitors = true;
+      #       skipStartupTransition = true;
+      #       linkLightAndDarkWallpapers = false;
+      #     };
+      #     appLauncher = {
+      #       enableClipboardHistory = false;
+      #       terminalCommand = "ghostty +new-window -e";
+      #       enableSettingsSearch = false;
+      #       enableSessionSearch = false;
+      #     };
+      #     controlCenter = {
+      #       shortcuts = {
+      #         left = [
+      #           { id = "Network"; }
+      #           { id = "Bluetooth"; }
+      #           { id = "PowerProfile"; }
+      #         ];
+      #         right = [
+      #           { id = "Notifications"; }
+      #           { id = "KeepAwake"; }
+      #           { id = "NightLight"; }
+      #           { id = "DarkMode"; }
+      #         ];
+      #       };
+      #       cards = [
+      #         {
+      #           id = "profile-card";
+      #           enabled = true;
+      #         }
+      #         {
+      #           id = "shortcuts-card";
+      #           enabled = true;
+      #         }
+      #         {
+      #           id = "audio-card";
+      #           enabled = true;
+      #         }
+      #         {
+      #           id = "brightness-card";
+      #           enabled = true;
+      #         }
+      #         {
+      #           id = "weather-card";
+      #           enabled = true;
+      #         }
+      #         {
+      #           id = "media-sysmon-card";
+      #           enabled = true;
+      #         }
+      #       ];
+      #     };
+      #     dock = {
+      #       enabled = false;
+      #     };
+      #     desktopWidgets = {
+      #       enabled = false;
+      #     };
+      #     sessionMenu = {
+      #       showKeybinds = false;
+      #       largeButtonsStyle = false;
+
+      #     };
+      #     idle = {
+      #       enabled = true;
+      #       suspendTimeout = 0; # disable auto-suspend
+      #     };
+      #     colorSchemes = {
+      #       predefinedScheme = "Rose Pine";
+      #     };
+      #     templates = {
+      #       activeTemplates = [
+      #         {
+      #           id = "gtk";
+      #           enabled = true;
+      #         }
+      #         {
+      #           id = "ghostty";
+      #           enabled = true;
+      #         }
+      #       ];
+      #     };
+      #   };
+      # };
 
       # set noctalia wallpapers
       home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
@@ -335,9 +343,9 @@ in
 
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
       programs.niri.settings = {
-        spawn-at-startup = [
-          { command = [ "noctalia-shell" ]; }
-        ];
+        # spawn-at-startup = [
+        #   { command = [ "noctalia" ]; }
+        # ];
 
         hotkey-overlay = {
           skip-at-startup = true;
@@ -371,7 +379,7 @@ in
         };
 
         switch-events = {
-          lid-close.action = niriActions.spawn [ "noctalia-shell" "ipc" "call" "sessionMenu" "lock" ];
+          lid-close.action = niriActions.spawn [ "noctalia" "msg" "session" "lock-and-suspend" ];
         };
 
         outputs = { }; # override this via the configOverride option
@@ -514,53 +522,37 @@ in
             hotkey-overlay.title = "Open Application picker";
             repeat = false;
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
+              "noctalia"
+              "msg"
+              "panel-toggle"
               "launcher"
-              "toggle"
-            ];
-          };
-          "Mod+W" = {
-            hotkey-overlay.title = "Open Window picker";
-            repeat = false;
-            action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
-              "launcher"
-              "windows"
             ];
           };
           "Mod+L" = {
             hotkey-overlay.title = "Lock the Screen";
             repeat = false;
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
-              "sessionMenu"
+              "noctalia"
+              "msg"
+              "session"
               "lock"
             ];
           };
           "Mod+Dead_Circumflex" = {
             hotkey-overlay.title = "Toggle Notification-Center";
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
-              "notifications"
-              "toggleHistory"
+              "noctalia"
+              "msg"
+              "panel-toggle"
+              "control-center" # TODO directly opening notifications would be better
             ];
           };
           "Mod+Shift+Dead_Circumflex" = {
             hotkey-overlay.title = "Toggle DnD";
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
-              "notifications"
-              "toggleDND"
+              "noctalia"
+              "msg"
+              "notification-dnd-toggle"
             ];
           };
           "Mod+Escape" = {
@@ -576,71 +568,52 @@ in
             repeat = false;
             action = niriActions.spawn [ "xdg-open" "~" ];
           };
-          "Mod+Shift+D" = {
-            hotkey-overlay.title = "Open Emoji Picker";
-            repeat = false;
-            action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
-              "launcher"
-              "emoji"
-            ];
-          };
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "wpctl"
-              "set-volume"
-              "@DEFAULT_AUDIO_SINK@"
-              "0.1+"
+              "noctalia"
+              "msg"
+              "volume-up"
             ];
           };
           "XF86AudioLowerVolume" = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "wpctl"
-              "set-volume"
-              "@DEFAULT_AUDIO_SINK@"
-              "0.1-"
+              "noctalia"
+              "msg"
+              "volume-down"
             ];
           };
           "XF86AudioMute" = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "wpctl"
-              "set-mute"
-              "@DEFAULT_AUDIO_SINK@"
-              "toggle"
+              "noctalia"
+              "msg"
+              "volume-mute"
             ];
           };
           "XF86AudioMicMute" = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "wpctl"
-              "set-mute"
-              "@DEFAULT_AUDIO_SOURCE@"
-              "toggle"
+              "noctalia"
+              "msg"
+              "mic-mute"
             ];
           };
           XF86MonBrightnessUp = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
-              "brightness"
-              "increase"
+              "noctalia"
+              "msg"
+              "brightness-up"
             ];
           };
           XF86MonBrightnessDown = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
-              "brightness"
-              "decrease"
+              "noctalia"
+              "msg"
+              "brightness-down"
             ];
           };
           XF86AudioPrev = {

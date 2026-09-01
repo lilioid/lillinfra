@@ -1,0 +1,109 @@
+[bar.default]
+center = [ "active_window" ]
+end = [ "clock", "tray", "media", "notifications", "volume", "bluetooth", "network", "battery", "control-center" ]
+start = [ "launcher", "workspaces" ]
+thickness = 30
+widget_spacing = 8
+
+[control_center.calendar]
+show_week_numbers = true
+
+[[control_center.shortcuts]]
+type = "keyboard_layout"
+
+[[control_center.shortcuts]]
+type = "caffeine"
+
+[[control_center.shortcuts]]
+type = "nightlight"
+
+[[control_center.shortcuts]]
+type = "dark_mode"
+
+[desktop_widgets]
+enabled = false
+
+[location]
+address = "Hamburg, Germany"
+
+[lockscreen]
+wallpaper = "/home/lilly/Sync/Wallpapers/ccc-camp.jpg"
+
+[lockscreen_widgets]
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 1018.0
+    output = "eDP-1"
+    placement_height = 1200.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[shell]
+avatar_path = "/home/lilly/Sync/ProfilePictures/poly_fox.jpg"
+clipboard_enabled = false
+launch_apps_as_systemd_services = true
+settings_show_advanced = false
+
+    [shell.panel]
+    open_near_click_control_center = true
+    open_near_click_session = true
+    session_position = "center"
+
+    [shell.session]
+    show_shortcuts = false
+
+[theme]
+builtin = "Rosé Pine"
+community_palette = "Oxocarbon"
+mode = "auto"
+source = "builtin"
+wallpaper_scheme = "m3-content"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "helix", "qt" ]
+
+[wallpaper]
+directory = "/home/lilly/Sync/Wallpapers"
+
+    [wallpaper.default]
+    path = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg"
+
+    [wallpaper.last]
+    path = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg"
+
+[widget.active_window]
+interactive = false
+title_scroll = "on_hover"
+
+[widget.brightness]
+enabled = false
