@@ -32,6 +32,10 @@ widget_order = []
 
     [desktop_widgets.widget]
 
+[hooks]
+colors_changed = "systemctl --user reload app-com.mitchellh.ghostty.service"
+theme_mode_changed = "systemctl --user reload app-com.mitchellh.ghostty.service"
+
 [location]
 address = "Hamburg, Germany"
 
@@ -166,25 +170,30 @@ settings_show_advanced = true
 [theme]
 builtin = "Rosé Pine"
 community_palette = "Oxocarbon"
-mode = "auto"
+mode = "dark"
 pure_black_dark = true
 source = "builtin"
 wallpaper_scheme = "m3-content"
 
     [theme.templates]
-    builtin_ids = [ "gtk3", "gtk4", "helix", "qt" ]
+    builtin_ids = [ "gtk3", "gtk4", "ghostty", "helix", "qt" ]
 
 [wallpaper]
 directory = "/home/lilly/Sync/Wallpapers"
+directory_dark = "/home/lilly/Sync/Wallpapers/darkmode"
+directory_light = "/home/lilly/Sync/Wallpapers/lightmode"
+
+    [wallpaper.automation]
+    enabled = true
 
     [wallpaper.default]
-    path = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg"
+    path = "/home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg"
 
     [wallpaper.last]
-    path = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg"
+    path = "/home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg"
+    path = "/home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg"
 
 [widget.active_window]
 interactive = false
