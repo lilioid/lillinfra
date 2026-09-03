@@ -710,7 +710,7 @@ in
           "Mod+C".action = niriActions.center-visible-columns;
           "Mod+Shift+Space".action = niriActions.toggle-window-floating;
           "Print".action.screenshot = { };
-          "Ctrl+Alt+Delete".action = niriActions.spawn [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
+          "Ctrl+Alt+Delete".action = niriActions.spawn [ "noctalia" "msg" "panel-toggle" "session" ];
         };
       }
       // cfg.configOverride;
