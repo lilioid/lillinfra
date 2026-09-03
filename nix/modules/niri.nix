@@ -135,7 +135,6 @@ in
 
       programs.noctalia = {
         enable = true;
-        systemd.enable = true;
         settings = ../dotfiles/lilly/noctalia.toml;
       };
 
@@ -343,9 +342,9 @@ in
 
       # ref: https://yalter.github.io/niri/Configuration%3A-Introduction.html
       programs.niri.settings = {
-        # spawn-at-startup = [
-        #   { command = [ "noctalia" ]; }
-        # ];
+        spawn-at-startup = [
+          { command = [ "noctalia" ]; }
+        ];
 
         hotkey-overlay = {
           skip-at-startup = true;

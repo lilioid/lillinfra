@@ -150,7 +150,6 @@ position = "top_right"
 avatar_path = "/home/lilly/Sync/ProfilePictures/poly_fox.jpg"
 clipboard_enabled = false
 clipboard_keep_from_closed_apps = false
-launch_apps_as_systemd_services = true
 settings_show_advanced = true
 
     [shell.launcher]
