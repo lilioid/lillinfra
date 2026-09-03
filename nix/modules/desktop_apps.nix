@@ -18,6 +18,7 @@ in {
     environment.systemPackages = with pkgs; [
       chromium
       element-desktop
+      cinny-desktop
       telegram-desktop
       signal-desktop
       keepassxc

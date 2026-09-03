@@ -151,6 +151,7 @@
       ];
     };
 
+    sway.enable = true;
     niri = {
       enable = true;
       configOverride = rec {

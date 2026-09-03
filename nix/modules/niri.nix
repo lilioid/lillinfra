@@ -321,17 +321,6 @@ in
       #   };
       # };
 
-      # set noctalia wallpapers
-      home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
-        defaultWallpaper = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
-        wallpapers = {
-          "" = {
-            "dark" = "/home/lilly/Sync/Wallpapers/ccc-camp.jpg";
-            "light" = "/home/lilly/Sync/Wallpapers/Artstation/laurel-d-austin-tyrannosaurusinrepose.jpg";
-          };
-        };
-      };
-
       # set icon theme for gtk
       # crucially, this only renders ~/.config/gtk-4.0/settings.ini so that theming can still be done from noctalia
       gtk = {
