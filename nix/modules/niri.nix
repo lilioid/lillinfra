@@ -543,7 +543,8 @@ in
               "noctalia"
               "msg"
               "panel-toggle"
-              "control-center" # TODO directly opening notifications would be better
+              "control-center"
+              "notifications"
             ];
           };
           "Mod+Shift+Dead_Circumflex" = {
