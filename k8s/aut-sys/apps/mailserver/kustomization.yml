@@ -23,7 +23,7 @@ resources:
 
 images:
   - name: docker.io/haproxy
-    newTag: "3.4.3"
+    newTag: "3.4.4"
   - name: docker.io/rspamd/rspamd
     newTag: "latest"
 
