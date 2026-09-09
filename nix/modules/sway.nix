@@ -120,15 +120,11 @@ in
             { command = "noctalia"; }
           ];
 
-          # disable all bars because I use noctalia
           bars = [ ];
           terminal = "ghostty";
           menu = "noctalia msg panel-toggle launcher";
           modifier = "Mod4";
           focus.mouseWarping = "container";
-
-          # TODO: switch events should lock noctalia
-          # lid-close.action = niriActions.spawn [ "noctalia" "msg" "session" "lock-and-suspend" ];
           fonts.names = [ "Maple Mono" ];
 
           keybindings =
@@ -143,10 +139,21 @@ in
               "${mod}+Shift+Dead_Circumflex" = "exec noctalia msg notifications-dnd-toggle";
               # TODO: "Print" = "exec noctalia screenshot or grim"
 
+              "${mod}+Shift+1" = "move container to workspace number 1, workspace number 1";
+              "${mod}+Shift+2" = "move container to workspace number 2, workspace number 2";
+              "${mod}+Shift+3" = "move container to workspace number 3, workspace number 3";
+              "${mod}+Shift+4" = "move container to workspace number 4, workspace number 4";
+              "${mod}+Shift+5" = "move container to workspace number 5, workspace number 5";
+              "${mod}+Shift+6" = "move container to workspace number 6, workspace number 6";
+              "${mod}+Shift+7" = "move container to workspace number 7, workspace number 7";
+              "${mod}+Shift+8" = "move container to workspace number 8, workspace number 8";
+              "${mod}+Shift+9" = "move container to workspace number 9, workspace number 9";
+              "${mod}+Shift+0" = "move container to workspace number 10, workspace number 10";
+
               "${mod}+Page_Down" = "workspace prev_on_output";
-              "${mod}+Shift+Page_Down" = "move container to workspace prev_on_output";
+              "${mod}+Shift+Page_Down" = "move container to workspace prev_on_output, workspace prev_on_output";
               "${mod}+Page_Up" = "workspace next_on_output";
-              "${mod}+Shift+Page_Up" = "move container to workspace next_on_output";
+              "${mod}+Shift+Page_Up" = "move container to workspace next_on_output, workspace next_on_output";
 
               # multimedia
               "XF86AudioRaiseVolume" = "exec noctalia msg volume-up";
