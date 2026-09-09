@@ -87,6 +87,7 @@ in
     # enable a DisplayManager
     # services.displayManager.gdm.enable = true;
     services.displayManager.ly.enable = true;
+    programs.sway.enable = true;
 
     environment.systemPackages = with pkgs; [
       nemo # standard file manager
@@ -124,8 +125,7 @@ in
           terminal = "ghostty";
           menu = "noctalia msg panel-toggle launcher";
           modifier = "Mod4";
-
-          # TODO: set floating_modifier to $mod normal
+          focus.mouseWarping = "container";
 
           # TODO: switch events should lock noctalia
           # lid-close.action = niriActions.spawn [ "noctalia" "msg" "session" "lock-and-suspend" ];
@@ -142,6 +142,11 @@ in
               "${mod}+Dead_Circumflex" = "exec noctalia noctalia msg panel-toggle control-center notifications";
               "${mod}+Shift+Dead_Circumflex" = "exec noctalia msg notifications-dnd-toggle";
               # TODO: "Print" = "exec noctalia screenshot or grim"
+
+              "${mod}+Page_Down" = "workspace prev_on_output";
+              "${mod}+Shift+Page_Down" = "move container to workspace prev_on_output";
+              "${mod}+Page_Up" = "workspace next_on_output";
+              "${mod}+Shift+Page_Up" = "move container to workspace next_on_output";
 
               # multimedia
               "XF86AudioRaiseVolume" = "exec noctalia msg volume-up";
@@ -171,7 +176,7 @@ in
           };
           output = {
             "eDP-1" = {
-              scale = "1.5";
+              scale = "1.4";
             };
           };
         };
