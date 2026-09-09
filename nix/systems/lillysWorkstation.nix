@@ -138,6 +138,11 @@
     gamescopeSession.enable = true;
   };
 
+  programs.obs-studio = {
+    enable = true;
+    enableVirtualCamera = true;
+  };
+
   # # options defined by other custom modules
   custom = {
     devEnv.enable = true;
@@ -146,6 +151,7 @@
       enable = true;
       destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
     };
+    sway.enable = true;
 
     niri = {
       enable = true;
