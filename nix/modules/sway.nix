@@ -126,7 +126,7 @@ in
           modifier = "Mod4";
           focus.mouseWarping = "container";
           fonts.names = [ "Maple Mono" ];
-          window.titlebar = false;
+          defaultWorkspace = "workspace number 1";
 
           keybindings =
             let
@@ -187,6 +187,21 @@ in
             "eDP-1" = {
               scale = "1.4";
             };
+            # lillysWorkstation
+            "Dell Inc. AW2725DF 6B87ZZ3" = {
+              mode = "2560x1440@239.970Hz";
+              scale = "1.0";
+              position = "0 0";
+            };
+            "LG Electronics LG Ultra HD 0x00084B5E" = {
+              mode = "3840x2160@59.997Hz";
+              scale = "1.5";
+              position = "-2560 0";
+            };
+            "LG Electronics 2D FHD LG TV 0x01010101" = {
+              mode = "1920x1080@60.000Hz";
+              position = "2560 0";
+            };
           };
         };
 
@@ -194,6 +209,8 @@ in
           bindgesture swipe:3:left workspace next_on_output
           bindgesture swipe:3:right workspace prev_on_output
         '';
+
+        extraOptions = [ "--unsupported-gpu" ];
       };
     };
   };
