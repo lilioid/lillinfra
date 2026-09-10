@@ -126,6 +126,7 @@ in
           modifier = "Mod4";
           focus.mouseWarping = "container";
           fonts.names = [ "Maple Mono" ];
+          window.titlebar = false;
 
           keybindings =
             let
@@ -150,10 +151,11 @@ in
               "${mod}+Shift+9" = "move container to workspace number 9, workspace number 9";
               "${mod}+Shift+0" = "move container to workspace number 10, workspace number 10";
 
-              "${mod}+Page_Down" = "workspace prev_on_output";
-              "${mod}+Shift+Page_Down" = "move container to workspace prev_on_output, workspace prev_on_output";
-              "${mod}+Page_Up" = "workspace next_on_output";
-              "${mod}+Shift+Page_Up" = "move container to workspace next_on_output, workspace next_on_output";
+              "${mod}+Alt+Tab" = "workspace back_and_forth";
+              "${mod}+Page_Down" = "workspace next_on_output";
+              "${mod}+Shift+Page_Down" = "move container to workspace next_on_output, workspace next_on_output";
+              "${mod}+Page_Up" = "workspace prev_on_output";
+              "${mod}+Shift+Page_Up" = "move container to workspace prev_on_output, workspace prev_on_output";
 
               # multimedia
               "XF86AudioRaiseVolume" = "exec noctalia msg volume-up";
@@ -187,6 +189,11 @@ in
             };
           };
         };
+
+        extraConfig = ''
+          bindgesture swipe:3:left workspace next_on_output
+          bindgesture swipe:3:right workspace prev_on_output
+        '';
       };
     };
   };

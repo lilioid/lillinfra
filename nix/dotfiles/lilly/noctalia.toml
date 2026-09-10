@@ -1,9 +1,17 @@
 [bar.default]
-center = [ "active_window" ]
+center = [ "active_window", "privacy" ]
 end = [ "tray", "media", "notifications", "volume", "bluetooth", "network", "battery", "control-center" ]
 start = [ "launcher", "workspaces", "clock" ]
 thickness = 30
 widget_spacing = 8
+
+[calendar]
+enabled = true
+
+    [calendar.account.ccchh_public]
+    name = "CCCHH Public"
+    server_url = "webcal://cloud.hamburg.ccc.de/remote.php/dav/public-calendars/QJAdExziSnNJEz5g/?export"
+    type = "ics"
 
 [control_center.calendar]
 show_week_numbers = true
@@ -33,7 +41,7 @@ widget_order = []
     [desktop_widgets.widget]
 
 [hooks]
-colors_changed = "systemctl --user reload app-com.mitchellh.ghostty.service"
+colors_changed = ""
 theme_mode_changed = "systemctl --user reload app-com.mitchellh.ghostty.service"
 
 [location]
@@ -48,6 +56,7 @@ wallpaper = "/home/lilly/Sync/Wallpapers/ccc-camp.jpg"
 enabled = true
 schema_version = 2
 widget_order = [
+    "lockscreen-login-box@WL-1",
     "lockscreen-login-box@eDP-1",
     "lockscreen-widget-0000000000000001",
     "lockscreen-widget-0000000000000002",
@@ -59,14 +68,41 @@ widget_order = [
     major_interval = 4
     visible = true
 
+    [lockscreen_widgets.widget."lockscreen-login-box@WL-1"]
+    box_height = 196.0
+    box_width = 720.0
+    cx = 358.0
+    cy = 663.0
+    output = "WL-1"
+    placement_height = 845.0
+    placement_width = 716.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@WL-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
     box_width = 400.0
-    cx = 960.0
-    cy = 1141.0
+    cx = 1028.5
+    cy = 1221.82080078125
     output = "eDP-1"
-    placement_height = 1200.0
-    placement_width = 1920.0
+    placement_height = 1285.0
+    placement_width = 2057.0
     rotation = 0.0
     type = "login_box"
 
@@ -89,11 +125,11 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
     box_height = 112.0
     box_width = 240.0
-    cx = 960.0
-    cy = 80.0
+    cx = 1028.5
+    cy = 85.666664123535156
     output = "eDP-1"
-    placement_height = 1200.0
-    placement_width = 1920.0
+    placement_height = 1285.0
+    placement_width = 2057.0
     rotation = 0.0
     type = "clock"
 
@@ -107,11 +143,11 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
     box_height = 176.0
     box_width = 416.0
-    cx = 221.0
-    cy = 1100.0
+    cx = 236.76927185058594
+    cy = 1177.9166259765625
     output = "eDP-1"
-    placement_height = 1200.0
-    placement_width = 1920.0
+    placement_height = 1285.0
+    placement_width = 2057.0
     rotation = 0.0
     type = "media_player"
 
@@ -123,11 +159,11 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000003]
     box_height = 0.0
     box_width = 0.0
-    cx = 1877.0
-    cy = 1176.0
+    cx = 2010.9317626953125
+    cy = 1259.300048828125
     output = "eDP-1"
-    placement_height = 1200.0
-    placement_width = 1920.0
+    placement_height = 1285.0
+    placement_width = 2057.0
     rotation = 0.0
     type = "label"
 
@@ -170,7 +206,7 @@ settings_show_advanced = true
 [theme]
 builtin = "Rosé Pine"
 community_palette = "Oxocarbon"
-mode = "dark"
+mode = "auto"
 pure_black_dark = true
 source = "builtin"
 wallpaper_scheme = "m3-content"
@@ -187,15 +223,19 @@ directory_light = "/home/lilly/Sync/Wallpapers/lightmode"
     enabled = true
 
     [wallpaper.default]
-    path = "/home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg"
+    path = "/home/lilly/Sync/Wallpapers/lightmode/daniel-clarke-yb-30sec-sh020-bg-paint-v021.jpg"
 
     [wallpaper.last]
-    path = "/home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg"
+    path = "/home/lilly/Sync/Wallpapers/lightmode/daniel-clarke-yb-30sec-sh020-bg-paint-v021.jpg"
+
+    [wallpaper.monitors.WL-1]
+    path = "/home/lilly/Sync/Wallpapers/darkmode/nasa-53884.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/lilly/Sync/Wallpapers/Yumi_wallpaper_horizontal_no_title.jpg"
+    path = "/home/lilly/Sync/Wallpapers/lightmode/daniel-clarke-yb-30sec-sh020-bg-paint-v021.jpg"
 
 [widget.active_window]
+anchor = true
 interactive = false
 title_scroll = "on_hover"
 
@@ -205,3 +245,6 @@ enabled = false
 [widget.media]
 hide_when_no_media = true
 show_progress = true
+
+[widget.privacy]
+hide_inactive = true
