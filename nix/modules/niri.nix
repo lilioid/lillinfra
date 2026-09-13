@@ -608,9 +608,8 @@ in
           XF86AudioPrev = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
+              "noctalia"
+              "msg"
               "media"
               "previous"
             ];
@@ -618,9 +617,8 @@ in
           XF86AudioNext = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
+              "noctalia"
+              "msg"
               "media"
               "next"
             ];
@@ -628,11 +626,10 @@ in
           XF86AudioPlay = {
             allow-when-locked = true;
             action = niriActions.spawn [
-              "noctalia-shell"
-              "ipc"
-              "call"
+              "noctalia"
+              "msg"
               "media"
-              "playPause"
+              "toggle"
             ];
           };
 
