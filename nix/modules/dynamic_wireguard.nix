@@ -141,6 +141,7 @@ in
           netdevConfig = {
             Name = iProfile.interface;
             Kind = "wireguard";
+            MTUBytes=1000;
           };
           wireguardConfig = {
             PrivateKeyFile = config.sops.secrets."wg/${iProfileName}/privkey".path;
@@ -180,6 +181,7 @@ in
             };
             wireguard = {
               private-key-flags = 1;
+              mtu = 1000;
             };
             ipv4 = {
               method = "manual";
@@ -210,6 +212,7 @@ in
           privateKeyFile = config.sops.secrets."wg/${iProfileName}/privkey".path;
           address = iProfile.address;
           dns = iProfile.dns;
+          mtu = 1000;
           peers = lib.mapAttrsToList
             (_: iPeer: {
               publicKey = iPeer.pubKey;
