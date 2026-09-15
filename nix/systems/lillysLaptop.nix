@@ -264,7 +264,6 @@
     prusa-slicer
     sops
     git-crypt
-    gnupg
     nftables
     file
     sbctl

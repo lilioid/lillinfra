@@ -258,7 +258,6 @@
 
   services.printing.enable = true;
   services.earlyoom.enable = true;
-  programs.gnupg.agent.enable = true;
   services.resolved.enable = true;
   hardware.sane = {
     enable = true;

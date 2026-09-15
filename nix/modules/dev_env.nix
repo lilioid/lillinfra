@@ -39,7 +39,8 @@ in
       nixos-rebuild-ng
       sops
       git-crypt
-      gnupg
+      sequoia-sq
+      sequoia-chameleon-gnupg
       glab
       helmfile
       jq
@@ -96,9 +97,9 @@ in
       end
     '';
 
-    programs.gnupg.agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-qt;
+    programs.gnupg = {
+      package = pkgs.sequoia-chameleon-gnupg;
+      agent.enable = true;
     };
 
     programs.wireshark = {

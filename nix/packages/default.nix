@@ -34,6 +34,11 @@ let
 
     # overwrite certain programs from nixos-unstable because of newer versions
     # glab = pkgs-unstable.glab;
+
+    # currently does not work because integration tests for pass fail
+    # gnupg = pkgs.callPackage
+    #   (flake.inputs.nixpkgs + "/pkgs/by-name/se/sequoia-chameleon-gnupg/package.nix")
+    #   { gnupg = pkgs.gnupg; };
   };
 in
 pkgs.lib.mergeAttrs dirPkgs manualPkgs
