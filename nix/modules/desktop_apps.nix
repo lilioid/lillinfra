@@ -24,7 +24,6 @@ in {
       keepassxc
       wl-clipboard
       thunderbird
-      spotify
       discord
       vlc
       mpv
