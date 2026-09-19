@@ -100,14 +100,6 @@ in
           };
         };
       };
-      programs.ghostty = lib.mkIf hasDesktop {
-        enable = true;
-        settings = {
-          quit-after-last-window-closed = false;
-          theme = "noctalia";
-          font-family = "Inter Mono";
-        };
-      };
       home.pointerCursor = lib.mkIf hasDesktop {
         enable = true;
         package = pkgs.bibata-cursors;

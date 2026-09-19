@@ -504,7 +504,7 @@ in
           "Mod+Return" = {
             hotkey-overlay.title = "Open Terminal";
             repeat = false;
-            action = niriActions.spawn [ "ghostty" "+new-window" ];
+            action = niriActions.spawn [ "foot" ];
           };
           "Mod+D" = {
             hotkey-overlay.title = "Open Application picker";
