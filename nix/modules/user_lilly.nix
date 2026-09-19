@@ -91,6 +91,15 @@ in
         enable = true;
         ediff = lib.mkForce false;
       };
+      programs.foot = lib.mkIf hasDesktop {
+        enable = true;
+        settings = {
+          main = {
+            font = "monospace:size=11";
+            initial-color-theme = "light";
+          };
+        };
+      };
       programs.ghostty = lib.mkIf hasDesktop {
         enable = true;
         settings = {
