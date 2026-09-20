@@ -26,7 +26,7 @@
   system.installer.channel.enable = true;
 
   # use iwd instead of wpa_supplicant because the CLI is more user-friendly
-  networking.wireless.enable = false;
+  networking.wireless.enable = lib.mkForce false;
   networking.wireless.iwd.enable = true;
 
   # configure my own user account in the installer
