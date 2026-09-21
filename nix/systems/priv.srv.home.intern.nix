@@ -66,6 +66,7 @@ in
 
   networking.firewall.allowedTCPPorts = [
     8000 # paperless web
+    8081 # zigbe2mqtt
     8384 # syncthing gui
     8123 # home assistant
     1883 # mqtt server (exposed so that tasmota devices can access it)
@@ -222,7 +223,6 @@ in
     extraOptions = [
       "--net=host"
       "--privileged"
-      "--device=/dev/ttyUSB0:/dev/ttyUSB0"
     ];
   };
 
@@ -233,6 +233,22 @@ in
       "${mosquittoConf}:/mosquitto/config/mosquitto.conf:ro"
     ];
     extraOptions = [ "--net=host" ];
+  };
+
+  # home assistant zigbe2mqtt
+  systemd.services."podman-zigbe2mqtt".wantedBy = lib.mkForce [ "encrypted-services.target" ];
+  virtualisation.oci-containers.containers."zigbe2mqtt" = {
+    image = "ghcr.io/koenkk/zigbee2mqtt";
+    environment.TZ = "Europe/Berlin";
+    volumes = [
+      "/srv/data/encrypted/zigbe2mqtt/:/app/data/"
+      "/run/udev/:/run/udev:ro"
+    ];
+    extraOptions = [
+      "--net=host"
+      # "-p" "8081:8080"
+      "--device=/dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_84d8fde04dafed11adca3d4e71c9e8b5-if00-port0:/dev/ttyACM0"
+    ];
   };
 
   # unifi controller

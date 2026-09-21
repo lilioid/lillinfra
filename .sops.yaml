@@ -16,7 +16,7 @@ keys:
   - &k8s-worker3-aut-num "age1k22c0uq675f5phyzevf36nj0yyvt3k97prxfz96m9xlec3rfhqjsvh5u0z"
   - &syncthing-aut-num "age1xz3g0du33t9mdyj33sj9n8hmc0fnmp8ec2lryawdcgldzuhfjd8s4u8wv5"
   - &db-aut-num "age1caeu2zle7swq93xy6glc897g5jxzsyzztjqyy8j6zhp6cuymw3fs54xksv"
-  - &webhost-aut-num "age1c54zwe67dwmw5swaf0qgzxtv49ryfczfyp2v5g42k5z66wzq55ksphx8fv"
+  - &webhost-aut-num "age188jnlksajgkmca0yh4cv4awqsav8388hk0k5lk63a0as425elchqtajk9c"
   - &actions-runner-aut-num "age1ml0mt9d87lkjtj4pu27hn5hayz40zy05qam6u8524ck40r5f4ugqc9dme8"
   - &nas-myroot "age1gufa7z3leuufvps6wszfzyk7e8rqdpz3ryfneu9x4qfj0je95amq4gpd20"
   - &gtw-myroot "age186x5sfsv6txmtu8f9dfd84td6fq7cxup25nrtxlr43327xrqvpzsvqe6sv"
