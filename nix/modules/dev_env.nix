@@ -79,10 +79,7 @@ in
       fzf
       findutils
       file
-      # jetbrains.pycharm
-      # jetbrains.rust-rover
-      # jetbrains.webstorm
-      # jetbrains.goland
+      opentofu
     ];
 
     programs.fish.shellInit = ''
