@@ -87,7 +87,11 @@ in
     # enable a DisplayManager
     # services.displayManager.gdm.enable = true;
     services.displayManager.ly.enable = true;
-    programs.sway.enable = true;
+    programs.sway = {
+      enable = true;
+      wrapperFeatures.gtk = true;
+      extraPackages = [];
+    };
 
     environment.systemPackages = with pkgs; [
       nemo # standard file manager
@@ -211,7 +215,7 @@ in
           };
           output = {
             "eDP-1" = {
-              scale = "1.4";
+              scale = "1.45";
             };
             # lillysWorkstation
             "Dell Inc. AW2725DF 6B87ZZ3" = {
@@ -231,6 +235,9 @@ in
           };
         };
 
+        extraConfigEarly = ''
+          include /etc/sway/config.d/*
+        '';
         extraConfig = ''
           bindgesture swipe:3:left workspace next_on_output
           bindgesture swipe:3:right workspace prev_on_output
