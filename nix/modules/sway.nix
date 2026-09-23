@@ -37,6 +37,7 @@ in
     # general system configuration
     #
     custom.desktopApps.enableCommon = true;
+    custom.greeter.enable = true;
     qt.style = "adwaita";
     services.gvfs.enable = true;
 
@@ -84,9 +85,6 @@ in
       pulse.enable = true;
     };
 
-    # enable a DisplayManager
-    # services.displayManager.gdm.enable = true;
-    services.displayManager.ly.enable = true;
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
