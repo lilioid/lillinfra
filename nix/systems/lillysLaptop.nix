@@ -268,7 +268,6 @@
     file
     sbctl
     docker-compose
-    minicom
   ];
 
   programs.steam = {

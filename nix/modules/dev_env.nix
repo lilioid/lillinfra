@@ -80,6 +80,7 @@ in
       findutils
       file
       opentofu
+      minicom
     ];
 
     programs.fish.shellInit = ''
