@@ -68,7 +68,7 @@
 
     # shell for niri
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell?ref=v5.1.0";
+      url = "github:noctalia-dev/noctalia-shell?ref=v5.2.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
