@@ -51,7 +51,7 @@ address = "Hamburg, Germany"
 blur_intensity = 0.0
 tint_intensity = 0.0
 transition = []
-wallpaper = "/home/lilly/Sync/Wallpapers/ccc-camp.jpg"
+wallpaper = "/home/lilly/Sync/Wallpapers/ccc-camp-2.jpg"
 
 [lockscreen_widgets]
 enabled = true
