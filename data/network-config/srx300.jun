@@ -1,0 +1,721 @@
+## Last commit: 2026-11-15 00:47:31 UTC by root
+version 25.4R1-S2.3;
+groups {
+    auth {
+        system {
+            root-authentication {
+                encrypted-password "$6$8CW7IWMg$8zqghTWsrZ.3Mg8s7hnE7GDfEbncvpME2qHto45nP6EzR9BIZDABdbwwKQn95djythdoSfE3ZP5.l99FOILKl."; ## SECRET-DATA
+                ssh-ed25519 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzGnNKyn6jmVxig4SRnTBfpi6okPU2aOHPwFnAPTxJm lilly@lly.sh"; ## SECRET-DATA
+            }
+        }
+    }
+    home-access-port {
+        interfaces {
+            <*> {
+                unit 0 {
+                    family ethernet-switching {
+                        interface-mode access;
+                        vlan {
+                            members HOME;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+apply-groups auth;
+system {
+    host-name srx300.home.internal;
+    root-authentication {
+        encrypted-password "$6$gw3Oj86D$yVWD5rp1iK69TQbgex829MGkYNoa80nl1mbnbn/XADglp./cDe5nODtUGEUw7f.ScBg8O1/bJk24AbjdLpqJo/"; ## SECRET-DATA
+        ssh-ed25519 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzGnNKyn6jmVxig4SRnTBfpi6okPU2aOHPwFnAPTxJm lilly@lly.sh"; ## SECRET-DATA
+    }
+    services {
+        ssh {
+            no-passwords;
+        }
+        dns {
+            forwarders {
+                9.9.9.9;
+                149.112.112.112;
+            }
+            dns-proxy {
+                propogate-setting enable;
+                interface {
+                    irb.2;
+                    irb.101;
+                    irb.102;
+                    irb.103;
+                }
+                cache {
+                    airgradient-livingroom.smart.home.internal inet 192.168.101.12;
+                    dusty.smart.home.internal inet 192.168.101.10;
+                    priv.servers.home.internal inet 192.168.102.12;
+                    proxy.servers.home.internal inet 192.168.102.11;
+                    raspi5.servers.home.internal inet 192.168.102.10;
+                    srx300.mgmt.home.internal inet 192.168.2.1;
+                    starlight.smart.home.internal inet 192.168.101.11;
+                }
+            }
+        }
+        dhcp-local-server {
+            group HOME {
+                interface irb.103;
+            }
+            group MGMT {
+                interface irb.2;
+            }
+            group SERVERS {
+                interface irb.102;
+            }
+            group SMART-HOME {
+                interface irb.101;
+            }
+            requested-ip-interface-match;
+        }
+    }
+    auto-snapshot;
+    domain-search home.internal;
+    name-server {
+        9.9.9.9;
+        149.112.112.112;
+    }
+    syslog {
+        archive {
+            size 100k;
+            files 3;
+        }
+        user * {
+            any emergency;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+        file messages {
+            any notice;
+            authorization info;
+        }
+    }
+    max-configurations-on-flash 5;
+    max-configuration-rollbacks 5;
+    processes {
+        dhcp-service {
+            inactive: traceoptions {
+                file jdhcpd size 10m;
+                level info;
+                flag all;
+            }
+        }
+    }
+}
+security {
+    nat {
+        source {
+            rule-set to-wan {
+                from zone [ LAN MGMT ];
+                to zone [ MGMT WAN ];
+                rule source-nat-rule {
+                    match {
+                        source-address-name lan;
+                    }
+                    then {
+                        source-nat {
+                            interface;
+                        }
+                    }
+                }
+            }
+        }
+        destination {
+            pool proxy-vm-http {
+                address 192.168.102.11/32 port 80;
+            }
+            pool proxy-vm-https {
+                address 192.168.102.11/32 port 443;
+            }
+            rule-set server-port-forward {
+                description "port-forwarding for my servers";
+                from zone WAN;
+                rule http-to-proxy-vm {
+                    description "port 80 (http) to proxy vm";
+                    match {
+                        destination-address 0.0.0.0/0;
+                        application junos-http;
+                    }
+                    then {
+                        destination-nat {
+                            pool {
+                                proxy-vm-http;
+                            }
+                        }
+                    }
+                }
+                rule https-to-proxy-vm {
+                    description "port 443 (https) to proxy vm";
+                    match {
+                        destination-address 0.0.0.0/0;
+                        application junos-https;
+                    }
+                    then {
+                        destination-nat {
+                            pool {
+                                proxy-vm-https;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    screen {
+        ids-option untrust-screen {
+            icmp {
+                ping-death;
+            }
+            ip {
+                source-route-option;
+                tear-drop;
+            }
+            tcp {
+                syn-flood {
+                    alarm-threshold 1024;
+                    attack-threshold 200;
+                    source-threshold 1024;
+                    destination-threshold 2048;
+                    timeout 20;
+                }
+                land;
+            }
+        }
+    }
+    zones {
+        inactive: security-zone untrust {
+            screen untrust-screen;
+            interfaces {
+                ge-0/0/0.0 {
+                    host-inbound-traffic {
+                        system-services {
+                            dhcp;
+                            tftp;
+                            https;
+                        }
+                    }
+                }
+                ge-0/0/7.0 {
+                    host-inbound-traffic {
+                        system-services {
+                            dhcp;
+                            tftp;
+                        }
+                    }
+                }
+            }
+        }
+        security-zone MGMT {
+            tcp-rst;
+            host-inbound-traffic {
+                system-services {
+                    all;
+                }
+                protocols {
+                    all;
+                }
+            }
+            interfaces {
+                irb.2;
+            }
+        }
+        security-zone LAN {
+            description "Internal Networks";
+            tcp-rst;
+            host-inbound-traffic {
+                system-services {
+                    bootp;
+                    dhcp;
+                    dhcpv6;
+                    dns;
+                    ping;
+                    ssh;
+                    traceroute;
+                    ntp;
+                }
+                protocols {
+                    router-discovery;
+                }
+            }
+            interfaces {
+                irb.101;
+                irb.102;
+                irb.103;
+            }
+        }
+        security-zone WAN {
+            description "Untrusted/Outside Networks";
+            screen untrust-screen;
+            host-inbound-traffic {
+                system-services {
+                    dhcp;
+                    bootp;
+                }
+            }
+            interfaces {
+                irb.100;
+                irb.255;
+            }
+        }
+    }
+    policies {
+        from-zone LAN to-zone WAN {
+            policy allow-all {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone LAN to-zone LAN {
+            policy allow-home-to-smart {
+                match {
+                    source-address home-devices;
+                    destination-address smart-home-devices;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+            policy allow-home-to-servers {
+                match {
+                    source-address home-devices;
+                    destination-address servers;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+            policy allow-servers-to-smart {
+                match {
+                    source-address servers;
+                    destination-address smart-home-devices;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+            policy allow-smart-to-servers {
+                match {
+                    source-address smart-home-devices;
+                    destination-address servers;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+            policy allow-servers-to-servers {
+                match {
+                    source-address servers;
+                    destination-address servers;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+            policy allow-home-to-home {
+                match {
+                    source-address home-devices;
+                    destination-address home-devices;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone WAN to-zone LAN {
+            policy allow-port-forwarded {
+                description "Allow traffic which is handled via port-forwarding rules and intended for internal devices";
+                match {
+                    source-address any;
+                    destination-address any;
+                    application [ junos-http junos-https ];
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        global {
+            policy allow-from-mgmt {
+                match {
+                    source-address mgmt;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+            inactive: policy allow-to-wan {
+                match {
+                    source-address lan;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        default-policy {
+            deny-all;
+        }
+        pre-id-default-policy {
+            then {
+                log {
+                    session-close;
+                }
+            }
+        }
+    }
+    address-book {
+        global {
+            address mgmt 192.168.2.0/24;
+            address wan 192.168.255.0/24;
+            address smart-home-devices 192.168.101.0/24;
+            address servers 192.168.102.0/24;
+            address home-devices 192.168.103.0/24;
+            address-set lan {
+                address home-devices;
+                address mgmt;
+                address servers;
+                address smart-home-devices;
+            }
+        }
+    }
+    dynamic-address;
+    forwarding-options {
+        family {
+            inet {
+                mode flow-based;
+            }
+            inet6 {
+                mode flow-based;
+            }
+        }
+    }
+}
+interfaces {
+    ge-0/0/0 {
+        description "Uplink to FritzBox";
+        unit 0 {
+            family ethernet-switching {
+                interface-mode access;
+                vlan {
+                    members WAN;
+                }
+            }
+        }
+    }
+    ge-0/0/1 {
+        description "Trunk to AP";
+        native-vlan-id 2;
+        unit 0 {
+            family ethernet-switching {
+                interface-mode trunk;
+                vlan {
+                    members all;
+                }
+            }
+        }
+    }
+    ge-0/0/2 {
+        description "Trunk to raspi5";
+        unit 0 {
+            family ethernet-switching {
+                interface-mode trunk;
+                vlan {
+                    members all;
+                }
+            }
+        }
+    }
+    ge-0/0/3 {
+        description "Access to printer";
+        unit 0 {
+            family ethernet-switching {
+                interface-mode access;
+                vlan {
+                    members HOME;
+                }
+            }
+        }
+    }
+    ge-0/0/4 {
+        description "Access to lillysWorkstation";
+        unit 0 {
+            family ethernet-switching {
+                interface-mode access;
+                vlan {
+                    members HOME;
+                }
+            }
+        }
+    }
+    ge-0/0/5 {
+        description "Fallback MGMT access";
+        unit 0 {
+            family ethernet-switching {
+                interface-mode access;
+                vlan {
+                    members MGMT;
+                }
+            }
+        }
+    }
+    ge-0/0/6 {
+        disable;
+        unit 0;
+    }
+    ge-0/0/7 {
+        disable;
+        unit 0;
+    }
+    irb {
+        unit 2 {
+            description MGMT;
+            family inet {
+                address 192.168.2.1/24;
+            }
+            family inet6 {
+                address fe80::1/64;
+            }
+        }
+        unit 100 {
+            disable;
+            description "Freifunk Clients";
+        }
+        unit 101 {
+            description Smart-Home;
+            family inet {
+                address 192.168.101.1/24;
+            }
+            family inet6 {
+                address fe80::1/64;
+            }
+        }
+        unit 102 {
+            description Servers;
+            family inet {
+                address 192.168.102.1/24;
+            }
+            family inet6 {
+                address fe80::1/64;
+            }
+        }
+        unit 103 {
+            description Home-Net;
+            family inet {
+                address 192.168.103.1/24;
+            }
+            family inet6 {
+                address fe80::1/64;
+            }
+        }
+        unit 255 {
+            description WAN;
+            family inet {
+                inactive: dhcp {
+                    client-identifier {
+                        prefix {
+                            host-name;
+                        }
+                    }
+                    no-dns-install;
+                }
+                address 192.168.255.2/24;
+            }
+        }
+    }
+    lo0 {
+        unit 0 {
+            family inet {
+                address 127.0.0.1/32;
+            }
+        }
+    }
+}
+inactive: firewall {
+    family any {
+        filter allow-all {
+            term allow-irb.2 {
+                from {
+                    interface irb.2;
+                }
+                then accept;
+            }
+            term allow-lo {
+                from {
+                    interface lo0;
+                }
+                then accept;
+            }
+        }
+    }
+}
+access {
+    address-assignment {
+        pool MgmtPool {
+            family inet {
+                network 192.168.2.0/24;
+                range MgmtRange {
+                    low 192.168.2.100;
+                    high 192.168.2.254;
+                }
+                dhcp-attributes {
+                    domain-name mgmt.home.internal;
+                    name-server {
+                        192.168.2.1;
+                    }
+                    router {
+                        192.168.2.1;
+                    }
+                }
+            }
+        }
+        pool SmartHome {
+            family inet {
+                network 192.168.101.0/24;
+                range r1 {
+                    low 192.168.101.100;
+                    high 192.168.101.254;
+                }
+                dhcp-attributes {
+                    domain-name smart.home.internal;
+                    name-server {
+                        192.168.101.1;
+                    }
+                    router {
+                        192.168.101.1;
+                    }
+                }
+                host dusty.smart.home.internal {
+                    hardware-address 70:c9:32:4b:b7:2d;
+                    ip-address 192.168.101.10;
+                }
+                host starlight.smart.home.internal {
+                    hardware-address 64:e8:33:b9:6a:a8;
+                    ip-address 192.168.101.11;
+                }
+                host airgradient-livingroom.smart.home.internal {
+                    hardware-address d8:3b:da:1a:20:f8;
+                    ip-address 192.168.101.12;
+                }
+            }
+        }
+        pool Servers {
+            family inet {
+                network 192.168.102.0/24;
+                range r1 {
+                    low 192.168.102.100;
+                    high 192.168.102.254;
+                }
+                dhcp-attributes {
+                    domain-name servers.home.internal;
+                    name-server {
+                        192.168.102.1;
+                    }
+                    router {
+                        192.168.102.1;
+                    }
+                }
+                host priv.servers.home.internal {
+                    hardware-address 52:54:00:9f:4c:d9;
+                    ip-address 192.168.102.12;
+                }
+                host proxy.servers.home.internal {
+                    hardware-address 52:54:00:64:29:1b;
+                    ip-address 192.168.102.11;
+                }
+                host raspi5.servers.home.internal {
+                    hardware-address 4e:45:40:03:0c:44;
+                    ip-address 192.168.102.10;
+                }
+            }
+        }
+        pool HomeNet {
+            family inet {
+                network 192.168.103.0/24;
+                range r1 {
+                    low 192.168.103.2;
+                    high 192.168.103.254;
+                }
+                dhcp-attributes {
+                    domain-name home.internal;
+                    name-server {
+                        192.168.103.1;
+                    }
+                    router {
+                        192.168.103.1;
+                    }
+                }
+            }
+        }
+    }
+}
+vlans {
+    FREIFUNK {
+        description "Freifunk Clients";
+        vlan-id 100;
+    }
+    HOME {
+        description "Home Network";
+        vlan-id 103;
+        l3-interface irb.103;
+    }
+    MGMT {
+        description Management;
+        vlan-id 2;
+        l3-interface irb.2;
+    }
+    SERVERS {
+        description Servers;
+        vlan-id 102;
+        l3-interface irb.102;
+    }
+    SMART {
+        description Smart-Home;
+        vlan-id 101;
+        l3-interface irb.101;
+    }
+    WAN {
+        description "WAN area with Freifunk Router and Uplink";
+        vlan-id 255;
+        l3-interface irb.255;
+    }
+}
+protocols {
+    router-advertisement {
+        interface irb.2 {
+            preference high;
+            prefix fc5:afd:0:2::/64;
+            dns-search-list home.internal;
+        }
+    }
+    l2-learning {
+        global-mode switching;
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 192.168.255.1;
+    }
+}

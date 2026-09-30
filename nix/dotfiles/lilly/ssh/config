@@ -87,16 +87,24 @@ Host k8s-worker2.srv.myroot.intern
 # Private Hosts @home
 #
 
-Host raspi5.home.internal
+Host raspi5.servers.home.internal
   User lilly
+  HostName raspi5.servers.home.internal
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
-Host proxy.srv.home.internal
+Host proxy.servers.home.internal
   User lilly
+  HostName proxy.servers.home.internal
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
-Host priv.srv.home.internal
+Host priv.servers.home.internal
   User lilly
+  HostName priv.servers.home.internal
+  IdentityFile ~/.ssh/id_lilly@lly.sh.pub
+
+Host srx300.mgmt.home.internal
+  User lilly
+  HostName srx300.mgmt.home.internal
   IdentityFile ~/.ssh/id_lilly@lly.sh.pub
 
 

@@ -1,0 +1,331 @@
+## Last commit: 2020-05-18 03:48:03 UTC by root
+version 18.2R3-S2.9;
+groups {
+    auth {
+        system {
+            root-authentication {
+                encrypted-password "$6$8CW7IWMg$8zqghTWsrZ.3Mg8s7hnE7GDfEbncvpME2qHto45nP6EzR9BIZDABdbwwKQn95djythdoSfE3ZP5.l99FOILKl."; ## SECRET-DATA
+                ssh-ed25519 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzGnNKyn6jmVxig4SRnTBfpi6okPU2aOHPwFnAPTxJm lilly@lly.sh"; ## SECRET-DATA
+            }
+        }
+    }
+    home-access-port {
+        interfaces {
+            <*> {
+                unit 0 {
+                    family ethernet-switching {
+                        interface-mode access;
+                        vlan {
+                            members HOME;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+apply-groups auth;
+system {
+    host-name ex2300c.home.internal;
+    auto-snapshot;
+    services {
+        ssh {
+            no-passwords;
+        }
+        dhcp-local-server {
+            group MGMT {
+                interface irb.2;
+            }
+            group HOME {
+                interface irb.103;
+            }
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+    processes {
+        dhcp-service {
+            traceoptions {
+                file dhcp_logfile size 10m;
+                level all;
+                flag all;
+            }
+        }
+    }
+}
+chassis {
+    redundancy {
+        graceful-switchover;
+    }
+}
+interfaces {
+    ge-0/0/0 {
+        description "FritzBox DSL Uplink";
+        unit 0 {
+            family ethernet-switching {
+                interface-mode access;
+                vlan {
+                    members WAN;
+                }
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/1 {
+        description BananaPI;
+        unit 0 {
+            family ethernet-switching {
+                interface-mode trunk;
+                vlan {
+                    members all;
+                }
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/2 {
+        description "Freifunk Router";
+        unit 0 {
+            family ethernet-switching {
+                interface-mode access;
+                vlan {
+                    members WAN;
+                }
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/3 {
+        description raspi5;
+        unit 0 {
+            family ethernet-switching {
+                interface-mode trunk;
+                vlan {
+                    members all;
+                }
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/4 {
+        description "WiFi AP";
+        native-vlan-id 2;
+        unit 0 {
+            family ethernet-switching {
+                interface-mode trunk;
+                vlan {
+                    members all;
+                }
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/5 {
+        apply-groups home-access-port;
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/6 {
+        apply-groups home-access-port;
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/7 {
+        apply-groups home-access-port;
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/8 {
+        apply-groups home-access-port;
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/9 {
+        apply-groups home-access-port;
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/10 {
+        apply-groups home-access-port;
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    ge-0/0/11 {
+        unit 0 {
+            family ethernet-switching {
+                interface-mode access;
+                vlan {
+                    members MGMT;
+                }
+                storm-control default;
+            }
+        }
+    }
+    ge-0/1/0 {
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    xe-0/1/0 {
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    ge-0/1/1 {
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    xe-0/1/1 {
+        unit 0 {
+            family ethernet-switching {
+                storm-control default;
+            }
+        }
+    }
+    irb {
+        unit 2 {
+            family inet {
+                address 192.168.2.2/24;
+            }
+            family inet6;
+        }
+    }
+    lo0 {
+        unit 0 {
+            family inet {
+                address 192.168.2.2/24;
+            }
+            family inet6;
+        }
+    }
+    vme {
+        unit 0 {
+            family inet {
+                dhcp {
+                    vendor-id Juniper-ex2300-c-12p-HV0217130362;
+                }
+            }
+        }
+    }
+}
+snmp {
+    description "Switch in the smol rack";
+    contact lilly;
+    view all {
+        oid .1 include;
+    }
+    community lillysHome {
+        view all;
+        authorization read-only;
+    }
+}
+forwarding-options {
+    storm-control-profiles default {
+        all;
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 192.168.2.1;
+    }
+}
+protocols {
+    router-advertisement {
+        interface irb.255;
+    }
+    lldp {
+        interface all;
+    }
+    lldp-med {
+        interface all;
+    }
+    igmp-snooping {
+        vlan default;
+    }
+    rstp {
+        interface ge-0/0/0;
+        interface ge-0/0/1;
+        interface ge-0/0/2;
+        interface ge-0/0/3;
+        interface ge-0/0/4;
+        interface ge-0/0/5;
+        interface ge-0/0/6;
+        interface ge-0/0/7;
+        interface ge-0/0/8;
+        interface ge-0/0/9;
+        interface ge-0/0/10;
+        interface ge-0/0/11;
+        interface ge-0/1/0;
+        interface xe-0/1/0;
+        interface ge-0/1/1;
+        interface xe-0/1/1;
+    }
+}
+poe {
+    interface all;
+}
+vlans {
+    FREIFUNK {
+        description "Freifunk Clients";
+        vlan-id 100;
+    }
+    HOME {
+        description "Home Network";
+        vlan-id 103;
+    }
+    MGMT {
+        description Management;
+        vlan-id 2;
+        l3-interface irb.2;
+    }
+    SERVERS {
+        description Servers;
+        vlan-id 102;
+    }
+    SMART {
+        description Smart-Home;
+        vlan-id 101;
+    }
+    WAN {
+        description "WAN area with Freifunk Router and Uplink";
+        vlan-id 255;
+    }
+    default {
+        vlan-id 1;
+    }
+}
