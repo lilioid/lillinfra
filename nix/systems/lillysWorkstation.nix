@@ -147,6 +147,7 @@
   custom = {
     devEnv.enable = true;
     user-syncthing.enable = true;
+    hardware.enableNitrokey = true;
     backup = {
       enable = true;
       destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
@@ -268,6 +269,12 @@
   services.avahi = {
     enable = true;
     nssmdns4 = true;
+  };
+
+  sops.secrets."keepass-sec++.bin" = {
+    sopsFile = ../data/shared-secrets/keepass-secret-sec++.bin;
+    owner = "lilly";
+    format = "binary";
   };
 
   # DO NOT CHANGE
