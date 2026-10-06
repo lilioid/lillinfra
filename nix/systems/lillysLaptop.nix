@@ -284,6 +284,17 @@
     nssmdns4 = true;
   };
 
+  sops.secrets."keepass-sec++.bin" = {
+    sopsFile = ../data/shared-secrets/keepass-secret-sec++.bin;
+    owner = "lilly";
+    format = "binary";
+  };
+  sops.secrets."age-key.txt" = {
+    sopsFile = ../data/shared-secrets/age-key.txt;
+    owner = "lilly";
+    format = "binary";
+  };
+
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
   home-manager.users.lilly.home.stateVersion = "25.11";
