@@ -109,7 +109,6 @@ in
       pulse.enable = true;
     };
 
-
     environment.systemPackages = with pkgs; [
       xwayland-satellite
       nemo # standard file manager
@@ -334,7 +333,7 @@ in
 
         hotkey-overlay = {
           skip-at-startup = true;
-        };        
+        };
 
         input = {
           focus-follows-mouse = {
@@ -364,7 +363,12 @@ in
         };
 
         switch-events = {
-          lid-close.action = niriActions.spawn [ "noctalia" "msg" "session" "lock-and-suspend" ];
+          lid-close.action = niriActions.spawn [
+            "noctalia"
+            "msg"
+            "session"
+            "lock-and-suspend"
+          ];
         };
 
         outputs = { }; # override this via the configOverride option
@@ -476,12 +480,30 @@ in
           {
             # open some windows floating on current workspace
             matches = [
-              { app-id = "^thunderbird$"; title = "^\\d+ Reminder(s?)$"; }
-              { app-id = "^org\\.keepassxc\\.KeePassXC$"; title = "KeePassXC - Passkey credentials"; }
+              {
+                app-id = "^thunderbird$";
+                title = "^\\d+ Reminder(s?)$";
+              }
+              {
+                app-id = "^org\\.keepassxc\\.KeePassXC$";
+                title = "KeePassXC - Passkey credentials";
+              }
             ];
             open-floating = true;
             open-focused = true;
             open-on-workspace = null;
+          }
+          {
+            # open some windows as small, floating popups
+            matches = [
+              {
+                app-id = "^nemo$";
+                title = "Properties$";
+              }
+            ];
+            open-floating = true;
+            default-column-width.fixed = 600;
+            default-window-height.fixed = 500;
           }
           {
             # default matcher that styles all windows
@@ -552,7 +574,10 @@ in
           "Mod+E" = {
             hotkey-overlay.title = "Open File Browser";
             repeat = false;
-            action = niriActions.spawn [ "xdg-open" "~" ];
+            action = niriActions.spawn [
+              "xdg-open"
+              "~"
+            ];
           };
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
@@ -694,7 +719,12 @@ in
           "Mod+C".action = niriActions.center-visible-columns;
           "Mod+Shift+Space".action = niriActions.toggle-window-floating;
           "Print".action.screenshot = { };
-          "Ctrl+Alt+Delete".action = niriActions.spawn [ "noctalia" "msg" "panel-toggle" "session" ];
+          "Ctrl+Alt+Delete".action = niriActions.spawn [
+            "noctalia"
+            "msg"
+            "panel-toggle"
+            "session"
+          ];
         };
       }
       // cfg.configOverride;
