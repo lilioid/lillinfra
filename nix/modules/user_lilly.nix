@@ -1,5 +1,4 @@
 {
-  modulesPath,
   config,
   lib,
   pkgs,
@@ -32,7 +31,8 @@ in
       ]
       ++ (if config.virtualisation.podman.dockerSocket.enable then [ "podman" ] else [ ])
       ++ (if config.virtualisation.docker.enable then [ "docker" ] else [ ])
-      ++ (if config.programs.wireshark.enable then [ "wireshark" ] else [ ]);
+      ++ (if config.programs.wireshark.enable then [ "wireshark" ] else [ ])
+      ++ (if config.virtualisation.libvirtd.enable then [ "libvirtd" ] else [ ]);
       home = "/home/lilly";
       shell = lib.mkForce pkgs.fish;
       openssh.authorizedKeys.keys = [
