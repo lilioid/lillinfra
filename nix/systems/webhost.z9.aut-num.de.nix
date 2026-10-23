@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   custom.preset = "aut-sys-vm";
 
   # mount shared filesystem for large file uploads
@@ -36,18 +42,24 @@
     users.lilly = {
       shell = pkgs.fish;
       sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzGnNKyn6jmVxig4SRnTBfpi6okPU2aOHPwFnAPTxJm ftsell@ftsell.de";
+      additionalLocations = {
+        "/5zE3sCjEFpFfWpr3oA7ZLmuWDdFniLdY/" = {
+          alias = "/srv/large-file-share/hexane-tar/";
+          extraConfig = ''
+            autoindex on;
+          '';
+        };
+      };
     };
   };
 
   custom.backup = {
     enable = true;
-    backupDirectories = lib.map
-      (i: "/home/${i}")
-      (lib.attrNames config.custom.webhosting.users);
+    backupDirectories = lib.map (i: "/home/${i}") (lib.attrNames config.custom.webhosting.users);
     destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
   };
 
-  sops.secrets."aut-sys-ceph/large-file-share/secret" = {};
+  sops.secrets."aut-sys-ceph/large-file-share/secret" = { };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
