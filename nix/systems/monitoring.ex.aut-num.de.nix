@@ -76,14 +76,14 @@
   # disable privacy extensions (because servers get cofused with multiple addresses sometimes)
   # also enable managed configuration through my router
   networking.useDHCP = false;
-  networking.nameservers = [ "2620:fe::fe" ];
+  networking.nameservers = [ "2620:fe::fe" "9.9.9.9" ];
   systemd.network = {
     enable = true;
     config.networkConfig."IPv6PrivacyExtensions" = false;
     networks."eth0" = {
       matchConfig.Type = "ether";
       matchConfig.Kind = "!bond bridge gre tun veth";
-      address = [ "212.12.50.243" ];
+      address = [ "212.12.50.243/27" ];
       gateway = [ "212.12.50.225" ];
       networkConfig.DHCP = "no";
       networkConfig.IPv6AcceptRA = "no";

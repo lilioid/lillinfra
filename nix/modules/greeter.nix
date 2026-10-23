@@ -11,7 +11,7 @@ in
   };
 
   # implemenation
-  config = lib.kmIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.greetd = {
       enable = true;
       useTextGreeter = true;

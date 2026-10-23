@@ -38,7 +38,8 @@ _acme-challenge.mx1.z9     CNAME    lilly-k8s.gruenkohl.org.
 _acme-challenge.mx2.z9     CNAME    lilly-k8s.gruenkohl.org.
 
 ; external hosts
-monitoring.ex        AAAA    2a01:4f8:251:226:ef::
+;monitoring.ex        AAAA    2a01:4f8:251:226:ef:: # TODO: tell scientress I don't need this anymore
+monitoring.ex        A       212.12.50.243
 
 ; mail settings for this domain
 @                  MX    10 mx1.z9.aut-sys.de.
