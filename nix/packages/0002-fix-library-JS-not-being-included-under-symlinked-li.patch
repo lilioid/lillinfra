@@ -1,0 +1,24 @@
+From 5ba1928652a023df4abce78342b5d494ac83f757 Mon Sep 17 00:00:00 2001
+From: lilly <li@lly.sh>
+Date: Mon, 26 Oct 2026 09:59:08 +0100
+Subject: [PATCH 2/2] fix library JS not being included under symlinked libs
+
+---
+ library/Icinga/Web/JavaScript.php | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/library/Icinga/Web/JavaScript.php b/library/Icinga/Web/JavaScript.php
+index 23fad5710..c3fe41e3b 100644
+--- a/library/Icinga/Web/JavaScript.php
++++ b/library/Icinga/Web/JavaScript.php
+@@ -217,6 +217,7 @@ class JavaScript
+             return $js;
+         }
+ 
++        $filePath = realpath($filePath);
+         $basePath = realpath($basePath);
+ 
+         foreach ($matches as $match) {
+-- 
+2.54.0
+

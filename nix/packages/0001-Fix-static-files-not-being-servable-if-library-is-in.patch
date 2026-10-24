@@ -1,0 +1,26 @@
+From fe09c6f7cf9e2833c93fb16bee616e9bf6081b5d Mon Sep 17 00:00:00 2001
+From: lilly <li@lly.sh>
+Date: Sun, 25 Oct 2026 21:33:28 +0100
+Subject: [PATCH 1/2] Fix static files not being servable if library is in a
+ symlink
+
+ref #5593
+---
+ library/Icinga/Web/Controller/StaticController.php | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/library/Icinga/Web/Controller/StaticController.php b/library/Icinga/Web/Controller/StaticController.php
+index a6eb4977b..aafeaaf5e 100644
+--- a/library/Icinga/Web/Controller/StaticController.php
++++ b/library/Icinga/Web/Controller/StaticController.php
+@@ -70,6 +70,7 @@ class StaticController
+             return;
+         }
+ 
++        $assetRoot = realpath($assetRoot);
+         $filePath = $assetRoot . DIRECTORY_SEPARATOR . $assetPath;
+         $dirPath = realpath(dirname($filePath)); // dirname, because the file may be a link
+ 
+-- 
+2.54.0
+

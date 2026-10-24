@@ -76,7 +76,10 @@
   # disable privacy extensions (because servers get cofused with multiple addresses sometimes)
   # also enable managed configuration through my router
   networking.useDHCP = false;
-  networking.nameservers = [ "2620:fe::fe" "9.9.9.9" ];
+  networking.nameservers = [
+    "2620:fe::fe"
+    "9.9.9.9"
+  ];
   systemd.network = {
     enable = true;
     config.networkConfig."IPv6PrivacyExtensions" = false;
@@ -103,6 +106,233 @@
       PasswordAuthentication = false;
       AllowGroups = lib.mkDefault [ "users" ];
     };
+  };
+
+  # icinga2
+  services.icinga2 = {
+    enable = true;
+    settings.ZoneName = "external-monitoring";
+    settings.stanzas = {
+      "object IcingaApplication \"app\"" = {};
+      "object JournaldLogger \"journald\"" = {};
+      "object JournaldLogger \"journald\"" = {};
+      "object CheckerComponent \"checker\"" = {};
+      "object ApiListener \"api\"" = {
+        accept_config = true;
+        accept_commands = true;
+      };
+      "object ApiUser \"icingaweb2\"" = {
+        password = "foobar123";
+        permissions = [ "*" ];
+      };
+      "object IcingaDB \"icingadb\"" = {
+        path = "/run/redis-icingadb/redis.sock";
+      };
+      "object Zone \"global-templates\"" = {
+        global = true;
+      };
+      "object Zone \"external-monitoring\"" = {
+        endpoints = [ config.networking.fqdnOrHostName ];
+      };
+      "object Endpoint \"${config.networking.fqdnOrHostName}\"" = { };
+    };
+    settings.zonedStanzas = {
+      "global-templates" = {
+        "apply Service \"icinga\" to Host" = {
+          "check_command" = "icinga";
+          "assign where" = "host.vars.has_icinga";
+        };
+        "apply Service \"load\" to Host" = {
+          "check_command"= "load";
+          "assign where" = "host.vars.has_icinga";
+        };
+        "apply Service \"disk\" to Host" = {
+          "check_command" = "disk";
+          "assign where" = "host.vars.has_icinga";
+        };
+      };
+      "external-monitoring" = {
+        "object Host \"monitoring.ex.aut-num.de\"" = {
+          display_name = "Monitoring";
+          address = config.networking.fqdnOrHostName;
+          check_command = "hostalive";
+          vars.has_icinga = true;
+        };
+        "object Host \"rt.z9.aut-num.de\"" = {
+          display_name = "Z9 Router";
+          address = "185.161.129.148";
+          address6 = "2a07:c481::2:1";
+          check_command = "ping";
+        };
+        "object Service \"icinga-cluster\"" = {
+          host_name = config.networking.fqdnOrHostName;
+          check_command = "cluster";
+        };
+        "object Service \"icingadb\"" = {
+          host_name = config.networking.fqdnOrHostName;
+          check_command = "icingadb";
+        };
+        "apply Service \"icinga-zone-\" for (zone in get_objects(Zone).map(zone => zone.name)) to Host" = ''
+          check_command = "cluster-zone"
+          vars.cluster_zone = zone
+          assign where host.vars.has_icinga && host.zone == zone
+        '';
+      };
+    };
+  };
+
+  services.icingadb = {
+    enable = true;
+    settings = {
+      database = {
+        type = "pgsql";
+        host = "/run/postgresql/";
+        database = "icingadb";
+        user = "icingadb";
+      };
+      redis = {
+        host = "/run/redis-icingadb/redis.sock";
+      };
+      retention = {
+        history-days = 30;
+        sla-days = 365;
+      };
+    };
+  };
+
+  services.icingaweb2 = {
+    enable = true;
+    timezone = "Europe/Berlin";
+    generalConfig = {
+      global = {
+        show_stacktraces = "1";
+        show_application_state_messages = "1";
+        config_resource = "icingaweb_db";
+      };
+      # security = {
+      #   use_strict_csp = "1";
+      # };
+      logging = {
+        log = "syslog";
+        level = "INFO";
+        application = "icingaweb2";
+        facility = "user";
+      };
+    };
+    resources = {
+      icingaweb_db = {
+        type = "db";
+        db = "pgsql";
+        host = "/run/postgresql/";
+        dbname = "icingaweb2";
+        username = "icingaweb2";
+      };
+      icingadb = {
+        type = "db";
+        db = "pgsql";
+        host = "/run/postgresql/";
+        dbname = "icingadb";
+        username = "icingaweb2";
+      };
+    };
+    authentications = {
+      icingaweb2 = {
+        backend = "db";
+        resource = "icingaweb_db";
+      };
+    };
+    groupBackends = {
+      icingaweb2 = {
+        backend = "db";
+        resource = "icingaweb_db";
+      };
+    };
+    roles = {
+      "Administrators" = {
+        users = "lilly";
+        permissions = "*";
+        groups = "Administrators";
+      };
+    };
+    modulePackages = {
+      icingadb = pkgs.icingaweb2Modules.icingadb-web;
+    };
+    libraryPaths = lib.mkForce {
+      icinga-php-library = pkgs.icingaweb2-ipl;
+      thirdparty = pkgs.icingaweb2-thirdparty;
+    };
+    modules.setup.enable = true;
+    modules.doc.enable = true;
+    modules.monitoring = {
+      enable = false;
+      generalConfig.protectedVars = [
+        "*pw*"
+        "*pass*"
+        "community"
+      ];
+      backends.icinga = {
+        resource = "icingadb";
+      };
+      transports.icinga2 = {
+        transport = "api";
+        host = "localhost";
+        port = "5665";
+        username = "root";
+        password = "foobar123";
+      };
+    };
+  };
+  environment.etc = {
+    "icingaweb2/modules/icingadb/config.ini".text = pkgs.lib.generators.toINI { } {
+      "icingadb" = {
+        resource = "icingadb";
+      };
+    };
+    "icingaweb2/modules/icingadb/commandtransports.ini".text = pkgs.lib.generators.toINI { } {
+      "icinga2-api" = {
+        transport = "api";
+        host = "localhost";
+        port = "5665";
+        username = "icingaweb2";
+        password = "foobar123";
+      };
+    };
+    "icingaweb2/modules/icingadb/redis.ini".text = pkgs.lib.generators.toINI { } {
+      icingadb.resource = "icingadb";
+      redis1 = {
+        # change once unix domain socket issue is fixed
+        # https://github.com/Icinga/icingadb-web/issues/1443
+        host = "localhost";
+        port = "6380";
+      };
+    };
+  };
+
+  # supporting services
+  services.nginx.virtualHosts.icingaweb2 = {
+    default = true;
+  };
+  services.redis.servers."icingadb" = {
+    enable = true;
+    databases = 1;
+    port = 6380;
+  };
+  services.postgresql = {
+    enable = true;
+    ensureUsers = [
+      {
+        name = "icingadb";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "icingaweb2";
+        ensureDBOwnership = true;
+      }
+    ];
+    ensureDatabases = [
+      "icingadb"
+      "icingaweb2"
+    ];
   };
 
   # DO NOT CHANGE
