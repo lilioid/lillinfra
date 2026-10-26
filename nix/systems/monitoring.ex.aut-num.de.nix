@@ -18,6 +18,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+  users.mutableUsers = false;
 
   # configure systemd-boot bootloader
   boot.loader.systemd-boot = {
@@ -120,10 +121,6 @@
       "object ApiListener \"api\"" = {
         accept_config = true;
         accept_commands = true;
-      };
-      "object ApiUser \"icingaweb2\"" = {
-        password = "foobar123";
-        permissions = [ "*" ];
       };
       "object IcingaDB \"icingadb\"" = {
         path = "/run/redis-icingadb/redis.sock";
@@ -238,8 +235,8 @@
         };
         "object Host \"jumphost.z9.aut-num.de\"" = {
           display_name = "Z9 Jumphost";
-          address = "185.161.130.11";
-          address6 = "2a07:c481:2:6::1";
+          address = "185.161.130.3";
+          address6 = "2a07:c481:2:5:be24:11ff:fed8:cbc1";
           check_command = "ping";
           vars.has_public_ssh = true;
         };
@@ -263,6 +260,9 @@
             "https://li.lly.sh/"
             "https://pics.aut-sys.de/"
             "https://budget.aut-sys.de/"
+            "https://argo.aut-sys.de/"
+            "https://auth.aut-sys.de/"
+            "https://prism.aut-sys.de/"
           ];
         };
         "object Host \"mx1.z9.aut-num.de\"" = {
@@ -280,6 +280,16 @@
           vars.tcp_port = "993";
           vars.has_smtp = true;
           vars.has_imap = true;
+        };
+        "object Host \"home.lly.sh\"" = {
+          address = "home.lly.sh";
+          check_command = "hostalive";
+          vars.http_vhosts = [
+            "https://sync.home.lly.sh/"
+            "https://ha.home.lly.sh/"
+            "https://docs.home.lly.sh/"
+            "https://unifi.home.lly.sh/"
+          ];
         };
         "object Host \"bleichen.hanse.de\"" = {
           address = "212.12.50.254";
@@ -316,6 +326,9 @@
         '';
       };
     };
+    extraConfigFiles = [
+      config.sops.templates."icinga/apiuser.conf".path
+    ];
   };
 
   services.icingadb = {
@@ -400,24 +413,6 @@
     };
     modules.setup.enable = true;
     modules.doc.enable = true;
-    modules.monitoring = {
-      enable = false;
-      generalConfig.protectedVars = [
-        "*pw*"
-        "*pass*"
-        "community"
-      ];
-      backends.icinga = {
-        resource = "icingadb";
-      };
-      transports.icinga2 = {
-        transport = "api";
-        host = "localhost";
-        port = "5665";
-        username = "root";
-        password = "foobar123";
-      };
-    };
   };
   environment.etc = {
     "icingaweb2/modules/icingadb/config.ini".text = pkgs.lib.generators.toINI { } {
@@ -425,15 +420,8 @@
         resource = "icingadb";
       };
     };
-    "icingaweb2/modules/icingadb/commandtransports.ini".text = pkgs.lib.generators.toINI { } {
-      "icinga2-api" = {
-        transport = "api";
-        host = "localhost";
-        port = "5665";
-        username = "icingaweb2";
-        password = "foobar123";
-      };
-    };
+    "icingaweb2/modules/icingadb/commandtransports.ini".source =
+      config.sops.templates."icinga/icingaweb-commandtransports.ini".path;
     "icingaweb2/modules/icingadb/redis.ini".text = pkgs.lib.generators.toINI { } {
       icingadb.resource = "icingadb";
       redis1 = {
@@ -446,8 +434,16 @@
   };
 
   # supporting services
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+  security.acme.acceptTerms = true;
   services.nginx.virtualHosts.icingaweb2 = {
+    serverName = "monitoring.aut-sys.de";
     default = true;
+    enableACME = true;
+    forceSSL = true;
   };
   services.redis.servers."icingadb" = {
     enable = true;
@@ -470,6 +466,34 @@
       "icingadb"
       "icingaweb2"
     ];
+  };
+
+  # required secrets
+  sops = {
+    secrets."icinga/apiuser_password" = { };
+    templates."icinga/apiuser.conf" = {
+      owner = "icinga2";
+      group = "icinga2";
+      content = ''
+        object ApiUser "icingaweb2" {
+          password = "${config.sops.placeholder."icinga/apiuser_password"}";
+          permissions = [ "*" ];
+        };
+      '';
+      reloadUnits = [ "icinga2.service" ];
+    };
+    templates."icinga/icingaweb-commandtransports.ini" = {
+      owner = "icingaweb2";
+      group = "icingaweb2";
+      content = ''
+        [icinga2-api]
+        host=localhost
+        password=${config.sops.placeholder."icinga/apiuser_password"}
+        port=5665
+        transport=api
+        username=icingaweb2
+      '';
+    };
   };
 
   # DO NOT CHANGE

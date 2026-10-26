@@ -106,6 +106,11 @@ in
           type = lib.types.attrsOf icingaStanzaOptionType;
         };
       };
+      extraConfigFiles = mkOption {
+        description = "Additional config files that will be included by the main icinga config";
+        default = [];
+        type = lib.types.listOf lib.types.externalPath;
+      };
     };
   };
 
@@ -163,6 +168,11 @@ in
          * are required on a master node when a client is used as command endpoint.
          */
         include <nscp>
+
+        /**
+         * Additional user-specified configuration files
+         */
+        ${lib.concatStringsSep "\n" (lib.map (i: "include \"${i}\"") cfg.extraConfigFiles)}
       '';
       "icinga2/constants.conf".text = ''
         const NodeName = "${cfg.settings.NodeName}"
