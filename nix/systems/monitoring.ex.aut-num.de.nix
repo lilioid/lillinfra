@@ -113,10 +113,10 @@
     enable = true;
     settings.ZoneName = "external-monitoring";
     settings.stanzas = {
-      "object IcingaApplication \"app\"" = {};
-      "object JournaldLogger \"journald\"" = {};
-      "object JournaldLogger \"journald\"" = {};
-      "object CheckerComponent \"checker\"" = {};
+      "object IcingaApplication \"app\"" = { };
+      "object JournaldLogger \"journald\"" = { };
+      "object JournaldLogger \"journald\"" = { };
+      "object CheckerComponent \"checker\"" = { };
       "object ApiListener \"api\"" = {
         accept_config = true;
         accept_commands = true;
@@ -138,18 +138,90 @@
     };
     settings.zonedStanzas = {
       "global-templates" = {
+        "object ServiceGroup \"Web\"" = ''
+          assign where service.check_command == "http"
+        '';
+        "object ServiceGroup \"System\"" = ''
+          assign where service.check_command == "load"
+          assign where service.check_command == "uptime"
+          assign where service.check_command == "disk"
+        '';
+        "object ServiceGroup \"Mail\"" = ''
+          assign where service.check_command == "imap"
+          assign where service.check_command == "smtp"
+        '';
         "apply Service \"icinga\" to Host" = {
           "check_command" = "icinga";
           "assign where" = "host.vars.has_icinga";
         };
         "apply Service \"load\" to Host" = {
-          "check_command"= "load";
+          "check_command" = "load";
           "assign where" = "host.vars.has_icinga";
         };
         "apply Service \"disk\" to Host" = {
           "check_command" = "disk";
           "assign where" = "host.vars.has_icinga";
         };
+        "apply Service \"ssh\" to Host" = {
+          "check_command" = "ssh";
+          "assign where" = "host.vars.has_public_ssh";
+        };
+        "apply Service \"http-\" for (i_vhost in host.vars.http_vhosts) to Host" = ''
+          display_name = i_vhost
+          check_command = "http"
+          vars = {
+            http_vhost = i_vhost.replace("https://", "").replace("http://", "").split("/")[0]
+            http_onredirect = "follow"
+            http_ignore_body = true
+            http_ssl = i_vhost.contains("https://")
+            http_sni = i_vhost.contains("https://")
+            http_ssl_force_tlsv1_or_higher = i_vhost.contains("https://")
+          }
+        '';
+        "apply Service \"tls-\" for (i_vhost in host.vars.http_vhosts) to Host" = ''
+          display_name = "TLS " + i_vhost
+          check_command = "http"
+          vars = {
+            http_vhost = i_vhost.replace("https://", "").replace("http://", "").split("/")[0]
+            http_ssl = true
+            http_sni = true
+            http_certificate = "2,1"
+            http_ssl_force_tlsv1_or_higher = true
+          }
+          assign where i_vhost.contains("https://")
+        '';
+        "apply Service \"imaps-\" to Host" = ''
+          display_name = "imaps://" + host.name
+          check_command = "imap"
+          vars = {
+            imap_port = 993
+            imap_certificate_age = 5
+            imap_ssl = true
+          };
+          assign where host.vars.has_imap
+        '';
+        "apply Service \"smtp-\" to Host" = ''
+          display_name = "smtp://" + host.name
+          check_command = "smtp"
+          vars = {
+            smtp_port = 25
+            smtp_helo_fqdn = "${config.networking.fqdnOrHostName}"
+            smtp_starttls = true
+            smtp_certificate_age = 5
+          }
+          assign where host.vars.has_smtp
+        '';
+        "apply Service \"submission-\" to Host" = ''
+          display_name = "submission://" + host.name
+          check_command = "smtp"
+          vars = {
+            smtp_port = 587
+            smtp_helo_fqdn = "${config.networking.fqdnOrHostName}"
+            smtp_starttls = true
+            smtp_certificate_age = 5
+          }
+          assign where host.vars.has_smtp
+        '';
       };
       "external-monitoring" = {
         "object Host \"monitoring.ex.aut-num.de\"" = {
@@ -164,6 +236,71 @@
           address6 = "2a07:c481::2:1";
           check_command = "ping";
         };
+        "object Host \"jumphost.z9.aut-num.de\"" = {
+          display_name = "Z9 Jumphost";
+          address = "185.161.130.11";
+          address6 = "2a07:c481:2:6::1";
+          check_command = "ping";
+          vars.has_public_ssh = true;
+        };
+        "object Host \"webhost.z9.aut-num.de\"" = {
+          display_name = "Z9 Webhost";
+          address = "185.161.130.7";
+          address6 = "2a07:c481:2:5:be24:11ff:fed0:b3ca";
+          check_command = "ping";
+          vars.http_vhosts = [
+            "https://lilly.hosted-on.aut-sys.de/"
+            "https://skye.hosted-on.aut-sys.de/"
+          ];
+        };
+        "object Host \"www2.z9.aut-num.de\"" = {
+          display_name = "Kubernetes www2";
+          address = "185.161.130.11";
+          address6 = "2a07:c481:2:6::1";
+          check_command = "tcp";
+          vars.tcp_port = "443";
+          vars.http_vhosts = [
+            "https://li.lly.sh/"
+            "https://pics.aut-sys.de/"
+            "https://budget.aut-sys.de/"
+          ];
+        };
+        "object Host \"mx1.z9.aut-num.de\"" = {
+          address = "185.161.130.10";
+          address6 = "2a07:c481:2:6::";
+          check_command = "tcp";
+          vars.tcp_port = "993";
+          vars.has_smtp = true;
+          vars.has_imap = true;
+        };
+        "object Host \"mx2.z9.aut-num.de\"" = {
+          address = "185.161.130.12";
+          address6 = "2a07:c481:2:6::2";
+          check_command = "tcp";
+          vars.tcp_port = "993";
+          vars.has_smtp = true;
+          vars.has_imap = true;
+        };
+        "object Host \"bleichen.hanse.de\"" = {
+          address = "212.12.50.254";
+          address6 = "2a00:14b0:f001:100::fe";
+          check_command = "tcp";
+          vars.tcp_port = 443;
+        };
+        "object Service \"matrix-server-delegation\"" = ''
+          host_name = "bleichen.hanse.de"
+          check_command = "http"
+          vars = {
+            http_vhost = "hanse.de"
+            http_uri = "/.well-known/matrix/server"
+            http_onredirect = "follow"
+            //http_expect_body_regex = "{\"m.server\": \"matrix.hanse.de:443\"}"
+            http_ssl = true
+            http_sni = true
+            http_certificate = "2,1"
+            http_ssl_force_tlsv1_or_higher = true
+          };
+        '';
         "object Service \"icinga-cluster\"" = {
           host_name = config.networking.fqdnOrHostName;
           check_command = "cluster";
