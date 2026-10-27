@@ -306,6 +306,14 @@
           check_command = "tcp";
           vars.tcp_port = 443;
         };
+        "object Host \"syncthing.z9.aut-num.de\"" = {
+          address = "185.161.130.8";
+          address6 = "2a07:c481:2:5:be24:11ff:fe38:a167";
+          check_command = "hostalive";
+          vars.http_vhosts = [
+            "https://sync.aut-sys.de/"
+          ];
+        };
         "object Service \"matrix-server-delegation\"" = ''
           host_name = "bleichen.hanse.de"
           check_command = "http"
