@@ -200,6 +200,11 @@ in
     systemd.services."icinga2" = {
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
+      reloadTriggers = lib.map
+        ({name, value}: "/etc/icinga2/${value.target}")
+        (lib.filter
+          ({name, value}: lib.strings.hasPrefix "icinga2/" value.target)
+          (lib.attrsToList config.environment.etc));
       serviceConfig = {
         "User" = "icinga2";
         "Group" = "icinga2";
