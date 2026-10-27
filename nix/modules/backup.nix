@@ -1,7 +1,8 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 let
   cfg = config.custom.backup;
@@ -48,34 +49,42 @@ in
       notify = mkOption {
         default = "on-failure";
         description = "In which cases a notification should be sent via ntfy";
-        type = types.enum [ "always" "on-failure" "never" ];
+        type = types.enum [
+          "always"
+          "on-failure"
+          "never"
+        ];
       };
       destinations = mkOption {
         description = "Definition of destination to which backups should be sent";
         default = [ ];
-        type = lib.types.attrsOf (types.submodule ({ config, ... }: {
-          options = {
-            enable = mkOption {
-              description = "Whether to enable this backup destination";
-              default = true;
-              type = types.bool;
-            };
-            path = mkOption {
-              description = ''
-                Destination to backup to.
+        type = lib.types.attrsOf (
+          types.submodule (
+            { config, ... }: {
+              options = {
+                enable = mkOption {
+                  description = "Whether to enable this backup destination";
+                  default = true;
+                  type = types.bool;
+                };
+                path = mkOption {
+                  description = ''
+                    Destination to backup to.
 
-                See the [Borgmatic Repository Documentation](https://torsion.org/borgmatic/reference/configuration/repositories/) for the syntax and valid values of the `path` attribute.
-              '';
-              type = types.str;
-            };
-            label = mkOption {
-              description = "Label to assign to this backup destination in borgmatic";
-              default = config._module.args.name;
-              defaultText = "<name>";
-              type = types.str;
-            };
-          };
-        }));
+                    See the [Borgmatic Repository Documentation](https://torsion.org/borgmatic/reference/configuration/repositories/) for the syntax and valid values of the `path` attribute.
+                  '';
+                  type = types.str;
+                };
+                label = mkOption {
+                  description = "Label to assign to this backup destination in borgmatic";
+                  default = config._module.args.name;
+                  defaultText = "<name>";
+                  type = types.str;
+                };
+              };
+            }
+          )
+        );
       };
     };
   };
@@ -86,12 +95,12 @@ in
       enable = true;
       settings = {
 
-        repositories = (lib.map
-          (iDestination: {
+        repositories = (
+          lib.map (iDestination: {
             path = iDestination.path;
             label = iDestination.label;
-          })
-          (lib.attrValues (filterEnabled cfg.destinations)));
+          }) (lib.attrValues (filterEnabled cfg.destinations))
+        );
 
         source_directories = cfg.backupDirectories;
         one_file_system = true;
@@ -153,51 +162,70 @@ in
         keep_daily = 7;
         keep_weekly = 8;
 
-        encryption_passphrase = "{credential file ${config.sops.secrets."${cfg.secretNamespace}/repoPass".path}}";
-        ssh_command = "ssh -i ${config.sops.secrets."${cfg.secretNamespace}/sshKey".path} -o StrictHostKeyChecking=no";
+        encryption_passphrase = "{credential file ${
+          config.sops.secrets."${cfg.secretNamespace}/repoPass".path
+        }}";
+        ssh_command = "ssh -i ${
+          config.sops.secrets."${cfg.secretNamespace}/sshKey".path
+        } -o StrictHostKeyChecking=no";
         verbosity = 1;
         remote_path = "borg14"; # requried for rsync.net
         extra_borg_options = {
           create = "--list --filter=AME";
         };
 
-        # configure notifications via gotify
-        commands = [
-          {
-            after = "error";
-            run = [
-              "${lib.getExe pkgs.curl} -sSL -H @${config.sops.templates."${cfg.secretNamespace}/gotifyHeaders".path} https://gotify.hanse.de/message -X POST -F \"title=Backup Failed\" -F \"message=${config.networking.fqdnOrHostName} failed to backup its data: {error}\" -F \"priority=8\""
-            ];
-          }
-        ];
+        # configure notifications via ntfy
+        ntfy = {
+          server = "https://ntfy.hanse.de";
+          topic = "lilly-backups";
+          access_token = "{credential file ${config.sops.secrets."${cfg.secretNamespace}/ntfyToken".path}}";
+          states = [ "start" "finish" "fail" ];
+          start = {
+            title = "Backup started";
+            message = "Backup for ${config.networking.fqdnOrHostName} just started";
+            priority = "min";
+          };
+          finish = {
+            title = "Backup finished successfully";
+            message = "Backup for ${config.networking.fqdnOrHostName} has finished successfully without errors";
+            priority = "min";
+          };
+          fail = {
+            title = "Backup failed!";
+            message = "Backup of ${config.networking.fqdnOrHostName} has just failed. Data was not backed up successfully";
+            priority = "max";
+            tags = "-1,skull";
+          };
+        };
 
         # enable postgres backup if required
         postgresql_databases = lib.mkIf cfg.backupPostgres (
           let
             pgConfig = config.services.postgresql;
-          in [
-          {
-            name = "all";
-            format = "directory";
-            psql_command = lib.getExe' pgConfig.package "psql";
-            pg_dump_command = lib.getExe' pgConfig.package "pg_dump";
-            pg_restore_command = lib.getExe' pgConfig.package "pg_restore";
-          }
-        ]);
-      } // cfg.settings;
+          in
+          [
+            {
+              name = "all";
+              format = "directory";
+              psql_command = lib.getExe' pgConfig.package "psql";
+              pg_dump_command = lib.getExe' pgConfig.package "pg_dump";
+              pg_restore_command = lib.getExe' pgConfig.package "pg_restore";
+            }
+          ]
+        );
+      }
+      // cfg.settings;
     };
 
     # configure sops secrets with backup credentials
     sops.secrets = {
       "${cfg.secretNamespace}/sshKey" = { };
-      "${cfg.secretNamespace}/repoPass" = { };
-      "${cfg.secretNamespace}/gotifyToken" = { };
-    };
-    sops.templates = {
-      "${cfg.secretNamespace}/gotifyHeaders".content = ''
-        Authorization: Bearer ${config.sops.placeholder."${cfg.secretNamespace}/gotifyToken"}
-      '';
+      "${cfg.secretNamespace}/repoPass" = {
+        sopsFile = ../../nix/data/shared-secrets/backup.sops.yml;
+      };
+      "${cfg.secretNamespace}/ntfyToken" = {
+        sopsFile = ../../nix/data/shared-secrets/backup.sops.yml;
+      };
     };
   };
 }
-

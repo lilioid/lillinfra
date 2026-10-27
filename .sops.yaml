@@ -128,7 +128,12 @@ creation_rules:
   - path_regex: "nix/data/shared-secrets/keepass-secret-sec\\+\\+\\.bin"
     key_groups:
       - age: [ *lilly, *lillysLaptop, *lillysWorkstation ]
+
   - path_regex: "nix/data/shared-secrets/age-key\\.txt"
+    key_groups:
+      - age: [ *lilly, *lillysLaptop, *lillysWorkstation ]
+
+  - path-regex: "nix/data/shared-secrets/backup.sops\\.yml"
     key_groups:
       - age: [ *lilly, *lillysLaptop, *lillysWorkstation ]
 
