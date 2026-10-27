@@ -95,6 +95,11 @@ in
           default = config.networking.fqdnOrHostName;
           defaultText = "config.networking.fqdnOrHostName";
         };
+        extraConstants = mkOption {
+          description = "Additional configuration constants made available to the icinga configuration language";
+          default = { };
+          type = lib.types.attrsOf lib.types.str;
+        };
         stanzas = mkOption {
           description = "icinga2 stanzas (https://icinga.com/docs/icinga-2/latest/doc/09-object-types/)";
           default = { };
@@ -108,8 +113,8 @@ in
       };
       extraConfigFiles = mkOption {
         description = "Additional config files that will be included by the main icinga config";
-        default = [];
-        type = lib.types.listOf lib.types.externalPath;
+        default = [ ];
+        type = lib.types.listOf lib.types.str;
       };
     };
   };
@@ -177,7 +182,10 @@ in
       "icinga2/constants.conf".text = ''
         const NodeName = "${cfg.settings.NodeName}"
         const ZoneName = "${cfg.settings.ZoneName}"
-        const PluginDir = "${cfg.monitoringPlugins}/bin"; 
+        const PluginDir = "${cfg.monitoringPlugins}/bin";
+        ${lib.concatMapAttrsStringSep "\n" (
+          name: value: "const ${name} = \"${value}\""
+        ) cfg.settings.extraConstants}
       '';
       "icinga2/nixos.conf".text = mkIcingaObjectsConf cfg.settings.stanzas;
     }

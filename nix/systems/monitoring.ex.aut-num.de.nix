@@ -113,11 +113,15 @@
   services.icinga2 = {
     enable = true;
     settings.ZoneName = "external-monitoring";
+    settings.extraConstants = {
+      "CustomPluginDir" = "${pkgs.custom-icinga-plugins}/bin";
+    };
     settings.stanzas = {
       "object IcingaApplication \"app\"" = { };
       "object JournaldLogger \"journald\"" = { };
       "object JournaldLogger \"journald\"" = { };
       "object CheckerComponent \"checker\"" = { };
+      "object NotificationComponent \"notification\"" = {};
       "object ApiListener \"api\"" = {
         accept_config = true;
         accept_commands = true;
@@ -324,10 +328,23 @@
           vars.cluster_zone = zone
           assign where host.vars.has_icinga && host.zone == zone
         '';
+        "apply Notification \"ntfy-service-state-\" for (user_name in get_objects(User).map(user => user.name)) to Service" = ''
+          host_name = service.host_name
+          service_name = service.name
+          command = "ntfy-service-notification"
+          users = [ user_name ]
+          
+          interval = 7d     // re-notification only once a week
+          //times.begin = 15m // only notify after 15 minutes of stable state
+          
+          assign where get_object(User, user_name).vars.ntfy_endpoint != null && get_object(User, user_name).vars.ntfy_auth != null
+          '';
       };
     };
     extraConfigFiles = [
+      "${pkgs.custom-icinga-plugins}/share/icinga-objects.conf"
       config.sops.templates."icinga/apiuser.conf".path
+      config.sops.secrets."icinga/secret_objects.conf".path
     ];
   };
 
@@ -471,6 +488,11 @@
   # required secrets
   sops = {
     secrets."icinga/apiuser_password" = { };
+    secrets."icinga/secret_objects.conf" = {
+      owner = "icinga2";
+      group = "icinga2";
+      reloadUnits = [ "icinga2.service" ];
+    };
     templates."icinga/apiuser.conf" = {
       owner = "icinga2";
       group = "icinga2";
