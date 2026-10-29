@@ -7,7 +7,7 @@ keys:
   - &vpn-srv "age1gvt4lwamnuxmqgp5anhn008ze8kzrq287rn4jpn7k75fvn5ufvfsm73cvx"
   - &mail-srv "age1rhkf95d3ffm9jfw8pskxtaq30lk02awg8ag8nr76wtytemzzuszskxa5ch"
   - &hosting-srv "age1cqx8gxslaum3uk3weqdd6ur473mlsfvc6kt5l3pl9sdxpyg84azq0g7fqh"
-  - &k8s-ctl-srv "age1ny4cv3stnnuvyf0qhhk7mha98rrhnwa4fpvdqt505qdsssn92flsayudjc"
+  - &k8s-ctl-srv "age14k696cxmqr34ll2ytaqjmtzr0qpjskppsh4a6gwxj99yspplx4ksyykjdx"
   - &k8s-worker1-srv "age1ujymnlvetgl0kq7cpm9xsk4wuugdr869fynhawfe2gk4ucu2mycsd2yjta"
   - &k8s-worker2-srv "age13523e34ct38lf099wu5lag5f75j58tkee6f0ragzc40qqrxuqafs06alhd"
   - &k8s-ctl-aut-num "age14k696cxmqr34ll2ytaqjmtzr0qpjskppsh4a6gwxj99yspplx4ksyykjdx"
@@ -135,7 +135,7 @@ creation_rules:
 
   - path-regex: "nix/data/shared-secrets/backup.sops\\.yml"
     key_groups:
-      - age: [ *lilly, *lillysLaptop, *lillysWorkstation ]
+      - age: [ *lilly, *lillysLaptop, *lillysWorkstation, *k8s-ctl-srv ]
 
   # generic secrets
   - path_regex: "nix/data/(.+-)?secrets/.+.yml"

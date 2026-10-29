@@ -179,7 +179,7 @@ in
           server = "https://ntfy.hanse.de";
           topic = "lilly-backups";
           access_token = "{credential file ${config.sops.secrets."${cfg.secretNamespace}/ntfyToken".path}}";
-          states = [ "start" "finish" "fail" ];
+          states = [ "fail" ];
           start = {
             title = "Backup started";
             message = "Backup for ${config.networking.fqdnOrHostName} just started";

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
   custom.preset = "aut-sys-vm";
 
   # mount shared kubernetes filesystem
@@ -18,7 +18,6 @@
       "rw"
       "noatime"
       "acl"
-      "crush_location=host:pve1"
       "read_from_replica=localize"
     ];
     neededForBoot = false;
@@ -58,6 +57,10 @@
       --node-label=topology.aut-sys.de/hypervisor=pve1
     '';
     environmentFile = config.sops.secrets."k3s/secret.env".path;
+  };
+  systemd.services."k3s" = {
+    wants = [ "srv-ceph\\x2dk8s.mount" ];
+    after = [ "srv-ceph\\x2dk8s.mount" ];
   };
 
   # configure backups

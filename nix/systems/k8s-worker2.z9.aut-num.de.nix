@@ -42,6 +42,10 @@
     '';
     tokenFile = config.sops.secrets."k3s/token".path;
   };
+  systemd.services."k3s" = {
+    requires = [ "srv-ceph\\x2dk8s.mount" ];
+    after = [ "srv-ceph\\x2dk8s.mount" ];
+  };
 
   sops.secrets."k3s/token" = {
     sopsFile = ../data/shared-secrets/aut-sys-k8s.yml;
