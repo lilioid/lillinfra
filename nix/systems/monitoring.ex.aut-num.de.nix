@@ -121,7 +121,7 @@
       "object JournaldLogger \"journald\"" = { };
       "object JournaldLogger \"journald\"" = { };
       "object CheckerComponent \"checker\"" = { };
-      "object NotificationComponent \"notification\"" = {};
+      "object NotificationComponent \"notification\"" = { };
       "object ApiListener \"api\"" = {
         accept_config = true;
         accept_commands = true;
@@ -328,16 +328,25 @@
           vars.cluster_zone = zone
           assign where host.vars.has_icinga && host.zone == zone
         '';
-        "apply Notification \"ntfy-service-state-\" for (user_name in get_objects(User).map(user => user.name)) to Service" = ''
-          host_name = service.host_name
-          service_name = service.name
-          command = "ntfy-service-notification"
-          users = [ user_name ]
-          
-          interval = 7d     // re-notification only once a week
-          //times.begin = 15m // only notify after 15 minutes of stable state
-          
-          assign where get_object(User, user_name).vars.ntfy_endpoint != null && get_object(User, user_name).vars.ntfy_auth != null
+        "apply Notification \"ntfy-service-state-\" for (user_name in get_objects(User).map(user => user.name)) to Service" =
+          ''
+            host_name = service.host_name
+            service_name = service.name
+            command = "ntfy-service-notification"
+            users = [ user_name ]
+
+            interval = 7d     // re-notification only once a week
+
+            assign where get_object(User, user_name).vars.ntfy_endpoint != null && get_object(User, user_name).vars.ntfy_auth != null
+          '';
+        "apply Notification \"ntfy-host-state-\" for (user_name in get_objects(User).map(user => user.name)) to Host" =
+          ''
+            command = "ntfy-host-notification"
+            users = [ user_name ]
+
+            interval = 7d     // re-notification only once a week
+
+            assign where get_object(User, user_name).vars.ntfy_endpoint != null && get_object(User, user_name).vars.ntfy_auth != null
           '';
       };
     };
