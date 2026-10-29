@@ -223,6 +223,11 @@
           }
           assign where host.vars.has_smtp
         '';
+        "apply Dependency \"z9-hosts-to-router\" to Host" = ''
+          parent_host_name = "rt.z9.aut-num.de"
+          child_host_name = host.name
+          assign where host.name.contains(".z9.") && host.name != "rt.z9.aut-num.de"
+        '';
       };
       "external-monitoring" = {
         "object Host \"monitoring.ex.aut-num.de\"" = {
