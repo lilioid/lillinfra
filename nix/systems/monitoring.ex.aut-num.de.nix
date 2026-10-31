@@ -186,7 +186,7 @@
             http_vhost = i_vhost.replace("https://", "").replace("http://", "").split("/")[0]
             http_ssl = true
             http_sni = true
-            http_certificate = "2,1"
+            http_certificate = "1,0"
             http_ssl_force_tlsv1_or_higher = true
           }
           assign where i_vhost.contains("https://")
@@ -272,6 +272,7 @@
             "https://argo.aut-sys.de/"
             "https://auth.aut-sys.de/"
             "https://prism.aut-sys.de/"
+            "https://babe-do-you-need-anything-from-the-nix.store/"
           ];
         };
         "object Host \"mx1.z9.aut-num.de\"" = {
