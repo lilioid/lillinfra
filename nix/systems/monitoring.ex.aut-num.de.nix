@@ -151,23 +151,31 @@
           assign where service.check_command == "imap"
           assign where service.check_command == "smtp"
         '';
+        "template Service \"base-service\"" = {
+          max_check_attempts = 5;
+        };
         "apply Service \"icinga\" to Host" = {
+          import = "base-service";
           "check_command" = "icinga";
           "assign where" = "host.vars.has_icinga";
         };
         "apply Service \"load\" to Host" = {
+          import = "base-service";
           "check_command" = "load";
           "assign where" = "host.vars.has_icinga";
         };
         "apply Service \"disk\" to Host" = {
+          import = "base-service";
           "check_command" = "disk";
           "assign where" = "host.vars.has_icinga";
         };
         "apply Service \"ssh\" to Host" = {
+          import = "base-service";
           "check_command" = "ssh";
           "assign where" = "host.vars.has_public_ssh";
         };
         "apply Service \"http-\" for (i_vhost in host.vars.http_vhosts) to Host" = ''
+          import "base-service"
           display_name = i_vhost
           check_command = "http"
           vars = {
@@ -180,6 +188,7 @@
           }
         '';
         "apply Service \"tls-\" for (i_vhost in host.vars.http_vhosts) to Host" = ''
+          import "base-service"
           display_name = "TLS " + i_vhost
           check_command = "http"
           vars = {
@@ -192,6 +201,7 @@
           assign where i_vhost.contains("https://")
         '';
         "apply Service \"imaps-\" to Host" = ''
+          import "base-service"
           display_name = "imaps://" + host.name
           check_command = "imap"
           vars = {
@@ -202,6 +212,7 @@
           assign where host.vars.has_imap
         '';
         "apply Service \"smtp-\" to Host" = ''
+          import "base-service"
           display_name = "smtp://" + host.name
           check_command = "smtp"
           vars = {
@@ -213,6 +224,7 @@
           assign where host.vars.has_smtp
         '';
         "apply Service \"submission-\" to Host" = ''
+          import "base-service"
           display_name = "submission://" + host.name
           check_command = "smtp"
           vars = {

@@ -34,6 +34,8 @@ let
     key: value:
     if key == "assign where" then
       "assign where ${value}"
+    else if key == "import" then
+      "import ${attrValue2icingaValue value}"
     else
       "${key} = ${attrValue2icingaValue value}";
 
