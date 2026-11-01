@@ -48,7 +48,6 @@ in
       ansible
       ansible-lint
       direnv
-      dig
       nodejs
       pnpm
       bun
@@ -81,12 +80,14 @@ in
       file
       opentofu
       minicom
+      doggo
     ];
 
     programs.fish.shellInit = ''
       fish_add_path $HOME/.krew/bin
 
       alias cdt "cd (mktemp -d)"
+      alias host "doggo"
 
       function cdp --description="Interactively change into a Project directory" --wraps="cd" -a root
         set root $root "$HOME/Projects"
