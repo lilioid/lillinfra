@@ -284,6 +284,7 @@
             "https://argo.aut-sys.de/"
             "https://auth.aut-sys.de/"
             "https://prism.aut-sys.de/"
+            "https://whoami.aut-sys.de/"
             "https://babe-do-you-need-anything-from-the-nix.store/"
           ];
         };
@@ -313,11 +314,10 @@
             "https://unifi.home.lly.sh/"
           ];
         };
-        "object Host \"bleichen.hanse.de\"" = {
-          address = "212.12.50.254";
-          address6 = "2a00:14b0:f001:100::fe";
-          check_command = "tcp";
-          vars.tcp_port = 443;
+        "object Host \"ever-given.hanse.de\"" = {
+          address = "212.12.50.232";
+          address6 = "2a00:14b0:f001:100::e8";
+          check_command = "hostalive";
         };
         "object Host \"syncthing.z9.aut-num.de\"" = {
           address = "185.161.130.8";
@@ -327,20 +327,33 @@
             "https://sync.aut-sys.de/"
           ];
         };
-        "object Service \"matrix-server-delegation\"" = ''
-          host_name = "bleichen.hanse.de"
-          check_command = "http"
+        "object Service \"matrix-server-delegation\"" = {
+          host_name = "ever-given.hanse.de";
+          check_command = "http";
           vars = {
-            http_vhost = "hanse.de"
-            http_uri = "/.well-known/matrix/server"
-            http_onredirect = "follow"
-            //http_expect_body_regex = "{\"m.server\": \"matrix.hanse.de:443\"}"
-            http_ssl = true
-            http_sni = true
-            http_certificate = "2,1"
-            http_ssl_force_tlsv1_or_higher = true
+            http_vhost = "hanse.de";
+            http_uri = "/.well-known/matrix/server";
+            http_string = ''{\"m.server\": \"matrix.hanse.de:443\"}'';
+            http_headerstring = "content-type: application/json";
+            http_ssl = true;
+            http_sni = true;
+            http_certificate = "2,1";
+            http_ssl_force_tlsv1_or_higher = true;
           };
-        '';
+        };
+        "object Service \"matrix-client-delegation\"" = {
+          host_name = "ever-given.hanse.de";
+          check_command = "http";
+          vars = {
+            http_vhost = "hanse.de";
+            http_uri = "/.well-known/matrix/client";
+            http_headerstring = "access-control-allow-origin: *";
+            http_ssl = true;
+            http_sni = true;
+            http_certificate = "2,1";
+            http_ssl_force_tlsv1_or_higher = true;
+          };
+        };
         "object Service \"icinga-cluster\"" = {
           host_name = config.networking.fqdnOrHostName;
           check_command = "cluster";
