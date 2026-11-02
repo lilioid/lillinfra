@@ -229,6 +229,7 @@ in
         "sd_mod"
         "sr_mod"
       ];
+      boot.kernelPackages = pkgs.linuxPackages_latest;
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];

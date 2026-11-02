@@ -135,7 +135,7 @@ creation_rules:
 
   - path-regex: "nix/data/shared-secrets/backup.sops\\.yml"
     key_groups:
-      - age: [ *lilly, *lillysLaptop, *lillysWorkstation, *k8s-ctl-srv ]
+      - age: [ *lilly, *lillysLaptop, *lillysWorkstation, *k8s-ctl-srv, *webhost-aut-num, *syncthing-aut-num ]
 
   # generic secrets
   - path_regex: "nix/data/(.+-)?secrets/.+.yml"

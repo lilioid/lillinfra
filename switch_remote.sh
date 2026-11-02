@@ -8,7 +8,6 @@ SYSTEM=${3:-$2}
 set -x
 exec nixos-rebuild "$ACTION" \
   --no-reexec \
-  --use-substitutes \
   --fallback \
   --ask-sudo-password \
   --target-host "$CONNECT" \
