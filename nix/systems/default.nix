@@ -75,7 +75,6 @@ in
 
   # private systems
   "lillysLaptop" = mkSystem "x86_64-linux" "lillysLaptop" flake.inputs.nixpkgs;
-  "lillysWorkLaptop" = mkSystem "x86_64-linux" "lillysWorkLaptop" flake.inputs.nixpkgs;
   # "lillysWorkstation" = mkSystem {
   #   system = "x86_64-linux";
   #   gcc.arch = "znver3";

@@ -26,7 +26,6 @@ keys:
   - &proxy-home "age17jjjswxkjtlxcut4ddy9cj60fx35z396fde7a5g275xu6sle83usy6auta"
   - &external-monitoring "age16fnfsdaexkzgwawr546h5wdsangx5y28hxztdjkz5qka9v3wc9vsfxv8kv"
   - &lillysLaptop "age1x84yrgq0nq247frmddjwgl5gn5wdcd8xlrdrf47v0ua9dulss35sxd763x"
-  - &lillysWorkLaptop "age1hn3ph2k4c37ndecy37zyvu4lhtk058xe7tkhnxdjry64wemcwc9q5s4ynp"
   - &lillysWorkstation "age1rgum2kymq52wdqalqgtsdvppuze2w05x03s8q7xewtesfw6tc50s74cnyv"
 
 creation_rules:
@@ -92,10 +91,6 @@ creation_rules:
   - path_regex: "nix/data/host-secrets/lillysLaptop.yml"
     key_groups:
       - age: [ *lilly, *lillysLaptop ]
-
-  - path_regex: "nix/data/host-secrets/lillysWorkLaptop.yml"
-    key_groups:
-      - age: [ *lilly, *lillysWorkLaptop ]
 
   - path_regex: "nix/data/host-secrets/lillysWorkstation.yml"
     key_groups:
