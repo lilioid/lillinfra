@@ -17,21 +17,15 @@ jobs:
         uses: actions/cache@v6
         with:
           key: nix-cache-${{ hashFiles('flake.lock', 'flake.nix') }}
-          path: |
-            /root/.cache/nix/**
-            flake.json
+          path: "/root/.cache/nix/**"
 
       - id: discover-nix-systems
         name: Discover Nix Systems
         run: |
           nix profile add nixpkgs#jq
-          if [[ ! -f flake.json ]]; then
-            echo "Converting flake to flake.json"
-            nix flake show --json >flake.json
-          else
-            echo "Reusing existing flake.json from cache"
-          fi
-          echo "Evaluating flake.json for nixos configurations"
+          echo "Converting flake to flake.json"
+          nix flake show --json >flake.json
+          echo "Querying flake.json for nixos configurations"
           SYSTEMS_JSON=$(jq <flake.json -c '.nixosConfigurations | map_values(select(.type == "nixos-configuration")) | keys_unsorted | map(select([.] | inside(["installer", "proxmox-lxc", "priv.srv.home.internal", "proxy.srv.home.internal"]) | not))')
           echo "systems=$SYSTEMS_JSON" >$FORGEJO_OUTPUT
 
