@@ -36,7 +36,7 @@ runs:
 
     # note that this cannot be done later because nix gets confused when the NIX_CONFIG store redirect
     # is active while calling this command
-    - name: Install attic-cli
+    - name: Install tools
       run: |
         if [[ ! -f /root/.nix-profile/bin/attic ]]; then
           nix profile add nixpkgs#attic-client
@@ -80,12 +80,12 @@ runs:
       run: |
         set -x
         SYSTEM_CLOSURE=${{ steps.build-system.outputs.system-path }}
-        SIZE=$(nix-store --query --size $SYSTEM_CLOSURE)
-        NUM_DERIVATIONS=$(nix-store --query --requisites $SYSTEM_CLOSURE | wc -l)
+        SIZE="$(nix path-info --closure-size --human-readable $SYSTEM_CLOSURE | cut -f 2 -w)"
+        NUM_DERIVATIONS="$(nix-store --query --requisites $SYSTEM_CLOSURE | wc -l)"
         cat << EOF > $FORGEJO_STEP_SUMMARY
           ## System Closure of \`${{ inputs.system }}\`
 
           - System closure path is \`${SYSTEM_CLOSURE}\`
-          - System Closure is **$(( SIZE / 1000 ))kb** large
+          - System Closure is **${SIZE}GB** large
           - ${NUM_DERIVATIONS} derivations are included
         EOF
