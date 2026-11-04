@@ -83,7 +83,6 @@ in
   "lillysWorkstation" = mkSystem "x86_64-linux" "lillysWorkstation" flake.inputs.nixpkgs;
 
   # others
-  "lan-server.intern" = mkSystem "x86_64-linux" "lan-server.intern" flake.inputs.nixpkgs;
   "installer" = mkSystem "x86_64-linux" "installer" flake.inputs.nixpkgs;
   "proxmox-lxc" = mkSystem "x86_64-linux" "proxmox-lxc" flake.inputs.nixpkgs;
 }
