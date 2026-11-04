@@ -72,3 +72,20 @@ runs:
         attic push lillinfra "${{ steps.build-system.outputs.system-path }}" ||true
         attic push lillinfra "${{ steps.build-system.outputs.system-path }}" ||true
         attic push lillinfra "${{ steps.build-system.outputs.system-path }}"
+
+    - name: "Generate forgejo step summary"
+      env:
+        NIX_CONFIG: |
+          store = local?root=${{ inputs.store_path }}
+      run: |
+        set -x
+        SYSTEM_CLOSURE=${{ steps.build-system.outputs.system-path }}
+        SIZE=$(nix-store --query --size $SYSTEM_CLOSURE)
+        NUM_DERIVATIONS=$(nix-store --query --requisites $SYSTEM_CLOSURE | wc -l)
+        cat << EOF > $FORGEJO_STEP_SUMMARY
+          ## System Closure of \`${{ inputs.system }}\`
+
+          - System closure path is \`${SYSTEM_CLOSURE}\`
+          - System Closure is **$(( SIZE / 1000 ))kb** large
+          - ${NUM_DERIVATIONS} derivations are included
+        EOF

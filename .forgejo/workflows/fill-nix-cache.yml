@@ -53,6 +53,7 @@ jobs:
         #   persist-credentials: true
 
       - name: Build and push System
+        id: build-system
         uses: ./.forgejo/local-actions/build-nix-system
         with:
           system: ${{ matrix.system }}
