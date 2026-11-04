@@ -2,7 +2,9 @@
 let
   # packages which are autodetected from this directory
   dirContent = (builtins.readDir ./.);
-  dirNonDefault = pkgs.lib.filterAttrs (iName: iValue: iName != "default.nix") dirContent;
+  dirNonDefault = pkgs.lib.filterAttrs (
+    iName: iValue: iName != "default.nix" && !(pkgs.lib.strings.hasSuffix ".patch" iName)
+  ) dirContent;
   dirPkgs = pkgs.lib.mapAttrs' (iName: iValue: {
     name = (pkgs.lib.removeSuffix ".nix" iName);
     value = pkgs.callPackage ./${iName} { };
@@ -69,7 +71,7 @@ let
         };
       }
     );
-    icingaweb2Modules.icingadb-web = pkgs.stdenv.mkDerivation (finalAttrs: {
+    icingaweb2Modules-icingadb-web = pkgs.stdenv.mkDerivation (finalAttrs: {
       pname = "icingadb-web";
       version = "1.4.0";
 

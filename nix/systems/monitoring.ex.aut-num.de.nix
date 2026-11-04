@@ -470,7 +470,7 @@
       };
     };
     modulePackages = {
-      icingadb = pkgs.icingaweb2Modules.icingadb-web;
+      icingadb = pkgs.icingaweb2Modules-icingadb-web;
     };
     libraryPaths = lib.mkForce {
       icinga-php-library = pkgs.icingaweb2-ipl;
