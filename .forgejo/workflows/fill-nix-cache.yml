@@ -7,11 +7,12 @@ on:
 jobs:
   generate-build-matrix:
     runs-on: nixos-latest
+    outputs:
+      systems: ${{ steps.discover-nix-systems.outputs.systems }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
-        # with:
-        #   persist-credentials: true
+
       - name: Setup caching
         uses: actions/cache@v6
         with:
@@ -19,6 +20,7 @@ jobs:
           path: |
             /root/.cache/nix/**
             flake.json
+
       - id: discover-nix-systems
         name: Discover Nix Systems
         run: |
@@ -32,8 +34,6 @@ jobs:
           echo "Evaluating flake.json for nixos configurations"
           SYSTEMS_JSON=$(jq <flake.json -c '.nixosConfigurations | map_values(select(.type == "nixos-configuration")) | keys_unsorted | map(select([.] | inside(["installer", "proxmox-lxc"]) | not))')
           echo "systems=$SYSTEMS_JSON" >$FORGEJO_OUTPUT
-    outputs:
-      systems: ${{ steps.discover-nix-systems.outputs.systems }}
 
   build-system:
     runs-on: nixos-latest
@@ -41,7 +41,23 @@ jobs:
     strategy:
       matrix:
         system: ${{ fromJSON(needs.generate-build-matrix.outputs.systems) }}
+    container:
+      image: git.hanse.de/lilly/lillinfra-nix-builder
+      volumes:
+        - shared-nix-store:/shared-nix-store
     steps:
-      - name: Dummy for ${{ matrix.system }}
-        run: echo ${{ matrix.system }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v7
+        # with:
+        #   persist-credentials: true
+
+      - name: Build and push System
+        uses: ./.forgejo/local-actions/build-nix-system
+        with:
+          system: ${{ matrix.system }}
+          attic_url: "https://babe-do-you-need-anything-from-the-nix.store"
+          attic_cache: "lillinfra"
+          attic_token: ${{ secrets.NIX_CACHE_TOKEN }}
+          store_path: /shared-nix-store
           

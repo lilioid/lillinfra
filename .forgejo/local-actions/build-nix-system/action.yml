@@ -1,0 +1,74 @@
+name: "Build Nix System"
+description: "Build a complete Nix system from the local flake and push it to a shared attic cache"
+
+inputs:
+  system:
+    # type: string
+    description: "Name of the nix system to be built and added to the cache"
+    required: true
+  attic_url:
+    description: "Base URL of a running attic instance"
+    required: true
+  attic_cache:
+    description: "Name of the cache on the attic server"
+    required: true
+  attic_token:
+    description: "Authentication token for interacting with attic"
+    required: true
+  store_path:
+    description: "Path to a local store that is used during build and eval"
+    required: false
+    default: "/nix/store"
+
+outputs:
+  system-path:
+    description: "Nix store path of the built system derivation"
+    value: ${{ steps.build-system.outputs.system-path }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup caching
+      uses: actions/cache@v6
+      with:
+        key: nix-cache-${{ hashFiles('flake.lock', 'flake.nix') }}
+        path: "/root/.cache/nix/**"
+
+    # note that this cannot be done later because nix gets confused when the NIX_CONFIG store redirect
+    # is active while calling this command
+    - name: Install attic-cli
+      run: |
+        if [[ ! -f /root/.nix-profile/bin/attic ]]; then
+          nix profile add nixpkgs#attic-client
+        fi
+
+    - name: Build system
+      id: build-system
+      env:
+        NIX_CONFIG: |
+          store = local?root=${{ inputs.store_path }}
+      run: |
+        echo Building system from '.#nixosConfigurations."${{ inputs.system }}".config.system.build.toplevel'
+        echo -n "system-path=" >> "$FORGEJO_OUTPUT"
+        set -x
+        nix build \
+          --fallback \
+          --log-format "raw" \
+          --no-link \
+          --print-out-paths \
+          '.#nixosConfigurations."${{ inputs.system }}".config.system.build.toplevel' \
+          >> "$FORGEJO_OUTPUT"
+
+    - name: Push build results into cache
+      env:
+        NIX_CONFIG: |
+          store = local?root=${{ inputs.store_path }}
+      run: |
+        echo "Pushing derivation '${{ steps.build-system.outputs.system-path }}' into cache ${{ inputs.attic_cache }}"
+
+        attic login "${{ inputs.attic_cache }}" "${{ inputs.attic_url }}" "${{ inputs.attic_token }}"
+
+        # try multiple times because sometimes the upload fails due to attic weirdness :|
+        attic push lillinfra "${{ steps.build-system.outputs.system-path }}" ||true
+        attic push lillinfra "${{ steps.build-system.outputs.system-path }}" ||true
+        attic push lillinfra "${{ steps.build-system.outputs.system-path }}"
