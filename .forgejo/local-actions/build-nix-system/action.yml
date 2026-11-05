@@ -113,5 +113,5 @@ runs:
           - System Closure is **${SIZE}GB** large
           - ${NUM_DERIVATIONS} derivations are included
 
-          Closure info file has been uploaded to forgejo at [${{ forgejo.server_url }}/api/packages/${{ forgejo.repository_owner }}/generic/nix-system-${{ inputs.system }}/latest/system-closure.txt](${{ forgejo.server_url }}/api/packages/${{ forgejo.repository_owner }}/generic/nix-system-${{ inputs.system }}/latest/system-closure.txt)
+          Closure info file has been uploaded to forgejo as generic package [nix-system-${{ inputs.system}}@latest](${{ forgejo.server_url }}/${{ forgejo.repository_owner }}/-/packages/generic/nix-system-${{ inputs.system }}/latest).
         EOF
