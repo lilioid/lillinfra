@@ -11,39 +11,31 @@ let
     name = "auto-upgrade.sh";
     runtimeInputs = with pkgs; [
       switch-nixos-raw
-      jq
-      git
+      curl
       nix
     ];
     text = ''
       MODE=$1
-      GIT_REPO=$2
-      SYSTEMS_FILE=$3
-      OWN_SYSTEM_NAME=$4
-      STATE_DIR=/run/nixos-auto-upgrade
-      GIT_DIR="''${STATE_DIR}/git"
+      SYSTEM_CLOSURE_URL=$2
 
-      cd "$STATE_DIR"
-      git clone --depth=1 "''${GIT_REPO}" "''${GIT_DIR}"
-
-      echo "Parsing system path from git repo"
-      SYSTEM_CLOSURE=$(jq -r <"''${GIT_DIR}/''${SYSTEMS_FILE}" ".[\"''${OWN_SYSTEM_NAME}\"]")
+      echo "Fetching current system path from URL"
+      TARGET_SYSTEM_CLOSURE=$(curl -sSLf "''${SYSTEM_CLOSURE_URL}")
       CURRENT_SYSTEM_CLOSURE=$(readlink /run/current-system)
 
-      if [[ "''${CURRENT_SYSTEM_CLOSURE}" = "''${SYSTEM_CLOSURE}" ]]; then
+      if [[ "''${CURRENT_SYSTEM_CLOSURE}" = "''${TARGET_SYSTEM_CLOSURE}" ]]; then
         echo "Current system closure is already at ''${CURRENT_SYSTEM_CLOSURE}"
         exit
       else
-        echo "System closure has changed to ''${SYSTEM_CLOSURE}"
+        echo "Target Sysdtem closure has changed to ''${TARGET_SYSTEM_CLOSURE}"
       fi
 
-      echo "Updating now…"
+      echo "Updating system now…"
       case "''${MODE}" in
         "live")
-          switch-nixos-raw switch --diff "''${SYSTEM_CLOSURE}" ;;
+          switch-nixos-raw switch --diff "''${TARGET_SYSTEM_CLOSURE}" ;;
 
         "reboot")
-          switch-nixos-raw boot --diff "''${SYSTEM_CLOSURE}"
+          switch-nixos-raw boot --diff "''${TARGET_SYSTEM_CLOSURE}"
           systemctl reboot
           ;;
       esac
@@ -51,10 +43,10 @@ let
   };
 in
 {
-  options = {
+  options = with lib.options; {
     custom.autoUpgrade = {
-      enable = lib.options.mkEnableOption "auto upgrades from my git repository";
-      mode = lib.options.mkOption {
+      enable = mkEnableOption "auto upgrades from my git repository";
+      mode = mkOption {
         default = "live";
         description = "Whether to perform live in-place upgrades or upgrade only via reboots";
         type = lib.types.enum [
@@ -62,20 +54,10 @@ in
           "reboot"
         ];
       };
-      git = lib.options.mkOption {
-        description = "URL of my git repository which tracks all system definitions";
-        default = "https://git.hanse.de/lilly/lillinfra.git";
-        type = lib.types.str;
-      };
-      systemsFile = lib.options.mkOption {
-        description = "Path to a file inside my git repository which knows current system closure paths of all systems";
-        default = "nix/system-closures.json";
-        type = lib.types.str;
-      };
-      systemName = lib.options.mkOption {
-        description = "Name of this system that shall be used when querying the systemsFile";
-        default = config.networking.fqdnOrHostName;
-        type = lib.types.str;
+      systemClosureUrl = mkOption {
+        description = "URL to a file that contains this systems current closure as a path in /nix/store";
+        default = "https://git.hanse.de/api/packages/lilly/generic/nix-system-${ config.networking.fqdnOrHostName }/latest/system-closure.txt";
+        defaultText = "https://git.hanse.de/api/packages/lilly/generic/nix-system-<networking.fqdnOrHostName>/latest/system-closure.txt";
       };
     };
   };
@@ -86,7 +68,7 @@ in
       after = [ "network.target" "network-online.target" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = ''${lib.getExe upgrade-script} "${cfg.mode}" "${cfg.git}" "${cfg.systemsFile}" "${cfg.systemName}"'';
+        ExecStart = ''${lib.getExe upgrade-script} "${cfg.mode}" "${cfg.systemClosureUrl}"'';
         RuntimeDirectory = "nixos-auto-upgrade";
       };
     };

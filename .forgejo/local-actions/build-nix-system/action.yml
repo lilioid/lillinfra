@@ -15,13 +15,16 @@ inputs:
   attic_token:
     description: "Authentication token for interacting with attic"
     required: true
+  forgejo_token:
+    description: "API-Token to the local forgejo instance which can be used for package publishing"
+    required: true
   store_path:
     description: "Path to a local store that is used during build and eval"
     required: false
     default: "/nix/store"
 
 outputs:
-  system-path:
+  system_path:
     description: "Nix store path of the built system derivation"
     value: ${{ steps.build-system.outputs.system-path }}
 
@@ -40,6 +43,9 @@ runs:
       run: |
         if [[ ! -f /root/.nix-profile/bin/attic ]]; then
           nix profile add nixpkgs#attic-client
+        fi
+        if [[ ! -f /root/.nix-profile/bin/curl ]]; then
+          nix profile add nixpkgs#curl
         fi
 
     - name: Build system
@@ -73,12 +79,30 @@ runs:
         attic push lillinfra "${{ steps.build-system.outputs.system-path }}" ||true
         attic push lillinfra "${{ steps.build-system.outputs.system-path }}"
 
+    - name: Publish system closure marker file as forgejo package
+      run: |
+        echo "Publishing forgejo package"
+
+        # ensure that the package is deleted before immediately republishing it
+        curl -sSL \
+          -X "DELETE" \
+          -H "Authorization: Bearer ${{ inputs.forgejo_token }}" \
+          "${{ forgejo.server_url }}/api/packages/${{ forgejo.repository_owner }}/generic/nix-system-${{ inputs.system }}/latest/system-closure.txt"
+
+        # publish the package which consists simply of a system-closure.txt file        
+        echo "${{ steps.build-system.outputs.system-path }}" >./system-closure.txt
+        curl -sSLf \
+           -X "PUT" \
+          -H "Authorization: Bearer ${{ inputs.forgejo_token }}" \
+          --upload-file "./system-closure.txt" \
+          "${{ forgejo.server_url }}/api/packages/${{ forgejo.repository_owner }}/generic/nix-system-${{ inputs.system }}/latest/system-closure.txt"
+
     - name: "Generate forgejo step summary"
       env:
         NIX_CONFIG: |
           store = local?root=${{ inputs.store_path }}
       run: |
-        set -x
+        echo "Writing forgejo job summary"
         SYSTEM_CLOSURE=${{ steps.build-system.outputs.system-path }}
         SIZE="$(nix path-info --closure-size --human-readable $SYSTEM_CLOSURE | cut -f 2 -w)"
         NUM_DERIVATIONS="$(nix-store --query --requisites $SYSTEM_CLOSURE | wc -l)"
@@ -88,4 +112,6 @@ runs:
           - System closure path is \`${SYSTEM_CLOSURE}\`
           - System Closure is **${SIZE}GB** large
           - ${NUM_DERIVATIONS} derivations are included
+
+          Closure info file has been uploaded to forgejo at [${{ forgejo.server_url }}/api/packages/${{ forgejo.repository_owner }}/generic/nix-system-${{ inputs.system }}/latest/system-closure.txt](${{ forgejo.server_url }}/api/packages/${{ forgejo.repository_owner }}/generic/nix-system-${{ inputs.system }}/latest/system-closure.txt)
         EOF

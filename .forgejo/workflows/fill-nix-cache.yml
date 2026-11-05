@@ -4,7 +4,28 @@ on:
   push:
     branches: [ "main" ]
 
+enable-openid-connect: true
+
 jobs:
+  fetch-forgejo-token:
+    runs-on: ubuntu-latest
+    outputs:
+      forgejo-token: ${{ steps.fetch-jwt.outputs.jwt }}
+    steps:
+      - name: Fetch JWT for package publishing
+        id: fetch-jwt
+        env:
+          AUD: "u:5:992a86e6-3eef-4dd6-b42f-87688cff80a1"
+        run: |
+          jwt=$( \
+            curl --fail \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$AUD" \
+            | jq -r ".value" \
+          )
+          echo "::add-mask::$jwt"
+          echo "jwt=$jwt" >> $FORGEJO_OUTPUT
+
   generate-build-matrix:
     runs-on: nixos-latest
     outputs:
@@ -31,7 +52,7 @@ jobs:
 
   build-system:
     runs-on: nixos-latest
-    needs: [ generate-build-matrix ]
+    needs: [ fetch-forgejo-token, generate-build-matrix ]
     strategy:
       matrix:
         system: ${{ fromJSON(needs.generate-build-matrix.outputs.systems) }}
@@ -39,12 +60,12 @@ jobs:
       image: git.hanse.de/lilly/lillinfra-nix-builder
       volumes:
         - shared-nix-store:/shared-nix-store
+    outputs:
+      system-closures: ${{ steps.build-system.outputs.system-path }}
     steps:
 
       - name: Checkout Code
         uses: actions/checkout@v7
-        # with:
-        #   persist-credentials: true
 
       - name: Build and push System
         id: build-system
@@ -54,5 +75,6 @@ jobs:
           attic_url: "https://babe-do-you-need-anything-from-the-nix.store"
           attic_cache: "lillinfra"
           attic_token: ${{ secrets.NIX_CACHE_TOKEN }}
+          forgejo_token: ${{ needs.fetch-forgejo-token.outputs.forgejo-token }}
           store_path: /shared-nix-store
           
