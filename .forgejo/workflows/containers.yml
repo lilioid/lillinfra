@@ -6,7 +6,28 @@ on:
   schedule:
     - cron: "@weekly"
 
+enable-openid-connect: true
+
 jobs:
+  fetch-forgejo-token:
+    runs-on: ubuntu-latest
+    outputs:
+      forgejo-token: ${{ steps.fetch-jwt.outputs.jwt }}
+    steps:
+      - name: Fetch JWT for package publishing
+        id: fetch-jwt
+        env:
+          AUD: "u:5:992a86e6-3eef-4dd6-b42f-87688cff80a1"
+        run: |
+          jwt=$( \
+            curl --fail \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$AUD" \
+            | jq -r ".value" \
+          )
+          echo "::add-mask::$jwt"
+          echo "jwt=$jwt" >> $FORGEJO_OUTPUT
+      
   generate-build-matrix:
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +48,7 @@ jobs:
 
   build-container:
     runs-on: alpine-latest
-    needs: [ generate-build-matrix ]
+    needs: [ generate-build-matrix, fetch-forgejo-token ]
     strategy:
       matrix: 
         container_name: ${{ fromJSON(needs.generate-build-matrix.outputs.container_names) }}
@@ -44,7 +65,7 @@ jobs:
         env:
           KANIKO_NO_PUSH: ${{ forgejo.ref_name != 'main' }}
           KANIKO_GIT_HANSE_DE_USER: forgejo-actions
-          KANIKO_GIT_HANSE_DE_PASSWORD: ${{ secrets.HANSE_PACKAGES_ACCESS }}
+          KANIKO_GIT_HANSE_DE_PASSWORD: ${{ needs.fetch-forgejo-token.outputs.forgejo-token }}
         run: /kaniko/executor
           --dockerfile="${{ forgejo.workspace }}/containers/${{ matrix.container_name }}/Containerfile" 
           --context="dir://${{ forgejo.workspace }}/containers/${{ matrix.container_name }}"
