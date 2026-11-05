@@ -19,9 +19,12 @@ def main():
         default="system",
         help="The name of the nix profile to use for generation tracking",
     )
+    argp.add_argument("--diff", action="store_true", default=False, help="Print diff to current system before applying")
     args = argp.parse_args()
 
     realize_closure(args.system_closure)
+    if args.diff:
+        diff_closure(args.system_closure)
 
     match args.action:
         case "test" | "dry-activate" | "check":
@@ -29,6 +32,14 @@ def main():
         case "switch" | "boot":
             update_profile(args.profile, args.system_closure)
             activate_system(args.system_closure, args.action)
+
+
+def diff_closure(system_closure: str):
+    print("Diff between current-system and target closure:")
+    subprocess.run(
+        ["nix", "--extra-experimental-features", "nix-command", "store", "diff-closure", "--quiet", "/run/current-system/", system_closure],
+        check=True
+    )
 
 
 def realize_closure(system_closure: str):

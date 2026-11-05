@@ -32,19 +32,18 @@ let
 
       if [[ "''${CURRENT_SYSTEM_CLOSURE}" = "''${SYSTEM_CLOSURE}" ]]; then
         echo "Current system closure is already at ''${CURRENT_SYSTEM_CLOSURE}"
-        # exit
+        exit
       else
-        echo "System closure has changed to ''${SYSTEM_CLOSURE}:"
-        nix --extra-experimental-features nix-command store --quiet diff-closures "''${CURRENT_SYSTEM_CLOSURE}" "''${SYSTEM_CLOSURE}"
+        echo "System closure has changed to ''${SYSTEM_CLOSURE}"
       fi
 
       echo "Updating now…"
       case "''${MODE}" in
         "live")
-          switch-nixos-raw switch "''${SYSTEM_CLOSURE}" ;;
+          switch-nixos-raw switch --diff "''${SYSTEM_CLOSURE}" ;;
 
         "reboot")
-          switch-nixos-raw boot "''${SYSTEM_CLOSURE}"
+          switch-nixos-raw boot --diff "''${SYSTEM_CLOSURE}"
           systemctl reboot
           ;;
       esac
