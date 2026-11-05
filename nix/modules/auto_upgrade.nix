@@ -77,6 +77,7 @@ in
     systemd.services."nixos-auto-upgrade" = {
       requires = [ "network.target" ];
       after = [ "network.target" "network-online.target" ];
+      restartIfChanged = false;
       serviceConfig = {
         Type = "oneshot";
         ExecStart = ''${lib.getExe upgrade-script} "${cfg.mode}" "${cfg.systemClosureUrl}"'';
