@@ -26,7 +26,7 @@ let
         echo "Current system closure is already at ''${CURRENT_SYSTEM_CLOSURE}"
         exit
       else
-        echo "Target Sysdtem closure has changed to ''${TARGET_SYSTEM_CLOSURE}"
+        echo "Target System closure has changed to ''${TARGET_SYSTEM_CLOSURE}"
       fi
 
       echo "Updating system now…"

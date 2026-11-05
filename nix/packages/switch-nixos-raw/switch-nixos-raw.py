@@ -37,7 +37,7 @@ def main():
 def diff_closure(system_closure: str):
     print("Diff between current-system and target closure:")
     subprocess.run(
-        ["nix", "--extra-experimental-features", "nix-command", "store", "diff-closure", "--quiet", "/run/current-system/", system_closure],
+        ["nix", "--extra-experimental-features", "nix-command", "store", "diff-closures", "--quiet", "/run/current-system/", system_closure],
         check=True
     )
 
