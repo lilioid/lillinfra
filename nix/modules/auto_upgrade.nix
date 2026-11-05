@@ -69,7 +69,13 @@ in
       serviceConfig = {
         Type = "oneshot";
         ExecStart = ''${lib.getExe upgrade-script} "${cfg.mode}" "${cfg.systemClosureUrl}"'';
-        RuntimeDirectory = "nixos-auto-upgrade";
+
+        # if for some reason the service unit vanishes during the upgrade, tell systemd to not terminate anything immediately.
+        # Only after a 5 minute timeout everything gets killed by SIGKILL.
+        # This should somewhat ensure that the new system activation does not get interrupted.
+        KillSignal = "SIGUSR1";
+        KillMode = "mixed";
+        TimeoutStopSec = "5min";
       };
     };
 
