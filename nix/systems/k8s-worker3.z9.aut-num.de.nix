@@ -47,6 +47,11 @@
     after = [ "srv-ceph\\x2dk8s.mount" ];
   };
 
+  custom.autoUpgrade = {
+    enable = true;
+    mode = "reboot";
+  };
+
   sops.secrets."k3s/token" = {
     sopsFile = ../data/shared-secrets/aut-sys-k8s.yml;
   };

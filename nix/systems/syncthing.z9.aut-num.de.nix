@@ -92,6 +92,11 @@
     destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
   };
 
+  custom.autoUpgrade = {
+    enable = true;
+    mode = "reboot";
+  };
+
   sops = {
     secrets."aut-sys-ceph/syncthing/secret" = { };
     secrets."authentik-outpost-token" = { };

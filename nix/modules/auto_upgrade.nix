@@ -47,7 +47,6 @@ in
     custom.autoUpgrade = {
       enable = mkEnableOption "auto upgrades from my git repository";
       mode = mkOption {
-        default = "live";
         description = "Whether to perform live in-place upgrades or upgrade only via reboots";
         type = lib.types.enum [
           "live"

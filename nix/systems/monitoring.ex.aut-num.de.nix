@@ -533,6 +533,11 @@
     ];
   };
 
+  custom.autoUpgrade = {
+    enable = true;
+    mode = "reboot";
+  };
+
   # required secrets
   sops = {
     secrets."icinga/apiuser_password" = { };

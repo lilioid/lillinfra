@@ -1,7 +1,10 @@
 { pkgs, lib, config, ... }: {
   custom.preset = "aut-sys-lxc";
 
-  custom.autoUpgrade.enable = true;
+  custom.autoUpgrade = {
+    enable = true;
+    mode = "live";
+  };
 
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible

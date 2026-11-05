@@ -38,6 +38,11 @@
     TOKEN=${config.sops.placeholder."forgejo-actions-runner/registration-token"}
   '';
 
+  custom.autoUpgrade = {
+    enable = true;
+    mode = "reboot";
+  };
+
   # DO NOT CHANGE
   # this defines the first version of NixOS that was installed on the machine so that programs with non-migratable data files are kept compatible
   home-manager.users.lilly.home.stateVersion = "25.11";

@@ -73,6 +73,11 @@
     destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
   };
 
+  custom.autoUpgrade = {
+    enable = true;
+    mode = "reboot";
+  };
+
   sops.secrets."k3s/secret.env" = {
     restartUnits = [ "k3s.service" ];
     key = "k3s/secretEnv";

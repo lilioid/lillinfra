@@ -59,6 +59,11 @@
     destinations."rsync.net".path = "ssh://zh4525@zh4525.rsync.net/./backups/borg-repo";
   };
 
+  custom.autoUpgrade = {
+    enable = true;
+    mode = "reboot";
+  };
+
   sops.secrets."aut-sys-ceph/large-file-share/secret" = { };
 
   # DO NOT CHANGE
