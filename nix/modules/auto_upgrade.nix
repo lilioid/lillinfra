@@ -58,6 +58,17 @@ in
         description = "URL to a file that contains this systems current closure as a path in /nix/store";
         default = "https://git.hanse.de/api/packages/lilly/generic/nix-system-${ config.networking.fqdnOrHostName }/latest/system-closure.txt";
         defaultText = "https://git.hanse.de/api/packages/lilly/generic/nix-system-<networking.fqdnOrHostName>/latest/system-closure.txt";
+        type = lib.types.str;
+      };
+      dates = mkOption {
+        description = "SystemD calendar expression on which auto-upgrade should run";
+        default = "04:00";
+        type = lib.types.str;
+      };
+      randomizedDelaySec = mkOption {
+        description = "SystemD calendar RandomizedDelaySec for introducing update jitter";
+        default = "1h";
+        type = lib.types.str;
       };
     };
   };
@@ -79,12 +90,12 @@ in
       };
     };
 
-    # system.autoUpgrade = {
-    #   enable = true;
-    #   flake = "git+https://git.lly.sh/lilly/lillinfra.git#${config.networking.fqdnOrHostName}";
-    #   operation = if cfg.mode == "live" then "switch" else "boot";
-    #   dates = "04:00";
-    #   randomizedDelaySec = "30min";
-    # };
+    systemd.timers."nixos-auto-upgrade" = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = cfg.dates;
+        RandomizedDelaySec = cfg.randomizedDelaySec;
+      };
+    };
   };
 }
