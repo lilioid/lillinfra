@@ -6,6 +6,7 @@ on:
   schedule:
     - cron: "@weekly"
 
+enable-email-notifications: true
 enable-openid-connect: true
 
 jobs:
