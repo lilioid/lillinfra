@@ -1,6 +1,6 @@
 icinga:
     apiuser_password: ENC[AES256_GCM,data:t4n26woIyznE/AW1ZadlYzGgcq1vIpgWQ829qlT9boc=,iv:xfEKGetgGLlSSMQ0W+wtTdU+iyxgH8OfjlUSWK+9Bjc=,tag:QYultOmv0Tth7aU6AfJdHQ==,type:str]
-    secret_objects.conf: ENC[AES256_GCM,data:Vrm0YIlBt7K+WANyLwIftUoWHuAka8O2/y2Sv4bXQ/82ti+EDX90I+7J5D9kXqUm3/6ZcfF/uAP1ZbVKpCp/NpJ3zKinyVdl5gdHKJQzgEIIW9+WTwAqw5DoGp2ZwN7mPLl8zr0lxSOMzptlI5z7zLLRTHHQmvfvi2XQC26WCg/Xv0H2I5sEVssDDYtfo3LG/eDxe3XdiWlQG+CgYY8K1cq2EF/tALHfSW7tSNP6mpW5s0jwIgeX7oxRm8JZkgqoW/abza5fKe6RS9S1FiqMgFZDTZ0BKxxgB0TPL9IOUArXmuEYsx0BnW41demI8Aa5AXVLjGb1LMce6RpDErfDZPJVH+UYFUxPmV2kYKBNtzeHvn96XafUeDzH16JjilxCmdelR/AclApG8LE+6iISKn24V0/L2lD9GUMpGDI9gts=,iv:XU7zFFPYwpLEHsRwmIedLgo+OpcPvQ2P9iDY6HQ/Mrc=,tag:wLNDQg044kf5jj7V/VvVSQ==,type:str]
+    secret_objects.conf: ENC[AES256_GCM,data:6rNWICGVJefJutyh7fG5stbrEFSEC9EtDOgk1mR2fTRw/ApiCNz5dQMRYG7FJ24dy71JAt79yjiOeYcx1l4g7Nt7u1ucfHYjSL1wr3lmofF8axhI5X0oSxHp9QUifPUVMJhgjjXafrROSM4FGp2cEmvhqPvG2apKgc31lXYT3HGSz1Zo7XJVVDrr2qc7VQB9Us7Qv9/P9golqz1jlOwHPymgYkqKnCR5NQ48cbTUhDiz4WRM53nRoECk+4N4u5aGJMA+6QgbH7yRdxj2rPvAFc2l8rmR+fihxkR5HYCT+U6My4BEDXnPPtaiAPwgef1kLQz5zd61RSlaHRdKAgQBOtNXGjmwl5WhJrr6veFXM7yeU9eZ9s1fZvr3WT/1zFVj9+7N0znqiBnDABdFZ0u2Fyaw3e2DjXbDVaQ2wFJORw9ubK9fi3b7EiuAiaSMXGZUAlJI8r8DcgiuHAF/8sTGP9Af1A2WpVMqzJ34CnHyxKcrdJq2P2obyA==,iv:uo2/yfACUo+ENPy1npwALZI/PkMA6XZcTyjFNvQW8x8=,tag:0+3TPtkiswcSCvvzt4qiYQ==,type:str]
 sops:
     age:
         - enc: |
@@ -21,7 +21,7 @@ sops:
             EYgfY0NbwaJsDGEImO6Ck5tL6O9Pv5NICA2qPRk1gC2WcQxXJ54/vQ==
             -----END AGE ENCRYPTED FILE-----
           recipient: age16fnfsdaexkzgwawr546h5wdsangx5y28hxztdjkz5qka9v3wc9vsfxv8kv
-    lastmodified: "2026-10-28T21:42:52Z"
-    mac: ENC[AES256_GCM,data:AupeF5ZiITw1/0W7oN9+WzrbZdum5Syqs4KraXvI5U0JfEJLfReTR4Ncpda7E0aQVJitqZP2OxtIdoLge5MIaBWQtS3q3MaD0pqpQQATng1yrNna3vVI3vXOQIyaUISg9id4SOh9dymxh9CMPbRBcNd89myjuOeOVY4jP9QDgmU=,iv:Ajge2TTI8A/frZlC4VqrVkZOEWvqap7CPckNKF+Dwis=,tag:64FN9R6F6VjLzUYA+c/q5A==,type:str]
+    lastmodified: "2026-11-06T08:44:05Z"
+    mac: ENC[AES256_GCM,data:Fi1lQLxJ5PfQnrrR1uj4UiFhpNf3UgeFfy8CC6eqaPQ0IwW7pJjf8Zr+e3+fouVnkSvs98UFlyB5azR6jZ87OtrJX1jvFtMsCcNqCQTHhUUNH02roYulO05DgGH5PQJ8JFZYoIBPn+uaQMIgosb6UnkBBGZkn8u3Hwlv2dDfu9E=,iv:73RzmVItAast+8r+DXfyQSZY7AUD+jchg1gjtqpGbUw=,tag:OJdCGX6U6E7mKozlz/zFHg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

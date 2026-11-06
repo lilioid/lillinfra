@@ -139,6 +139,17 @@
     };
     settings.zonedStanzas = {
       "global-templates" = {
+        "object TimePeriod \"daytime\"" = {
+          ranges = {
+            monday = "00:00-01:00,06:00-24:00";
+            tuesday = "00:00-01:00,06:00-24:00";
+            wednesday = "00:00-01:00,06:00-24:00";
+            thursday = "00:00-01:00,06:00-24:00";
+            friday = "00:00-01:00,06:00-24:00";
+            saturday = "00:00-01:00,06:00-24:00";
+            sunday = "00:00-01:00,06:00-24:00";
+          };
+        };
         "object ServiceGroup \"Web\"" = ''
           assign where service.check_command == "http"
         '';
@@ -240,6 +251,22 @@
           child_host_name = host.name
           assign where host.name.contains(".z9.") && host.name != "rt.z9.aut-num.de"
         '';
+        "apply ScheduledDowntime \"nightly-update\" to Host" = ''
+          author = "icinga-system"
+          comment = "Nightly downtime for automatic host upgrades"
+          fixed = false
+          ranges = {
+            monday = "04:00-05:10"
+            tuesday = "04:00-05:10"
+            wednesday = "04:00-05:10"
+            thursday = "04:00-05:10"
+            friday = "04:00-05:10"
+            saturday = "04:00-05:10"
+            sunday = "04:00-05:10"
+          }
+          duration = 30m
+          assign where host.vars.does_auto_upgrade == true
+        '';
       };
       "external-monitoring" = {
         "object Host \"monitoring.ex.aut-num.de\"" = {
@@ -247,6 +274,7 @@
           address = config.networking.fqdnOrHostName;
           check_command = "hostalive";
           vars.has_icinga = true;
+          vars.does_auto_upgrade = true;
         };
         "object Host \"rt.z9.aut-num.de\"" = {
           display_name = "Z9 Router";
@@ -260,12 +288,14 @@
           address6 = "2a07:c481:2:5:be24:11ff:fed8:cbc1";
           check_command = "ping";
           vars.has_public_ssh = true;
+          vars.does_auto_upgrade = true;
         };
         "object Host \"webhost.z9.aut-num.de\"" = {
           display_name = "Z9 Webhost";
           address = "185.161.130.7";
           address6 = "2a07:c481:2:5:be24:11ff:fed0:b3ca";
           check_command = "ping";
+          vars.does_auto_upgrade = true;
           vars.http_vhosts = [
             "https://lilly.hosted-on.aut-sys.de/"
             "https://skye.hosted-on.aut-sys.de/"
@@ -277,6 +307,7 @@
           address6 = "2a07:c481:2:6::1";
           check_command = "tcp";
           vars.tcp_port = "443";
+          vars.does_auto_upgrade = true;
           vars.http_vhosts = [
             "https://li.lly.sh/"
             "https://pics.aut-sys.de/"
@@ -292,6 +323,7 @@
           address = "185.161.130.10";
           address6 = "2a07:c481:2:6::";
           check_command = "tcp";
+          vars.does_auto_upgrade = true;
           vars.tcp_port = "993";
           vars.has_smtp = true;
           vars.has_imap = true;
@@ -299,6 +331,7 @@
         "object Host \"mx2.z9.aut-num.de\"" = {
           address = "185.161.130.12";
           address6 = "2a07:c481:2:6::2";
+          vars.does_auto_upgrade = true;
           check_command = "tcp";
           vars.tcp_port = "993";
           vars.has_smtp = true;
@@ -323,6 +356,7 @@
           address = "185.161.130.8";
           address6 = "2a07:c481:2:5:be24:11ff:fe38:a167";
           check_command = "hostalive";
+          vars.does_auto_upgrade = true;
           vars.http_vhosts = [
             "https://sync.aut-sys.de/"
           ];
