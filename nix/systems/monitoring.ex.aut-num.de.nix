@@ -267,6 +267,16 @@
           duration = 30m
           assign where host.vars.does_auto_upgrade == true
         '';
+        "apply ScheduledDowntime \"fux-wartung\" to Host" = ''
+          author = "icinga-system"
+          comment = "Weekly Fux Netzwerkwartung"
+          fixed = false
+          ranges = {
+            friday = "19:00-23:59"
+          }
+          duration = 1h
+          assign where host.name.contains(".z9.")
+        '';
       };
       "external-monitoring" = {
         "object Host \"monitoring.ex.aut-num.de\"" = {
