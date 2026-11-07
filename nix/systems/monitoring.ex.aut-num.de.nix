@@ -249,6 +249,7 @@
         "apply Dependency \"z9-hosts-to-router\" to Host" = ''
           parent_host_name = "rt.z9.aut-num.de"
           child_host_name = host.name
+          ignore_soft_states = false
           assign where host.name.contains(".z9.") && host.name != "rt.z9.aut-num.de"
         '';
         "apply ScheduledDowntime \"nightly-update\" to Host" = ''
