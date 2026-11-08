@@ -521,6 +521,7 @@
       icinga-php-library = pkgs.icingaweb2-ipl;
       thirdparty = pkgs.icingaweb2-thirdparty;
     };
+    modules.monitoring.enable = false;
     modules.setup.enable = true;
     modules.doc.enable = true;
   };
