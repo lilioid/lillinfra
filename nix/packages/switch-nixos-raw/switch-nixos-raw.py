@@ -19,7 +19,12 @@ def main():
         default="system",
         help="The name of the nix profile to use for generation tracking",
     )
-    argp.add_argument("--diff", action="store_true", default=False, help="Print diff to current system before applying")
+    argp.add_argument(
+        "--diff",
+        action="store_true",
+        default=False,
+        help="Print diff to current system before applying",
+    )
     args = argp.parse_args()
 
     realize_closure(args.system_closure)
@@ -35,15 +40,24 @@ def main():
 
 
 def diff_closure(system_closure: str):
-    print("Diff between current-system and target closure:")
+    print("Diff between current-system and target closure:", flush=True)
     subprocess.run(
-        ["nix", "--extra-experimental-features", "nix-command", "store", "diff-closures", "--quiet", "/run/current-system/", system_closure],
-        check=True
+        [
+            "nix",
+            "--extra-experimental-features",
+            "nix-command",
+            "store",
+            "diff-closures",
+            "--quiet",
+            "/run/current-system/",
+            system_closure,
+        ],
+        check=True,
     )
 
 
 def realize_closure(system_closure: str):
-    print("Realizing system closure on local system")
+    print("Realizing system closure on local system", flush=True)
     subprocess.run(
         ["nix-store", "--realize", system_closure],
         check=True,
@@ -52,7 +66,8 @@ def realize_closure(system_closure: str):
 
 def update_profile(profile: str, system_closure: str):
     print(
-        "Updating nix profile to point current generation at specified system closure"
+        "Updating nix profile to point current generation at specified system closure",
+        flush=True,
     )
     subprocess.run(
         [
@@ -62,7 +77,7 @@ def update_profile(profile: str, system_closure: str):
             "--set",
             system_closure,
         ],
-        check=True
+        check=True,
     )
 
 

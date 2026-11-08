@@ -18,13 +18,13 @@ let
       MODE=$1
       SYSTEM_CLOSURE_URL=$2
 
-      echo "Fetching current system path from URL"
+      echo "Fetching current system path from URL ''${SYSTEM_CLOSURE_URL}"
       TARGET_SYSTEM_CLOSURE=$(curl -sSLf "''${SYSTEM_CLOSURE_URL}")
       CURRENT_SYSTEM_CLOSURE=$(readlink /run/current-system)
 
       if [[ "''${CURRENT_SYSTEM_CLOSURE}" = "''${TARGET_SYSTEM_CLOSURE}" ]]; then
         echo "Current system closure is already at ''${CURRENT_SYSTEM_CLOSURE}"
-        exit
+        # exit
       else
         echo "Target System closure has changed to ''${TARGET_SYSTEM_CLOSURE}"
       fi
@@ -36,7 +36,7 @@ let
 
         "reboot")
           switch-nixos-raw boot --diff "''${TARGET_SYSTEM_CLOSURE}"
-          systemctl reboot
+          systemctl start reboot-soon.timer
           ;;
       esac
     '';
@@ -88,6 +88,12 @@ in
       timerConfig = {
         OnCalendar = cfg.dates;
         RandomizedDelaySec = cfg.randomizedDelaySec;
+      };
+    };
+    systemd.timers."reboot-soon" = lib.mkIf (cfg.mode == "reboot") {
+      timerConfig = {
+        Unit = "reboot.target";
+        OnActiveSec = "5s";
       };
     };
   };
