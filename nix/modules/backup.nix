@@ -217,6 +217,13 @@ in
       // cfg.settings;
     };
 
+    systemd.timers."borgmatic" = {
+      timerConfig = {
+        OnCalendar = "01:00";
+        RandomizedDelaySec = "1h";
+      };
+    };
+
     # configure sops secrets with backup credentials
     sops.secrets = {
       "${cfg.secretNamespace}/sshKey" = { };
