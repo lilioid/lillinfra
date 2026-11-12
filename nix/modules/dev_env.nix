@@ -81,6 +81,7 @@ in
       opentofu
       minicom
       doggo
+      gram
     ];
 
     programs.fish.shellInit = ''

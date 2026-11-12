@@ -130,6 +130,7 @@
     makemkv
     sieve-connect
     darktable
+    heroic
   ];
   programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;

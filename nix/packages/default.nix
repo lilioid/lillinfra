@@ -99,6 +99,7 @@ let
 
     # currently does not work because integration tests for pass fail
     picard = pkgs-unstable.picard;
+    gram = pkgs-unstable.gram;
     # gnupg = pkgs.callPackage
     #   (flake.inputs.nixpkgs + "/pkgs/by-name/se/sequoia-chameleon-gnupg/package.nix")
     #   { gnupg = pkgs.gnupg; };

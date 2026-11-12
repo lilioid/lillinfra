@@ -70,6 +70,10 @@ in
           enable = config.home-manager.users.lilly.programs.jujutsu.enable;
           source = ../dotfiles/lilly/jj/config.toml;
         };
+        "gram/settings.jsonc" = {
+          enable = hasDevEnv;
+          source = ../dotfiles/lilly/gram-settings.jsonc;
+        };
       };
       home.file = {
         ".ssh/config".source = ../dotfiles/lilly/ssh/config;
