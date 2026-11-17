@@ -11,7 +11,13 @@ let
   }) dirNonDefault;
 
   # a ready-to-use version of pkgs pulled from nixos-unstable
-  pkgs-unstable = import flake.inputs.nixpkgs-unstable { system = pkgs.system; };
+  pkgs-unstable = import flake.inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config = {
+      allowUnfree = true;
+      nvidia.acceptLicense = true;
+    };
+  };
 
   # manually defined packages or overrides from existing nixpkgs packages
   manualPkgs = {
