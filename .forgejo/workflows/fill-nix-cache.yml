@@ -49,7 +49,7 @@ jobs:
           echo "Converting flake to flake.json"
           nix flake show --json >flake.json
           echo "Querying flake.json for nixos configurations"
-          SYSTEMS_JSON=$(jq <flake.json -c '.nixosConfigurations | map_values(select(.type == "nixos-configuration")) | keys_unsorted | map(select([.] | inside(["installer", "proxmox-lxc", "priv.srv.home.internal", "proxy.srv.home.internal"]) | not))')
+          SYSTEMS_JSON=$(jq <flake.json -c '.nixosConfigurations | map_values(select(.type == "nixos-configuration")) | keys_unsorted | map(select([.] | inside(["installer", "proxmox-lxc", "priv.servers.home.internal", "proxy.servers.home.internal"]) | not))')
           echo "systems=$SYSTEMS_JSON" >$FORGEJO_OUTPUT
 
   build-system:
