@@ -266,6 +266,7 @@
             sunday = "04:00-05:10"
           }
           duration = 30m
+          child_options = DowntimeTriggeredChildren
           assign where host.vars.does_auto_upgrade == true
         '';
         "apply ScheduledDowntime \"fux-wartung\" to Host" = ''
