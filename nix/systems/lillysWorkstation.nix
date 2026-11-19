@@ -24,6 +24,7 @@
     "sg"
   ];
   hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
     enable = true;
