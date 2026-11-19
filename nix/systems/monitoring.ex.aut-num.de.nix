@@ -255,28 +255,25 @@
         "apply ScheduledDowntime \"nightly-update\" to Host" = ''
           author = "icinga-system"
           comment = "Nightly downtime for automatic host upgrades"
-          fixed = false
           ranges = {
-            monday = "04:00-05:10"
-            tuesday = "04:00-05:10"
-            wednesday = "04:00-05:10"
-            thursday = "04:00-05:10"
-            friday = "04:00-05:10"
-            saturday = "04:00-05:10"
-            sunday = "04:00-05:10"
+            monday = "04:00-05:30"
+            tuesday = "04:00-05:30"
+            wednesday = "04:00-05:30"
+            thursday = "04:00-05:30"
+            friday = "04:00-05:30"
+            saturday = "04:00-05:30"
+            sunday = "04:00-05:30"
           }
-          duration = 30m
           child_options = DowntimeTriggeredChildren
           assign where host.vars.does_auto_upgrade == true
         '';
         "apply ScheduledDowntime \"fux-wartung\" to Host" = ''
           author = "icinga-system"
           comment = "Weekly Fux Netzwerkwartung"
-          fixed = false
           ranges = {
-            friday = "19:00-23:59"
+            friday = "19:00-24:00"
+            saturday = "00:00-02:00"
           }
-          duration = 1h
           assign where host.name.contains(".z9.")
         '';
       };
