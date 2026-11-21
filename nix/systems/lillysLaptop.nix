@@ -285,6 +285,7 @@
   services.earlyoom.enable = true;
   services.resolved.enable = true;
   services.openssh.enable = true;
+  services.fprintd.enable = true;
   services.avahi = {
     enable = true;
     nssmdns4 = true;
