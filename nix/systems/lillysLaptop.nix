@@ -37,6 +37,11 @@
     "vm.swappiness" = 10;
   };
 
+  # configure lid switch to do suspend-then-hibernate when not docked
+  # this puts the system to sleep, wakes it after a delay and the hibernates it
+  services.logind.settings.Login."HandleLidSwitch" = "sleep";
+  systemd.sleep.settings.Sleep."HibernateDelaySec" = 1 * 60 * 60; # 1 hour
+
   # partitions and fileSystems
   disko.devices = {
     disk = {

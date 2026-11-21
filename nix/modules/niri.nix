@@ -362,14 +362,12 @@ in
           trackpoint = { };
         };
 
-        switch-events = {
-          lid-close.action = niriActions.spawn [
-            "noctalia"
-            "msg"
-            "session"
-            "lock-and-suspend"
-          ];
-        };
+        # switch-events = {
+        #   lid-close.action = niriActions.spawn [
+        #     "systemctl"
+        #     "sleep"
+        #   ];
+        # };
 
         outputs = { }; # override this via the configOverride option
 

@@ -45,7 +45,7 @@ colors_changed = ""
 theme_mode_changed = "systemctl --user reload app-com.mitchellh.ghostty.service"
 
 [idle]
-behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+behavior_order = [ "lock", "systemctl sleep", "screen-off" ]
 pre_action_fade_seconds = 5
 
     [idle.behavior.lock]
@@ -60,8 +60,14 @@ pre_action_fade_seconds = 5
 
     [idle.behavior.screen-off]
     action = "screen_off"
-    enabled = true
+    enabled = false
     timeout = 660.0
+
+    [idle.behavior."systemctl sleep"]
+    action = "command"
+    command = "systemctl sleep"
+    enabled = true
+    timeout = 600.0
 
 [location]
 address = "Hamburg, Germany"
@@ -76,11 +82,8 @@ wallpaper = "/home/lilly/Sync/Wallpapers/ccc-camp-2.jpg"
 enabled = true
 schema_version = 2
 widget_order = [
-    "lockscreen-login-box@winit",
+    "lockscreen-login-box@HDMI-A-1",
     "lockscreen-login-box@WL-1",
-    "lockscreen-login-box@DP-2",
-    "lockscreen-login-box@DP-1",
-    "lockscreen-login-box@DP-3",
     "lockscreen-login-box@eDP-1",
     "lockscreen-widget-0000000000000001",
     "lockscreen-widget-0000000000000002",
@@ -177,9 +180,9 @@ widget_order = [
     box_height = 196.0
     box_width = 810.0
     cx = 960.0
-    cy = 898.0
+    cy = 997.77783203125
     output = "HDMI-A-1"
-    placement_height = 1080.0
+    placement_height = 1200.0
     placement_width = 1920.0
     rotation = 0.0
     type = "login_box"
@@ -202,12 +205,12 @@ widget_order = [
 
     [lockscreen_widgets.widget."lockscreen-login-box@WL-1"]
     box_height = 196.0
-    box_width = 810.0
-    cx = 848.667236328125
-    cy = 1216.0
+    box_width = 720.0
+    cx = 953.99993896484375
+    cy = 908.58465576171875
     output = "WL-1"
-    placement_height = 1398.0
-    placement_width = 1696.0
+    placement_height = 1158.0
+    placement_width = 1908.0
     rotation = 0.0
     type = "login_box"
 
@@ -230,7 +233,7 @@ widget_order = [
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
     box_width = 400.0
-    cx = 960.0
+    cx = 959.99993896484375
     cy = 1141.0
     output = "eDP-1"
     placement_height = 1200.0
@@ -284,7 +287,7 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
     box_height = 112.0
     box_width = 240.0
-    cx = 960.0
+    cx = 959.99993896484375
     cy = 80.0
     output = "eDP-1"
     placement_height = 1200.0
@@ -302,7 +305,7 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
     box_height = 176.0
     box_width = 416.0
-    cx = 221.0
+    cx = 220.99998474121094
     cy = 1100.0
     output = "eDP-1"
     placement_height = 1200.0
@@ -318,7 +321,7 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000003]
     box_height = 0.0
     box_width = 0.0
-    cx = 1877.0
+    cx = 1876.9998779296875
     cy = 1176.0
     output = "eDP-1"
     placement_height = 1200.0
@@ -382,10 +385,10 @@ directory_light = "/home/lilly/Sync/Wallpapers/lightmode"
     enabled = true
 
     [wallpaper.default]
-    path = "/home/lilly/Sync/Wallpapers/lightmode/wallpaper27.jpg"
+    path = "/home/lilly/Sync/Wallpapers/darkmode/galen-crout-175291.jpg"
 
     [wallpaper.last]
-    path = "/home/lilly/Sync/Wallpapers/lightmode/wallpaper27.jpg"
+    path = "/home/lilly/Sync/Wallpapers/darkmode/galen-crout-175291.jpg"
 
     [wallpaper.monitors.DP-1]
     path = "/home/lilly/Sync/Wallpapers/lightmode/wallpaper27.jpg"
@@ -397,13 +400,13 @@ directory_light = "/home/lilly/Sync/Wallpapers/lightmode"
     path = "/home/lilly/Sync/Wallpapers/lightmode/wallpaper27.jpg"
 
     [wallpaper.monitors.HDMI-A-1]
-    path = "/home/lilly/Sync/Wallpapers/lightmode/lake_louise.jpg"
+    path = "/home/lilly/Sync/Wallpapers/lightmode/daniel-clarke-yb-30sec-sh020-bg-paint-v021.jpg"
 
     [wallpaper.monitors.WL-1]
-    path = "/home/lilly/Sync/Wallpapers/darkmode/Yumi_wallpaper_horizontal_no_title.jpg"
+    path = "/home/lilly/Sync/Wallpapers/lightmode/wallpaper27.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/lilly/Sync/Wallpapers/darkmode/tim-mccartney-39907.jpg"
+    path = "/home/lilly/Sync/Wallpapers/darkmode/galen-crout-175291.jpg"
 
     [wallpaper.monitors.winit]
     path = "/home/lilly/Sync/Wallpapers/darkmode/galen-crout-175291.jpg"

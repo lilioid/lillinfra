@@ -200,7 +200,7 @@ in
               "${mod}+Shift+e" = null;
             };
 
-          bindswitches."lid:on".action = "exec noctalia session lock-and-suspend";
+          # bindswitches."lid:on".action = "exec noctalia session lock-and-suspend";
 
           input = {
             "type:keyboard" = {
