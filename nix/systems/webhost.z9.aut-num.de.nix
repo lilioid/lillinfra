@@ -49,6 +49,12 @@
             autoindex on;
           '';
         };
+        "/KcPRAPUTgiYLQX4iNLafmAvn5Yf9chWE/" = {
+          alias = "/srv/large-file-share/max-book-dump/";
+          extraConfig = ''
+            autoindex on;
+          '';
+        };
       };
     };
   };
