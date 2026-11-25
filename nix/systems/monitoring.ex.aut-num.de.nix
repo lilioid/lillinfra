@@ -162,6 +162,12 @@
           assign where service.check_command == "imap"
           assign where service.check_command == "smtp"
         '';
+        "object HostGroup \"Z9\"" = ''
+          assign where host.name.contains(".z9.")
+        '';
+        "object HostGroup \"hanse.de\"" = ''
+          assign where host.name.contains(".hanse.de")
+        '';
         "template Service \"base-service\"" = {
           max_check_attempts = 5;
         };
@@ -360,6 +366,25 @@
           address = "212.12.50.232";
           address6 = "2a00:14b0:f001:100::e8";
           check_command = "hostalive";
+          vars.http_vhosts = [
+            "https://cloud.hanse.de/"
+            "https://ntfy.hanse.de/"
+            "https://auth.hanse.de/"
+            "https://git.hanse.de/"
+            "https://argo.hanse.de/"
+          ];
+        };
+        "object Host\"vesteralen.hanse.de\"" = {
+          address = "212.12.50.228";
+          address6 = "2a00:14b0:f001:100::e4";
+          check_command = "hostalive";
+          vars.http_vhosts = [
+            "https://matrix.hanse.de/_matrix/federation/v1/version"
+            "https://matrix.hanse.de/_matrix/client/versions"
+            "https://auth.matrix.hanse.de/"
+            "https://element.hanse.de/"
+            "https://rtc.matrix.hanse.de/"
+          ];
         };
         "object Host \"syncthing.z9.aut-num.de\"" = {
           address = "185.161.130.8";
