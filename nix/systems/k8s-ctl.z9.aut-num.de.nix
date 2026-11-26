@@ -66,6 +66,7 @@
   # configure backups
   custom.backup = {
     enable = true;
+    enableRepoChecks = true;
     backupDirectories = [
       "/var/lib/rancher/k3s"
       "/srv/ceph-k8s"

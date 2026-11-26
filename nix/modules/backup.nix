@@ -20,6 +20,7 @@ in
   options = with lib; {
     custom.backup = {
       enable = mkEnableOption "automatic backup creation";
+      enableRepoChecks = mkEnableOption "regular repository health checks from this node";
       backupDirectories = mkOption {
         type = types.listOf types.str;
         description = "A list of directories from this host that should be backed up";
@@ -213,6 +214,18 @@ in
             }
           ]
         );
+
+        # configure archive checks on this node
+        checks = if cfg.enableRepoChecks then [
+          {
+            name = "archives";
+            frequency = "1 week";
+          }
+          {
+            name = "repository";
+            frequency = "1 month";
+          }
+        ] else [];
       }
       // cfg.settings;
     };
